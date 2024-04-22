@@ -80,20 +80,15 @@ class indexpage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text(
+                              Text(
                                 'Patient',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
                                 ),
-                              ),
-                              const SizedBox(width: 100), // Adjust the spacing between text and image
-                              Image.asset(
-                                'assets/docicon.png', // Replace with your image path
-                                width: 30, // Adjust the width of the image
                               ),
                             ],
                           ),
@@ -114,20 +109,15 @@ class indexpage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text(
+                              Text(
                                 'Doctor',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
                                 ),
-                              ),
-                              const SizedBox(width: 100), // Adjust the spacing between text and image
-                              Image.asset(
-                                'assets/paticon.png', // Replace with your image path
-                                width: 30, // Adjust the width of the image
                               ),
                             ],
                           ),
