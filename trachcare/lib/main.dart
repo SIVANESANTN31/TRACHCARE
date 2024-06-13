@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
 
 import 'package:trachcare/Screens/AuthScreens/WelcomePage.dart';
 
@@ -19,12 +20,15 @@ class MyApp extends StatelessWidget {
  
 
 
-    return MaterialApp( 
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(textTheme: GoogleFonts.ibmPlexSansTextTheme()),
-      
-      home: Welcome_page()
-    );
-  }
+    return Sizer(builder: (context, orientation, deviceType){
+      return MaterialApp( 
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(textTheme: GoogleFonts.ibmPlexSansTextTheme()),
+        
+        home: Welcome_page()
+      );
+  });
+    
+    }
 }
 
