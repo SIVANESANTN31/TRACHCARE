@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'SplashScreen.dart';
 
 import 'package:trachcare/Screens/AuthScreens/WelcomePage.dart';
 
