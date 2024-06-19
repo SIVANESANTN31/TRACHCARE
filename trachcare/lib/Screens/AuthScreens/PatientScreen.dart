@@ -2,6 +2,7 @@ import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:gap/gap.dart";
 import "package:sizer/sizer.dart";
+import "package:trachcare/Api/API_funcation/Login.dart";
 import "package:trachcare/components/Loginform.dart";
 import "package:trachcare/components/Titlebox.dart";
 import "package:trachcare/components/subhead.dart";
@@ -15,12 +16,29 @@ class patientScreenlogin extends StatefulWidget {
 }
 
 class _patientScreenloginState extends State<patientScreenlogin> {
+
+  final _formkey = GlobalKey<FormState>();
+
+  void Loign_btn(){
+
+        if (_formkey.currentState!.validate()) {
+          _formkey.currentState!.save();  
+          LoginClassApi().Patientlogin();
+
+        }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        leading: Icon(CupertinoIcons.chevron_back),
+        leading: InkWell(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: Icon(CupertinoIcons.chevron_back)),
+        
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -36,7 +54,7 @@ class _patientScreenloginState extends State<patientScreenlogin> {
               decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/3.png"))),
             ),
             Gap(2.5.h),
-            loginForm(),
+            loginForm(formKey: _formkey,Singup_button: Loign_btn,)
             
           ],),
         ),

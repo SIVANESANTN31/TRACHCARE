@@ -3,12 +3,20 @@ import "package:flutter/material.dart";
 import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
+import "package:trachcare/Api/DataStore/Datastore.dart";
 import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
 
 class loginForm extends StatelessWidget {
-  const loginForm({super.key});
+  final Singup_button;
 
+  final GlobalKey<FormState> formKey;
+   loginForm({super.key, this.Singup_button, required this.formKey});
+
+LoginDataStore store = LoginDataStore();
+  
+  String username ="";
+  String password =" ";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,12 +27,24 @@ class loginForm extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 25.0),
         child: Form(
+          key: formKey,
           child: Column(
             children: [
               SizedBox(
                   width: 70.w,
                   height: 6.h,
                   child: TextFormField(
+                    validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please Enter Username';
+              }
+              return null;
+            },
+            onSaved: (value) {
+                  username  = value!; 
+                  store.Setusername(username);
+                  
+                },
                     cursorColor: TitleColor,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
@@ -40,6 +60,17 @@ class loginForm extends StatelessWidget {
                   width: 70.w,
                   height: 6.h,
                   child: TextFormField(
+                    validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please Enter password';
+                
+              }
+              return null;
+            },
+            onSaved: (value) {
+                  password  = value!;
+                  store.SetPassword(password);
+                },
                     cursorColor: TitleColor,
                     obscureText: true,
                     decoration: InputDecoration(
@@ -66,9 +97,7 @@ class loginForm extends StatelessWidget {
               custom_Button(
                   text: "Signup",
                   width: 55,
-                 button_funcation: (){
-
-                 },
+                 button_funcation: Singup_button,
                   height: 6,
                   backgroundColor: TitleColor,
                   textcolor: whiteColor,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:trachcare/Screens/started/WelcomePage.dart';
+import  'package:animate_do/animate_do.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,8 +16,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => WelcomePage()));
+    Timer(const Duration(seconds:1), () {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => BounceInUp(
+        curve: Curves.linear,
+        
+        child: Welcome_page())));
     });
   }
 

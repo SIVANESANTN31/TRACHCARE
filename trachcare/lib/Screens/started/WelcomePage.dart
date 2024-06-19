@@ -1,8 +1,10 @@
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
+import "package:trachcare/Screens/AuthScreens/Doctorlogin.dart";
 import "package:trachcare/Screens/AuthScreens/PatientScreen.dart";
 import "package:trachcare/components/Titlebox.dart";
 import "package:trachcare/components/custom_button.dart";
@@ -52,34 +54,41 @@ void Admin(){
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    width: 130,
-                    height: 120,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0XFFA7DBAF), Color(0XFFD2EFD7)],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SizedBox(
-                          width: 60,
-                          height: 60,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                AssetImage("assets/images/doctor.png"),
+                  GestureDetector(
+                    onTap: (){
+                        Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => DoctorLogin()));
+                    },
+                    child: Container(
+                      width: 130,
+                      height: 120,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color(0XFFA7DBAF), Color(0XFFD2EFD7)],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
                           ),
-                        ),
-                        Text("Doctor",
-                            style: GoogleFonts.ibmPlexSans(
-                                textStyle: TextStyle(
-                                    fontSize: 17,
-                                    color: Color(0XFF455A64),
-                                    fontWeight: FontWeight.bold)))
-                      ],
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: CircleAvatar(
+                              backgroundImage:
+                                  AssetImage("assets/images/doctor.png"),
+                            ),
+                          ),
+                          Text("Doctor",
+                              style: GoogleFonts.ibmPlexSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 17,
+                                      color: Color(0XFF455A64),
+                                      fontWeight: FontWeight.bold)))
+                        ],
+                      ),
                     ),
                   ),
                   GestureDetector(
