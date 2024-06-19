@@ -95,7 +95,7 @@ void Admin(){
                     onTap: (){
                      Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => const doctorScreenlogin()),
+    MaterialPageRoute(builder: (context) => const patientScreenlogin()),
   );
                     },
                     child: Container(

@@ -1,29 +1,20 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:sizer/sizer.dart';
-import 'package:trachcare/Api/API_funcation/Login.dart';
-import 'package:trachcare/Api/DataStore/Datastore.dart';
-import 'package:trachcare/components/Titlebox.dart';
-import 'package:trachcare/components/subhead.dart';
+import "package:flutter/cupertino.dart";
+import "package:flutter/material.dart";
+import "package:gap/gap.dart";
+import "package:sizer/sizer.dart";
+import "package:trachcare/components/Loginform.dart";
+import "package:trachcare/components/Titlebox.dart";
+import "package:trachcare/components/subhead.dart";
+import "package:trachcare/style/colors.dart";
 
-import '../../components/Loginform.dart';
+class doctorScreenlogin extends StatefulWidget {
+  const doctorScreenlogin({super.key});
 
+  @override
+  State<doctorScreenlogin> createState() => _doctorScreenloginState();
+}
 
-class DoctorLogin extends StatelessWidget {
-   DoctorLogin({super.key});
-   
-    final _formkey = GlobalKey<FormState>();
- 
-void Login_btn(){
-  if (_formkey.currentState!.validate()) {
-    _formkey.currentState!.save();  
-    LoginClassApi().DoctorLogin(); 
-  }
- 
- 
- }
-
+class _doctorScreenloginState extends State<doctorScreenlogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +28,7 @@ void Login_btn(){
            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
             Titlehead(titleName: "TRACHCARE"),
-            subhead(Subhead: "Doctor"),
+            subhead(Subhead: "Login"),
             Gap(2.h),
             Container(
               width: double.infinity,
@@ -45,7 +36,7 @@ void Login_btn(){
               decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/2.png"))),
             ),
             Gap(2.5.h),
-            loginForm(formKey: _formkey,Singup_button: Login_btn),
+            loginForm(),
             
           ],),
         ),
