@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
@@ -12,7 +14,8 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> 
+  with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -22,6 +25,14 @@ class _SplashScreenState extends State<SplashScreen> {
         
         child: Welcome_page())));
     });
+    }
+  
+
+@override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+     overlays: SystemUiOverlay.values);
+    super.dispose();
   }
 
   @override
@@ -49,7 +60,6 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
           ],)
-         // Replace with your logo or image
       ),
     );
   }
