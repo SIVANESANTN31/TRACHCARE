@@ -29,11 +29,7 @@ void Login_btn(){
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        leading: InkWell(
-          onTap: (){
-            Navigator.pop(context);
-          },
-          child: Icon(CupertinoIcons.chevron_back))
+        leading: Icon(CupertinoIcons.chevron_back),
       ),
       body: SingleChildScrollView(
         child: Center(
