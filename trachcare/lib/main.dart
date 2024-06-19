@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-
-import 'package:trachcare/Screens/AuthScreens/WelcomePage.dart';
+import 'package:trachcare/Screens/AuthScreens/SplashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(textTheme: GoogleFonts.ibmPlexSansTextTheme()),
         
-        home: Welcome_page()
+        home: const SplashScreen()
       );
   });
     

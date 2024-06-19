@@ -3,7 +3,7 @@ import "package:flutter/widgets.dart";
 import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
-import "package:trachcare/Screens/AuthScreens/PatientScreen.dart";
+import "package:trachcare/Screens/AuthScreens/DoctorLogin.dart";
 import "package:trachcare/components/Titlebox.dart";
 import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
@@ -86,7 +86,7 @@ void Admin(){
                     onTap: (){
                      Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => const patientScreenlogin()),
+    MaterialPageRoute(builder: (context) => const doctorScreenlogin()),
   );
                     },
                     child: Container(

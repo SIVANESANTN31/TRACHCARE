@@ -1,8 +1,10 @@
+// ignore_for_file: unnecessary_import
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-
+import 'package:trachcare/Screens/AuthScreens/WelcomePage.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -10,13 +12,24 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> 
+  with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => WelcomePage()));
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    Future.delayed(const Duration(seconds: 3),(){
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const Welcome_page(),
+      ));
     });
+    }
+  
+
+@override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+     overlays: SystemUiOverlay.values);
+    super.dispose();
   }
 
   @override
@@ -44,7 +57,6 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
           ],)
-         // Replace with your logo or image
       ),
     );
   }
