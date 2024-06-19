@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
 import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
+import "package:trachcare/Screens/AuthScreens/PatientScreen.dart";
 import "package:trachcare/components/Titlebox.dart";
 import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
@@ -80,34 +82,42 @@ void Admin(){
                       ],
                     ),
                   ),
-                  Container(
-                    width: 130,
-                    height: 120,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SizedBox(
-                          width: 60,
-                          height: 60,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                AssetImage("assets/images/patient.png"),
+                  GestureDetector(
+                    onTap: (){
+                     Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const patientScreenlogin()),
+  );
+                    },
+                    child: Container(
+                      width: 130,
+                      height: 120,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
                           ),
-                        ),
-                        Text("Patient",
-                            style: GoogleFonts.ibmPlexSans(
-                                textStyle: TextStyle(
-                                    fontSize: 17,
-                                    color: Color(0XFF455A64),
-                                    fontWeight: FontWeight.bold)))
-                      ],
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: CircleAvatar(
+                              backgroundImage:
+                                  AssetImage("assets/images/patient.png"),
+                            ),
+                          ),
+                          Text("Patient",
+                              style: GoogleFonts.ibmPlexSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 17,
+                                      color: Color(0XFF455A64),
+                                      fontWeight: FontWeight.bold)))
+                        ],
+                      ),
                     ),
                   ),
                 ],
