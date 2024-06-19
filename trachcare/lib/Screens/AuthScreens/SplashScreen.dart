@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -11,31 +15,36 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => HomeScreen()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => WelcomePage()));
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Image.asset('assets/images/0.png'), // Replace with your logo or image
-      ),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Screen'),
-      ),
-      body: const Center(
-        child: Text('Welcome to the Home Screen!'),
+      body: Container(
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFFA7DBAF), Color(0xFFFFD9A0)],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/0.png'),
+            const Text(
+              'Trachcare',
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                color: Colors.white,
+                fontSize: 32,
+              ),
+            ),
+          ],)
+         // Replace with your logo or image
       ),
     );
   }
