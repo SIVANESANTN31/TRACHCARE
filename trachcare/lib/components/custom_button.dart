@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 class custom_Button extends StatelessWidget {
@@ -36,7 +37,11 @@ class custom_Button extends StatelessWidget {
             children: [
               Text(
                 text,
-                style: TextStyle(fontSize: textSize.sp, color: textcolor),
+                style:  GoogleFonts.ibmPlexSans(
+                        textStyle: TextStyle(
+                            fontSize: textSize.sp,
+                            color: textcolor,
+                            fontWeight: FontWeight.bold)),
               ),
               icon == null
                   ? Text("")

@@ -65,8 +65,10 @@ class loginForm extends StatelessWidget {
               Gap(1.h),
               custom_Button(
                   text: "Signup",
-                  width: 75,
-                 // icon: CupertinoIcons.right_chevron,
+                  width: 55,
+                 button_funcation: (){
+
+                 },
                   height: 6,
                   backgroundColor: TitleColor,
                   textcolor: whiteColor,
