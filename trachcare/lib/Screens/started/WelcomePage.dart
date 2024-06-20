@@ -5,7 +5,7 @@ import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/Screens/AuthScreens/Doctorlogin.dart";
-import "package:trachcare/Screens/AuthScreens/PatientScreen.dart";
+import "package:trachcare/Screens/AuthScreens/PatientLogin copy.dart";
 import "package:trachcare/components/Titlebox.dart";
 import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
