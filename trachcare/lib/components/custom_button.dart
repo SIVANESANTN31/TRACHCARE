@@ -13,7 +13,7 @@ class custom_Button extends StatelessWidget {
   final IconData? icon;
   final Color textcolor;
   
-  custom_Button(
+  custom_Button( 
       {super.key,
       required this.text,
       required this.width,
