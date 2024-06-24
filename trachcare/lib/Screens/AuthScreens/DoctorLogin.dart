@@ -17,18 +17,26 @@ class DoctorLogin extends StatelessWidget {
    DoctorLogin({super.key});
    
     final _formkey = GlobalKey<FormState>();
- 
-void Login_btn(){
+
+  @override
+  Widget build(BuildContext context) {
+
+    // The below funcation is Login Button fucation 
+    void Login_btn(){
   if (_formkey.currentState!.validate()) {
     _formkey.currentState!.save();  
     LoginClassApi().DoctorLogin(); 
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => Doctordashboard()));
   }
  
  
  }
 
-  @override
-  Widget build(BuildContext context) {
+
+
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
