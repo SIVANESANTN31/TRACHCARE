@@ -6,6 +6,9 @@ import 'package:trachcare/Api/API_funcation/Login.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
 import 'package:trachcare/components/Titlebox.dart';
 import 'package:trachcare/components/subhead.dart';
+import "package:trachcare/components/custom_button.dart";
+import 'package:trachcare/Screens/AuthScreens/Doctordb.dart';
+import "package:flutter/cupertino.dart";
 
 import '../../components/Loginform.dart';
 
@@ -46,7 +49,6 @@ void Login_btn(){
             ),
             Gap(2.5.h),
             loginForm(formKey: _formkey,Singup_button: Login_btn),
-            
           ],),
         ),
       ),
