@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import "package:gap/gap.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/Api/API_funcation/Login.dart";
+import "package:trachcare/Screens/Views/patient/PatientDashborad.dart";
 import "package:trachcare/components/Loginform.dart";
 import "package:trachcare/components/Titlebox.dart";
 import "package:trachcare/components/subhead.dart";
@@ -24,6 +25,9 @@ class _patientScreenloginState extends State<patientScreenlogin> {
         if (_formkey.currentState!.validate()) {
           _formkey.currentState!.save();  
           LoginClassApi().Patientlogin();
+          Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => PatientDashBoard()));
 
         }
   }

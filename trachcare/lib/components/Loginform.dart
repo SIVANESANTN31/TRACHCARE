@@ -21,7 +21,7 @@ LoginDataStore store = LoginDataStore();
   Widget build(BuildContext context) {
     return Container(
       width: 85.w,
-      height: 32.h,
+      height: 35.h,
       decoration: BoxDecoration(
           color: loginFormcolor, borderRadius: BorderRadius.circular(15)),
       child: Padding(
@@ -32,7 +32,7 @@ LoginDataStore store = LoginDataStore();
             children: [
               SizedBox(
                   width: 70.w,
-                  height: 6.h,
+                  height: 8.h,
                   child: TextFormField(
                     validator: (value) {
               if (value == null || value.isEmpty) {
@@ -58,7 +58,7 @@ LoginDataStore store = LoginDataStore();
               Gap(2.5.h),
               SizedBox(
                   width: 70.w,
-                  height: 6.h,
+                  height: 8.h,
                   child: TextFormField(
                     validator: (value) {
               if (value == null || value.isEmpty) {
@@ -93,12 +93,12 @@ LoginDataStore store = LoginDataStore();
                           fontWeight: FontWeight.bold)),
                 ),
               ),
-              Gap(1.h),
+              Gap(2.h),
               custom_Button(
                   text: "Signup",
                   width: 55,
                  button_funcation: Singup_button,
-                  height: 6,
+                  height: 6.5,
                   backgroundColor: TitleColor,
                   textcolor: whiteColor,
                   textSize: 13)
