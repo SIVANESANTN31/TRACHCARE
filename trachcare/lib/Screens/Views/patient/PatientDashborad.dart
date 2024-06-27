@@ -74,7 +74,7 @@ PreferredSizeWidget Bottom(){
   return PreferredSize(
        preferredSize: Size.fromHeight(40.0),
        child: Positioned(
-              top: 0.0, // Position from the top of the screen
+              top: 20.0, // Position from the top of the screen
               left: 25.0, // Position from the left of the screen
               right: 25.0, // Position from the right of the screen
               child: Container(
