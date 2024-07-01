@@ -23,6 +23,7 @@ class _Welcome_pageState extends State<Welcome_page> {
 
 
 void Admin(){
+  print("vannakam da mapla");
 
 }
 

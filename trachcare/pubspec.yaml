@@ -39,6 +39,7 @@ dependencies:
   gap: ^3.0.1
   sizer: ^2.0.15
   animate_do: ^3.3.4
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:

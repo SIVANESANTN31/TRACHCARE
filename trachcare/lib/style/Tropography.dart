@@ -4,4 +4,4 @@ import "package:sizer/sizer.dart";
 
 TextStyle Nomal =  GoogleFonts.ibmPlexSans(
                         textStyle: TextStyle(
-                            fontSize: 5));
+                            fontSize: 20));
