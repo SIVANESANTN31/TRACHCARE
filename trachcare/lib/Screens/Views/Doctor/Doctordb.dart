@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/API_funcation/Login.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
+import 'package:trachcare/Screens/Views/Doctor/Addpatients.dart';
 import 'package:trachcare/components/Titlebox.dart';
 import 'package:trachcare/components/story_circles.dart';
 import 'package:trachcare/components/subhead.dart';
@@ -115,19 +116,23 @@ class Doctordashboard extends StatelessWidget {
                 //         fontWeight: FontWeight.w600,
                 //       ),),
                 //   ],),
-                  // SizedBox(height: 10,),
+                  SizedBox(height: 10,),
                   GridView.builder(
                     itemCount: imgList.length,
                     shrinkWrap: true,
-                    physics: FixedExtentScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-                    childAspectRatio: (MediaQuery.of(context).size.height - 50 - 25)/ (4*240),
+                    childAspectRatio: (MediaQuery.of(context).size.height - 40 - 20)/ (4*200),
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
                     ),
                     itemBuilder: (context, index){
                       return InkWell(
-                        onTap: (){},
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => Addpatients(),)
+                            );
+                        },
                         child: Container(
                           padding: 
                           EdgeInsets.symmetric(vertical: 20, horizontal:  10),
@@ -139,7 +144,16 @@ class Doctordashboard extends StatelessWidget {
                             children: [
                               Padding(
                                 padding: EdgeInsets.all(10),
-                                child: Image.asset("images/${imgList[index]}.png", width: 100, height: 100,),),
+                                child: Image.asset("images/${imgList[index]}.png", width: 50, height: 50,),),
+                                SizedBox(height: 10,),
+                                Text(
+                                  imgList[index],
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black.withOpacity(0.5),
+                                  ),
+                                )
                             
                           ],),
                         ),
@@ -151,7 +165,12 @@ class Doctordashboard extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
-      
+        showSelectedLabels: true,
+        iconSize: 30,
+        selectedItemColor: Color.fromARGB(255, 95, 95, 95),
+        selectedFontSize: 18,
+        unselectedItemColor: Color.fromARGB(255, 194, 194, 194),
+        
         items: const [
           BottomNavigationBarItem(
             label: "Home",
