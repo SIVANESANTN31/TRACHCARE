@@ -26,6 +26,7 @@ class custom_Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       width: width.w,
       height: height.h,
       child: CupertinoButton(

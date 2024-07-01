@@ -5,11 +5,12 @@ import "package:flutter/widgets.dart";
 import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
+import "package:trachcare/Screens/Views/patient/Bottomnavigationscreens/AudioScreen.dart";
 import "package:trachcare/components/Appbar.dart";  
 import "package:trachcare/components/Navbardrawer.dart";
 import "package:trachcare/style/colors.dart";
 
-import "../../../style/Tropography.dart";
+import "../../../../style/Tropography.dart";
 
 class PatientDashBoard extends StatelessWidget {
   const PatientDashBoard({super.key});
@@ -68,7 +69,7 @@ class PatientDashBoard extends StatelessWidget {
         Gap(1.h),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: TaptoSpeak(),
+          child: TaptoSpeak(context),
         )
 
           
@@ -167,7 +168,7 @@ Widget carsouleview(List Imageslist){
 }
 
 
-Widget TaptoSpeak(){
+Widget TaptoSpeak(BuildContext context){
   return Container(
     width: 95.w,
     height: 18.h,
@@ -201,10 +202,14 @@ Widget TaptoSpeak(){
       Row(
         
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children:[ Helpercontainer("YES",Color(0XFF82FF87)) ,
-      Helpercontainer("NO",Color(0XFFFB8A72)),
-      Helpercontainer("Help",Color(0XFFA8ECE8)),
-      Helpercontainer("More words",Color(0XFFEEECFF))
+        children:[ Helpercontainer("YES",Color(0XFF82FF87),(){}) ,
+      Helpercontainer("NO",Color(0XFFFB8A72),(){}),
+      Helpercontainer("Help",Color(0XFFA8ECE8),(){}),
+      Helpercontainer("More words",Color(0XFFEEECFF),(){
+        Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => AudioScreen()));
+      })
 
       ])
     ],),
@@ -212,28 +217,31 @@ Widget TaptoSpeak(){
 }
 
 
-Widget Helpercontainer(String text,Color colour){
+Widget Helpercontainer(String text,Color colour,final buttonfuncation){
   return Padding(
     padding: const EdgeInsets.all(8.0),
-    child: Container(
-      alignment: Alignment.center,
-      width: 18.w,
-      height: 8.h,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-      color: colour,
-      boxShadow: [
-                    BoxShadow(
-            color: BlackColor_light,
-            blurRadius: 4.0,
-          ),
-                  ]
+    child: GestureDetector(
+      onTap: buttonfuncation,
+      child: Container(
+        alignment: Alignment.center,
+        width: 18.w,
+        height: 8.h,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+        color: colour,
+        boxShadow: [
+                      BoxShadow(
+              color: BlackColor_light,
+              blurRadius: 4.0,
+            ),
+                    ]
+        ),
+        child: Text(text ,textAlign: TextAlign.center,style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(
+                            
+                            fontWeight: FontWeight.bold,
+                              fontSize: 13.sp)),),
+      
       ),
-      child: Text(text ,textAlign: TextAlign.center,style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          
-                          fontWeight: FontWeight.bold,
-                            fontSize: 13.sp)),),
-
     ),
   );
 }

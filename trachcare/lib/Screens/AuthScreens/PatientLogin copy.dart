@@ -3,7 +3,7 @@ import "package:flutter/material.dart";
 import "package:gap/gap.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/Api/API_funcation/Login.dart";
-import "package:trachcare/Screens/Views/patient/PatientDashborad.dart";
+import "package:trachcare/Screens/Views/patient/Bottomnavigationscreens/PatientDashborad.dart";
 import "package:trachcare/Screens/Views/patient/patientScreenmain.dart";
 import "package:trachcare/components/Loginform.dart";
 import "package:trachcare/components/Titlebox.dart";

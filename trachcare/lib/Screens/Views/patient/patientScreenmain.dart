@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:trachcare/Screens/Views/patient/PatientDashborad.dart';
+import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/AudioScreen.dart';
+import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/PatientDashborad.dart';
 import 'package:trachcare/style/colors.dart';
 
 class PatientMainScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class PatientMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List pages=[
        PatientDashBoard(),
-       PatientDashBoard(),
+       AudioScreen(),
        PatientDashBoard(),
        PatientDashBoard(),
        
