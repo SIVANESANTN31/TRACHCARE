@@ -7,7 +7,7 @@ import 'package:trachcare/Api/DataStore/Datastore.dart';
 import 'package:trachcare/components/Titlebox.dart';
 import 'package:trachcare/components/subhead.dart';
 import "package:trachcare/components/custom_button.dart";
-import 'package:trachcare/Screens/AuthScreens/Doctordb.dart';
+import 'package:trachcare/Screens/Views/Doctor/Doctordb.dart';
 import "package:flutter/cupertino.dart";
 
 import '../../components/Loginform.dart';

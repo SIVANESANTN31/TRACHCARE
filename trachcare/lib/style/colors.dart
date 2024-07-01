@@ -9,3 +9,4 @@ const BlackColor_light = Color.fromARGB(115, 0, 0, 0);
 const admin_color = Color.fromARGB(255, 71, 215, 92);
 const TitleColor = Color(0XFFA7DBAF);
 const BlackColor = Colors.black;
+const maincolor = LinearGradient(colors: [Color(0xFFA7DBAF), Color(0xFFFFD9A0)],);
