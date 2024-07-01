@@ -24,9 +24,9 @@ class Doctordashboard extends StatelessWidget {
   // }
 
   List imgList = [
-    'vector',
-    'vector-1',
-    'vector-2',
+    'Vector',
+    'Vector-1',
+    'Vector-2',
     'video.fill.badge.plus'
 
   ];
@@ -144,7 +144,7 @@ class Doctordashboard extends StatelessWidget {
                             children: [
                               Padding(
                                 padding: EdgeInsets.all(10),
-                                child: Image.asset("images/${imgList[index]}.png", width: 50, height: 50,),),
+                                child: Image.asset("assets/images/${imgList[index]}.png", width: 50, height: 50,),),
                                 SizedBox(height: 10,),
                                 Text(
                                   imgList[index],
