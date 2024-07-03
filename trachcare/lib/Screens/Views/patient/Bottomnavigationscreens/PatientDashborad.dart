@@ -10,13 +10,14 @@ import "package:trachcare/components/Appbar.dart";
 import "package:trachcare/components/Navbardrawer.dart";
 import "package:trachcare/style/colors.dart";
 
-
+import "../../../../style/Tropography.dart";
 
 class PatientDashBoard extends StatelessWidget {
   const PatientDashBoard({super.key});
   @override
   Widget build(BuildContext context) {
 
+        var currentIndex = 0;
     List imagelist = ["assets/images/Images_1.png","assets/images/images_2.png","assets/images/Images_3.png"];
     return Scaffold(
       appBar: Appbar(Name: "sivanesan",bottom: Bottom(),),
