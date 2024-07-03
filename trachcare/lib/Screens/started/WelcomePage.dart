@@ -63,13 +63,18 @@ void Admin(){
                     },
                     child: Container(
                       width: 130,
-                      height: 120,
+                      height: 130,
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [Color(0XFFA7DBAF), Color(0XFFD2EFD7)],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                           ),
+                          boxShadow: [
+                            BoxShadow(color: Colors.black.withOpacity(0.25),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3))],
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -101,13 +106,18 @@ void Admin(){
                     },
                     child: Container(
                       width: 130,
-                      height: 120,
+                      height: 130,
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                           ),
+                          boxShadow: [
+                            BoxShadow(color: Colors.black.withOpacity(0.25),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3))],
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -139,7 +149,9 @@ void Admin(){
                   height: 6.5,
                   backgroundColor: TitleColor ,
                   textcolor: whiteColor,
-                  textSize: 15),
+                  textSize: 15,
+                  ),
+                  
 
                   
             ],

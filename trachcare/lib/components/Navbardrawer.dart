@@ -91,7 +91,8 @@ class drawer extends StatelessWidget {
                 height: 6,
                 backgroundColor: Logoutbtncolor,
                 textcolor: whiteColor,
-                textSize: 13),
+                textSize: 13,
+                ),
           )
         ],
       ),

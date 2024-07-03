@@ -10,7 +10,7 @@ import "package:trachcare/components/Appbar.dart";
 import "package:trachcare/components/Navbardrawer.dart";
 import "package:trachcare/style/colors.dart";
 
-import "../../../../style/Tropography.dart";
+import "../../../../../style/Tropography.dart";
 
 class PatientDashBoard extends StatelessWidget {
   const PatientDashBoard({super.key});
@@ -22,13 +22,12 @@ class PatientDashBoard extends StatelessWidget {
     return Scaffold(
       appBar: Appbar(Name: "sivanesan",bottom: Bottom(),),
        drawer: drawer(),
-    
       
       body: Column(
        
        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Gap(3.h),
+          Gap(1.h),
           Padding(
             padding: const EdgeInsets.only(left: 10.0),
             child: Container(
@@ -91,7 +90,7 @@ PreferredSizeWidget Bottom(){
               left: 25.0, // Position from the left of the screen
               right: 25.0, // Position from the right of the screen
               child: Container(
-                height: 16.h,
+                height: 20.h,
                 width: 97.w,
               
                 decoration: BoxDecoration(

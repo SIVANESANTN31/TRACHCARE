@@ -101,7 +101,13 @@ LoginDataStore store = LoginDataStore();
                   height: 6.5,
                   backgroundColor: TitleColor,
                   textcolor: whiteColor,
-                  textSize: 13)
+                  textSize: 13,
+                  // boxShadow:
+                  //           BoxShadow(color: Colors.black.withOpacity(0.25),
+                  //           spreadRadius: 5,
+                  //           blurRadius: 7,
+                  //           offset: Offset(0, 3)),
+                            )
             ],
           ),
         ),

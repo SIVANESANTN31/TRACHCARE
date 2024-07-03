@@ -9,17 +9,21 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
   final String Name;
   final PreferredSizeWidget ? bottom;
 
-   Appbar({super.key, required this.Name,this.
-   bottom});
+   Appbar( 
+   {super.key, 
+   required this.Name,
+   this.bottom});
 
   @override
   AppBar build(BuildContext context) {
-    return AppBar(backgroundColor: TitleColor,
+    return AppBar(
+    backgroundColor: TitleColor,
     shape:  RoundedRectangleBorder(
     borderRadius: BorderRadius.vertical(
       bottom: Radius.circular(30),
     )),
      leading: Builder(
+      
       builder: (BuildContext context) {
         return IconButton(
           icon: Icon(Icons.menu),
@@ -46,6 +50,6 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
   
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(190);
+  Size get preferredSize => Size.fromHeight(250);
 }
 

@@ -7,10 +7,11 @@ import 'package:trachcare/Api/DataStore/Datastore.dart';
 import 'package:trachcare/components/Titlebox.dart';
 import 'package:trachcare/components/subhead.dart';
 import "package:trachcare/components/custom_button.dart";
-import 'package:trachcare/Screens/Views/Doctor/Doctordb.dart';
-import "package:flutter/cupertino.dart";
+import 'package:trachcare/Screens/Views/Doctor/Bottomnavigator/Doctordb.dart';
+// import "package:flutter/cupertino.dart";
 
 import '../../components/Loginform.dart';
+import '../Views/Doctor/Bottomnavigator/Doctorsdashboard.dart';
 
 
 class DoctorLogin extends StatelessWidget {
@@ -28,7 +29,7 @@ class DoctorLogin extends StatelessWidget {
     LoginClassApi().DoctorLogin(); 
     Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => Doctordashboard()));
+    MaterialPageRoute(builder: (context) => DoctorDashBoard()));
   }
  
  

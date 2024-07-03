@@ -12,6 +12,7 @@ class custom_Button extends StatelessWidget {
   final button_funcation;
   final IconData? icon;
   final Color textcolor;
+  final List<BoxShadow>? boxShadow;
   
   custom_Button( 
       {super.key,
@@ -19,6 +20,7 @@ class custom_Button extends StatelessWidget {
       required this.width,
       required this.height,
       required this.backgroundColor,
+      this.boxShadow,
       this.button_funcation,
       this.icon,
       required this.textcolor, required this.textSize});
@@ -26,6 +28,16 @@ class custom_Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        boxShadow: boxShadow ?? [ 
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3)),
+
+        ],
+      ),
       alignment: Alignment.center,
       width: width.w,
       height: height.h,
