@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/API_funcation/Login.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
+import 'package:trachcare/Screens/Views/Doctor/Doctormainscreen.dart';
 import 'package:trachcare/components/Titlebox.dart';
 import 'package:trachcare/components/subhead.dart';
 import "package:trachcare/components/custom_button.dart";
@@ -29,7 +30,7 @@ class DoctorLogin extends StatelessWidget {
     LoginClassApi().DoctorLogin(); 
     Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => DoctorDashBoard()));
+    MaterialPageRoute(builder: (context) => Doctormainpage()));
   }
  
  

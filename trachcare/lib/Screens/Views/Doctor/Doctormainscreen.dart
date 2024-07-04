@@ -9,8 +9,8 @@ import 'Bottomnavigator/Addpatients.dart';
 import 'Bottomnavigator/Doctorsdashboard.dart';
 import 'Bottomnavigator/patientslist.dart';
 
-class PatientMainScreen extends StatelessWidget {
-  const PatientMainScreen({super.key});
+class Doctormainpage extends StatelessWidget {
+  const Doctormainpage({super.key});
 
   @override
   Widget build(BuildContext context) {

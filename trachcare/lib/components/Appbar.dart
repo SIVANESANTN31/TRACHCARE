@@ -7,12 +7,13 @@ import 'package:trachcare/style/colors.dart';
 
 class Appbar extends StatelessWidget implements PreferredSizeWidget {
   final String Name;
+  final double height;
   final PreferredSizeWidget ? bottom;
 
    Appbar( 
    {super.key, 
    required this.Name,
-   this.bottom});
+   this.bottom, required this.height});
 
   @override
   AppBar build(BuildContext context) {
@@ -50,6 +51,6 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
   
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(250);
+  Size get preferredSize => Size.fromHeight(height);
 }
 
