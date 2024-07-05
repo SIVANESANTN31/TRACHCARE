@@ -39,7 +39,7 @@ class DoctorDashBoard extends StatelessWidget {
         var currentIndex = 0;
     List imagelist = ["assets/images/Images_1.png","assets/images/images_2.png","assets/images/Images_3.png"];
     return Scaffold(
-      appBar: Appbar(Name: "sivanesan",bottom: Bottom(context), height: 190,),
+      appBar: Appbar(Name: "sivanesan",bottom: Bottom(context), height: 35.h,),
        drawer: drawer(),
       
       body: ListView(
