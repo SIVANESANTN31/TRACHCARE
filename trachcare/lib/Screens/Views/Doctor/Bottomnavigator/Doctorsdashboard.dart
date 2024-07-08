@@ -68,7 +68,9 @@ class DoctorDashBoard extends StatelessWidget {
                             EdgeInsets.symmetric(vertical: 20, horizontal:  10),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: Color.fromARGB(255, 226, 195, 129),
+                              gradient: LinearGradient(colors: [Color.fromARGB(255, 255, 190, 126), Color.fromARGB(255, 250, 231, 203)],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,),
                               boxShadow: [
                             BoxShadow(color: Colors.black.withOpacity(0.25),
                             spreadRadius: 2,

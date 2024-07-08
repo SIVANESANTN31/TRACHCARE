@@ -43,100 +43,103 @@ class profilepage extends StatelessWidget {
                                     backgroundImage: AssetImage('assets/images/doctor.png'),
                                   ),
                                 ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Username'),
-                                        TextField(
-                                          enableInteractiveSelection : false,
-                                        decoration:  InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              width: 1.0,
+                                
+                                // child: Container(),
+                                // Column(
+                                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                //   children: [
+                                //     Column(
+                                //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                //       crossAxisAlignment: CrossAxisAlignment.start,
+                                //       children: [
+                                //         Text('Username'),
+                                //         TextField(
+                                //           enableInteractiveSelection : false,
+                                //         decoration:  InputDecoration(
+                                //           enabledBorder: OutlineInputBorder(
+                                //             borderSide: BorderSide(
+                                //               width: 1.0,
                                             
-                                            ),
+                                //             ),
 
-                                          ),
+                                //           ),
 
-                                        ),
+                                //         ),
 
-                                        ),
+                                //         ),
                                         
-                                      ],
-                                    ),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Username'),
-                                        TextField(
-                                          enableInteractiveSelection : false,
-                                        decoration:  InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              width: 1.0,
+                                //       ],
+                                //     ),
+                                //     Column(
+                                //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                //       crossAxisAlignment: CrossAxisAlignment.start,
+                                //       children: [
+                                //         Text('Username'),
+                                //         TextField(
+                                //           enableInteractiveSelection : false,
+                                //         decoration:  InputDecoration(
+                                //           enabledBorder: OutlineInputBorder(
+                                //             borderSide: BorderSide(
+                                //               width: 1.0,
                                             
-                                            ),
+                                //             ),
 
-                                          ),
+                                //           ),
 
-                                        ),
+                                //         ),
 
-                                        ),
+                                //         ),
                                         
-                                      ],
-                                    ),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Username'),
-                                        TextField(
-                                          enableInteractiveSelection : false,
-                                        decoration:  InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              width: 1.0,
+                                //       ],
+                                //     ),
+                                //     Column(
+                                //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                //       crossAxisAlignment: CrossAxisAlignment.start,
+                                //       children: [
+                                //         Text('Username'),
+                                //         TextField(
+                                //           enableInteractiveSelection : false,
+                                //         decoration:  InputDecoration(
+                                //           fillColor: Colors.white,
+                                //           enabledBorder: OutlineInputBorder(
+                                //             borderSide: BorderSide(
+                                //               width: 1.0,
                                             
-                                            ),
+                                //             ),
 
-                                          ),
+                                //           ),
 
-                                        ),
+                                //         ),
 
-                                        ),
+                                //         ),
                                         
-                                      ],
-                                    ),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Username'),
-                                        TextField(
-                                          enableInteractiveSelection : false,
-                                        decoration:  InputDecoration(
-                                          fillColor: Colors.white,
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              width: 1.0,
+                                //       ],
+                                //     ),
+                                //     Column(
+                                //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                //       crossAxisAlignment: CrossAxisAlignment.start,
+                                //       children: [
+                                //         Text('Username'),
+                                //         TextField(
+                                //           enableInteractiveSelection : false,
+                                //         decoration:  InputDecoration(
+                                //           fillColor: Colors.white,
+                                //           enabledBorder: OutlineInputBorder(
+                                //             borderSide: BorderSide(
+                                //               width: 1.0,
                                             
-                                            ),
+                                //             ),
 
-                                          ),
+                                //           ),
 
-                                        ),
+                                //         ),
 
-                                        ),
+                                //         ),
                                         
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                //       ],
+                                //     ),
+                                //   ],
+                                // ),
                               ],
                             ),
                           ),

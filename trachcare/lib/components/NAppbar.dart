@@ -8,8 +8,11 @@ import "../style/colors.dart";
 
 class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String Title;
-  final  IconButton actionbutton;
-   NormalAppbar({super.key, required this.Title,   required this.actionbutton});
+  final   actionbutton;
+   NormalAppbar(
+    {super.key,
+    required this.Title,
+    this.actionbutton});
 
   @override
   Widget build(BuildContext context) {
