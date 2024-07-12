@@ -28,7 +28,7 @@ class Doctormainpage extends StatelessWidget {
             activeColor:BlackColor ,
              inactiveColor: grey_color,
 
-
+            
             items: const [
               BottomNavigationBarItem(
                   icon: Icon(CupertinoIcons.home),
@@ -37,14 +37,14 @@ class Doctormainpage extends StatelessWidget {
 
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.multitrack_audio_outlined),
-                  label: "Audio",
-                  activeIcon: Icon(Icons.multitrack_audio_sharp)
+                  icon: Icon(Icons.person_add_alt_1),
+                  label: "Add Patients",
+                  activeIcon: Icon(Icons.person_add_alt_1_sharp)
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.video_collection_outlined),
-                  label: "Video",
-                  activeIcon: Icon(Icons.video_collection)
+                  icon: Icon(Icons.person_outlined),
+                  label: "Patients List",
+                  activeIcon: Icon(Icons.person_sharp)
               ),
               // BottomNavigationBarItem(
               //     icon: Icon(Icons.medication_liquid_sharp),

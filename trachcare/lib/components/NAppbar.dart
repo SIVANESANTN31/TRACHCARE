@@ -23,13 +23,16 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
       bottom: Radius.circular(20),
 
     )),
-    leading: Icon(CupertinoIcons.chevron_left,color: whiteColor,size: 28.0,),
+    leading: InkWell(
+      onTap:(){
+      Navigator.pop(context);
+    },
+    child: Icon(CupertinoIcons.chevron_left,color: whiteColor,size: 28.0,),),
     title: Text(Title,style: GoogleFonts.ibmPlexSans(
                         textStyle: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: whiteColor,
                             fontSize: 15.sp)),),
-
         centerTitle: true,
         actions: [
             Padding(

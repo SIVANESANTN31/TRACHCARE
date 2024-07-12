@@ -14,16 +14,16 @@ class patientslist extends StatefulWidget {
 class _patientslistState extends State<patientslist> {
  
   final List<Map<String, dynamic>> patientslist = [
-    {"id": 1, "name": "Andy", "age": 29},
-    {"id": 2, "name": "Aragon", "age": 40},
-    {"id": 3, "name": "Bob", "age": 5},
-    {"id": 4, "name": "Barbara", "age": 35},
-    {"id": 5, "name": "Candy", "age": 21},
-    {"id": 6, "name": "Colin", "age": 55},
-    {"id": 7, "name": "Audra", "age": 30},
-    {"id": 8, "name": "Banana", "age": 14},
-    {"id": 9, "name": "Caversky", "age": 100},
-    {"id": 10, "name": "Becky", "age": 32},
+    {"id": 192121051, "name": "Andy", "age": 29},
+    {"id": 192121052, "name": "Aragon", "age": 40},
+    {"id": 192121053, "name": "Bob", "age": 5},
+    {"id": 192121054, "name": "Barbara", "age": 35},
+    {"id": 192121055, "name": "Candy", "age": 21},
+    {"id": 192121056, "name": "Colin", "age": 55},
+    {"id": 192121057, "name": "Audra", "age": 30},
+    {"id": 192121058, "name": "Banana", "age": 14},
+    {"id": 192121059, "name": "Caversky", "age": 100},
+    {"id": 192121060, "name": "Becky", "age": 32},
   ];
 // This list holds the data for the list view
   List<Map<String, dynamic>> display_list = [];
@@ -112,11 +112,11 @@ class _patientslistState extends State<patientslist> {
                                     backgroundImage: AssetImage('assets/images/doctor.png'),
                                   ),
                     title: Text(display_list[index]['name'], style:TextStyle(
-                      color: Colors.black87,
+                      color: Colors.black,
                     )),
                     subtitle:Text(
                      display_list[index]["id"].toString(),
-                      style: const TextStyle(fontSize: 24, color:Colors.white),
+                      style: const TextStyle(fontSize: 12, color:Color.fromARGB(255, 0, 0, 0)),
                     ),
                   ),
                 ),

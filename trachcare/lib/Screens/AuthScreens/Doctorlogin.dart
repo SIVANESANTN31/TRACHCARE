@@ -35,14 +35,14 @@ class DoctorLogin extends StatelessWidget {
  
  
  }
-
-
-
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        leading: Icon(CupertinoIcons.chevron_back),
+        leading: InkWell(onTap: (){
+          Navigator.pop(context);
+        },
+        child: Icon(CupertinoIcons.chevron_back),),
+        
       ),
       body: SingleChildScrollView(
         child: Center(

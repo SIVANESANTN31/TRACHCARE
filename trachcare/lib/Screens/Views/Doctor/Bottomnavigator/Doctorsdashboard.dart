@@ -6,6 +6,7 @@ import "package:flutter/widgets.dart";
 import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
+import "package:trachcare/Screens/Views/Doctor/AddExVideos.dart";
 import "package:trachcare/Screens/Views/patient/Bottomnavigationscreens/AudioScreen.dart";
 import "package:trachcare/components/Appbar.dart";  
 import "package:trachcare/components/Navbardrawer.dart";
@@ -60,7 +61,7 @@ class DoctorDashBoard extends StatelessWidget {
                         return InkWell(
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => Addpatients(),)
+                              builder: (context) => Adexvideos(),)
                               );
                           },
                           child: Container(
