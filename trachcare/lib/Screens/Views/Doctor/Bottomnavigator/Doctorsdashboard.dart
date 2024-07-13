@@ -40,7 +40,7 @@ class DoctorDashBoard extends StatelessWidget {
         var currentIndex = 0;
     List imagelist = ["assets/images/Images_1.png","assets/images/images_2.png","assets/images/Images_3.png"];
     return Scaffold(
-      appBar: Appbar(Name: "sivanesan",bottom: Bottom(context), height: 35.h,),
+      appBar: Appbar(Name: "sivanesan",bottom: Bottom(context), height: 29.h,),
        drawer: drawer(),
       
       body: ListView(
@@ -53,7 +53,7 @@ class DoctorDashBoard extends StatelessWidget {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-                      childAspectRatio: (MediaQuery.of(context).size.height - 40 - 20)/ (4*175),
+                      childAspectRatio: (MediaQuery.of(context).size.height - 40 - 20)/ (4*22.h),
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
                       ),
@@ -89,11 +89,11 @@ class DoctorDashBoard extends StatelessWidget {
                                     option[index],
                                     style: TextStyle(
                                       fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black.withOpacity(0.50),
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
                                     ),
-                                  )
-                              
+                                    textAlign: TextAlign.center,
+                                  )                  
                             ],),
                           ),
                     
@@ -161,15 +161,15 @@ class DoctorDashBoard extends StatelessWidget {
 
 PreferredSizeWidget Bottom(BuildContext context){
   return PreferredSize(
-       preferredSize: Size.fromHeight(20.0),
+       preferredSize: Size.fromHeight(5.0),
        child: Column(
          children: [
            Padding(
-             padding: const EdgeInsets.only(top: 5,left: 10,right: 10,bottom: 0),
+             padding: const EdgeInsets.only(top: 0,left: 10,right: 10,bottom: 0),
              child: Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 25,),
+                        margin: EdgeInsets.only(top: 0, bottom: 10,),
                         width: MediaQuery.of(context).size.width,
-                        height: 55,
+                        height: 6.h,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: Colors.white,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-import 'package:trachcare/Screens/Views/Doctor/Profilepage.dart';
+import 'package:trachcare/Screens/Views/Doctor/Profileviewpage.dart';
 import 'package:trachcare/components/custom_button.dart';
 import 'package:trachcare/style/Tropography.dart';
 import 'package:trachcare/style/colors.dart';
@@ -56,7 +56,7 @@ class drawer extends StatelessWidget {
             title: const Text('My Profile'),
             onTap: () {
                Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => profilepage(),)
+                              builder: (context) => ProfilePage(),)
                               );
             },
           ),
