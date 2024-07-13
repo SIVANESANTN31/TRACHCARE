@@ -3,19 +3,16 @@ import 'package:trachcare/components/NAppbar.dart';
 import 'package:trachcare/components/PatientsDataModel.dart';
 
 class Patientsdetails extends StatelessWidget {
-  final Patientsdatamodel patientsdata;
-  const Patientsdetails({super.key, required this.patientsdata, });
+  final int patientId;
+
+  const Patientsdetails({Key? key, required this.patientId}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: NormalAppbar(Title: 'Patients details'),
-      body: ListView(
-        children: [
-          Image.network('src'),
-          const Text('desc')
-        ],
-      ),
+      body: Center(child: Text('$patientId',)),
 
     );
   }

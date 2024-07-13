@@ -12,7 +12,7 @@ class patientslist extends StatefulWidget {
 }
 
 class _patientslistState extends State<patientslist> {
- 
+  //String selectedPid = "";
   final List<Map<String, dynamic>> patientslist = [
     {"id": 192121051, "name": "Andy", "age": 29},
     {"id": 192121052, "name": "Aragon", "age": 40},
@@ -33,7 +33,7 @@ class _patientslistState extends State<patientslist> {
     display_list = patientslist;
     super.initState();
   }
- void onsearch(String enteredKeyword) {
+  void onsearch(String enteredKeyword) {
     List<Map<String, dynamic>> results = [];
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
@@ -67,35 +67,35 @@ class _patientslistState extends State<patientslist> {
         child: Column(
           children: [
             Container(
-                       margin: EdgeInsets.only(top: 5, bottom:8,),
-                       width: MediaQuery.of(context).size.width,
-                       height: 55,
-                       alignment: Alignment.center,
-                       decoration: BoxDecoration(
-                         color: Colors.white,
-                         borderRadius: BorderRadius.circular(10),
-                         boxShadow: [
-                           BoxShadow(color: Colors.black.withOpacity(0.15),
-                           spreadRadius: 5,
-                           blurRadius: 7,
-                           offset: Offset(0, 3))],
-                       ),
-                       
-                       child: TextFormField(
-                        onChanged: (value) => onsearch(value),
-                         decoration: InputDecoration(
-                           border: InputBorder.none,
-                           hintText: "Search here....",
-                           hintStyle: TextStyle(
-                             color: Colors.black.withOpacity(0.5),
-                           ),
-                           prefixIcon: Icon(Icons.search,size: 25,),
-                         ),
-                       )  
-                     ),
-                //  SizedBox(height: 0,),
-                //  
-                 Expanded(
+                margin: EdgeInsets.only(top: 5, bottom:8,),
+                width: MediaQuery.of(context).size.width,
+                height: 55,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(color: Colors.black.withOpacity(0.15),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3))],
+                ),
+
+                child: TextFormField(
+                  onChanged: (value) => onsearch(value),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "Search here....",
+                    hintStyle: TextStyle(
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+                    prefixIcon: Icon(Icons.search,size: 25,),
+                  ),
+                )
+            ),
+            //  SizedBox(height: 0,),
+            //
+            Expanded(
               child: display_list.isNotEmpty
                   ? ListView.builder(
                 itemCount: display_list.length,
@@ -105,17 +105,18 @@ class _patientslistState extends State<patientslist> {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: ListTile(
                     onTap: (){
-                      //Navigator.of(context).push(MaterialPageRoute(builder: (context) => Patientsdetails()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => Patientsdetails(patientId : display_list[index]['id']),),);
                     },
                     leading: CircleAvatar(
-                                    radius: 25,
-                                    backgroundImage: AssetImage('assets/images/doctor.png'),
-                                  ),
+                      radius: 25,
+                      backgroundImage: AssetImage('assets/images/doctor.png'),
+                    ),
                     title: Text(display_list[index]['name'], style:TextStyle(
                       color: Colors.black,
                     )),
                     subtitle:Text(
-                     display_list[index]["id"].toString(),
+                      display_list[index]["id"].toString(),
                       style: const TextStyle(fontSize: 12, color:Color.fromARGB(255, 0, 0, 0)),
                     ),
                   ),
