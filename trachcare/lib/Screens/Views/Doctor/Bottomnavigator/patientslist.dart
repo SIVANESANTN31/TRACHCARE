@@ -105,7 +105,7 @@ class _patientslistState extends State<patientslist> {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: ListTile(
                     onTap: (){
-                      
+                      //Navigator.of(context).push(MaterialPageRoute(builder: (context) => Patientsdetails()));
                     },
                     leading: CircleAvatar(
                                     radius: 25,
