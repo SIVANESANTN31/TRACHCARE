@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/AudioScreen.dart';
+import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/Medication.dart';
 import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/PatientDashborad.dart';
+import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/videospage.dart';
 import 'package:trachcare/style/colors.dart';
 
 class PatientMainScreen extends StatelessWidget {
@@ -13,8 +15,8 @@ class PatientMainScreen extends StatelessWidget {
     List pages=[
        PatientDashBoard(),
        AudioScreen(),
-       PatientDashBoard(),
-       PatientDashBoard(),
+       Videospage(),
+       MedicationPage(),
        
     ];
 
@@ -23,7 +25,7 @@ class PatientMainScreen extends StatelessWidget {
     return CupertinoTabScaffold(
 
           tabBar: CupertinoTabBar(
-            // backgroundColor: widget_color,
+            backgroundColor: Colors.grey[50],
             activeColor:BlackColor ,
              inactiveColor: grey_color,
 

@@ -1,6 +1,9 @@
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
+import "package:trachcare/components/custom_button.dart";
+import "package:trachcare/style/colors.dart";
 
 import "profilefeild.dart";
 // import 'package:onboarding/utils/profilefield.dart';
@@ -17,9 +20,20 @@ class ProfilePage extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  height: 30.h,
+                  alignment: Alignment.topLeft,
+                  height: 25.h,
+                  child: SafeArea(
+                    child: InkWell(
+                          onTap:(){
+                          Navigator.pop(context);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(CupertinoIcons.chevron_left,color: BlackColor,size: 28.0,),
+                        ),),
+                  ),
                   decoration: const BoxDecoration(
-                    color: Colors.green,
+                    color: TitleColor,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
@@ -28,14 +42,14 @@ class ProfilePage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                    top: 150,
+                    top: 110,
                     left: 30,
                     right: 30,
                     bottom: 0,
                   ),
                   child: Container(
                     decoration: const BoxDecoration(
-                      color: Colors.amberAccent,
+                      color: loginFormcolor,
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     child: Padding(
@@ -44,33 +58,59 @@ class ProfilePage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Center(
-                            child: Text(
-                              'Profile',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('Profile',
+                                  style: GoogleFonts.ibmPlexSans(
+                                      textStyle: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14.sp))),
                             ),
                           ),
-                          const SizedBox(height: 20.0),
+                          const SizedBox(height: 10.0),
                           const Center(
                             child: CircleAvatar(
-                              radius: 60,
+                              radius: 48,
                               backgroundColor: Colors.grey,
                               child: CircleAvatar(
-                                radius: 58,
+                                radius: 55,
                                 backgroundImage:
                                     AssetImage('assets/images/doctor.png'),
                               ),
                             ),
                           ),
+                          SizedBox(height: 6,),
+                          Center(
+                            child: Container(
+                              width: 40.w,
+                              height: 5.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: whiteColor,
+                               
+                                
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                Text('Change Picture ',
+                                  style: GoogleFonts.ibmPlexSans(
+                                      textStyle: TextStyle(
+                                          //fontWeight: FontWeight.bold,
+                                          fontSize: 11.sp))),
+                                  Icon(Icons.image),
+                        ]),
+                            ),
+                          ),
                           const SizedBox(height: 20.0),
                           const ProfileField(title: 'Username', value: 'XYX'),
                           const SizedBox(height: 20.0),
-                          const ProfileField(title: 'Email Id', value: 'XYX@gmail.com'),
+                          const ProfileField(
+                              title: 'Email Id', value: 'XYX@gmail.com'),
                           const SizedBox(height: 20.0),
-                          const ProfileField(title: 'Phone Number', value: '123456789'),
+                          const ProfileField(
+                              title: 'Phone Number', value: '123456789'),
                           const SizedBox(height: 20.0),
                           const ProfileField(title: 'Password', value: '123'),
                           const SizedBox(height: 20),
@@ -81,22 +121,15 @@ class ProfilePage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                elevation: 3,
-              ),
-              onPressed: () {
-                print('Success');
-              },
-              child: const Text(
-                'Edit Profile',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
+             SizedBox(height: 4.h),
+            custom_Button(
+                text: "Edit Profile",
+                width: 60,
+                height: 6,
+                button_funcation: (){},
+                backgroundColor: sucess_color,
+                textcolor: whiteColor,
+                textSize: 13)
           ],
         ),
       ),

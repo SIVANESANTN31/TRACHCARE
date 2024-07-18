@@ -11,4 +11,5 @@ const TitleColor = Color(0XFFA7DBAF);
 const Logoutbtncolor = Color(0XFFB8DABD);
 const BlackColor = Colors.black;
 const grey_color = Colors.grey;
+const sucess_color = Colors.green;
 const maincolor = LinearGradient(colors: [Color(0xFFA7DBAF), Color(0xFFFFD9A0)],);
