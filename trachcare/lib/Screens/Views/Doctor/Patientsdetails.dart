@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trachcare/components/NAppbar.dart';
 import 'package:trachcare/components/PatientsDataModel.dart';
 
-import 'profilefeild.dart';
+import '../../../components/profilefeild.dart';
 
 class Patientsdetails extends StatelessWidget {
   final int patientId;

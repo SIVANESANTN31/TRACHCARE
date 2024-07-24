@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Screens/Views/Doctor/Profileviewpage.dart';
+import 'package:trachcare/Screens/Views/Doctor/information.dart';
 import 'package:trachcare/components/custom_button.dart';
 import 'package:trachcare/style/Tropography.dart';
 import 'package:trachcare/style/colors.dart';
@@ -68,8 +69,10 @@ class drawer extends StatelessWidget {
               Icons.info_outline,
             ),
             title: const Text('Information'),
-            onTap: () {
-              Navigator.pop(context);
+             onTap: () {
+               Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => Information(),)
+                              );
             },
           ),
           ListTile(

@@ -3,10 +3,12 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
 
-import "profilefeild.dart";
+import "../../../components/custom_button.dart";
+import "../../../style/colors.dart";
+import "../../../components/profilefeild.dart";
 // import 'package:onboarding/utils/profilefield.dart';
 
-import "profilefeild.dart";
+import "../../../components/profilefeild.dart";
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
