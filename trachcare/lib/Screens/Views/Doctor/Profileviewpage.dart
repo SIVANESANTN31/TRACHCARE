@@ -1,9 +1,9 @@
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:sizer/sizer.dart";
+// import 'package:onboarding/utils/profilefield.dart';
 
 import "profilefeild.dart";
-// import 'package:onboarding/utils/profilefield.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -61,13 +61,19 @@ class ProfilePage extends StatelessWidget {
                               child: CircleAvatar(
                                 radius: 58,
                                 backgroundImage:
-                                    AssetImage('assets/images/doctor.png'),
+                                AssetImage('assets/images/doctor.png'),
                               ),
                             ),
                           ),
                           const SizedBox(height: 20.0),
                           const ProfileField(title: 'Username', value: 'XYX'),
                           const SizedBox(height: 20.0),
+                          const ProfileField(title: 'Email Id', value: 'XYX@gmail.com'),
+                          const SizedBox(height: 20.0),
+                          const ProfileField(title: 'Phone Number', value: '123456789'),
+                          const SizedBox(height: 20.0),
+                          const ProfileField(title: 'Password', value: '123'),
+                          const SizedBox(height: 20),
                           const ProfileField(title: 'Email Id', value: 'XYX@gmail.com'),
                           const SizedBox(height: 20.0),
                           const ProfileField(title: 'Phone Number', value: '123456789'),
@@ -103,3 +109,4 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+
