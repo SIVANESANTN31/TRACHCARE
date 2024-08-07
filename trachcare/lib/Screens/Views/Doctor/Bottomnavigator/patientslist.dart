@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
-import '../Patientsdetails.dart';
+import '../doctorscreens/Patientsdetails.dart';
 
 class patientslist extends StatefulWidget {
   const patientslist({super.key});
