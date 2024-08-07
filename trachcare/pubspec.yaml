@@ -43,6 +43,8 @@ dependencies:
   media_kit: ^1.1.10+1
   media_kit_video: ^1.2.4                        # For video rendering.
   media_kit_libs_video: ^1.0.4  
+  http: ^1.2.2
+  toastification: ^2.1.0
 
 dev_dependencies:
   flutter_test:

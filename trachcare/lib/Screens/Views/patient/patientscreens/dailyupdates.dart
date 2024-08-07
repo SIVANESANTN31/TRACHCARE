@@ -19,7 +19,7 @@ class your_daily_updates extends StatelessWidget {
           
           Gap(2.h),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
             
               Column(

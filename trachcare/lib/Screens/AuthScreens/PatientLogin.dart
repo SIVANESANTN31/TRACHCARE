@@ -25,10 +25,10 @@ class _patientScreenloginState extends State<patientScreenlogin> {
 
         if (_formkey.currentState!.validate()) {
           _formkey.currentState!.save();  
-          LoginClassApi().Patientlogin();
-          Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => PatientMainScreen()));
+          LoginClassApi().Patientlogin(context);
+          _formkey.currentState!.reset();
+
+        
 
         }
   }

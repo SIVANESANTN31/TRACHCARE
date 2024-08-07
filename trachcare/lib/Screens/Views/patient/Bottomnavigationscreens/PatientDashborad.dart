@@ -4,7 +4,10 @@ import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:media_kit/generated/libmpv/bindings.dart";
 import "package:sizer/sizer.dart";
+import "package:trachcare/Api/API_funcation/PatientDashboard.dart";
+import "package:trachcare/Api/DataStore/Datastore.dart";
 import "package:trachcare/Screens/Views/patient/Bottomnavigationscreens/AudioScreen.dart";
 import "package:trachcare/components/Appbar.dart";  
 import "package:trachcare/components/Navbardrawer.dart";
@@ -14,69 +17,90 @@ import "../../../../style/Tropography.dart";
 
 class PatientDashBoard extends StatelessWidget {
   const PatientDashBoard({super.key});
+
+
+
   @override
   Widget build(BuildContext context) {
-
+      print(patient_id);
         var currentIndex = 0;
     List imagelist = ["assets/images/Images_1.png","assets/images/images_2.png","assets/images/Images_3.png"];
-    return Scaffold(
-      appBar: Appbar(Name: "sivanesan",bottom: Bottom(), height: 190,),
-       drawer: drawer(),
-    
+    return FutureBuilder(
+        future: PatientDashBoardApi().FetchDetials(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return Center(child: CupertinoActivityIndicator(radius: 15,),);
+          }
+          if(snapshot.connectionState ==ConnectionState.done){
+            if(snapshot.hasData){
+              var patientDetials = snapshot.data;
+              var name  = patientDetials['Name'].toString();
+      return Scaffold(
+        appBar: Appbar(Name:name ,bottom: Bottom(), height: 190,),
+         drawer: drawer(Name: name,),
       
-      body: Column(
-       
-       crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Gap(3.h),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Container(
-              width: 95.w,
-              height: 10.h,
-              decoration: BoxDecoration(border: Border.all(),borderRadius: BorderRadius.circular(15)),
-      
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                Text("Next Appointment Date to conseil is",style: GoogleFonts.ibmPlexSans(
-                    textStyle: TextStyle(
-                        fontSize: 10.sp)),),
-                  
-                Container(
-                  width: 20.w,
-                  height: 6.h,
-                  decoration: BoxDecoration(
-                    border: Border.all(),borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: Center(child: Text(" Aug 15")),
-                )
-              ],),
-            ),
-          ),
+        
+        body: 
+                 Column(
+           
+           crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Gap(3.h),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Container(
+                  width: 95.w,
+                  height: 10.h,
+                  decoration: BoxDecoration(border: Border.all(),borderRadius: BorderRadius.circular(15)),
           
-          Gap(3.5.h),
-      
-          Padding(
-            padding: const EdgeInsets.all(9.0),
-            child: Text("Exercisers For Trach Care :",style: GoogleFonts.ibmPlexSans(
-                      textStyle: TextStyle(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                    Text("Next Appointment Date to conseil is",style: GoogleFonts.ibmPlexSans(
+                        textStyle: TextStyle(
+                            fontSize: 10.sp)),),
                       
-                          fontSize: 15.sp,fontWeight: FontWeight.bold,color: Color(0XFF455A64)),)),
-          ),
-        carsouleview(imagelist),
-        Gap(1.h),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TaptoSpeak(context),
-        )
-
+                    Container(
+                      width: 20.w,
+                      height: 6.h,
+                      decoration: BoxDecoration(
+                        border: Border.all(),borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Center(child: Text(" Aug 15")),
+                    )
+                  ],),
+                ),
+              ),
+              
+              Gap(3.5.h),
           
-        ],
-      ),
-
-      );
+              Padding(
+                padding: const EdgeInsets.all(9.0),
+                child: Text("Exercisers For Trach Care :",style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(
+                          
+                              fontSize: 15.sp,fontWeight: FontWeight.bold,color: Color(0XFF455A64)),)),
+              ),
+            carsouleview(imagelist),
+            Gap(1.h),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TaptoSpeak(context),
+            )
+          
+              
+            ],
+          )
+              
+        
+      
+        );
+  }}
+  
+  return Text("sdfghjkl");
+  });
 
   }
 

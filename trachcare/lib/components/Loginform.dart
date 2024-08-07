@@ -7,18 +7,28 @@ import "package:trachcare/Api/DataStore/Datastore.dart";
 import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
 
-class loginForm extends StatelessWidget {
+class loginForm extends StatefulWidget {
   final Singup_button;
 
   final GlobalKey<FormState> formKey;
    loginForm({super.key, this.Singup_button, required this.formKey});
 
+  @override
+  State<loginForm> createState() => _loginFormState();
+}
+
+class _loginFormState extends State<loginForm> {
 LoginDataStore store = LoginDataStore();
-  
+
   String username ="";
+
   String password =" ";
+
+    bool visiblilty = true;
   @override
   Widget build(BuildContext context) {
+
+
     return Container(
       width: 85.w,
       height: 35.h,
@@ -27,7 +37,7 @@ LoginDataStore store = LoginDataStore();
       child: Padding(
         padding: const EdgeInsets.only(top: 25.0),
         child: Form(
-          key: formKey,
+          key: widget.formKey,
           child: Column(
             children: [
               SizedBox(
@@ -35,10 +45,18 @@ LoginDataStore store = LoginDataStore();
                   height: 8.h,
                   child: TextFormField(
                     validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please Enter Username';
+                      String pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+                final regex = RegExp(pattern);
+              if (value == null || value.isEmpty||regex.hasMatch(value)==false) {
+                return 'Please Enter vaild Email ID';
               }
-              return null;
+              
+                
+                return null;
+              
+            
+              
+              
             },
             onSaved: (value) {
                   username  = value!; 
@@ -72,15 +90,30 @@ LoginDataStore store = LoginDataStore();
                   store.SetPassword(password);
                 },
                     cursorColor: TitleColor,
-                    obscureText: true,
+                    obscureText: visiblilty,
                     decoration: InputDecoration(
                       hintText: "Password",
                       filled: true,
                       fillColor: whiteColor,
-                      suffixIcon: Icon(CupertinoIcons.eye_slash_fill),
+                  suffixIcon: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          visiblilty = !visiblilty;
+                                        });
+                                      },
+                                      icon: visiblilty
+                                          ? Icon(
+                                              CupertinoIcons.eye_slash,
+                                              size: 28.0,
+                                            )
+                                          : Icon(
+                                              CupertinoIcons.eye,
+                                              size: 28.0,
+                                            )),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
                     ),
+                    onEditingComplete: widget.Singup_button,
                   )),
               Padding(
                 padding: const EdgeInsets.only(left: 140),
@@ -97,7 +130,7 @@ LoginDataStore store = LoginDataStore();
               custom_Button(
                   text: "Signup",
                   width: 55,
-                 button_funcation: Singup_button,
+                 button_funcation: widget.Singup_button,
                   height: 6.5,
                   backgroundColor: TitleColor,
                   textcolor: whiteColor,

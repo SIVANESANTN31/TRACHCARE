@@ -27,10 +27,8 @@ class DoctorLogin extends StatelessWidget {
     void Login_btn(){
   if (_formkey.currentState!.validate()) {
     _formkey.currentState!.save();  
-    LoginClassApi().DoctorLogin(); 
-    Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => Doctormainpage()));
+    LoginClassApi().DoctorLogin(context); 
+    
   }
  
  
