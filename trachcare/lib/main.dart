@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:media_kit/media_kit.dart';
+
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Screens/AuthScreens/SplashScreen.dart';
 
@@ -19,22 +19,12 @@ class MyHttpOverrides extends HttpOverrides {
 
 
 
-
-
-
-
-
-
-
-
-
-
 void main() {
 
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   // Necessary initialization for package:media_kit.
-  MediaKit.ensureInitialized();
+ 
   runApp(const MyApp());
 }
 

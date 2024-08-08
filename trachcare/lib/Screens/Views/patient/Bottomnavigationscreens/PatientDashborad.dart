@@ -4,7 +4,6 @@ import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:media_kit/generated/libmpv/bindings.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/Api/API_funcation/PatientDashboard.dart";
 import "package:trachcare/Api/DataStore/Datastore.dart";
@@ -30,7 +29,7 @@ class PatientDashBoard extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             
           if(snapshot.connectionState == ConnectionState.waiting){
-            return Center(child: CupertinoActivityIndicator(radius: 15,),);
+            return Center(child: CupertinoActivityIndicator(radius: 10,),);
           }
           if(snapshot.connectionState ==ConnectionState.done){
             if(snapshot.hasData){

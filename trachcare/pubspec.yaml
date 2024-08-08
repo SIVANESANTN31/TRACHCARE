@@ -40,11 +40,10 @@ dependencies:
   sizer: ^2.0.15
   animate_do: ^3.3.4
   carousel_slider: ^4.2.1
-  media_kit: ^1.1.10+1
-  media_kit_video: ^1.2.4                        # For video rendering.
-  media_kit_libs_video: ^1.0.4  
   http: ^1.2.2
   toastification: ^2.1.0
+  video_player: ^2.9.1
+  chewie: ^1.8.3
 
 dev_dependencies:
   flutter_test:
