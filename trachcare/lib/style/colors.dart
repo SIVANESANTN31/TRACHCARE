@@ -10,6 +10,6 @@ const admin_color = Color.fromARGB(255, 71, 215, 92);
 const TitleColor = Color(0XFFA7DBAF);
 const Logoutbtncolor = Color(0XFFB8DABD);
 const BlackColor = Colors.black;
-const grey_color = Colors.grey;
+const grey_color = Color.fromARGB(179, 20, 20, 20);
 const sucess_color = Colors.green;
 const maincolor = LinearGradient(colors: [Color(0xFFA7DBAF), Color(0xFFFFD9A0)],);

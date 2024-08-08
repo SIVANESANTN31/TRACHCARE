@@ -44,6 +44,13 @@ dependencies:
   toastification: ^2.1.0
   video_player: ^2.9.1
   chewie: ^1.8.3
+  video_thumbnail: any
+  path_provider: ^2.1.4
+
+
+
+
+
 
 dev_dependencies:
   flutter_test:
