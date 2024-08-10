@@ -46,6 +46,7 @@ dependencies:
   chewie: ^1.8.3
   video_thumbnail: any
   path_provider: ^2.1.4
+  pull_down_button: ^0.10.1
 
 
 

@@ -2,7 +2,9 @@ import "package:flutter/material.dart";
 import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
+import "package:trachcare/components/Dailyupdateform.dart";
 import "package:trachcare/components/NAppbar.dart";
+import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
 
 class your_daily_updates extends StatelessWidget {
@@ -18,74 +20,20 @@ class your_daily_updates extends StatelessWidget {
           Namecard("siva", "12345"),
           
           Gap(2.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-            
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                Text("Vitals",style:GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                            fontSize: 13.sp))),
-                Text("Respiratory Rate",
-
-                
-                textAlign: TextAlign.start,
-                style:GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          
-                            fontSize: 13.sp))),
-                 Text("Heart Rate",
-                 textAlign: TextAlign.start,
-                 style:GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          
-                            fontSize: 13.sp))),
-                  Text("SPO2 @ Room Air",
-                  textAlign: TextAlign.start,
-                  style:GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          
-                            fontSize: 13.sp))),
-                  Text("Daily dressing done ?",
-                  textAlign: TextAlign.start,
-                  style:GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          
-                            fontSize: 13.sp))),
-                  Text("Trachestomy tie changed ?",
-                  textAlign: TextAlign.start,
-                  style:GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          
-                            fontSize: 13.sp))),
-                  Text("Suctioning done ?",
-                  textAlign: TextAlign.start,
-                  style:GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          
-                            fontSize: 13.sp))),
-                  Text("has the patient started on oral feeds ?",
-                  textAlign: TextAlign.start,
-                  style:GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          
-                            fontSize: 13.sp))),
-                  Text("has the patient been changed to green tube ?",
-                  textAlign: TextAlign.start,
-                  style:GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          
-                            fontSize: 13.sp))),
-              ],),
-              Column(children: [
-                //TextField(decoration: InputDecoration(hintText: "Values..",border: OutlineInputBorder(borderSide: BorderSide(color: BlackColor))),)
-                Text("data")
-              ],)
-
-          ],)
+          Dailyupdateform(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50),
+            child: custom_Button(
+                    text: "Submit",
+                    width: 30,
+                    height: 6,
+                    button_funcation: (){},
+                    backgroundColor: Colors.green,
+                    textcolor: whiteColor,
+                    textSize: 13),
+          ),
+                  Gap(3.h),
+          
 
       ],),
     );
@@ -158,3 +106,5 @@ Widget Namecard(String name ,String patient_id){
    
 
 }
+
+

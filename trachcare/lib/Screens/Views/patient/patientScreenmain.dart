@@ -14,7 +14,7 @@ class PatientMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List pages=[
        PatientDashBoard(),
-       AudioScreen(),
+      
        Videospage(),
        MedicationPage(),
        
@@ -37,11 +37,7 @@ class PatientMainScreen extends StatelessWidget {
                   activeIcon: Icon(CupertinoIcons.house_fill)
 
               ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.multitrack_audio_outlined),
-                  label: "Audio",
-                  activeIcon: Icon(Icons.multitrack_audio_sharp)
-              ),
+              
               BottomNavigationBarItem(
                   icon: Icon(Icons.video_collection_outlined),
                   label: "Video",

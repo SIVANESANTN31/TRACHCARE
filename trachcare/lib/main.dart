@@ -23,7 +23,7 @@ void main() {
 
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
-  // Necessary initialization for package:media_kit.
+  
  
   runApp(const MyApp());
 }

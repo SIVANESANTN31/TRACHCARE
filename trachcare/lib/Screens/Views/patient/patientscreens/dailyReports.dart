@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+import 'package:trachcare/Screens/Views/patient/patientscreens/dailyupdates.dart';
 import 'package:trachcare/components/NAppbar.dart';
 import 'package:trachcare/style/colors.dart';
 
@@ -27,7 +28,13 @@ class YourdailyReports extends StatelessWidget {
            
                return Padding(
                  padding: const EdgeInsets.all(8.0),
-                 child: NameCard("Siva", "3", "26/08/2003"),
+                 child: GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => your_daily_updates()));
+                  },
+                  child: NameCard("Siva", "3", "26/08/2003")),
                );
              }
            
