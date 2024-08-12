@@ -53,7 +53,7 @@ class DoctorDashBoard extends StatelessWidget {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-                      childAspectRatio: (MediaQuery.of(context).size.height - 40 - 20)/ (4*22.h),
+                      childAspectRatio: (MediaQuery.of(context).size.height - 40 - 20)/ (4*24.h),
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
                       ),
