@@ -45,11 +45,8 @@ class Doctormainpage extends StatelessWidget {
                   label: "Patients List",
                   activeIcon: Icon(Icons.person_sharp)
               ),
-              // BottomNavigationBarItem(
-              //     icon: Icon(Icons.medication_liquid_sharp),
-              //     label: "Medications",
-              //     activeIcon: Icon(Icons.medication_liquid_rounded)
-              // )
+              
+              
             ],
           ),
           tabBuilder:

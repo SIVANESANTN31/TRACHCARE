@@ -7,6 +7,7 @@ import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/Screens/Views/Doctor/doctorscreens/AddExVideos.dart";
+import "package:trachcare/Screens/Views/Doctor/doctorscreens/DailyUpadtes_patient.dart";
 import "package:trachcare/Screens/Views/patient/Bottomnavigationscreens/AudioScreen.dart";
 import "package:trachcare/components/Appbar.dart";  
 import "package:trachcare/components/Navbardrawer.dart";
@@ -207,7 +208,11 @@ PreferredSizeWidget Bottom(BuildContext context){
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return StoryCircles(
-                        // function: _openStory,
+                         function: (){
+                          Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => DailyUpdatePatients()));
+                         },
                       );
                      },
                     ),
