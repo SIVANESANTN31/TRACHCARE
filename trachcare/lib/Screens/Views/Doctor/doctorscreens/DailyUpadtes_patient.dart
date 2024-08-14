@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+
 import 'package:table_calendar/table_calendar.dart';
 import 'package:trachcare/components/NAppbar.dart';
 
@@ -21,18 +22,15 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
   Widget build(BuildContext context) {
 
 
-     DateTime today = DateTime.now();
-     DateTime?_selectedDate;
-      void onDaySelected(DateTime day ,DateTime focusedDay){
-       print(day);
-          setState(() {
-             today = day;
-          });
-         
-          
-        
+      DateTime _selectedDate = DateTime.now();
+  DateTime _focusedDate = DateTime.now();
 
-     }
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    setState(() {
+      _selectedDate = selectedDay;
+      _focusedDate = focusedDay;
+    });
+  }
 
 
     return Scaffold(
@@ -43,21 +41,34 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
             availableGestures: AvailableGestures.all,
             pageJumpingEnabled: true,
             headerStyle:HeaderStyle(formatButtonVisible: false,titleCentered: true,) ,
-              focusedDay: today,
+              focusedDay: _focusedDate,
                firstDay: DateTime.utc(2010,1,1), 
                lastDay: DateTime.now().add(
                 Duration(days: 365),
               ),
-              selectedDayPredicate: (day) =>isSameDay(day,today),
-
-             onDaySelected: onDaySelected,
+              selectedDayPredicate: (day) => isSameDay(day, _selectedDate),
+        onDaySelected: _onDaySelected,
               
               )
-        ]));
+
+        // SfCalendar(
+        //   view: CalendarView.month,
+        // )
+        ])
+        
+        
+        )
+        
+        
+        
+        ;
 
         
   }
 }
+
+
+
 
 Widget Namecard(String name, String patient_id) {
   return Container(
