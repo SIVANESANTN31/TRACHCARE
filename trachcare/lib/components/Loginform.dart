@@ -7,6 +7,8 @@ import "package:trachcare/Api/DataStore/Datastore.dart";
 import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
 
+import "../style/utils/Dimention.dart";
+
 class loginForm extends StatefulWidget {
   final Singup_button;
 
@@ -27,11 +29,11 @@ LoginDataStore store = LoginDataStore();
     bool visiblilty = true;
   @override
   Widget build(BuildContext context) {
-
+Dimentions dn = new Dimentions(context);
 
     return Container(
-      width: 85.w,
-      height: 35.h,
+      width: dn.width(90),
+      height: dn.height(35),
       decoration: BoxDecoration(
           color: loginFormcolor, borderRadius: BorderRadius.circular(15)),
       child: Padding(

@@ -15,11 +15,11 @@ class Dimentions {
   }
 
   double  width(double width){
-    return width *size_w /100;
+    return width/100 *size_w ;
 
   }
   double height(double height){
-    return height *size_w /100;
+    return height/100 *size_h;
 
   }
   

@@ -9,6 +9,7 @@ import "package:trachcare/Screens/AuthScreens/PatientLogin.dart";
 import "package:trachcare/components/Titlebox.dart";
 import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
+import "package:trachcare/style/utils/Dimention.dart";
 
 class Welcome_page extends StatefulWidget {
   const Welcome_page({super.key});
@@ -27,6 +28,7 @@ void Admin(){
 
 }
 
+Dimentions dn = new Dimentions(context);
 
 
     var Screen_Size = MediaQuery.of(context).size;
@@ -60,10 +62,11 @@ void Admin(){
                         Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => DoctorLogin()));
+
                     },
                     child: Container(
-                      width: 130,
-                      height: 130,
+                      width: dn.width(37),
+                      height: dn.height(17),
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [Color(0XFFA7DBAF), Color(0XFFD2EFD7)],
@@ -105,8 +108,9 @@ void Admin(){
   );
                     },
                     child: Container(
-                      width: 130,
-                      height: 130,
+                      width: dn.width(37),
+
+                      height: dn.height(17),
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
