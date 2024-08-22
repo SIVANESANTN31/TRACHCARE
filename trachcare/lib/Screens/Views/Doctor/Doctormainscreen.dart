@@ -36,9 +36,9 @@ class Doctormainpage extends StatelessWidget {
 
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.person_add_alt_1),
-                  label: "Add Patients",
-                  activeIcon: Icon(Icons.person_add_alt_1_sharp)
+                  icon: Icon(CupertinoIcons.calendar_circle),
+                  label: "Apponinments",
+                  activeIcon: Icon(CupertinoIcons.calendar_circle_fill)
               ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.person_outlined),

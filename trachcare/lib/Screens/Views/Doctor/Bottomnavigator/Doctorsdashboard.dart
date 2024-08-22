@@ -3,6 +3,7 @@ import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
 import "package:flutter/widgets.dart";
+import "package:flutter_carousel_widget/flutter_carousel_widget.dart";
 import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
@@ -32,6 +33,8 @@ class DoctorDashBoard extends StatelessWidget {
   List option = [
     'Add new Patient',
   ];
+
+  List<String> img = ["assets/images/Images_1.png","assets/images/images_2.png","assets/images/Images_3.png"];
 
   
   @override
@@ -83,46 +86,53 @@ class DoctorDashBoard extends StatelessWidget {
                                 builder: (context) => pages[index],)
                                 );
                             },
-                           child: Padding(
-                             padding: const EdgeInsets.all(8.0),
-                             child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  gradient: LinearGradient(
-                                    colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(color: Colors.black.withOpacity(0.10),
-                                    spreadRadius: 2,
-                                    blurRadius: 7,
-                                    offset: Offset(0, 2))],
+                           child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                gradient: LinearGradient(
+                                  colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
                                 ),
-                                width: dn.width(70),
-                                  height: dn.height(10),
-                                  
-                                  child: Row(children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 30),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Image.asset(imagelist[index]),
-                                      ),
+                                boxShadow: [
+                                  BoxShadow(color: Colors.black.withOpacity(0.10),
+                                  spreadRadius: 2,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 2))],
+                              ),
+                              width: dn.width(70),
+                                height: dn.height(10),
+                                
+                                child: Row(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 30),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Image.asset(imagelist[index]),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('Entry ${option[index]}'),
-                                    )
-                                    
-                           ]),
-                                ),
-                           ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text('${option[index]}'),
+                                  )
+                                  
+                                                      ]),
+                              ),
                          );
                         
                         },
                        ),
                       ),
+
+                      Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text("Exercisers For Trach Care:", style: GoogleFonts.ibmPlexSans(
+                        textStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, color: Color(0XFF455A64)))),
+                    ),
+
+                      carsouleview(img, context),
+                      //  carsouleview(img, context),
+                      //   carsouleview(img, context)
         ],
       ),
          
@@ -238,6 +248,52 @@ Widget circleButton(String time,){
     ],
   );
 }
+
+
+Widget carsouleview(List<String> imagesList,BuildContext context) {
+    Dimentions dn = new Dimentions(context);
+    
+    return Container(
+      width: dn.width(100),
+      height: dn.height(17),
+          child: 
+                FlutterCarousel.builder(
+                  itemCount:imagesList.length,
+                  itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+                  Container(
+                 child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                 
+                 Center(child: Image.asset(imagesList[itemIndex], fit: BoxFit.cover, width: 1000)),
+                    CircleAvatar(
+                backgroundColor: Colors.black45,
+                child: Icon(Icons.play_arrow,color: whiteColor,),
+              )
+                 
+                 
+                 ])), 
+                 options:  CarouselOptions(
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 2),
+                  autoPlayCurve: Curves.easeIn,
+                  enableInfiniteScroll: true,
+                 ),
+    
+                ),
+             
+          );
+        
+  }
+
+
+
+
+
+
+
+
+
 
 // Widget carsouleview(List Imageslist){
 //   return  Container(

@@ -130,51 +130,58 @@ class PatientDashBoard extends StatelessWidget {
                       child: Text("Exercisers For Trach Care:", style: GoogleFonts.ibmPlexSans(
                         textStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, color: Color(0XFF455A64)))),
                     ),
-                    Gap(1.h),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                    )
+                   
+                    
+                    carsouleview(imagelist,context)
                   ],
                 ),
               )
             );
           }
         }
-        return Text("No data available");
+        return Center(child: Text("No data available"));
       }
     );
-  }
 
-  Widget carsouleview(List<String> imagesList) {
+    
+  }
+  Widget carsouleview(List<String> imagesList,BuildContext context) {
+    Dimentions dn = new Dimentions(context);
     
     return Container(
-      width: 100.w,
-      height: 20.h,
-      // child: CarouselSlider(
-      //   carouselController: controller,  // Pass the controller here
-      //   options: CarouselOptions(),
-      //   items: imagesList
-      //     .map((item) => Container(
-      //       child: Center(child: Image.asset(item, fit: BoxFit.cover, width: 1000)),
-      //     ))
-      //     .toList(),
-      // )
-      child : FlutterCarousel.builder(
-  itemCount: 15,
-  itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-  Container(
-    child: Text(itemIndex.toString()),
-  ), options:  CarouselOptions(),
-)
-    );
+      width: dn.width(100),
+      height: dn.height(17),
+          child: 
+                FlutterCarousel.builder(
+                  itemCount:imagesList.length,
+                  itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+                  Container(
+                 child: Stack(
+                  alignment: material.Alignment.center,
+                  children: [
+                 
+                 Center(child: Image.asset(imagesList[itemIndex], fit: BoxFit.cover, width: 1000)),
+                    CircleAvatar(
+                backgroundColor: Colors.black45,
+                child: Icon(Icons.play_arrow,color: whiteColor,),
+              )
+                 
+                 
+                 ])), 
+                 options:  CarouselOptions(
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 2),
+                  autoPlayCurve: material.Curves.easeIn,
+                  enableInfiniteScroll: true,
+                 ),
+    
+                ),
+             
+          );
+        
   }
 
-  // Other widgets like Bottom, circleButton, TaptoSpeak, Helpercontainer...
 
-// PreferredSizeWidget Bottom(context){
-//   Dimentions dn = new Dimentions(context);
-//   return ContainerLaye
-// }
 
 
 Widget circleButton(String time,){
