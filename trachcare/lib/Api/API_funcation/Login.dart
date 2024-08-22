@@ -137,6 +137,69 @@ class LoginClassApi{
     
 
   }
+
+  void Adminlogin(BuildContext context)async{
+    try {
+      final response  =  await http.post(Uri.parse(AdminLoginurl),body: jsonEncode(LoginData));
+      if(response.statusCode ==200){
+        var data = jsonDecode(response.body);
+        if(data["Status"]){
+          print(data);
+              toastification.show(
+                type: ToastificationType.success ,
+      style: ToastificationStyle.flatColored,
+      context: context, // optional if you use ToastificationWrapper
+      title: Text('${data['message']} 🎉'),
+      showProgressBar: false,
+      icon: const Icon(Icons.check_circle_outline,color: Colors.green,),
+      showIcon: true, // show or hide the icon
+      
+      autoCloseDuration: const Duration(seconds: 2),
+    );
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => PatientMainScreen()));
+    LoginData.clear();
+    patient_id = data['userInfo']['patient_id'];
+    
+    
+
+
+        }
+        else{
+          toastification.show(
+                type: ToastificationType.error ,
+      style: ToastificationStyle.flatColored,
+      context: context, // optional if you use ToastificationWrapper
+      title: Text('${data['message']}'),
+      icon: const Icon(Icons.cancel_rounded,color: Colors.red,),
+      showIcon: true, // show or hide the icon
+      showProgressBar: false,
+      autoCloseDuration: const Duration(seconds: 2),
+    );
+
+        }
+      }
+      
+
+    } catch (e) {
+      toastification.show(
+                type: ToastificationType.error ,
+      style: ToastificationStyle.flatColored,
+      context: context, // optional if you use ToastificationWrapper
+      title: Text('Something went wrong'),
+      showProgressBar: false,
+      icon: const Icon(Icons.cancel_rounded,color: Colors.red,),
+      showIcon: true, // show or hide the icon
+      
+      autoCloseDuration: const Duration(seconds: 2),
+    );
+      
+    }
+    
+
+  }
+  
   
 
 

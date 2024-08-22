@@ -27,7 +27,7 @@ class AdminLogin extends StatelessWidget {
     void Login_btn(){
   if (_formkey.currentState!.validate()) {
     _formkey.currentState!.save();  
-    LoginClassApi().DoctorLogin(context); 
+    LoginClassApi().Adminlogin(context); 
     
   }
  
