@@ -1,130 +1,73 @@
-import "package:carousel_slider/carousel_slider.dart";
-import "package:flutter/cupertino.dart";
-import "package:flutter/material.dart";
-import "package:flutter/widgets.dart";
-import "package:gap/gap.dart";
-import "package:google_fonts/google_fonts.dart";
-import "package:sizer/sizer.dart";
-import "package:trachcare/Api/API_funcation/PatientDashboard.dart";
-import "package:trachcare/Api/DataStore/Datastore.dart";
-import "package:trachcare/Screens/Views/patient/Bottomnavigationscreens/AudioScreen.dart";
-import "package:trachcare/components/Appbar.dart";  
-import "package:trachcare/components/Navbardrawer.dart";
-import "package:trachcare/style/colors.dart";
-
-import "../../../../style/Tropography.dart";
+// import 'package:carousel_slider/carousel_controller.dart' as carousel;
+// import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+import 'package:gap/gap.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
+import 'package:trachcare/Api/API_funcation/PatientDashboard.dart';
+import 'package:trachcare/Api/DataStore/Datastore.dart';
+import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/AudioScreen.dart';
+import 'package:trachcare/components/Appbar.dart';  
+import 'package:trachcare/components/Navbardrawer.dart';
+import 'package:trachcare/style/colors.dart';
+import '../../../../style/Tropography.dart';
+import '../../../../style/utils/Dimention.dart';
+import 'package:flutter/src/material/carousel.dart';
 
 class PatientDashBoard extends StatelessWidget {
   const PatientDashBoard({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
-      print(patient_id);
-        var currentIndex = 0;
-    List imagelist = ["assets/images/Images_1.png","assets/images/images_2.png","assets/images/Images_3.png"];
+    print(patient_id);
+    var currentIndex = 0;
+    List<String> imagelist = ["assets/images/Images_1.png","assets/images/images_2.png","assets/images/Images_3.png"];
+    
+    // Instantiate the CarouselController
+    // final carousel.CarouselController controller = carousel.CarouselController();
+
     return FutureBuilder(
-        future: PatientDashBoardApi().FetchDetials(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            
-          if(snapshot.connectionState == ConnectionState.waiting){
-            return Center(child: CupertinoActivityIndicator(radius: 10,),);
-          }
-          if(snapshot.connectionState ==ConnectionState.done){
-            if(snapshot.hasData){
-              var patientDetials = snapshot.data;
-              var name  = patientDetials['Name'].toString();
-      return Scaffold(
-        appBar: Appbar(Name:name ,bottom: Bottom(), height: 190,),
-         drawer: drawer(Name: name,),
-      
-        
-        body: 
-                 Column(
-           
-           crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Gap(3.h),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Container(
-                  width: 95.w,
-                  height: 10.h,
-                  decoration: BoxDecoration(border: Border.all(),borderRadius: BorderRadius.circular(15)),
-          
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                    Text("Next Appointment Date to conseil is",style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                            fontSize: 10.sp)),),
-                      
-                    Container(
-                      width: 20.w,
-                      height: 6.h,
-                      decoration: BoxDecoration(
-                        border: Border.all(),borderRadius: BorderRadius.circular(10)
-                      ),
-                      child: Center(child: Text(" Aug 15")),
-                    )
-                  ],),
-                ),
-              ),
-              
-              Gap(3.5.h),
-          
-              Padding(
-                padding: const EdgeInsets.all(9.0),
-                child: Text("Exercisers For Trach Care :",style: GoogleFonts.ibmPlexSans(
-                          textStyle: TextStyle(
-                          
-                              fontSize: 15.sp,fontWeight: FontWeight.bold,color: Color(0XFF455A64)),)),
-              ),
-            carsouleview(imagelist),
-            Gap(1.h),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TaptoSpeak(context),
-            )
-          
-              
-            ],
-          )
-              
-        
-      
-        );
-  }}
-  
-  return Text("sdfghjkl");
-  });
+      future: PatientDashBoardApi().FetchDetials(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return Center(child: CupertinoActivityIndicator(radius: 10,),);
+        }
+        if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.hasData){
+            var patientDetials = snapshot.data;
+            var name  = patientDetials['Name'].toString();
 
-  }
+            Dimentions dn = Dimentions(context);
 
-
-
-
-PreferredSizeWidget Bottom(){
-  return PreferredSize(
-       preferredSize: Size.fromHeight(30.0),
-       child: Positioned(
-              top: 0.0, // Position from the top of the screen
+            return Scaffold(
+              appBar: Appbar(Name:name, height: dn.height(10)),
+              drawer: drawer(Name: name),
+              body: SingleChildScrollView(
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Gap(3.h),
+                    Positioned(
+              top: 500.0, // Position from the top of the screen
               left: 25.0, // Position from the left of the screen
               right: 25.0, // Position from the right of the screen
               child: Container(
-                height: 16.h,
-                width: 97.w,
-              
+                width: dn.width(90),
+                height: dn.height(20),
+    
                 decoration: BoxDecoration(
                   color: whiteColor,
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
-            color: BlackColor_light,
-            blurRadius: 4.0,
-          ),
+                   color: BlackColor_light,
+                    blurRadius: 4.0,
+                   ),
                   ]
                 ),
                 child: Column(
@@ -152,8 +95,86 @@ PreferredSizeWidget Bottom(){
                 )
               ),
             ),
-     );
-}
+            Gap(3.h),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Container(
+                        width: dn.width(100),
+                        height: dn.height(10),
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(15)
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text("Next Appointment Date to conseil is", style: GoogleFonts.ibmPlexSans(
+                              textStyle: TextStyle(fontSize: 10.sp))),
+                            Container(
+                              width: 20.w,
+                              height: 6.h,
+                              decoration: BoxDecoration(
+                                border: Border.all(),
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                              child: Center(child: Text(" Aug 15")),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Gap(3.5.h),
+                    Padding(
+                      padding: const EdgeInsets.all(9.0),
+                      child: Text("Exercisers For Trach Care:", style: GoogleFonts.ibmPlexSans(
+                        textStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, color: Color(0XFF455A64)))),
+                    ),
+                    Gap(1.h),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                    )
+                  ],
+                ),
+              )
+            );
+          }
+        }
+        return Text("No data available");
+      }
+    );
+  }
+
+  Widget carsouleview(List<String> imagesList) {
+    
+    return Container(
+      width: 100.w,
+      height: 20.h,
+      // child: CarouselSlider(
+      //   carouselController: controller,  // Pass the controller here
+      //   options: CarouselOptions(),
+      //   items: imagesList
+      //     .map((item) => Container(
+      //       child: Center(child: Image.asset(item, fit: BoxFit.cover, width: 1000)),
+      //     ))
+      //     .toList(),
+      // )
+      child : FlutterCarousel.builder(
+  itemCount: 15,
+  itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+  Container(
+    child: Text(itemIndex.toString()),
+  ), options:  CarouselOptions(),
+)
+    );
+  }
+
+  // Other widgets like Bottom, circleButton, TaptoSpeak, Helpercontainer...
+
+// PreferredSizeWidget Bottom(context){
+//   Dimentions dn = new Dimentions(context);
+//   return ContainerLaye
+// }
 
 
 Widget circleButton(String time,){
@@ -169,76 +190,6 @@ Widget circleButton(String time,){
     ],
   );
 }
-
-Widget carsouleview(List Imageslist){
-  return  Container(
-        width: 100.w,
-        height: 20.h,
-        // decoration: BoxDecoration(
-        //   image: DecorationImage(image: AssetImage(imagelist[index]),
-        // ),
-        child: CarouselSlider(
-      options: CarouselOptions(),
-      items: Imageslist
-          .map((item) => Container(
-                child: Center(
-                    child:
-                        Image.asset(item, fit: BoxFit.cover, width: 1000)),
-              ))
-          .toList(),
-      ));
-
-}
-
-
-Widget TaptoSpeak(BuildContext context){
-  return Container(
-    width: 95.w,
-    height: 18.h,
-    decoration: BoxDecoration(gradient: maincolor ,borderRadius: BorderRadius.circular(15)),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          width: 45.w,
-          height: 6.h,
-          //color: BlackColor,
-
-           decoration: BoxDecoration(color: whiteColor ,borderRadius: BorderRadius.circular(10)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SizedBox(
-                width: 10.w,
-                height: 4.h,
-                child: Image.asset("assets/images/Vector.png"),
-              ),
-              Text("Tap to Speak",style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                            fontSize: 13.sp)),)
-            ],
-        )),
-      ),
-      
-      Row(
-        
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children:[ Helpercontainer("YES",Color(0XFF82FF87),(){}) ,
-      Helpercontainer("NO",Color(0XFFFB8A72),(){}),
-      Helpercontainer("Help",Color(0XFFA8ECE8),(){}),
-      Helpercontainer("More words",Color(0XFFEEECFF),(){
-        Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => AudioScreen()));
-      })
-
-      ])
-    ],),
-  );
-}
-
 
 Widget Helpercontainer(String text,Color colour,final buttonfuncation){
   return Padding(
@@ -268,7 +219,4 @@ Widget Helpercontainer(String text,Color colour,final buttonfuncation){
     ),
   );
 }
-
-
-
 }

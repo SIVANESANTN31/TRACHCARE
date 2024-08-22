@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:trachcare/components/Appbar_copy.dart';
+
+import '../../../../components/NAppbar.dart';
 
 class Information extends StatelessWidget {
   const Information({super.key});
@@ -7,7 +11,9 @@ class Information extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: Duplicate_Appbar(Title: 'Information'),
       body: Container(
+ 
         width: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -17,6 +23,7 @@ class Information extends StatelessWidget {
             ),
         ),
         child: Column(
+          
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/images/0.png'),
@@ -28,14 +35,16 @@ class Information extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                ' Information: Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quis reprehenderit et laborum, rem, dolore eum quod voluptate exercitationem nobis, nihil esse debitis maxime facere minus sint delectus velit in eos quo officiis explicabo deleniti dignissimos. Eligendi illum libero dolorum cum laboriosam corrupti quidem, reiciendis ea magnam? Nulla, impedit fuga! Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quis reprehenderit et laborum, rem, dolore eum quod voluptate exercitationem nobis, nihil esse debitis maxime facere minus sint delectus velit in eos quo officiis explicabo deleniti dignissimos. Eligendi illum libero dolorum cum laboriosam corrupti quidem, reiciendis ea magnam? Nulla, impedit fuga!',
-                style: TextStyle(
-                  fontStyle: FontStyle.italic,
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  fontSize: 16,
+            const SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  ' Information: Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quis reprehenderit et laborum, rem, dolore eum quod voluptate exercitationem nobis, nihil es impedit fugadolore eum quod voluptate exercitationem nobis, nihil es impedit fugadolore eum quod voluptate exercitationem nobis, nihil es impedit fugadolore eum quod voluptate exercitationem nobis, nihil es impedit fugadolore eum quod voluptate exercitationem nobis, nihil es impedit fugadolore eum quod voluptate exercitationem nobis, nihil es impedit fuga!',
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ),

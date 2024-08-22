@@ -6,6 +6,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/Screens/AuthScreens/Doctorlogin.dart";
 import "package:trachcare/Screens/AuthScreens/PatientLogin.dart";
+import "package:trachcare/Screens/Views/Admin/Adminlogin.dart";
 import "package:trachcare/components/Titlebox.dart";
 import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
@@ -23,15 +24,10 @@ class _Welcome_pageState extends State<Welcome_page> {
   Widget build(BuildContext context) {
 
 
-void Admin(){
-  print("vannakam da mapla");
 
-}
 
 Dimentions dn = new Dimentions(context);
-
-
-    var Screen_Size = MediaQuery.of(context).size;
+var Screen_Size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -60,8 +56,8 @@ Dimentions dn = new Dimentions(context);
                   GestureDetector(
                     onTap: (){
                         Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => DoctorLogin()));
+                        context,
+                        MaterialPageRoute(builder: (context) => DoctorLogin()));
 
                     },
                     child: Container(
@@ -109,7 +105,6 @@ Dimentions dn = new Dimentions(context);
                     },
                     child: Container(
                       width: dn.width(37),
-
                       height: dn.height(17),
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
@@ -146,15 +141,45 @@ Dimentions dn = new Dimentions(context);
                   ),
                 ],
               ),
-              custom_Button(
-                  text: "ADMIN",
-                  button_funcation: Admin,
-                  width: 60,
-                  height: 6.5,
-                  backgroundColor: TitleColor ,
-                  textcolor: whiteColor,
-                  textSize: 15,
+              Column(
+                children: [
+                GestureDetector(
+                  onTap: (){
+                     Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (context) =>   AdminLogin()),
+                );
+                    },
+                    child: Container(
+                      width: dn.width(60),
+                      height: dn.height(7),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color(0XFFA7DBAF), Color(0XFFD2EFD7)],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                          boxShadow: [
+                            BoxShadow(color: Colors.black.withOpacity(0.25),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3))],
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text("ADMIN",
+                              style: GoogleFonts.ibmPlexSans(
+                                  textStyle: TextStyle(
+                                      fontSize: 17,
+                                      color: Color(0XFF455A64),
+                                      fontWeight: FontWeight.bold)))
+                        ],
+                      ),
+                    ),
                   ),
+                ],
+              ),
                   
 
                   

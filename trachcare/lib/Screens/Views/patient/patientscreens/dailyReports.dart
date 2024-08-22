@@ -7,14 +7,17 @@ import 'package:trachcare/Screens/Views/patient/patientscreens/dailyupdates.dart
 import 'package:trachcare/components/NAppbar.dart';
 import 'package:trachcare/style/colors.dart';
 
+import '../../../../style/utils/Dimention.dart';
+
 
 class YourdailyReports extends StatelessWidget {
   const YourdailyReports({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "YOUR DAILY RECORDS"),
+      appBar: NormalAppbar(Title: "YOUR DAILY RECORDS",height: dn.height(10),),
       body:  Column(children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 12,vertical: 10),

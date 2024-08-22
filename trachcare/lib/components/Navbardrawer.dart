@@ -92,17 +92,17 @@ class drawer extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            Gap(35.h),
+            Gap(30.h),
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: custom_Button(
                   text: "Logout",
                   button_funcation: (){},
                   width: 10,
-                  height: 6,
+                  height: 7,
                   backgroundColor: Logoutbtncolor,
                   textcolor: whiteColor,
-                  textSize: 13,
+                  textSize: 12,
                   ),
             )
           ],

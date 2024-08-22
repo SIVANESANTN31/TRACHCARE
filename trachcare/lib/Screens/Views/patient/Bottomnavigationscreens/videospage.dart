@@ -14,6 +14,7 @@ import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../../../../style/colors.dart';
+import '../../../../style/utils/Dimention.dart';
 
 class Videospage extends StatefulWidget {
   const Videospage({super.key});
@@ -55,9 +56,10 @@ return thumbnailurl!;
 
   @override
   Widget build(BuildContext context) {
+    Dimentions dn = new Dimentions(context);
     return Scaffold(
       appBar: NormalAppbar(
-        Title: "Videos",
+        Title: "Videos",height: dn.height(15),
       ),
     
 

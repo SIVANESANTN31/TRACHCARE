@@ -5,6 +5,8 @@ import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
 
+import "../../../../style/utils/Dimention.dart";
+
 class AudioScreen extends StatelessWidget {
   const AudioScreen({super.key});
 
@@ -40,10 +42,11 @@ class AudioScreen extends StatelessWidget {
       Color(0XFFA8ECE8),
       Color(0XFFEEECFF)
     ];
-
+    Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: NormalAppbar(
         Title: "Tap To Speak",
+        height: dn.height(15),
         actionbutton: IconButton(
             onPressed: () {},
             icon: Icon(

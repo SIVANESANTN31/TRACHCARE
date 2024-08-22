@@ -8,11 +8,12 @@ import "../style/colors.dart";
 
 class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String Title;
+  final height;
   final   actionbutton;
    NormalAppbar(
     {super.key,
     required this.Title,
-    this.actionbutton});
+    this.actionbutton, required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
     title: Text(Title,style: GoogleFonts.ibmPlexSans(
                         textStyle: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: whiteColor,
+                          color: const Color.fromARGB(255, 10, 26, 7),
                             fontSize: 15.sp)),),
         centerTitle: true,
         actions: [
@@ -48,5 +49,5 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
   
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(90);
+  Size get preferredSize => Size.fromHeight(height);
 }

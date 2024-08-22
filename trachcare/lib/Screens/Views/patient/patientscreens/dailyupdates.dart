@@ -7,13 +7,16 @@ import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
 
+import "../../../../style/utils/Dimention.dart";
+
 class your_daily_updates extends StatelessWidget {
   const your_daily_updates({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "Your Daily Update"),
+      appBar: NormalAppbar(Title: "Your Daily Update",height: dn.height(10),),
       body: ListView(
         
         children: [

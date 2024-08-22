@@ -1,4 +1,4 @@
-import "package:carousel_slider/carousel_slider.dart";
+// import "package:carousel_slider/carousel_slider.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
@@ -15,93 +15,116 @@ import "package:trachcare/style/colors.dart";
 
 import "../../../../../style/Tropography.dart";
 import "../../../../components/story_circles.dart";
+import "../../../../style/utils/Dimention.dart";
+import "../doctorscreens/AddSurVideos.dart";
 import "Addpatients.dart";
+import "patientslist.dart";
 
 class DoctorDashBoard extends StatelessWidget {
        DoctorDashBoard({super.key});
 
   List imgList = [
     'Vector',
-    'Vector-1',
-    'Vector-2',
-    'video.fill.badge.plus'
+    
+    
 
   ];
   List option = [
-    'Add new words to speak',
     'Add new Patient',
-    'Add new Surgical videos',
-    'Add new execerise videos'
   ];
 
   
   @override
   Widget build(BuildContext context) {
 
-        var currentIndex = 0;
-    List imagelist = ["assets/images/Images_1.png","assets/images/images_2.png","assets/images/Images_3.png"];
+    List pages=[
+       Addpatients(),
+       Adexvideos(),
+       Adsurvideos(),
+    ];
+    Dimentions dn = new Dimentions(context);
+
+    List imagelist = ["assets/images/Vector-1.png"];
     return Scaffold(
-      appBar: Appbar(Name: "sivanesan",bottom: Bottom(context), height: 29.h,),
+      appBar: Appbar(Name: "sivanesan",bottom: Bottom(context), height: dn.height(15),),
        drawer: drawer(Name: 'siva',),
-      
-      body: ListView(
+      body: 
+      Column(
         children: [
-                  SizedBox(height: 10,),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: GridView.builder(
-                      itemCount: imgList.length,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-                      childAspectRatio: (MediaQuery.of(context).size.height - 40 - 20)/ (4*24.h),
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      ),
-                      itemBuilder: (context, index){
-                        return InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => Adexvideos(),)
-                              );
-                          },
-                          child: Container(
-                            padding: 
-                            EdgeInsets.symmetric(vertical: 20, horizontal:  10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              gradient: LinearGradient(colors: [Color.fromARGB(255, 255, 190, 126), Color.fromARGB(255, 250, 231, 203)],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,),
-                              boxShadow: [
-                            BoxShadow(color: Colors.black.withOpacity(0.25),
-                            spreadRadius: 2,
-                            blurRadius: 7,
-                            offset: Offset(0, 3))],
-                            
-                            ),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Image.asset("assets/images/${imgList[index]}.png", width: 50, height: 50,),),
-                                  SizedBox(height: 10,),
-                                  Text(
-                                    option[index],
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  )                  
-                            ],),
-                          ),
-                    
-                        );
-                      },
-                      ),
+          Padding(
+             padding: const EdgeInsets.all(10.0),
+             child: Container(
+              decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 177, 255, 183),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                    height: 100,
+                    child: ListView.builder(itemCount: 15,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return StoryCircles(
+                         function: (){
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DailyUpdatePatients()));
+                         },
+                      );
+                     },
+                    ),
                   ),
+           ),
+          Expanded(
+                        child: ListView.builder(
+                        itemCount: imgList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                         return InkWell(
+                          onTap: (){
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => pages[index],)
+                                );
+                            },
+                           child: Padding(
+                             padding: const EdgeInsets.all(8.0),
+                             child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  gradient: LinearGradient(
+                                    colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(color: Colors.black.withOpacity(0.10),
+                                    spreadRadius: 2,
+                                    blurRadius: 7,
+                                    offset: Offset(0, 2))],
+                                ),
+                                width: dn.width(70),
+                                  height: dn.height(10),
+                                  
+                                  child: Row(children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Image.asset(imagelist[index]),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text('Entry ${option[index]}'),
+                                    )
+                                    
+                           ]),
+                                ),
+                           ),
+                         );
+                        
+                        },
+                       ),
+                      ),
+        ],
+      ),
          
         //  crossAxisAlignment: CrossAxisAlignment.start,
         //   children: [
@@ -151,8 +174,6 @@ class DoctorDashBoard extends StatelessWidget {
         
             
         //   ],
-        ]
-        ),
       );
 
   }
@@ -196,28 +217,7 @@ PreferredSizeWidget Bottom(BuildContext context){
                       ),
            ),
           //  SizedBox(height: 10),
-           Padding(
-             padding: const EdgeInsets.all(10.0),
-             child: Container(
-              decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 177, 255, 183),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                    height: 100,
-                    child: ListView.builder(itemCount: 15,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return StoryCircles(
-                         function: (){
-                          Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => DailyUpdatePatients()));
-                         },
-                      );
-                     },
-                    ),
-                  ),
-           ),
+           
 
          ],
        ),
@@ -239,104 +239,105 @@ Widget circleButton(String time,){
   );
 }
 
-Widget carsouleview(List Imageslist){
-  return  Container(
-        width: 100.w,
-        height: 20.h,
-        // decoration: BoxDecoration(
-        //   image: DecorationImage(image: AssetImage(imagelist[index]),
-        // ),
-        child: CarouselSlider(
-      options: CarouselOptions(),
-      items: Imageslist
-          .map((item) => Container(
-                child: Center(
-                    child:
-                        Image.asset(item, fit: BoxFit.cover, width: 1000)),
-              ))
-          .toList(),
-      ));
+// Widget carsouleview(List Imageslist){
+//   return  Container(
+//         width: 100.w,
+//         height: 20.h,
+//         // decoration: BoxDecoration(
+//         //   image: DecorationImage(image: AssetImage(imagelist[index]),
+//         // ),
+//         child: CarouselSlider(
+//       options: CarouselOptions(),
+//       items: Imageslist
+//           .map((item) => Container(
+//                 child: Center(
+//                     child:
+//                         Image.asset(item, fit: BoxFit.cover, width: 1000)),
+//               ))
+//           .toList(),
+//       ));
 
-}
+// }
 
 
-Widget TaptoSpeak(BuildContext context){
-  return Container(
-    width: 95.w,
-    height: 18.h,
-    decoration: BoxDecoration(gradient: maincolor ,borderRadius: BorderRadius.circular(15)),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          width: 45.w,
-          height: 6.h,
-          //color: BlackColor,
+// Widget TaptoSpeak(BuildContext context){
+//   Dimentions dn = new Dimentions(context);
+//   return Container(
+//    width: dn.width(90),
+//    height: dn.height(35),
+//     decoration: BoxDecoration(gradient: maincolor ,borderRadius: BorderRadius.circular(15)),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//       Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: Container(
+//           width: dn.width(90),
+//           height: dn.height(35),
+//           //color: BlackColor,
 
-           decoration: BoxDecoration(color: whiteColor ,borderRadius: BorderRadius.circular(10)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SizedBox(
-                width: 10.w,
-                height: 4.h,
-                child: Image.asset("assets/images/Vector.png"),
-              ),
-              Text("Tap to Speak",style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                            fontSize: 13.sp)),)
-            ],
-        )),
-      ),
+//            decoration: BoxDecoration(color: whiteColor ,borderRadius: BorderRadius.circular(10)),
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//             children: [
+//               SizedBox(
+//                 width: 10.w,
+//                 height: 4.h,
+//                 child: Image.asset("assets/images/Vector.png"),
+//               ),
+//               Text("Tap to Speak",style: GoogleFonts.ibmPlexSans(
+//                         textStyle: TextStyle(
+//                             fontSize: 13.sp)),)
+//             ],
+//         )),
+//       ),
       
-      Row(
+//       Row(
         
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children:[ Helpercontainer("YES",Color(0XFF82FF87),(){}) ,
-      Helpercontainer("NO",Color(0XFFFB8A72),(){}),
-      Helpercontainer("Help",Color(0XFFA8ECE8),(){}),
-      Helpercontainer("More words",Color(0XFFEEECFF),(){
-        Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => AudioScreen()));
-      })
+//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         children:[ Helpercontainer("YES",Color(0XFF82FF87),(){}) ,
+//       Helpercontainer("NO",Color(0XFFFB8A72),(){}),
+//       Helpercontainer("Help",Color(0XFFA8ECE8),(){}),
+//       Helpercontainer("More words",Color(0XFFEEECFF),(){
+//         Navigator.push(
+//     context,
+//     MaterialPageRoute(builder: (context) => AudioScreen()));
+//       })
 
-      ])
-    ],),
-  );
-}
+//       ])
+//     ],),
+//   );
+// }
 
 
-Widget Helpercontainer(String text,Color colour,final buttonfuncation){
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: GestureDetector(
-      onTap: buttonfuncation,
-      child: Container(
-        alignment: Alignment.center,
-        width: 18.w,
-        height: 8.h,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-        color: colour,
-        boxShadow: [
-                      BoxShadow(
-              color: BlackColor_light,
-              blurRadius: 4.0,
-            ),
-                    ]
-        ),
-        child: Text(text ,textAlign: TextAlign.center,style: GoogleFonts.ibmPlexSans(
-                          textStyle: TextStyle(
+// Widget Helpercontainer(String text,Color colour,final buttonfuncation){
+//   return Padding(
+//     padding: const EdgeInsets.all(8.0),
+//     child: GestureDetector(
+//       onTap: buttonfuncation,
+//       child: Container(
+//         alignment: Alignment.center,
+//         width: 18.w,
+//         height: 8.h,
+//         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+//         color: colour,
+//         boxShadow: [
+//                       BoxShadow(
+//               color: BlackColor_light,
+//               blurRadius: 4.0,
+//             ),
+//                     ]
+//         ),
+//         child: Text(text ,textAlign: TextAlign.center,style: GoogleFonts.ibmPlexSans(
+//                           textStyle: TextStyle(
                             
-                            fontWeight: FontWeight.bold,
-                              fontSize: 13.sp)),),
+//                             fontWeight: FontWeight.bold,
+//                               fontSize: 13.sp)),),
       
-      ),
-    ),
-  );
-}
+//       ),
+//     ),
+//   );
+// }
 
 
 

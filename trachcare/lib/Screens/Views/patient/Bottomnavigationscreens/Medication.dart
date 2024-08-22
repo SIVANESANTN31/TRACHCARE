@@ -5,6 +5,7 @@ import "package:trachcare/Screens/Views/patient/patientscreens/dailyupdates.dart
 import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/style/colors.dart";
 
+import "../../../../style/utils/Dimention.dart";
 import "../patientscreens/dailyReports.dart";
 
 class MedicationPage extends StatelessWidget {
@@ -33,10 +34,12 @@ void daily_Reports(){
     MaterialPageRoute(builder: (context) =>YourdailyReports()));
 
 }
+    Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: NormalAppbar(
         
         Title: "Diagnostics",
+        height: dn.height(15),
       ),
       body: Column(
         children: [

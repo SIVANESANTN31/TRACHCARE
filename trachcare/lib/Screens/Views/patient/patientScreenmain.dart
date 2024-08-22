@@ -7,6 +7,8 @@ import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/PatientD
 import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/videospage.dart';
 import 'package:trachcare/style/colors.dart';
 
+import '../../../style/utils/Dimention.dart';
+
 class PatientMainScreen extends StatelessWidget {
   const PatientMainScreen({super.key});
 
@@ -14,16 +16,12 @@ class PatientMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List pages=[
        PatientDashBoard(),
-      
        Videospage(),
        MedicationPage(),
        
     ];
-
-
-
+Dimentions dn = new Dimentions(context);
     return CupertinoTabScaffold(
-
           tabBar: CupertinoTabBar(
             backgroundColor: Colors.grey[50],
             activeColor:BlackColor ,

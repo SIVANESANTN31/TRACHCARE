@@ -5,6 +5,8 @@ import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/style/Tropography.dart";
 import "package:video_player/video_player.dart";
 
+import "../../../../style/utils/Dimention.dart";
+
 
 
 
@@ -62,8 +64,9 @@ materialProgressColors: ChewieProgressColors(playedColor: Colors.white)
 
   @override
   Widget build(BuildContext context) {
+    Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "WatchZone"),
+      appBar: NormalAppbar(Title: "WatchZone",height: dn.height(15),),
       body:  FutureBuilder(
         future: _intialltingvideoplayer, builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if(snapshot.connectionState== ConnectionState.done){

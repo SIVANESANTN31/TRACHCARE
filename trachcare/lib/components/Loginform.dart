@@ -130,7 +130,7 @@ Dimentions dn = new Dimentions(context);
               ),
               Gap(2.h),
               custom_Button(
-                  text: "Signup",
+                  text: "SignIn",
                   width: 55,
                  button_funcation: widget.Singup_button,
                   height: 6.5,

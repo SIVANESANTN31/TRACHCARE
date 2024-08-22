@@ -4,6 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/components/Navbardrawer.dart';
 import 'package:trachcare/style/colors.dart';
+import 'package:open_whatsapp/open_whatsapp.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+
 
 class Appbar extends StatelessWidget implements PreferredSizeWidget {
   final String Name;
@@ -18,10 +22,11 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   AppBar build(BuildContext context) {
     return AppBar(
+      
     backgroundColor: TitleColor,
     shape:  RoundedRectangleBorder(
     borderRadius: BorderRadius.vertical(
-      bottom: Radius.circular(30),
+      bottom: Radius.circular(10),
     )),
      leading: Builder(
       
@@ -41,8 +46,13 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
                           
                           fontWeight: FontWeight.bold)),),
       actions: [
-        IconButton(onPressed: (){} ,icon: Icon(CupertinoIcons.chat_bubble_2,size: 29,color: Colors.green,))
+        IconButton(onPressed: (){
+          FlutterOpenWhatsapp.sendSingleMessage("9500077434", "Hello, this is a test message.");
+        },
+        icon: Icon(FontAwesomeIcons.whatsapp,
+        color: Colors.green,))
       ],
+      
      bottom: bottom,
      automaticallyImplyLeading: false,
       );

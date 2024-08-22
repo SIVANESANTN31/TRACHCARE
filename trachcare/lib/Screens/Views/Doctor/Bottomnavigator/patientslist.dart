@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
+import '../../../../style/utils/Dimention.dart';
 import '../doctorscreens/Patientsdetails.dart';
 
 class patientslist extends StatefulWidget {
@@ -57,10 +58,11 @@ class _patientslistState extends State<patientslist> {
   // }
   @override
   Widget build(BuildContext context) {
+    Dimentions dn = Dimentions(context);
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 217, 255, 215),
       appBar: NormalAppbar(
-        Title: "Patients List",
+        Title: "Patients List",height: dn.height(10),
       ),
       body:Padding(
         padding: const EdgeInsets.all(8.0),
@@ -100,13 +102,13 @@ class _patientslistState extends State<patientslist> {
                   ? ListView.builder(
                 itemCount: display_list.length,
                 itemBuilder: (context, index) => Card(
-                  color: Color.fromRGBO(180, 249, 183, 1),
+                  color: Color.fromRGBO(255, 255, 255, 1),
                   elevation: 4,
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: ListTile(
                     onTap: (){
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Patientsdetails(patientId : display_list[index]['id']),),);
+                        builder: (context) => Patientsdetails(),),);
                     },
                     leading: CircleAvatar(
                       radius: 25,

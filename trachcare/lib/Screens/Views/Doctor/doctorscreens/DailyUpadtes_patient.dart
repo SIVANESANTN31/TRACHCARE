@@ -10,6 +10,8 @@ import 'package:trachcare/components/NAppbar.dart';
 import '../../../../style/colors.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../style/utils/Dimention.dart';
+
 class DailyUpdatePatients extends StatefulWidget {
   DailyUpdatePatients({super.key});
 
@@ -32,9 +34,9 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
     });
   }
 
-
+    Dimentions dn = Dimentions(context);
     return Scaffold(
-        appBar: NormalAppbar(Title: "Report"),
+        appBar: NormalAppbar(Title: "Report", height: dn.height(15),),
         body: ListView(children: [
           Namecard("Siva", "132"),
           TableCalendar(
