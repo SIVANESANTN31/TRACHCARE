@@ -132,7 +132,7 @@ Dimentions dn = new Dimentions(context);
               custom_Button(
                   text: "SignIn",
                   width: 55,
-                 button_funcation: widget.Singup_button,
+                  button_funcation: widget.Singup_button,
                   height: 6.5,
                   backgroundColor: TitleColor,
                   textcolor: whiteColor,

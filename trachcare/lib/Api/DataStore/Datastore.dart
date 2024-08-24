@@ -7,7 +7,6 @@ class LoginDataStore{
   void SetPassword(String password){
     LoginData.addAll({"password":password});
   }
-
 }
 
 var patient_id ;

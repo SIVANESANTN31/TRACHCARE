@@ -12,11 +12,18 @@ import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
 import "package:trachcare/style/utils/Dimention.dart";
 
+import "../../../components/Appbar.dart";
+import "../../../components/Navbardrawer.dart";
+
 class Admindb extends StatelessWidget {
   const Admindb({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    Dimentions dn = new Dimentions(context);
+    return Scaffold(
+      appBar: Appbar(Name: "sivanesan", height: dn.height(15),),
+       drawer: drawer(Name: 'siva',),
+    );
   }
 }

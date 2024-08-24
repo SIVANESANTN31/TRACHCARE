@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/API_funcation/Login.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
+import 'package:trachcare/Screens/Views/Admin/Adminlogin.dart';
 import 'package:trachcare/Screens/Views/Doctor/Doctormainscreen.dart';
 import 'package:trachcare/components/Titlebox.dart';
 import 'package:trachcare/components/subhead.dart';
@@ -12,6 +13,7 @@ import 'package:trachcare/Screens/Views/Doctor/Bottomnavigator/Doctordb.dart';
 // import "package:flutter/cupertino.dart";
 
 import '../../../components/Loginform.dart';
+import 'Adminlogin.dart';
 
 
 
@@ -25,11 +27,14 @@ class AdminLogin extends StatelessWidget {
 
     // The below funcation is Login Button fucation 
     void Login_btn(){
-  if (_formkey.currentState!.validate()) {
-    _formkey.currentState!.save();  
-    LoginClassApi().Adminlogin(context); 
-    
-  }
+   if (_formkey.currentState!.validate()) {
+          _formkey.currentState!.save();  
+          LoginClassApi().Adminlogin(context);
+          _formkey.currentState!.reset();
+
+        
+
+        }
  
  
  }

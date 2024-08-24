@@ -264,6 +264,7 @@ class _AddpatientsState extends State<Addpatients> {
                   },
                   child: Text('Next'),
                 ),
+                SizedBox(height: 50,)
               ],
             ),
           ),
