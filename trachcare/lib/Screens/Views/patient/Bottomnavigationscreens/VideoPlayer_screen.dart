@@ -1,6 +1,7 @@
 import "package:chewie/chewie.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
+import "package:trachcare/Api/Apiurl.dart";
 import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/style/Tropography.dart";
 import "package:video_player/video_player.dart";
@@ -11,7 +12,8 @@ import "../../../../style/utils/Dimention.dart";
 
 
 class video_player extends StatefulWidget {
-  const video_player({super.key});
+  final String Videoulrl;
+   video_player({super.key, required this.Videoulrl});
 
   @override
   State<video_player> createState() => _video_playerState();
@@ -27,9 +29,10 @@ class _video_playerState extends State<video_player> {
   @override
   void initState() {
     super.initState();
+    print('https://$ip/Trachcare/$videourl');
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(
-          'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4'),
+          'https://$ip/Trachcare/$videourl'),
     );
 
     _intialltingvideoplayer =  _controller.initialize();

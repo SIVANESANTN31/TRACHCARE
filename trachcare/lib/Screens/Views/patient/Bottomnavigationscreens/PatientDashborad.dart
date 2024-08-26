@@ -40,7 +40,7 @@ class PatientDashBoard extends StatelessWidget {
         if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasData){
             var patientDetials = snapshot.data;
-            var name  = patientDetials['Name'].toString();
+            var name  = patientDetials['name'].toString();
 
             Dimentions dn = Dimentions(context);
 

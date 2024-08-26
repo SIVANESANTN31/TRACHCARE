@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
   
   Widget build(BuildContext context) {
 
-    return Sizer(builder: (context, orientation, deviceType){
+    return Sizer( 
+  builder: (context, orientation, screenType) {
       return MaterialApp( 
         debugShowCheckedModeBanner: false,
         theme: ThemeData(textTheme: GoogleFonts.ibmPlexSansTextTheme()),
