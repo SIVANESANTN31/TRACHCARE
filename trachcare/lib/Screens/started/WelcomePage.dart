@@ -6,7 +6,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/Screens/AuthScreens/Doctorlogin.dart";
 import "package:trachcare/Screens/AuthScreens/PatientLogin.dart";
-import "package:trachcare/Screens/Views/Admin/Adminlogin.dart";
+import "package:trachcare/Screens/AuthScreens/Adminlogin.dart";
 import "package:trachcare/components/Titlebox.dart";
 import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
@@ -155,7 +155,7 @@ var Screen_Size = MediaQuery.of(context).size;
                       height: dn.height(7),
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [Color(0XFFA7DBAF), Color(0XFFD2EFD7)],
+                            colors: [Color.fromARGB(255, 35, 198, 60), Color.fromARGB(255, 153, 255, 168)],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                           ),
@@ -171,9 +171,9 @@ var Screen_Size = MediaQuery.of(context).size;
                           Text("ADMIN",
                               style: GoogleFonts.ibmPlexSans(
                                   textStyle: TextStyle(
-                                      fontSize: 17,
-                                      color: Color(0XFF455A64),
-                                      fontWeight: FontWeight.bold)))
+                                  fontSize: 17,
+                                  color: Color(0XFF455A64),
+                                  fontWeight: FontWeight.bold)))
                         ],
                       ),
                     ),

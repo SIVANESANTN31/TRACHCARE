@@ -7,7 +7,7 @@ import 'package:trachcare/Api/DataStore/Datastore.dart';
 import "package:http/http.dart" as http;
 import 'package:trachcare/Screens/Views/patient/patientScreenmain.dart';
 
-import '../../Screens/Views/Admin/Admindb.dart';
+import '../../Screens/Views/Admin/Adminmainpage.dart';
 import '../../Screens/Views/Doctor/Doctormainscreen.dart';
 
 class LoginClassApi{
@@ -159,7 +159,7 @@ class LoginClassApi{
     );
     Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => Admindb()));
+    MaterialPageRoute(builder: (context) => Adminmainpage()));
     LoginData.clear();
     patient_id = data['userInfo']['patient_id'];
     

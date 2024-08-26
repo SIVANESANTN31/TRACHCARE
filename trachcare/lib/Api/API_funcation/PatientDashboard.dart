@@ -25,8 +25,6 @@ Future FetchDetials() async{
     print(e);
     
   }
-
-
 }
 
 
