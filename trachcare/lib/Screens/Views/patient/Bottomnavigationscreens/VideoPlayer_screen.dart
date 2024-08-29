@@ -29,10 +29,10 @@ class _video_playerState extends State<video_player> {
   @override
   void initState() {
     super.initState();
-    print('https://$ip/Trachcare/$videourl');
+    print('http://$ip/Trachcare/$videourl');
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(
-          'https://$ip/Trachcare/$videourl'),
+          'http://$ip/Trachcare/$videourl'),
     );
 
     _intialltingvideoplayer =  _controller.initialize();
@@ -69,7 +69,7 @@ materialProgressColors: ChewieProgressColors(playedColor: Colors.white)
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "WatchZone",height: dn.height(15),),
+      appBar: NormalAppbar(Title: "WatchZone",height: dn.height(10),),
       body:  FutureBuilder(
         future: _intialltingvideoplayer, builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if(snapshot.connectionState== ConnectionState.done){

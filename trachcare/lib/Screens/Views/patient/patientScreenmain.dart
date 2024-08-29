@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
-import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/AudioScreen.dart';
 import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/Medication.dart';
 import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/PatientDashborad.dart';
-import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/videospage.dart';
 import 'package:trachcare/style/colors.dart';
-
+import '../../../Api/Apiurl.dart';
 import '../../../style/utils/Dimention.dart';
+import 'Bottomnavigationscreens/VideoPlayer_screen.dart';
 
 class PatientMainScreen extends StatelessWidget {
   const PatientMainScreen({super.key});
@@ -16,7 +14,7 @@ class PatientMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List pages=[
        PatientDashBoard(),
-       Videospage(),
+       video_player(Videoulrl: 'http://$ip/Trachcare/139286981614-hd_1920_1080_30fps.mp4',),
        MedicationPage(),
        
     ];
