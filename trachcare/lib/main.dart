@@ -5,8 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Screens/AuthScreens/SplashScreen.dart';
 
-
-
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -15,12 +13,9 @@ class MyHttpOverrides extends HttpOverrides {
           (X509Certificate cert, String host, int port) => true;
   }
 }
-
-
-
 void main() {
 
-  HttpOverrides.global = MyHttpOverrides();
+ HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   
  

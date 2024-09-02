@@ -100,6 +100,7 @@ class LoginClassApi{
     MaterialPageRoute(builder: (context) => PatientMainScreen()));
     LoginData.clear();
     patient_id = data['userInfo']['patient_id'];
+    Doctor_id = data['userInfo']['doctorid'];
     
     
 

@@ -18,8 +18,18 @@ class _DailyupdateformState extends State<Dailyupdateform> {
   @override
   bool yes_selected = false;
   bool no_selected = false;
-  TextEditingController dropmenu =
-      new TextEditingController(text: "Select the option");
+  TextEditingController dropmenu = new TextEditingController(text: "Select the option");
+  TextEditingController dropmenu1 = new TextEditingController(text: "Select the option"); 
+  TextEditingController dropmenu2 = new TextEditingController(text: "Select the option");
+  TextEditingController dropmenu3 = new TextEditingController(text: "Select the option");
+  TextEditingController dropmenu4 = new TextEditingController(text: "Select the option");
+
+
+   TextEditingController input1 = new TextEditingController();
+   TextEditingController input2 = new TextEditingController();
+   TextEditingController input3 = new TextEditingController();
+   TextEditingController input4 = new TextEditingController();
+   TextEditingController input5 = new TextEditingController();
 
   Widget build(BuildContext context) {
     return CupertinoFormSection(
@@ -30,9 +40,11 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             width: 70.w,
             height: 6.h,
             child: CupertinoTextField(
+              controller: input1,
               placeholder: "Enter the values",
             )),
         prefix: Text(
+          
           "Vitals",
           style: Normal,
           softWrap: true,
@@ -43,6 +55,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             width: 70.w,
             height: 6.h,
             child: CupertinoTextField(
+              controller: input2,
               placeholder: "Enter the values",
             )),
         prefix: Text(
@@ -56,6 +69,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             width: 70.w,
             height: 6.h,
             child: CupertinoTextField(
+              controller: input3,
               placeholder: "Enter the values",
             )),
         prefix: Text(
@@ -68,6 +82,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             width: 70.w,
             height: 6.h,
             child: CupertinoTextField(
+              controller: input4,
               placeholder: "Enter the values",
             )),
         prefix: Text(
@@ -80,6 +95,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             width: 70.w,
             height: 6.h,
             child: CupertinoTextField(
+              controller: input5,
               placeholder: "Enter the values",
             )),
         prefix: Text(
@@ -93,6 +109,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             width: 50.w,
             height: 5.5.h,
             child: CupertinoTextField(
+              readOnly: true,
               placeholder: " ",
               controller: dropmenu,
               suffix: PullDownButton(
@@ -137,8 +154,9 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             width: 50.w,
             height: 5.5.h,
             child: CupertinoTextField(
+              readOnly: true,
               placeholder: " ",
-              controller: dropmenu,
+              controller: dropmenu1,
               suffix: PullDownButton(
                 itemBuilder: (context) => [
                   PullDownMenuItem.selectable(
@@ -146,7 +164,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
                       setState(() {
                         yes_selected = true;
                         no_selected = false;
-                        dropmenu.text = "yes";
+                        dropmenu1.text = "yes";
                       });
                     },
                     selected: yes_selected,
@@ -157,7 +175,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
                       setState(() {
                         yes_selected = false;
                         no_selected = true;
-                        dropmenu.text = "No";
+                        dropmenu1.text = "No";
                       });
                     },
                     selected: no_selected,
@@ -181,8 +199,9 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             width: 50.w,
             height: 5.5.h,
             child: CupertinoTextField(
+              readOnly: true,
               placeholder: " ",
-              controller: dropmenu,
+              controller: dropmenu2,
               suffix: PullDownButton(
                 itemBuilder: (context) => [
                   PullDownMenuItem.selectable(
@@ -190,7 +209,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
                       setState(() {
                         yes_selected = true;
                         no_selected = false;
-                        dropmenu.text = "yes";
+                        dropmenu2.text = "yes";
                       });
                     },
                     selected: yes_selected,
@@ -201,7 +220,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
                       setState(() {
                         yes_selected = false;
                         no_selected = true;
-                        dropmenu.text = "No";
+                        dropmenu2.text = "No";
                       });
                     },
                     selected: no_selected,
@@ -225,8 +244,9 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             width: 50.w,
             height: 5.5.h,
             child: CupertinoTextField(
+               readOnly: true,
               placeholder: " ",
-              controller: dropmenu,
+              controller: dropmenu3,
               suffix: PullDownButton(
                 itemBuilder: (context) => [
                   PullDownMenuItem.selectable(
@@ -234,7 +254,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
                       setState(() {
                         yes_selected = true;
                         no_selected = false;
-                        dropmenu.text = "yes";
+                        dropmenu3.text = "yes";
                       });
                     },
                     selected: yes_selected,
@@ -245,7 +265,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
                       setState(() {
                         yes_selected = false;
                         no_selected = true;
-                        dropmenu.text = "No";
+                        dropmenu3.text = "No";
                       });
                     },
                     selected: no_selected,
@@ -269,8 +289,9 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             width: 50.w,
             height: 5.5.h,
             child: CupertinoTextField(
+               readOnly: true,
               placeholder: " ",
-              controller: dropmenu,
+              controller: dropmenu4,
               suffix: PullDownButton(
                 itemBuilder: (context) => [
                   PullDownMenuItem.selectable(
@@ -278,7 +299,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
                       setState(() {
                         yes_selected = true;
                         no_selected = false;
-                        dropmenu.text = "yes";
+                        dropmenu4.text = "yes";
                       });
                     },
                     selected: yes_selected,
@@ -289,7 +310,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
                       setState(() {
                         yes_selected = false;
                         no_selected = true;
-                        dropmenu.text = "No";
+                        dropmenu4.text = "No";
                       });
                     },
                     selected: no_selected,

@@ -1,5 +1,5 @@
 
-const ip = "172.23.23.199";
+const ip = "172.23.29.199";
 
 String PatientLoginurl = "https://$ip/Trachcare/auth/patientAuth/PatientLogin.php";
 String getpatientdetialsurl = "https://$ip/Trachcare/Patient/getdetials.php";

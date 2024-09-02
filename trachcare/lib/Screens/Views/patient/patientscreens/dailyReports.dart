@@ -3,55 +3,88 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:trachcare/Api/API_funcation/PatientDashboard.dart';
 import 'package:trachcare/Screens/Views/patient/patientscreens/dailyupdates.dart';
 import 'package:trachcare/components/NAppbar.dart';
+import 'package:trachcare/style/Tropography.dart';
 import 'package:trachcare/style/colors.dart';
 
 import '../../../../style/utils/Dimention.dart';
 
 
-class YourdailyReports extends StatelessWidget {
+class YourdailyReports extends StatefulWidget {
   const YourdailyReports({super.key});
+
+  @override
+  State<YourdailyReports> createState() => _YourdailyReportsState();
+}
+
+class _YourdailyReportsState extends State<YourdailyReports> {
+    DateTime _selectedDate = DateTime.now();
+
+  DateTime _focusedDate = DateTime.now();
+
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    setState(() {
+      _selectedDate = selectedDay;
+      _focusedDate = focusedDay;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: NormalAppbar(Title: "YOUR DAILY RECORDS",height: dn.height(10),),
-      body:  Column(children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
-          child: CupertinoSearchTextField(),
+      body:  FutureBuilder(
+        future: PatientDashBoardApi().FetchDetials(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {  
+          if(snapshot.connectionState == ConnectionState.waiting){
+          return Center(child: CupertinoActivityIndicator(radius: 10,),);
+        }
+        if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.hasData){
+            var patientDetials = snapshot.data;
+            var name  = patientDetials['name'].toString();
+            var patient_id =  patientDetials['patient_id'].toString();
+            var age = patientDetials['age'].toString();
 
-        ),
-         Expanded(
-           child: ListView.builder(
-            itemCount: 10,
-             itemBuilder: (BuildContext context, int index) {
-           
-               return Padding(
-                 padding: const EdgeInsets.all(8.0),
-                 child: GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => your_daily_updates()));
-                  },
-                  child: NameCard("Siva", "3", "26/08/2003")),
-               );
-             }
-           
-           ),
-         )
 
-       
+               return Column(children: [
+         
+           
+           Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: 22,vertical: 10),
+                 child: NameCard(name, patient_id, age),
+               ),
+                TableCalendar(
+              availableGestures: AvailableGestures.all,
+              pageJumpingEnabled: true,
+              headerStyle:HeaderStyle(formatButtonVisible: false,titleCentered: true,) ,
+                focusedDay: _focusedDate,
+                 firstDay: DateTime.utc(2010,1,1), 
+                 lastDay: DateTime.now().add(
+                  Duration(days: 365),
+                ),
+                selectedDayPredicate: (day) => isSameDay(day, _selectedDate),
+          onDaySelected: _onDaySelected,
+                
+                )
+        
+          
+          
+        
+         
+          
+          
         
         
-
-
-
-
-      ],),
+        
+        
+        ],);}}
+        return Text("Something Went Wrong!!!!",style: BoldStyle,);
+  }),
     );
   }
 }
