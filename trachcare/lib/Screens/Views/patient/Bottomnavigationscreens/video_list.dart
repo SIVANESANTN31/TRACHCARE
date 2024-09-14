@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_thumbnail_video/index.dart';
-import 'package:get_thumbnail_video/video_thumbnail.dart';
+// import 'package:get_thumbnail_video/index.dart';
+// import 'package:get_thumbnail_video/video_thumbnail.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:trachcare/Api/API_funcation/VideoApi.dart';
 import 'package:trachcare/Api/Apiurl.dart';
@@ -25,122 +25,114 @@ class Videospage extends StatefulWidget {
 }
 
 class _VideospageState extends State<Videospage> {
+  List Videourls = [];
+  List thumbnil = [];
 
-List Videourls = [];
-List  thumbnil =[];
-
-@override
-  void initState()  {
+  @override
+  void initState() {
     super.initState();
     FetchVideos();
-    
-    
-    
   }
 
-  Future FetchVideos() async{
+  Future FetchVideos() async {
     Videourls = await Video().Fetchvideo(patient_id, Doctor_id);
-   Videourls.removeAt(0);
-  //  for (int i = 0; i<Videourls.length;i++){
-  //    String thumbpath = await gearatevedioThambline(Videourls[i]);
-  //    thumbnil.add(thumbpath);
+    Videourls.removeAt(0);
+    //  for (int i = 0; i<Videourls.length;i++){
+    //    String thumbpath = await gearatevedioThambline(Videourls[i]);
+    //    thumbnil.add(thumbpath);
 
-  //   }
-  //   print(thumbnil);
-   return Videourls;
+    //   }
+    //   print(thumbnil);
+    return Videourls;
   }
 
-   Future gearatevedioThambline(String videourl) async{
-    
-  
-    XFile thumbnailurl  = await VideoThumbnail.thumbnailFile(
-  video: "http://$ip/$videourl",
-  thumbnailPath: (await getTemporaryDirectory()).path,
-  imageFormat: ImageFormat.WEBP,
-  maxHeight: 64, 
-  quality: 80,
-);
-return thumbnailurl.path;
-  }
+  // Future gearatevedioThambline(String videourl) async {
+  //   XFile thumbnailurl = await VideoThumbnail.thumbnailFile(
+  //     video: "http://$ip/$videourl",
+  //     thumbnailPath: (await getTemporaryDirectory()).path,
+  //     imageFormat: ImageFormat.WEBP,
+  //     maxHeight: 64,
+  //     quality: 80,
+  //   );
+  //   return thumbnailurl.path;
+  // }
 
-
-   
-  
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
-      appBar: NormalAppbar(Title: "Videos", height: 90.0),
-      body: FutureBuilder(
-        future: FetchVideos(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {  
-          if(snapshot.connectionState == ConnectionState.done){
-            if(snapshot.hasData){
-              List data =  snapshot.data;
+        appBar: NormalAppbar(Title: "Videos", height: 90.0),
+        body: FutureBuilder(
+            future: FetchVideos(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  List data = snapshot.data;
 
-            return  ListView.builder(
-              itemCount: data.length ,
-              itemBuilder: (BuildContext context, int index) {  
-                // Future thumblinefilepath =  gearatevedioThambline(data[index]);
-              return 
-              
-                            Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => video_player()));
-                  },
+                  return ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        // Future thumblinefilepath =  gearatevedioThambline(data[index]);
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => video_player()));
+                              },
+                              child: Videocard("assets/images/0.png",
+                                  "5 Tips for Managing Lung Disease Symptoms")),
+                        );
+                      });
+                }
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CupertinoActivityIndicator(
+                    radius: 12,
+                  ),
+                );
+              }
 
-                  child: Videocard("assets/images/0.png","5 Tips for Managing Lung Disease Symptoms")),
+              return Center(
+                child: Text("something went wrong!!!"),
               );
-          });
-          }
-          }
-          else if(snapshot.connectionState ==ConnectionState.waiting){
-            return Center(child: CupertinoActivityIndicator(radius: 12,),);
-          }
-
-          return Center(child: Text("something went wrong!!!"),);
-     
-  })
-    );
+            }));
   }
 
-
-Widget Videocard(String ImageUrl,String Video_Title){
-  Dimentions dn =  new Dimentions(context);
-  return Container(
-    width:dn.width(78),
-    height: dn.height(25),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(15),
-       color: Colors.transparent
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-
-
+  Widget Videocard(String ImageUrl, String Video_Title) {
+    Dimentions dn = new Dimentions(context);
+    return Container(
+      width: dn.width(78),
+      height: dn.height(25),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15), color: Colors.transparent),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Stack(alignment: Alignment.center, children: [
             SizedBox(
-            width: dn.width(100),
-            height: dn.height(19),
-            child: Image(image: AssetImage(ImageUrl),fit: BoxFit.contain,)
-          ),
-
-          CircleAvatar(
-            backgroundColor: Colors.black45,
-            child: Icon(Icons.play_arrow,color: whiteColor,),
+                width: dn.width(100),
+                height: dn.height(19),
+                child: Image(
+                  image: AssetImage(ImageUrl),
+                  fit: BoxFit.contain,
+                )),
+            CircleAvatar(
+              backgroundColor: Colors.black45,
+              child: Icon(
+                Icons.play_arrow,
+                color: whiteColor,
+              ),
+            )
+          ]),
+          Text(
+            Video_Title,
+            style: Normal,
+            textAlign: TextAlign.justify,
           )
-      ]),
-
-        Text(Video_Title,style: Normal,textAlign: TextAlign.justify,)
-      ],
-    ),
-  );
-
-}}
+        ],
+      ),
+    );
+  }
+}
