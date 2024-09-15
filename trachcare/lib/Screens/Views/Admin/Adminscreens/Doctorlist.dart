@@ -19,26 +19,26 @@ class _DoctorlistState extends State<Doctorlist> {
   List<Map<String, dynamic>> Doctorlist = [];
 
 
-  Future<void> fetchData() async {
+  Future fetchData() async {
     final response = await http.get(Uri.parse(DoctorslistUrl)); // Use http://localhost if you're using a real device or emulator IP for Android
     if (response.statusCode == 200) {
-      setState(() {
-        Doctorlist = json.decode(response.body);
-      });
+      // setState(() {
+      //   Doctorlist = json.decode(response.body);
+      // });
       return json.decode(response.body);
     } else {
       throw Exception('Failed to load data');
     }
   }
 // This list holds the data for the list view
-  List<Map<String, dynamic>> display_list = [];
+  List<dynamic> display_list = [];
   @override
   initState() {
     display_list = Doctorlist;
     super.initState();
   }
   void onsearch(String enteredKeyword) {
-    List<Map<String, dynamic>> results = [];
+    List<dynamic> results = [];
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
       results = Doctorlist;
@@ -72,8 +72,9 @@ class _DoctorlistState extends State<Doctorlist> {
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
-                  List data = snapshot.data;
-                  print(data);
+                  var data = snapshot.data;
+                  display_list = data["data"];
+                  print(display_list[0]['id']);
          return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -108,10 +109,12 @@ class _DoctorlistState extends State<Doctorlist> {
               //  SizedBox(height: 0,),
               //
               Expanded(
-                child: display_list.isNotEmpty
-                    ? ListView.builder(
+                child:  ListView.builder(
                   itemCount: display_list.length,
-                  itemBuilder: (context, index) => Card(
+                  itemBuilder: (context, index){
+                  print(display_list[index]['id']);
+
+                  return Card(
                     color: Color.fromRGBO(255, 255, 255, 1),
                     elevation: 4,
                     margin: const EdgeInsets.symmetric(vertical: 10),
@@ -128,17 +131,15 @@ class _DoctorlistState extends State<Doctorlist> {
                         color: Colors.black,
                       )),
                       subtitle:Text(
-                        display_list[index].toString(),
+                        display_list[index]["username"].toString(),
                         style: const TextStyle(fontSize: 12, color:Color.fromARGB(255, 0, 0, 0)),
                       ),
                     ),
-                  ),
+                  );}
                 )
-                    : const Text(
-                  'No results found',
-                  style: TextStyle(fontSize: 24),
+                   
                 ),
-              ),
+          
             ],
           ),
         );}}
