@@ -30,7 +30,6 @@ class _patientslistState extends State<patientslist> {
   List<Map<String, dynamic>> display_list = [];
   @override
   initState() {
-
     display_list = patientslist;
     super.initState();
   }

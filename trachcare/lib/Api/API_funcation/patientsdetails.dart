@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 import 'package:trachcare/Api/Apiurl.dart';
 import "package:http/http.dart" as http;
+import 'package:trachcare/Screens/Views/Admin/Adminscreens/doctordetails.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import 'package:trachcare/Screens/Views/Doctor/Bottomnavigator/Addpatients.dart';
 import 'package:trachcare/Screens/Views/Doctor/doctorscreens/Patientsdetails.dart';
@@ -212,3 +213,5 @@ void ViewPatientDetails(BuildContext context, String patientId) async {
     );
   }
 }
+
+

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/Addvideos.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import "package:trachcare/components/Appbar.dart";
+import '../../../../components/Navbardrawer.dart';
 import '../../../../style/utils/Dimention.dart';
 import '../Adminscreens/Doctorlist.dart'; 
 
@@ -38,7 +39,10 @@ class Admindb extends StatelessWidget {
     ];
         Dimentions dn = new Dimentions(context);
     return Scaffold(
-      appBar: Appbar(Name: "sivanesan", height: dn.height(12),),
+      appBar: Appbar(Name: "rajieswari", height: dn.height(12),),
+       drawer: drawer(
+        Name: 'rajieswari',
+      ),
       body: Stack(
       children: [
         // Background image with blur effect

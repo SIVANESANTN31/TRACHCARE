@@ -68,7 +68,7 @@ class DoctorDashBoard extends StatelessWidget {
                 color: Color.fromARGB(255, 177, 255, 183),
                 borderRadius: BorderRadius.circular(10),
               ),
-              height: dn.height(11),
+              height: dn.height(15),
               child: ListView.builder(
                 itemCount: 15,
                 scrollDirection: Axis.horizontal,
@@ -89,7 +89,7 @@ class DoctorDashBoard extends StatelessWidget {
           //   height: 10,
           // ),
           SizedBox(
-            height: dn.height(12), // Set a specific height as needed
+            height: dn.height(15), // Set a specific height as needed
             child: ListView.builder(
               itemCount: imgList.length,
               itemBuilder: (BuildContext context, int index) {
@@ -145,7 +145,7 @@ class DoctorDashBoard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 15,
           ),
 
           Padding(

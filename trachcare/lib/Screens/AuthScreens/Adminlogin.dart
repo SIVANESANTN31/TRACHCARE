@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -10,12 +12,7 @@ import 'package:trachcare/components/Titlebox.dart';
 import 'package:trachcare/components/subhead.dart';
 import "package:trachcare/components/custom_button.dart";
 import 'package:trachcare/Screens/Views/Doctor/Bottomnavigator/Doctordb.dart';
-// import "package:flutter/cupertino.dart";
-
 import '../../components/Loginform.dart';
-import 'Adminlogin.dart';
-
-
 
 class AdminLogin extends StatelessWidget {
    AdminLogin({super.key});
