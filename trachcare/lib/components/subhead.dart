@@ -11,7 +11,7 @@ class subhead extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(Subhead,style:  GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             fontSize: 22,
                             color: Color(0XFF455A64),
                             fontWeight: FontWeight.bold)),);

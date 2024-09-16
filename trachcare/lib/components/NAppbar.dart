@@ -10,7 +10,7 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String Title;
   final height;
   final   actionbutton;
-   NormalAppbar(
+   const NormalAppbar(
     {super.key,
     required this.Title,
     this.actionbutton, required this.height});
@@ -19,7 +19,7 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return  AppBar(
       backgroundColor: TitleColor,
-    shape:  RoundedRectangleBorder(
+    shape:  const RoundedRectangleBorder(
     borderRadius: BorderRadius.vertical(
       bottom: Radius.circular(20),
 
@@ -29,7 +29,7 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
       onTap:(){
       Navigator.pop(context);
     },
-    child: Icon(CupertinoIcons.chevron_left,color: BlackColor,size: 28.0,),),
+    child: const Icon(CupertinoIcons.chevron_left,color: BlackColor,size: 28.0,),),
     title: Text(Title,style: GoogleFonts.ibmPlexSans(
                         textStyle: TextStyle(
                           fontWeight: FontWeight.bold,

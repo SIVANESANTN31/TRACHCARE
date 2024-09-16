@@ -1,14 +1,10 @@
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:get_thumbnail_video/index.dart';
 // import 'package:get_thumbnail_video/video_thumbnail.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:trachcare/Api/API_funcation/VideoApi.dart';
-import 'package:trachcare/Api/Apiurl.dart';
 import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/VideoPlayer_screen.dart';
-import 'package:trachcare/components/Appbar.dart';
 import 'package:trachcare/components/NAppbar.dart';
 import 'package:trachcare/style/colors.dart';
 import 'package:trachcare/style/utils/Dimention.dart';
@@ -60,7 +56,7 @@ class _VideospageState extends State<Videospage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: NormalAppbar(Title: "Videos", height: 90.0),
+        appBar: const NormalAppbar(Title: "Videos", height: 90.0),
         body: FutureBuilder(
             future: FetchVideos(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -79,7 +75,7 @@ class _VideospageState extends State<Videospage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => video_player()));
+                                        builder: (context) => const video_player()));
                               },
                               child: Videocard("assets/images/0.png",
                                   "5 Tips for Managing Lung Disease Symptoms")),
@@ -87,21 +83,21 @@ class _VideospageState extends State<Videospage> {
                       });
                 }
               } else if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
+                return const Center(
                   child: CupertinoActivityIndicator(
                     radius: 12,
                   ),
                 );
               }
 
-              return Center(
+              return const Center(
                 child: Text("something went wrong!!!"),
               );
             }));
   }
 
-  Widget Videocard(String ImageUrl, String Video_Title) {
-    Dimentions dn = new Dimentions(context);
+  Widget Videocard(String ImageUrl, String videoTitle) {
+    Dimentions dn = Dimentions(context);
     return Container(
       width: dn.width(78),
       height: dn.height(25),
@@ -118,7 +114,7 @@ class _VideospageState extends State<Videospage> {
                   image: AssetImage(ImageUrl),
                   fit: BoxFit.contain,
                 )),
-            CircleAvatar(
+            const CircleAvatar(
               backgroundColor: Colors.black45,
               child: Icon(
                 Icons.play_arrow,
@@ -127,7 +123,7 @@ class _VideospageState extends State<Videospage> {
             )
           ]),
           Text(
-            Video_Title,
+            videoTitle,
             style: Normal,
             textAlign: TextAlign.justify,
           )

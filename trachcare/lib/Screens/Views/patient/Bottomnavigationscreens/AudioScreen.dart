@@ -2,7 +2,6 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/components/NAppbar.dart";
-import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
 
 import "../../../../style/utils/Dimention.dart";
@@ -29,18 +28,18 @@ class AudioScreen extends StatelessWidget {
       "HELP"
     ];
     List colour = [
-      Color(0XFF82FF87),
-      Color(0XFFFB8A72),
-      Color(0XFFA8ECE8),
-      Color(0XFFEEECFF),
-      Color(0XFF82FF87),
-      Color(0XFFFB8A72),
-      Color(0XFFA8ECE8),
-      Color(0XFFEEECFF),
-      Color(0XFF82FF87),
-      Color(0XFFFB8A72),
-      Color(0XFFA8ECE8),
-      Color(0XFFEEECFF)
+      const Color(0XFF82FF87),
+      const Color(0XFFFB8A72),
+      const Color(0XFFA8ECE8),
+      const Color(0XFFEEECFF),
+      const Color(0XFF82FF87),
+      const Color(0XFFFB8A72),
+      const Color(0XFFA8ECE8),
+      const Color(0XFFEEECFF),
+      const Color(0XFF82FF87),
+      const Color(0XFFFB8A72),
+      const Color(0XFFA8ECE8),
+      const Color(0XFFEEECFF)
     ];
     Dimentions dn = Dimentions(context);
     return Scaffold(
@@ -49,7 +48,7 @@ class AudioScreen extends StatelessWidget {
         height: dn.height(15),
         actionbutton: IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.translate,
               color: whiteColor,
               size: 28,
@@ -72,7 +71,7 @@ class AudioScreen extends StatelessWidget {
                     color: whiteColor),
                 child: GridView.builder(
                   itemCount: 12,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       mainAxisSpacing: 6,
                       crossAxisSpacing: 2),
@@ -140,7 +139,7 @@ class AudioScreen extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: colour,
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: BlackColor_light,
                 blurRadius: 4.0,

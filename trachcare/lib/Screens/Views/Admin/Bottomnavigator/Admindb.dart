@@ -33,14 +33,14 @@ class Admindb extends StatelessWidget {
   Widget build(BuildContext context) {
 
     List pages=[
-       Doctorlist(),
-       Addvideos(),
-       patients_list(),
+       const Doctorlist(),
+       const Addvideos(),
+       const patients_list(),
     ];
-        Dimentions dn = new Dimentions(context);
+        Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: Appbar(Name: "rajieswari", height: dn.height(12),),
-       drawer: drawer(
+       drawer: const drawer(
         Name: 'rajieswari',
       ),
       body: Stack(
@@ -49,7 +49,7 @@ class Admindb extends StatelessWidget {
         ImageFiltered(
           imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/5.png'), 
                 
@@ -62,17 +62,17 @@ class Admindb extends StatelessWidget {
         SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
-                padding: EdgeInsets.all(16.0),
-                margin: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
+                margin: const EdgeInsets.all(16.0),
                 color: Colors.white.withOpacity(0.8), // Semi-transparent background for the content
                 child: Text(
                   'Your scrollable content goes here. ' * 1, // Example text
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               // Padding(
               //   padding: const EdgeInsets.all(8.0),
               //   child: GridView.builder(
@@ -102,7 +102,7 @@ class Admindb extends StatelessWidget {
                     child: GridView.builder(
                       itemCount: imgList.length,
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
                       childAspectRatio: (MediaQuery.of(context).size.height - 40 - 20)/ (4*175),
                       mainAxisSpacing: 10,
@@ -117,10 +117,10 @@ class Admindb extends StatelessWidget {
                           },
                           child: Container(
                             padding: 
-                            EdgeInsets.symmetric(vertical: 20, horizontal:  10),
+                            const EdgeInsets.symmetric(vertical: 20, horizontal:  10),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                   colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
@@ -130,10 +130,10 @@ class Admindb extends StatelessWidget {
                               children: [
                                 
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   child: 
                                   Image.asset("assets/images/${imgList[index]}.png", width: 70, height: 70,),),
-                                  SizedBox(height: 20,),
+                                  const SizedBox(height: 20,),
                                   Text(
                                     pages_name[index],
                                     style: TextStyle(

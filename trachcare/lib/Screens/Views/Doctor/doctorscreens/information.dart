@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:trachcare/components/Appbar_copy.dart';
 
-import '../../../../components/NAppbar.dart';
 
 class Information extends StatelessWidget {
   const Information({super.key});
@@ -11,7 +8,7 @@ class Information extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Duplicate_Appbar(Title: 'Information'),
+      appBar: const Duplicate_Appbar(Title: 'Information'),
       body: Container(
  
         width: double.infinity,

@@ -1,15 +1,14 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:trachcare/Api/DataStore/Datastore.dart';
-import 'package:trachcare/Screens/Views/Doctor/doctorscreens/Patientsdetails.dart';
 
 import '../../../../Api/API_funcation/patientsdetails.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
 
 class Addpatients extends StatefulWidget {
+  const Addpatients({super.key});
+
   @override
   _AddpatientsState createState() => _AddpatientsState();
 }
@@ -125,7 +124,7 @@ class _AddpatientsState extends State<Addpatients> {
                 //   'Enter Patient Details',
                 //   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 // ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 buildTextField('Name', (value) => name = value),
                 buildTextField('Age', (value) => age = value),
                 buildTextField('Address', (value) => address = value),
@@ -152,14 +151,14 @@ class _AddpatientsState extends State<Addpatients> {
                 buildTextField('Liver Function Test',(value) => liverFunctionTest = value),
                 buildTextField('Renal Function Test',
                 (value) => renalFunctionTest = value),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
                       onPressed: () => _save(context),
-                      child: Text('Save'),
-                    ),SizedBox(height: 15,),
+                      child: const Text('Save'),
+                    ),const SizedBox(height: 15,),
                     // ElevatedButton(
                     //   style: ElevatedButton.styleFrom(
                     //     backgroundColor: Colors.red,
@@ -172,7 +171,7 @@ class _AddpatientsState extends State<Addpatients> {
                     // ),
                   ],
                 ),
-                SizedBox(height: 100),
+                const SizedBox(height: 100),
               ],
             ),
           ),

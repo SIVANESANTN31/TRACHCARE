@@ -4,7 +4,6 @@ import "package:flutter/material.dart";
 import "package:trachcare/Api/Apiurl.dart";
 import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/style/Tropography.dart";
-import "package:trachcare/style/colors.dart";
 import "package:video_player/video_player.dart";
 
 import "../../../../style/utils/Dimention.dart";
@@ -14,7 +13,7 @@ import "../../../../style/utils/Dimention.dart";
 
 class video_player extends StatefulWidget {
   //final String Videoulrl;
-   video_player({super.key});
+   const video_player({super.key});
 
   @override
   State<video_player> createState() => _video_playerState();
@@ -28,7 +27,7 @@ class _video_playerState extends State<video_player> {
 
 
 
-VideoPlayerController _controller = VideoPlayerController.networkUrl(Uri.parse(
+final VideoPlayerController _controller = VideoPlayerController.networkUrl(Uri.parse(
         'http://$ip/Trachcare/uploads/videos/477456981614-hd_1920_1080_30fps.mp4'),
         videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true,), // Optional settings
   httpHeaders: {
@@ -88,7 +87,7 @@ VideoPlayerController _controller = VideoPlayerController.networkUrl(Uri.parse(
           );
         }
         else if(snapshot.connectionState==ConnectionState.waiting){
-          return Center(child: CupertinoActivityIndicator(radius: 12,),);
+          return const Center(child: CupertinoActivityIndicator(radius: 12,),);
         }
 
         return Column(

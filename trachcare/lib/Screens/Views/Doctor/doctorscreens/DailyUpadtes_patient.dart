@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -8,12 +7,11 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:trachcare/components/NAppbar.dart';
 
 import '../../../../style/colors.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../style/utils/Dimention.dart';
 
 class DailyUpdatePatients extends StatefulWidget {
-  DailyUpdatePatients({super.key});
+  const DailyUpdatePatients({super.key});
 
   @override
   State<DailyUpdatePatients> createState() => _DailyUpdatePatientsState();
@@ -24,13 +22,13 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
   Widget build(BuildContext context) {
 
 
-      DateTime _selectedDate = DateTime.now();
-  DateTime _focusedDate = DateTime.now();
+      DateTime selectedDate = DateTime.now();
+  DateTime focusedDate = DateTime.now();
 
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+  void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
-      _selectedDate = selectedDay;
-      _focusedDate = focusedDay;
+      selectedDate = selectedDay;
+      focusedDate = focusedDay;
     });
   }
 
@@ -42,14 +40,14 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
           TableCalendar(
             availableGestures: AvailableGestures.all,
             pageJumpingEnabled: true,
-            headerStyle:HeaderStyle(formatButtonVisible: false,titleCentered: true,) ,
-              focusedDay: _focusedDate,
+            headerStyle:const HeaderStyle(formatButtonVisible: false,titleCentered: true,) ,
+              focusedDay: focusedDate,
                firstDay: DateTime.utc(2010,1,1), 
                lastDay: DateTime.now().add(
-                Duration(days: 365),
+                const Duration(days: 365),
               ),
-              selectedDayPredicate: (day) => isSameDay(day, _selectedDate),
-        onDaySelected: _onDaySelected,
+              selectedDayPredicate: (day) => isSameDay(day, selectedDate),
+        onDaySelected: onDaySelected,
               
               )
 
@@ -72,9 +70,9 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
 
 
 
-Widget Namecard(String name, String patient_id) {
+Widget Namecard(String name, String patientId) {
   return Container(
-    margin: EdgeInsets.all(10),
+    margin: const EdgeInsets.all(10),
     width: double.infinity,
     height: 12.h,
     decoration: BoxDecoration(
@@ -83,7 +81,7 @@ Widget Namecard(String name, String patient_id) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        CircleAvatar(
+        const CircleAvatar(
           minRadius: 20,
           child: Image(image: AssetImage("assets/images/doctor.png")),
         ),
@@ -127,7 +125,7 @@ Widget Namecard(String name, String patient_id) {
                           textStyle: TextStyle(fontSize: 13.sp)),
                     ),
                     Text(
-                      patient_id,
+                      patientId,
                       style: GoogleFonts.ibmPlexSans(
                           textStyle: TextStyle(fontSize: 13.sp)),
                     )

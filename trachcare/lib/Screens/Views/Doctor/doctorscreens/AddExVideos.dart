@@ -5,6 +5,6 @@ class Adexvideos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Patients details'),);
+    return const Center(child: Text('Patients details'),);
   }
 }

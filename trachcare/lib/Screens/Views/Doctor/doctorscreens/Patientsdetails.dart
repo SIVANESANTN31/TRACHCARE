@@ -4,12 +4,15 @@ import 'package:http/http.dart' as http;
 import '../../../../Api/Apiurl.dart';
 import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../components/NAppbar.dart';
+import 'package:trachcare/components/NAppbar.dart';
+import '../../../../components/profilefeild.dart';
 import '../../../../style/utils/Dimention.dart';
 
 class ViewPatientDetails extends StatefulWidget {
   final String patientId;
   final String patientName;
   final String doctorId;  // Optional, in case you want to pass the name
+
 
   const ViewPatientDetails({Key? key, required this.patientId, required this.patientName,required this.doctorId,}) : super(key: key);
   @override

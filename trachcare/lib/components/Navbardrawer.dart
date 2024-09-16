@@ -12,7 +12,7 @@ import 'package:trachcare/style/colors.dart';
 
 class drawer extends StatelessWidget {
   final String Name;
-   drawer({super.key, required this.Name});
+   const drawer({super.key, required this.Name});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class drawer extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0XFFECCEA8),
               ),
               child: Center(
@@ -55,38 +55,38 @@ class drawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.person,
               ),
-              trailing:Icon(
+              trailing:const Icon(
                 Icons.chevron_right,
               ) ,
               title: const Text('My Profile'),
               onTap: () {
                  Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => ProfilePage(),)
+                                builder: (context) => const ProfilePage(),)
                                 );
               },
             ),
             ListTile(
-               trailing:Icon(
+               trailing:const Icon(
                 Icons.chevron_right,
               ) ,
-              leading: Icon(
+              leading: const Icon(
                 Icons.info_outline,
               ),
               title: const Text('Information'),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => Information(),)
+                                builder: (context) => const Information(),)
                                 );
               },
             ),
             ListTile(
-               trailing:Icon(
+               trailing:const Icon(
                 Icons.chevron_right,
               ) ,
-              leading: Icon(
+              leading: const Icon(
                 Icons.contacts,
               ),
               title: const Text('contacts'),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:trachcare/Screens/Views/Admin/Adminscreens/doctordetails.dart';
 
 import '../../../../Api/API_funcation/doctordetails.dart';
 import '../../../../style/utils/Dimention.dart';
@@ -42,11 +40,11 @@ class Adddoctor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Dimentions dn = new Dimentions(context);
+    Dimentions dn = Dimentions(context);
      return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
-        title: Text('Doctor Profile'),
+        title: const Text('Doctor Profile'),
         backgroundColor: const Color.fromRGBO(78, 230, 126, 1),
       ),
       body: SingleChildScrollView(
@@ -64,15 +62,15 @@ class Adddoctor extends StatelessWidget {
                       CircleAvatar(
                         radius: 50,
                         backgroundColor: Colors.grey[300],
-                        child: Icon(Icons.person, size: 50, color: Colors.blue),
+                        child: const Icon(Icons.person, size: 50, color: Colors.blue),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       ElevatedButton.icon(
                         onPressed: () {
                           // Handle picture change
                         },
-                        icon: Icon(Icons.camera_alt),
-                        label: Text('Change Picture'),
+                        icon: const Icon(Icons.camera_alt),
+                        label: const Text('Change Picture'),
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black, backgroundColor: Colors.grey[200],
                         ),
@@ -80,14 +78,14 @@ class Adddoctor extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 // Username Field
                 TextFormField(
                   controller: usernameController,
                   decoration: InputDecoration(
                     labelText: 'Username',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     filled: true,
                     fillColor: Colors.orange[100],
                   ),
@@ -98,14 +96,14 @@ class Adddoctor extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
 
                 // Doctor Registration Number Field
                 TextFormField(
                   controller: doctorRegNoController,
                   decoration: InputDecoration(
                     labelText: 'Doctor_reg_no',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     filled: true,
                     fillColor: Colors.orange[100],
                   ),
@@ -116,14 +114,14 @@ class Adddoctor extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
 
                 // Email Field
                 TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email Id',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     filled: true,
                     fillColor: Colors.orange[100],
                   ),
@@ -134,14 +132,14 @@ class Adddoctor extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
 
                 // Phone Number Field
                 TextFormField(
                   controller: phoneNumberController,
                   decoration: InputDecoration(
                     labelText: 'Phone Number',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     filled: true,
                     fillColor: Colors.orange[100],
                   ),
@@ -152,7 +150,7 @@ class Adddoctor extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
 
                 // Password Field
                 TextFormField(
@@ -160,7 +158,7 @@ class Adddoctor extends StatelessWidget {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     filled: true,
                     fillColor: Colors.orange[100],
                   ),
@@ -171,7 +169,7 @@ class Adddoctor extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
 
                 // Buttons: Edit and Delete
                 Row(
@@ -179,8 +177,8 @@ class Adddoctor extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () => _save(context),
-                      child: Text('Save'),
-                    ),SizedBox(height: 15,),
+                      child: const Text('Save'),
+                    ),const SizedBox(height: 15,),
                     // ElevatedButton(
                     //   style: ElevatedButton.styleFrom(
                     //     backgroundColor: Colors.red,

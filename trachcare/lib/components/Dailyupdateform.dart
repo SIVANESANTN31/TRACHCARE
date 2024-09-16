@@ -10,7 +10,7 @@ import 'package:trachcare/style/Tropography.dart';
 import 'package:trachcare/style/colors.dart';
 
 class Dailyupdateform extends StatefulWidget {
-  Dailyupdateform({super.key});
+  const Dailyupdateform({super.key});
 
   @override
   State<Dailyupdateform> createState() => _DailyupdateformState();
@@ -20,24 +20,31 @@ class _DailyupdateformState extends State<Dailyupdateform> {
   @override
   bool yes_selected = false;
   bool no_selected = false;
-  TextEditingController dropmenu = new TextEditingController(text: "Select the option");
-  TextEditingController dropmenu1 = new TextEditingController(text: "Select the option"); 
-  TextEditingController dropmenu2 = new TextEditingController(text: "Select the option");
-  TextEditingController dropmenu3 = new TextEditingController(text: "Select the option");
-  TextEditingController dropmenu4 = new TextEditingController(text: "Select the option");
+  TextEditingController dropmenu = TextEditingController(text: "Select the option");
+  TextEditingController dropmenu1 = TextEditingController(text: "Select the option"); 
+  TextEditingController dropmenu2 = TextEditingController(text: "Select the option");
+  TextEditingController dropmenu3 = TextEditingController(text: "Select the option");
+  TextEditingController dropmenu4 = TextEditingController(text: "Select the option");
 
 
-   TextEditingController input1 = new TextEditingController();
-   TextEditingController input2 = new TextEditingController();
-   TextEditingController input3 = new TextEditingController();
-   TextEditingController input4 = new TextEditingController();
-   TextEditingController input5 = new TextEditingController();
+   TextEditingController input1 = TextEditingController();
+   TextEditingController input2 = TextEditingController();
+   TextEditingController input3 = TextEditingController();
+   TextEditingController input4 = TextEditingController();
+   TextEditingController input5 = TextEditingController();
 
+  @override
   Widget build(BuildContext context) {
     return CupertinoFormSection(
       
-      header: Text("Daily Update"), children: [
+      header: const Text("Daily Update"), children: [
       CupertinoFormRow(
+        prefix: Text(
+          
+          "Vitals",
+          style: Normal,
+          softWrap: true,
+        ),
         child: SizedBox(
             width: 70.w,
             height: 6.h,
@@ -45,14 +52,13 @@ class _DailyupdateformState extends State<Dailyupdateform> {
               controller: input1,
               placeholder: "Enter the values",
             )),
+      ),
+      CupertinoFormRow(
         prefix: Text(
-          
-          "Vitals",
+          "Respiratory\nRate",
           style: Normal,
           softWrap: true,
         ),
-      ),
-      CupertinoFormRow(
         child: SizedBox(
             width: 70.w,
             height: 6.h,
@@ -60,13 +66,12 @@ class _DailyupdateformState extends State<Dailyupdateform> {
               controller: input2,
               placeholder: "Enter the values",
             )),
-        prefix: Text(
-          "Respiratory\nRate",
-          style: Normal,
-          softWrap: true,
-        ),
       ),
       CupertinoFormRow(
+        prefix: Text(
+          "Heart Rate",
+          style: Normal,
+        ),
         child: SizedBox(
             width: 70.w,
             height: 6.h,
@@ -74,12 +79,12 @@ class _DailyupdateformState extends State<Dailyupdateform> {
               controller: input3,
               placeholder: "Enter the values",
             )),
-        prefix: Text(
-          "Heart Rate",
-          style: Normal,
-        ),
       ),
       CupertinoFormRow(
+        prefix: Text(
+          "SPO2\n@Room Air",
+          style: Normal,
+        ),
         child: SizedBox(
             width: 70.w,
             height: 6.h,
@@ -87,12 +92,12 @@ class _DailyupdateformState extends State<Dailyupdateform> {
               controller: input4,
               placeholder: "Enter the values",
             )),
-        prefix: Text(
-          "SPO2\n@Room Air",
-          style: Normal,
-        ),
       ),
       CupertinoFormRow(
+        prefix: Text(
+          "Decrease in\nurine output",
+          style: Normal,
+        ),
         child: SizedBox(
             width: 70.w,
             height: 6.h,
@@ -100,13 +105,9 @@ class _DailyupdateformState extends State<Dailyupdateform> {
               controller: input5,
               placeholder: "Enter the values",
             )),
-        prefix: Text(
-          "Decrease in\nurine output",
-          style: Normal,
-        ),
       ),
       CupertinoFormRow(
-          prefix: Text("Daily dressing done ?"),
+          prefix: const Text("Daily dressing done ?"),
           child: SizedBox(
             width: 50.w,
             height: 5.5.h,
@@ -151,7 +152,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             ),
           )),
       CupertinoFormRow(
-          prefix: Text("Trachestomy tie\nchanged ?"),
+          prefix: const Text("Trachestomy tie\nchanged ?"),
           child: SizedBox(
             width: 50.w,
             height: 5.5.h,
@@ -196,7 +197,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             ),
           )),
       CupertinoFormRow(
-          prefix: Text("Suctioning done ?"),
+          prefix: const Text("Suctioning done ?"),
           child: SizedBox(
             width: 50.w,
             height: 5.5.h,
@@ -241,7 +242,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             ),
           )),
       CupertinoFormRow(
-          prefix: Text("Has the patient\nstarted on oral feeds ?"),
+          prefix: const Text("Has the patient\nstarted on oral feeds ?"),
           child: SizedBox(
             width: 50.w,
             height: 5.5.h,
@@ -286,7 +287,7 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             ),
           )),
       CupertinoFormRow(
-          prefix: Text("Has the patient been\nchanged to green tube?"),
+          prefix: const Text("Has the patient been\nchanged to green tube?"),
           child: SizedBox(
             width: 50.w,
             height: 5.5.h,
@@ -331,9 +332,9 @@ class _DailyupdateformState extends State<Dailyupdateform> {
             ),
           )),
       CupertinoFormSection(
-        header: Text("Spigotting status"),
+        header: const Text("Spigotting status"),
         children: [
-          CupertinoFormRow(
+          const CupertinoFormRow(
               child: Text(
                   "Is the patient able berath through noise, while blocking the tube with hands ?")),
           CupertinoFormRow(
