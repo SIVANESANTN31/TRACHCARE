@@ -14,7 +14,7 @@ class custom_Button extends StatelessWidget {
   final Color textcolor;
   final List<BoxShadow>? boxShadow;
   
-  custom_Button( 
+  const custom_Button( 
       {super.key,
       required this.text,
       required this.width,
@@ -34,7 +34,7 @@ class custom_Button extends StatelessWidget {
             color: Colors.black.withOpacity(0.25),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 3)),
+                            offset: const Offset(0, 3)),
 
         ],
       ),
@@ -57,7 +57,7 @@ class custom_Button extends StatelessWidget {
                             fontWeight: FontWeight.bold)),
               ),
               icon == null
-                  ? Text("")
+                  ? const Text("")
                   : Icon(
                       icon,
                       size: 28,

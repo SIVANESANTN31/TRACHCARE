@@ -4,20 +4,16 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/API_funcation/PatientDashboard.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
-import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/AudioScreen.dart';
 import 'package:trachcare/components/Appbar.dart';  
 import 'package:trachcare/components/Navbardrawer.dart';
 import 'package:trachcare/style/colors.dart';
-import '../../../../style/Tropography.dart';
 import '../../../../style/utils/Dimention.dart';
-import 'package:flutter/src/material/carousel.dart';
 
 class PatientDashBoard extends StatelessWidget {
   const PatientDashBoard({super.key});
@@ -35,7 +31,7 @@ class PatientDashBoard extends StatelessWidget {
       future: PatientDashBoardApi().FetchDetials(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if(snapshot.connectionState == ConnectionState.waiting){
-          return Center(child: CupertinoActivityIndicator(radius: 10,),);
+          return const Center(child: CupertinoActivityIndicator(radius: 10,),);
         }
         if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasData){
@@ -63,7 +59,7 @@ class PatientDashBoard extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: whiteColor,
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                    color: BlackColor_light,
                     blurRadius: 4.0,
@@ -118,7 +114,7 @@ class PatientDashBoard extends StatelessWidget {
                                 border: Border.all(),
                                 borderRadius: BorderRadius.circular(10)
                               ),
-                              child: Center(child: Text(" Aug 15")),
+                              child: const Center(child: Text(" Aug 15")),
                             )
                           ],
                         ),
@@ -128,7 +124,7 @@ class PatientDashBoard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(9.0),
                       child: Text("Exercisers For Trach Care:", style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, color: Color(0XFF455A64)))),
+                        textStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, color: const Color(0XFF455A64)))),
                     ),
                    
                     
@@ -139,16 +135,16 @@ class PatientDashBoard extends StatelessWidget {
             );
           }
         }
-        return Center(child: Text("No data available"));
+        return const Center(child: Text("No data available"));
       }
     );
 
     
   }
   Widget carsouleview(List<String> imagesList,BuildContext context) {
-    Dimentions dn = new Dimentions(context);
+    Dimentions dn = Dimentions(context);
     
-    return Container(
+    return SizedBox(
       width: dn.width(100),
       height: dn.height(17),
           child: 
@@ -161,7 +157,7 @@ class PatientDashBoard extends StatelessWidget {
                   children: [
                  
                  Center(child: Image.asset(imagesList[itemIndex], fit: BoxFit.cover, width: 1000)),
-                    CircleAvatar(
+                    const CircleAvatar(
                 backgroundColor: Colors.black45,
                 child: Icon(Icons.play_arrow,color: whiteColor,),
               )
@@ -170,7 +166,7 @@ class PatientDashBoard extends StatelessWidget {
                  ])), 
                  options:  CarouselOptions(
                   autoPlay: true,
-                  autoPlayInterval: Duration(seconds: 2),
+                  autoPlayInterval: const Duration(seconds: 2),
                   autoPlayCurve: material.Curves.easeIn,
                   enableInfiniteScroll: true,
                  ),
@@ -187,8 +183,8 @@ class PatientDashBoard extends StatelessWidget {
 Widget circleButton(String time,){
   return Column(
     children: [
-      Padding(
-        padding: const EdgeInsets.all(4.0),
+      const Padding(
+        padding: EdgeInsets.all(4.0),
         child: CircleAvatar(
           backgroundColor: admin_color,
         ),
@@ -209,7 +205,7 @@ Widget Helpercontainer(String text,Color colour,final buttonfuncation){
         height: 8.h,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
         color: colour,
-        boxShadow: [
+        boxShadow: const [
                       BoxShadow(
               color: BlackColor_light,
               blurRadius: 4.0,

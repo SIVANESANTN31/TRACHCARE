@@ -13,7 +13,7 @@ class Doctordetails extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
-        title: Text('Doctor Profile (View Only)'),
+        title: const Text('Doctor Profile (View Only)'),
         backgroundColor: const Color.fromARGB(255, 140, 207, 88),
       ),
       body: SingleChildScrollView(
@@ -29,13 +29,13 @@ class Doctordetails extends StatelessWidget {
                     CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.grey[300],
-                      child: Icon(Icons.person, size: 50, color: Colors.blue),
+                      child: const Icon(Icons.person, size: 50, color: Colors.blue),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Username Field (View Only)
               TextFormField(
@@ -43,12 +43,12 @@ class Doctordetails extends StatelessWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   labelText: 'Username',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.orange[100],
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Doctor Registration Number Field (View Only)
               TextFormField(
@@ -56,12 +56,12 @@ class Doctordetails extends StatelessWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   labelText: 'Doctor_reg_no',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.orange[100],
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Email Field (View Only)
               TextFormField(
@@ -69,12 +69,12 @@ class Doctordetails extends StatelessWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   labelText: 'Email Id',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.orange[100],
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Phone Number Field (View Only)
               TextFormField(
@@ -82,12 +82,12 @@ class Doctordetails extends StatelessWidget {
                 enabled: false,
                 decoration: InputDecoration(
                   labelText: 'Phone Number',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.orange[100],
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Password Field (View Only)
               TextFormField(
@@ -96,12 +96,12 @@ class Doctordetails extends StatelessWidget {
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.orange[100],
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
             ],
           ),
         ),

@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 import 'package:trachcare/Api/Apiurl.dart';
 import "package:http/http.dart" as http;
-import 'package:trachcare/Screens/Views/Admin/Adminscreens/doctordetails.dart';
-import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
-import 'package:trachcare/Screens/Views/Doctor/Bottomnavigator/Addpatients.dart';
-import 'package:trachcare/Screens/Views/Doctor/doctorscreens/Patientsdetails.dart';
 
 import '../../Screens/Views/Doctor/Bottomnavigator/patientslist.dart';
 
@@ -28,11 +24,11 @@ void SubmitPatientDetails(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Success'),
-              content: Text('Doctor added successfully.'),
+              title: const Text('Success'),
+              content: const Text('Doctor added successfully.'),
               actions: <Widget>[
                 TextButton(
-                  child: Text('OK'),
+                  child: const Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -43,7 +39,7 @@ void SubmitPatientDetails(
         );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => patientslist()),
+          MaterialPageRoute(builder: (context) => const patientslist()),
         );
       } else {
         toastification.show(
@@ -63,7 +59,7 @@ void SubmitPatientDetails(
       type: ToastificationType.error,
       style: ToastificationStyle.flatColored,
       context: context,
-      title: Text('Something went wrong'),
+      title: const Text('Something went wrong'),
       showProgressBar: false,
       icon: const Icon(Icons.cancel_rounded, color: Colors.red),
       showIcon: true,
@@ -97,7 +93,7 @@ void UpdatePatientDetails(BuildContext context, String patientId,
         );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => patientslist()),
+          MaterialPageRoute(builder: (context) => const patientslist()),
         );
       } else {
         toastification.show(
@@ -117,7 +113,7 @@ void UpdatePatientDetails(BuildContext context, String patientId,
       type: ToastificationType.error,
       style: ToastificationStyle.flatColored,
       context: context,
-      title: Text('Something went wrong'),
+      title: const Text('Something went wrong'),
       showProgressBar: false,
       icon: const Icon(Icons.cancel_rounded, color: Colors.red),
       showIcon: true,
@@ -142,7 +138,7 @@ void ViewPatientDetails(BuildContext context, String patientId) async {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Patient Details'),
+              title: const Text('Patient Details'),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
@@ -157,7 +153,7 @@ void ViewPatientDetails(BuildContext context, String patientId) async {
                         'Post-op Tracheostomy Day: ${data['userInfo']['post_op_tracheostomy_day']}'),
                     Text(
                         'Tube Name and Size: ${data['userInfo']['tube_name_and_size']}'),
-                    Text('Baseline Vitals:'),
+                    const Text('Baseline Vitals:'),
                     Text(
                         ' - Respiratory Rate: ${data['userInfo']['baseline_vitals']['respiratory_rate']}'),
                     Text(
@@ -188,7 +184,7 @@ void ViewPatientDetails(BuildContext context, String patientId) async {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: Text('Close'),
+                  child: const Text('Close'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -215,7 +211,7 @@ void ViewPatientDetails(BuildContext context, String patientId) async {
       type: ToastificationType.error,
       style: ToastificationStyle.flatColored,
       context: context,
-      title: Text('Something went wrong'),
+      title: const Text('Something went wrong'),
       showProgressBar: false,
       icon: const Icon(Icons.cancel_rounded, color: Colors.red),
       showIcon: true,

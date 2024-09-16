@@ -8,7 +8,6 @@ import "../../../../style/colors.dart";
 import "../../../../components/profilefeild.dart";
 // import 'package:onboarding/utils/profilefield.dart';
 
-import "../../../../components/profilefeild.dart";
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -24,22 +23,22 @@ class ProfilePage extends StatelessWidget {
                 Container(
                   alignment: Alignment.topLeft,
                   height: 25.h,
-                  child: SafeArea(
-                    child: InkWell(
-                          onTap:(){
-                          Navigator.pop(context);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(CupertinoIcons.chevron_left,color: BlackColor,size: 28.0,),
-                        ),),
-                  ),
                   decoration: const BoxDecoration(
                     color: TitleColor,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     ),
+                  ),
+                  child: SafeArea(
+                    child: InkWell(
+                          onTap:(){
+                          Navigator.pop(context);
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(CupertinoIcons.chevron_left,color: BlackColor,size: 28.0,),
+                        ),),
                   ),
                 ),
                 Padding(
@@ -82,7 +81,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 6,),
+                          const SizedBox(height: 6,),
                           Center(
                             child: Container(
                               width: 40.w,
@@ -101,7 +100,7 @@ class ProfilePage extends StatelessWidget {
                                       textStyle: TextStyle(
                                           //fontWeight: FontWeight.bold,
                                           fontSize: 11.sp))),
-                                  Icon(Icons.image),
+                                  const Icon(Icons.image),
                         ]),
                             ),
                           ),

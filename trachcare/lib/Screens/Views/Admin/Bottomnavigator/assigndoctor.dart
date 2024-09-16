@@ -8,7 +8,7 @@ class assigndoctor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     Dimentions dn = new Dimentions(context);
+     Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: NormalAppbar(Title: "Assign Doctors to Patients", height: dn.height(10),),
     );

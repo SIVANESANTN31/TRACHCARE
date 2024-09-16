@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen>
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => BounceInUp(
         curve: Curves.linear,
         
-        child: Welcome_page())));
+        child: const Welcome_page())));
     });
     }
   

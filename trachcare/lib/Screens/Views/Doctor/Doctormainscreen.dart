@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
-import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/AudioScreen.dart';
-import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/PatientDashborad.dart';
 import 'package:trachcare/style/colors.dart';
 
 import 'Bottomnavigator/Addpatients.dart';
@@ -16,8 +13,8 @@ class Doctormainpage extends StatelessWidget {
   Widget build(BuildContext context) {
     List pages=[
        DoctorDashBoard(),
-       Addpatients(),
-       patientslist(),
+       const Addpatients(),
+       const patientslist(),
     ];
     return CupertinoTabScaffold(
 

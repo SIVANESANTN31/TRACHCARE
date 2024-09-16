@@ -60,7 +60,7 @@ class _patientslistState extends State<patientslist> {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 217, 255, 215),
+      backgroundColor: const Color.fromARGB(255, 217, 255, 215),
       appBar: NormalAppbar(
         Title: "Patients List",height: dn.height(10),
       ),
@@ -77,7 +77,7 @@ class _patientslistState extends State<patientslist> {
           child: Column(
             children: [
               Container(
-                  margin: EdgeInsets.only(top: 5, bottom:8,),
+                  margin: const EdgeInsets.only(top: 5, bottom:8,),
                   width: MediaQuery.of(context).size.width,
                   height: 55,
                   alignment: Alignment.center,
@@ -88,7 +88,7 @@ class _patientslistState extends State<patientslist> {
                       BoxShadow(color: Colors.black.withOpacity(0.15),
                           spreadRadius: 5,
                           blurRadius: 7,
-                          offset: Offset(0, 3))],
+                          offset: const Offset(0, 3))],
                   ),
         
                   child: TextFormField(
@@ -99,7 +99,7 @@ class _patientslistState extends State<patientslist> {
                       hintStyle: TextStyle(
                         color: Colors.black.withOpacity(0.5),
                       ),
-                      prefixIcon: Icon(Icons.search,size: 25,),
+                      prefixIcon: const Icon(Icons.search,size: 25,),
                     ),
                   )
               ),
@@ -109,19 +109,19 @@ class _patientslistState extends State<patientslist> {
                 child: ListView.builder(
                   itemCount: display_list.length,
                   itemBuilder: (context, index) => Card(
-                    color: Color.fromRGBO(255, 255, 255, 1),
+                    color: const Color.fromRGBO(255, 255, 255, 1),
                     elevation: 4,
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     child: ListTile(
                       onTap: (){
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Patientsdetails(),),);
+                          builder: (context) => const Patientsdetails(),),);
                       },
-                      leading: CircleAvatar(
+                      leading: const CircleAvatar(
                         radius: 25,
                         backgroundImage: AssetImage('assets/images/doctor.png'),
                       ),
-                      title: Text(display_list[index]['name'], style:TextStyle(
+                      title: Text(display_list[index]['name'], style:const TextStyle(
                         color: Colors.black,
                       )),
                       subtitle:Text(
@@ -137,13 +137,13 @@ class _patientslistState extends State<patientslist> {
           ),
         );}}
         else if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
+                return const Center(
                   child: CupertinoActivityIndicator(
                     radius: 12,
                   ),
                 );
               }
-               return Center(
+               return const Center(
                 child: Text("something went wrong!!!"),
               );
 

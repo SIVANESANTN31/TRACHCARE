@@ -1,5 +1,5 @@
 import 'dart:convert';  // For JSON encoding/decoding
-import 'dart:typed_data';  // For handling image data
+// For handling image data
 import 'package:http/http.dart' as http;  // For HTTP requests
 import 'package:flutter/material.dart';
 import 'package:trachcare/Api/Apiurl.dart';
@@ -50,18 +50,18 @@ Future<void> addDoctorDetails(
       if (data['Status']) {
         Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => Doctorlist()));
+    MaterialPageRoute(builder: (context) => const Doctorlist()));
     requestBody.clear();
         // Success: Show a success dialog or message
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Success'),
-              content: Text('Doctor added successfully.'),
+              title: const Text('Success'),
+              content: const Text('Doctor added successfully.'),
               actions: <Widget>[
                 TextButton(
-                  child: Text('OK'),
+                  child: const Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

@@ -1,8 +1,6 @@
 // ignore_for_file: unused_import, unused_local_variable
 
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:flutter/widgets.dart";
 import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
@@ -28,13 +26,13 @@ class _Welcome_pageState extends State<Welcome_page> {
 
 
 
-Dimentions dn = new Dimentions(context);
-var Screen_Size = MediaQuery.of(context).size;
+Dimentions dn = Dimentions(context);
+var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
 
               //colorFilter: ColorFilter.mode(const Color.fromARGB(255, 129, 128, 128), BlendMode.dstATop),
@@ -47,7 +45,7 @@ var Screen_Size = MediaQuery.of(context).size;
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Titlehead(
+              const Titlehead(
                 titleName: 'TRACHCARE',
               ),
               
@@ -66,7 +64,7 @@ var Screen_Size = MediaQuery.of(context).size;
                       width: dn.width(37),
                       height: dn.height(17),
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [Color(0XFFA7DBAF), Color(0XFFD2EFD7)],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
@@ -75,12 +73,12 @@ var Screen_Size = MediaQuery.of(context).size;
                             BoxShadow(color: Colors.black.withOpacity(0.25),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 3))],
+                            offset: const Offset(0, 3))],
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 60,
                             height: 60,
                             child: CircleAvatar(
@@ -90,7 +88,7 @@ var Screen_Size = MediaQuery.of(context).size;
                           ),
                           Text("Doctor",
                               style: GoogleFonts.ibmPlexSans(
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                       fontSize: 17,
                                       color: Color(0XFF455A64),
                                       fontWeight: FontWeight.bold)))
@@ -109,7 +107,7 @@ var Screen_Size = MediaQuery.of(context).size;
                       width: dn.width(37),
                       height: dn.height(17),
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
@@ -118,12 +116,12 @@ var Screen_Size = MediaQuery.of(context).size;
                             BoxShadow(color: Colors.black.withOpacity(0.25),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 3))],
+                            offset: const Offset(0, 3))],
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 60,
                             height: 60,
                             child: CircleAvatar(
@@ -133,7 +131,7 @@ var Screen_Size = MediaQuery.of(context).size;
                           ),
                           Text("Patient",
                               style: GoogleFonts.ibmPlexSans(
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                       fontSize: 17,
                                       color: Color(0XFF455A64),
                                       fontWeight: FontWeight.bold)))
@@ -156,7 +154,7 @@ var Screen_Size = MediaQuery.of(context).size;
                       width: dn.width(60),
                       height: dn.height(7),
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [Color.fromARGB(255, 35, 198, 60), Color.fromARGB(255, 153, 255, 168)],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
@@ -165,14 +163,14 @@ var Screen_Size = MediaQuery.of(context).size;
                             BoxShadow(color: Colors.black.withOpacity(0.25),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 3))],
+                            offset: const Offset(0, 3))],
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text("ADMIN",
                               style: GoogleFonts.ibmPlexSans(
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                   fontSize: 17,
                                   color: Color(0XFF455A64),
                                   fontWeight: FontWeight.bold)))

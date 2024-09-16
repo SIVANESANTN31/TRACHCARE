@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:trachcare/Api/API_funcation/PatientDashboard.dart';
-import 'package:trachcare/Screens/Views/patient/patientscreens/dailyupdates.dart';
 import 'package:trachcare/components/NAppbar.dart';
 import 'package:trachcare/style/Tropography.dart';
 import 'package:trachcare/style/colors.dart';
@@ -41,13 +39,13 @@ class _YourdailyReportsState extends State<YourdailyReports> {
         future: PatientDashBoardApi().FetchDetials(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {  
           if(snapshot.connectionState == ConnectionState.waiting){
-          return Center(child: CupertinoActivityIndicator(radius: 10,),);
+          return const Center(child: CupertinoActivityIndicator(radius: 10,),);
         }
         if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasData){
             var patientDetials = snapshot.data;
             var name  = patientDetials['name'].toString();
-            var patient_id =  patientDetials['patient_id'].toString();
+            var patientId =  patientDetials['patient_id'].toString();
             var age = patientDetials['age'].toString();
 
 
@@ -56,16 +54,16 @@ class _YourdailyReportsState extends State<YourdailyReports> {
            
            Padding(
                  padding: const EdgeInsets.symmetric(horizontal: 22,vertical: 10),
-                 child: NameCard(name, patient_id, age),
+                 child: NameCard(name, patientId, age),
                ),
                 TableCalendar(
               availableGestures: AvailableGestures.all,
               pageJumpingEnabled: true,
-              headerStyle:HeaderStyle(formatButtonVisible: false,titleCentered: true,) ,
+              headerStyle:const HeaderStyle(formatButtonVisible: false,titleCentered: true,) ,
                 focusedDay: _focusedDate,
                  firstDay: DateTime.utc(2010,1,1), 
                  lastDay: DateTime.now().add(
-                  Duration(days: 365),
+                  const Duration(days: 365),
                 ),
                 selectedDayPredicate: (day) => isSameDay(day, _selectedDate),
           onDaySelected: _onDaySelected,
@@ -90,7 +88,7 @@ class _YourdailyReportsState extends State<YourdailyReports> {
 }
 
 
-Widget NameCard(String name, String patient_id ,String Dob){
+Widget NameCard(String name, String patientId ,String Dob){
 
   return Container( 
     width: 88.w,
@@ -101,7 +99,7 @@ Widget NameCard(String name, String patient_id ,String Dob){
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        CircleAvatar(
+        const CircleAvatar(
                   minRadius: 20,
                   child: Image(image: AssetImage("assets/images/doctor.png")),),
                 Padding(
@@ -140,7 +138,7 @@ Widget NameCard(String name, String patient_id ,String Dob){
           Text(name,style: GoogleFonts.ibmPlexSans(
                         textStyle: TextStyle(
                             fontSize: 13.sp)),),
-      Text(patient_id,style: GoogleFonts.ibmPlexSans(
+      Text(patientId,style: GoogleFonts.ibmPlexSans(
                         textStyle: TextStyle(
                             fontSize: 13.sp)),),
         Text(Dob,style: GoogleFonts.ibmPlexSans(

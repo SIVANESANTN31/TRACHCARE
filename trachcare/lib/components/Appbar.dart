@@ -1,5 +1,4 @@
 // ignore_for_file: unused_import
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -13,19 +12,19 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
   final PreferredSizeWidget? bottom;
 
-  Appbar({super.key, required this.Name, this.bottom, required this.height});
+  const Appbar({super.key, required this.Name, this.bottom, required this.height});
 
   @override
   AppBar build(BuildContext context) {
     return AppBar(
       backgroundColor: TitleColor,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
         bottom: Radius.circular(10),
       )),
       leading: Builder(builder: (BuildContext context) {
         return IconButton(
-          icon: Icon(Icons.menu),
+          icon: const Icon(Icons.menu),
           onPressed: () {
             Scaffold.of(context).openDrawer();
           },
@@ -34,7 +33,7 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
       }),
       centerTitle: true,
       title: Text(
-        "Hi,${Name}",
+        "Hi,$Name",
         style: GoogleFonts.ibmPlexSans(
             textStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
       ),
@@ -44,7 +43,7 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
               // FlutterOpenWhatsapp.sendSingleMessage(
               //     "9500077434", "Hello, this is a test message.");
             },
-            icon: Icon(
+            icon: const Icon(
               FontAwesomeIcons.whatsapp,
               color: Colors.green,
             ))

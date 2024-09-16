@@ -13,7 +13,7 @@ class loginForm extends StatefulWidget {
   final Singup_button;
 
   final GlobalKey<FormState> formKey;
-   loginForm({super.key, this.Singup_button, required this.formKey});
+   const loginForm({super.key, this.Singup_button, required this.formKey});
 
   @override
   State<loginForm> createState() => _loginFormState();
@@ -29,7 +29,7 @@ LoginDataStore store = LoginDataStore();
     bool visiblilty = true;
   @override
   Widget build(BuildContext context) {
-Dimentions dn = new Dimentions(context);
+Dimentions dn = Dimentions(context);
 
     return Container(
       width: dn.width(90),
@@ -104,11 +104,11 @@ Dimentions dn = new Dimentions(context);
                                         });
                                       },
                                       icon: visiblilty
-                                          ? Icon(
+                                          ? const Icon(
                                               CupertinoIcons.eye_slash,
                                               size: 28.0,
                                             )
-                                          : Icon(
+                                          : const Icon(
                                               CupertinoIcons.eye,
                                               size: 28.0,
                                             )),
@@ -122,7 +122,7 @@ Dimentions dn = new Dimentions(context);
                 child: Text(
                   "Forget Password",
                   style: GoogleFonts.ibmPlexSans(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                           fontSize: 15,
                           color: Color(0XFF455A64),
                           fontWeight: FontWeight.bold)),

@@ -1,4 +1,4 @@
-Map<String,String> LoginData = Map();
+Map<String,String> LoginData = {};
 class LoginDataStore{
   void Setusername(String username){
     LoginData.addAll({"username":username});

@@ -23,7 +23,7 @@ class your_daily_updates extends StatelessWidget {
           Namecard("siva", "12345"),
           
           Gap(2.h),
-          Dailyupdateform(),
+          const Dailyupdateform(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: custom_Button(
@@ -43,11 +43,11 @@ class your_daily_updates extends StatelessWidget {
   }
 }
 
-Widget Namecard(String name ,String patient_id){
+Widget Namecard(String name ,String patientId){
 
       return Container(
             
-            margin: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
             width: double.infinity,
             height: 12.h,
             decoration: BoxDecoration(
@@ -58,7 +58,7 @@ Widget Namecard(String name ,String patient_id){
               
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   minRadius: 20,
                   child: Image(image: AssetImage("assets/images/doctor.png")),),
                 Padding(
@@ -90,7 +90,7 @@ Widget Namecard(String name ,String patient_id){
           Text(name,style: GoogleFonts.ibmPlexSans(
                         textStyle: TextStyle(
                             fontSize: 13.sp)),),
-      Text(patient_id,style: GoogleFonts.ibmPlexSans(
+      Text(patientId,style: GoogleFonts.ibmPlexSans(
                         textStyle: TextStyle(
                             fontSize: 13.sp)),)
         ],

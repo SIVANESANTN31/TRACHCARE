@@ -17,7 +17,7 @@ class Adminmainpage extends StatelessWidget {
     List pages=[
        Admindb(),
        Adddoctor(),
-       assigndoctor(),
+       const assigndoctor(),
     ];
     return CupertinoTabScaffold(
 

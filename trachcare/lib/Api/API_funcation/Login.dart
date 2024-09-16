@@ -32,7 +32,7 @@ class LoginClassApi{
     );
     Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => Doctormainpage()));
+    MaterialPageRoute(builder: (context) => const Doctormainpage()));
     LoginData.clear();
     Doctor_id = data['userInfo']['doctorid'];
     
@@ -61,7 +61,7 @@ class LoginClassApi{
                 type: ToastificationType.error ,
       style: ToastificationStyle.flatColored,
       context: context, // optional if you use ToastificationWrapper
-      title: Text('Something went wrong'),
+      title: const Text('Something went wrong'),
       showProgressBar: false,
       icon: const Icon(Icons.cancel_rounded,color: Colors.red,),
       showIcon: true, // show or hide the icon
@@ -97,7 +97,7 @@ class LoginClassApi{
     );
     Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => PatientMainScreen()));
+    MaterialPageRoute(builder: (context) => const PatientMainScreen()));
     LoginData.clear();
     patient_id = data['userInfo']['patient_id'];
     Doctor_id = data['userInfo']['doctorid'];
@@ -127,7 +127,7 @@ class LoginClassApi{
                 type: ToastificationType.error ,
       style: ToastificationStyle.flatColored,
       context: context, // optional if you use ToastificationWrapper
-      title: Text('Something went wrong'),
+      title: const Text('Something went wrong'),
       showProgressBar: false,
       icon: const Icon(Icons.cancel_rounded,color: Colors.red,),
       showIcon: true, // show or hide the icon
@@ -160,7 +160,7 @@ class LoginClassApi{
     );
     Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => Adminmainpage()));
+    MaterialPageRoute(builder: (context) => const Adminmainpage()));
     LoginData.clear();
     patient_id = data['userInfo']['patient_id'];
     
@@ -189,7 +189,7 @@ class LoginClassApi{
                 type: ToastificationType.error ,
       style: ToastificationStyle.flatColored,
       context: context, // optional if you use ToastificationWrapper
-      title: Text('Something went wrong'),
+      title: const Text('Something went wrong'),
       showProgressBar: false,
       icon: const Icon(Icons.cancel_rounded,color: Colors.red,),
       showIcon: true, // show or hide the icon

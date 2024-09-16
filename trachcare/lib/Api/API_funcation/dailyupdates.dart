@@ -29,7 +29,7 @@ void SubmitDailyVitals(BuildContext context, String patientId, Map<String, dynam
         );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DailyUpdatePatients()),
+          MaterialPageRoute(builder: (context) => const DailyUpdatePatients()),
         );
       } else {
         toastification.show(
@@ -49,7 +49,7 @@ void SubmitDailyVitals(BuildContext context, String patientId, Map<String, dynam
       type: ToastificationType.error,
       style: ToastificationStyle.flatColored,
       context: context,
-      title: Text('Something went wrong'),
+      title: const Text('Something went wrong'),
       showProgressBar: false,
       icon: const Icon(Icons.cancel_rounded, color: Colors.red),
       showIcon: true,
@@ -82,7 +82,7 @@ void ViewDailyVitals(BuildContext context, String patientId, String date) async 
                     Text('Date: ${data['userInfo']['date']}'),
                     Text('Name: ${data['userInfo']['name']}'),
                     Text('Patient ID: ${data['userInfo']['patient_id']}'),
-                    Text('Vitals:'),
+                    const Text('Vitals:'),
                     Text(' - Respiratory Rate: ${data['userInfo']['vitals']['respiratory_rate']}'),
                     Text(' - Heart Rate: ${data['userInfo']['vitals']['heart_rate']}'),
                     Text(' - SPO2 @ Room Air: ${data['userInfo']['vitals']['spo2_room_air']}'),
@@ -91,7 +91,7 @@ void ViewDailyVitals(BuildContext context, String patientId, String date) async 
                     Text('Suctioning done: ${data['userInfo']['suctioning_done']}'),
                     Text('Oral feeds started: ${data['userInfo']['oral_feeds_started']}'),
                     Text('Changed to green tube: ${data['userInfo']['changed_to_green_tube']}'),
-                    Text('Spigotting Status:'),
+                    const Text('Spigotting Status:'),
                     Text(' - Able to breathe through nose: ${data['userInfo']['spigotting_status']['breathing_through_nose']}'),
                     if (data['userInfo']['spigotting_status']['breathing_through_nose'] == "Yes")
                       Text(' - Breath Duration: ${data['userInfo']['spigotting_status']['breath_duration']}'),
@@ -100,7 +100,7 @@ void ViewDailyVitals(BuildContext context, String patientId, String date) async 
               ),
               actions: <Widget>[
                 TextButton(
-                  child: Text('Close'),
+                  child: const Text('Close'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -127,7 +127,7 @@ void ViewDailyVitals(BuildContext context, String patientId, String date) async 
       type: ToastificationType.error,
       style: ToastificationStyle.flatColored,
       context: context,
-      title: Text('Something went wrong'),
+      title: const Text('Something went wrong'),
       showProgressBar: false,
       icon: const Icon(Icons.cancel_rounded, color: Colors.red),
       showIcon: true,
@@ -176,7 +176,7 @@ void ViewDailyVitals(BuildContext context, String patientId, String date) async 
                 ),
                 actions: <Widget>[
                   TextButton(
-                    child: Text('Close'),
+                    child: const Text('Close'),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -203,7 +203,7 @@ void ViewDailyVitals(BuildContext context, String patientId, String date) async 
         type: ToastificationType.error,
         style: ToastificationStyle.flatColored,
         context: context,
-        title: Text('Something went wrong'),
+        title: const Text('Something went wrong'),
         showProgressBar: false,
         icon: const Icon(Icons.cancel_rounded, color: Colors.red),
         showIcon: true,

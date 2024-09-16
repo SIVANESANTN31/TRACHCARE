@@ -23,7 +23,7 @@ class MedicationPage extends StatelessWidget {
     void daily_updates(){
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) =>your_daily_updates()));
+    MaterialPageRoute(builder: (context) =>const your_daily_updates()));
 }
 
 
@@ -31,7 +31,7 @@ class MedicationPage extends StatelessWidget {
 void daily_Reports(){
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) =>YourdailyReports()));
+    MaterialPageRoute(builder: (context) =>const YourdailyReports()));
 
 }
     Dimentions dn = Dimentions(context);
@@ -51,7 +51,7 @@ void daily_Reports(){
             padding: const EdgeInsets.all(10.0),
             child: Container(width: double.infinity,
             height: 45.h,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
              
               image: DecorationImage(image: AssetImage("assets/images/D1.png")))
             ),
@@ -75,12 +75,12 @@ void daily_Reports(){
                               BoxShadow(color: Colors.black.withOpacity(0.25),
                               spreadRadius: 2,
                               blurRadius: 5,
-                              offset: Offset(0, 3))]),
+                              offset: const Offset(0, 3))]),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 50,bottom: 20),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 50,bottom: 20),
                         child: Icon(Icons.history,size: 50,color: whiteColor,),
                       ),
                       Padding(
@@ -114,15 +114,15 @@ void daily_Reports(){
                               BoxShadow(color: Colors.black.withOpacity(0.25),
                               spreadRadius: 2,
                               blurRadius: 5,
-                              offset: Offset(0, 3))]
+                              offset: const Offset(0, 3))]
                   
                   ),
                   
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 50,bottom: 20),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 50,bottom: 20),
                         child: Icon(Icons.calendar_today_rounded,size: 50,color: whiteColor,),
                       ),
                       Padding(

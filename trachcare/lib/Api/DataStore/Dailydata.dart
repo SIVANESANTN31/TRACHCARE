@@ -1,4 +1,4 @@
 class Dailydata{
-  Map <String,String> DailydataStore = new Map<String,String> ();
+  Map <String,String> DailydataStore = <String,String>{};
   
 }

@@ -1,25 +1,18 @@
 // import "package:carousel_slider/carousel_slider.dart";
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:flutter/rendering.dart";
-import "package:flutter/widgets.dart";
 import "package:flutter_carousel_widget/flutter_carousel_widget.dart";
-import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/Screens/Views/Doctor/doctorscreens/AddExVideos.dart";
 import "package:trachcare/Screens/Views/Doctor/doctorscreens/DailyUpadtes_patient.dart";
-import "package:trachcare/Screens/Views/patient/Bottomnavigationscreens/AudioScreen.dart";
 import "package:trachcare/components/Appbar.dart";
 import "package:trachcare/components/Navbardrawer.dart";
 import "package:trachcare/style/colors.dart";
 
-import "../../../../../style/Tropography.dart";
 import "../../../../components/story_circles.dart";
 import "../../../../style/utils/Dimention.dart";
 import "../doctorscreens/AddSurVideos.dart";
 import "Addpatients.dart";
-import "patientslist.dart";
 
 class DoctorDashBoard extends StatelessWidget {
   DoctorDashBoard({super.key});
@@ -40,11 +33,11 @@ class DoctorDashBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List pages = [
-      Addpatients(),
-      Adexvideos(),
-      Adsurvideos(),
+      const Addpatients(),
+      const Adexvideos(),
+      const Adsurvideos(),
     ];
-    Dimentions dn = new Dimentions(context);
+    Dimentions dn = Dimentions(context);
 
     List imagelist = ["assets/images/Vector-1.png"];
     return Scaffold(
@@ -53,19 +46,19 @@ class DoctorDashBoard extends StatelessWidget {
         bottom: Bottom(context),
         height: dn.height(15),
       ),
-      drawer: drawer(
+      drawer: const drawer(
         Name: 'siva',
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 177, 255, 183),
+                color: const Color.fromARGB(255, 177, 255, 183),
                 borderRadius: BorderRadius.circular(10),
               ),
               height: dn.height(15),
@@ -78,7 +71,7 @@ class DoctorDashBoard extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DailyUpdatePatients()));
+                              builder: (context) => const DailyUpdatePatients()));
                     },
                   );
                 },
@@ -107,7 +100,7 @@ class DoctorDashBoard extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                           colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
@@ -117,7 +110,7 @@ class DoctorDashBoard extends StatelessWidget {
                             color: Colors.black.withOpacity(0.10),
                             spreadRadius: 2,
                             blurRadius: 7,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
@@ -144,7 +137,7 @@ class DoctorDashBoard extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
 
@@ -155,7 +148,7 @@ class DoctorDashBoard extends StatelessWidget {
                     textStyle: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.bold,
-                        color: Color(0XFF455A64)))),
+                        color: const Color(0XFF455A64)))),
           ),
 
           carsouleview(img, context),
@@ -216,14 +209,14 @@ class DoctorDashBoard extends StatelessWidget {
 
   PreferredSizeWidget Bottom(BuildContext context) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(5.0),
+      preferredSize: const Size.fromHeight(5.0),
       child: Column(
         children: [
           Padding(
             padding:
                 const EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 0),
             child: Container(
-                margin: EdgeInsets.only(
+                margin: const EdgeInsets.only(
                   top: 0,
                   bottom: 10,
                 ),
@@ -238,7 +231,7 @@ class DoctorDashBoard extends StatelessWidget {
                         color: Colors.black.withOpacity(0.15),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3))
+                        offset: const Offset(0, 3))
                   ],
                 ),
                 child: TextFormField(
@@ -248,7 +241,7 @@ class DoctorDashBoard extends StatelessWidget {
                     hintStyle: TextStyle(
                       color: Colors.black.withOpacity(0.5),
                     ),
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.search,
                       size: 25,
                     ),
@@ -266,8 +259,8 @@ class DoctorDashBoard extends StatelessWidget {
   ) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(4.0),
+        const Padding(
+          padding: EdgeInsets.all(4.0),
           child: CircleAvatar(
             backgroundColor: admin_color,
           ),
@@ -278,9 +271,9 @@ class DoctorDashBoard extends StatelessWidget {
   }
 
   Widget carsouleview(List<String> imagesList, BuildContext context) {
-    Dimentions dn = new Dimentions(context);
+    Dimentions dn = Dimentions(context);
 
-    return Container(
+    return SizedBox(
       width: dn.width(100),
       height: dn.height(17),
       child: FlutterCarousel.builder(
@@ -291,7 +284,7 @@ class DoctorDashBoard extends StatelessWidget {
           Center(
               child: Image.asset(imagesList[itemIndex],
                   fit: BoxFit.cover, width: 1000)),
-          CircleAvatar(
+          const CircleAvatar(
             backgroundColor: Colors.black45,
             child: Icon(
               Icons.play_arrow,
@@ -301,7 +294,7 @@ class DoctorDashBoard extends StatelessWidget {
         ])),
         options: CarouselOptions(
           autoPlay: true,
-          autoPlayInterval: Duration(seconds: 2),
+          autoPlayInterval: const Duration(seconds: 2),
           autoPlayCurve: Curves.easeIn,
           enableInfiniteScroll: true,
         ),

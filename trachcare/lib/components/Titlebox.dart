@@ -4,7 +4,7 @@ import 'package:trachcare/style/colors.dart';
 
 class Titlehead extends StatelessWidget {
   final String titleName;
-   Titlehead({super.key, required this.titleName});
+   const Titlehead({super.key, required this.titleName});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class Titlehead extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: TitleColor,
                       borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: BlackColor_light,
                           blurRadius: 3,
@@ -26,7 +26,7 @@ class Titlehead extends StatelessWidget {
                       child: Text(
                     titleName,
                     style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             fontSize: 22,
                             color: whiteColor,
                             fontWeight: FontWeight.bold)),

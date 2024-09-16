@@ -16,16 +16,16 @@ class ProfileField extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
-        SizedBox(height: 10,),
+        Text(title,style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+        const SizedBox(height: 10,),
         Container(
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: Colors.white,
             border: Border.all(color: Colors.grey,),
           ),
-          child: Text(value,style: TextStyle(fontSize: 16),),
+          child: Text(value,style: const TextStyle(fontSize: 16),),
         ),
 
       ],
