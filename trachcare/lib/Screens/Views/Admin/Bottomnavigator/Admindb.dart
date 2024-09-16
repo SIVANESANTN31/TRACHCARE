@@ -35,7 +35,7 @@ class Admindb extends StatelessWidget {
     List pages=[
        Doctorlist(),
        Addvideos(),
-       patientslist(),
+       patients_list(),
     ];
         Dimentions dn = new Dimentions(context);
     return Scaffold(

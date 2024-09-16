@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2024 at 08:41 AM
+-- Generation Time: Sep 16, 2024 at 10:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,74 +24,38 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `addpatient`
+-- Table structure for table `addpatients`
 --
 
-CREATE TABLE `addpatient` (
-  `doctorid` varchar(255) NOT NULL,
+CREATE TABLE `addpatients` (
+  `doctor_id` varchar(255) NOT NULL,
   `patient_id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `age` int(11) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `bmi` varchar(255) NOT NULL,
-  `diagnosis` varchar(255) NOT NULL,
-  `surgery_status` varchar(255) NOT NULL,
-  `postop` varchar(255) NOT NULL,
-  `tubenameandsize` varchar(255) NOT NULL,
-  `baselinvitals` varchar(255) NOT NULL,
-  `respiratory_rate` varchar(255) NOT NULL,
-  `heart_rate` varchar(255) NOT NULL,
-  `Spo2_AT_room` varchar(255) NOT NULL,
-  `INDICATIONOFTRACHEOSTOMY` varchar(255) NOT NULL,
-  `COMORBIDITIES` varchar(255) NOT NULL,
-  `HEMOGLOBIN` varchar(255) NOT NULL,
-  `SRSODIUM` varchar(255) NOT NULL,
-  `SRPOTASSIUM` varchar(255) NOT NULL,
-  `SRCALCIUM` varchar(255) NOT NULL,
-  `SRBICARBONATE` varchar(255) NOT NULL,
-  `Pt` varchar(255) NOT NULL,
-  `APTT` varchar(255) NOT NULL,
-  `INR` varchar(255) NOT NULL,
-  `PLATELETS` varchar(255) NOT NULL,
-  `LIVERFUNCTIONTEST` varchar(255) NOT NULL,
-  `RENALFUNCTIONTEST` varchar(255) NOT NULL,
-  `Patient_imag_path` varchar(255) NOT NULL
+  `age` varchar(10) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `bmi` varchar(10) DEFAULT NULL,
+  `diagnosis` varchar(500) DEFAULT NULL,
+  `surgery_status` varchar(100) DEFAULT NULL,
+  `post_op_tracheostomy_day` varchar(10) DEFAULT NULL,
+  `tube_name_size` varchar(50) DEFAULT NULL,
+  `baseline_vitals` varchar(500) DEFAULT NULL,
+  `respiratory_rate` varchar(10) DEFAULT NULL,
+  `heart_rate` varchar(10) DEFAULT NULL,
+  `spo2_room_air` varchar(10) DEFAULT NULL,
+  `indication_of_tracheostomy` varchar(500) DEFAULT NULL,
+  `comorbidities` varchar(500) DEFAULT NULL,
+  `hemoglobin` varchar(10) DEFAULT NULL,
+  `sr_sodium` varchar(10) DEFAULT NULL,
+  `sr_potassium` varchar(10) DEFAULT NULL,
+  `sr_calcium` varchar(10) DEFAULT NULL,
+  `sr_bicarbonate` varchar(10) DEFAULT NULL,
+  `pt` varchar(10) DEFAULT NULL,
+  `aptt` varchar(10) DEFAULT NULL,
+  `inr` varchar(10) DEFAULT NULL,
+  `platelets` varchar(10) DEFAULT NULL,
+  `liver_function_test` varchar(500) DEFAULT NULL,
+  `renal_function_test` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `addpatient`
---
-
-INSERT INTO `addpatient` (`doctorid`, `patient_id`, `name`, `age`, `address`, `bmi`, `diagnosis`, `surgery_status`, `postop`, `tubenameandsize`, `baselinvitals`, `respiratory_rate`, `heart_rate`, `Spo2_AT_room`, `INDICATIONOFTRACHEOSTOMY`, `COMORBIDITIES`, `HEMOGLOBIN`, `SRSODIUM`, `SRPOTASSIUM`, `SRCALCIUM`, `SRBICARBONATE`, `Pt`, `APTT`, `INR`, `PLATELETS`, `LIVERFUNCTIONTEST`, `RENALFUNCTIONTEST`, `Patient_imag_path`) VALUES
-('1', '13717JohnDoe', 'JohnDoe', 30, '123 Main St', '24.5', 'Hypertension', 'No', 'No', 'Tube X', 'Normal', '20', '80', '98%', 'Routine Checkup', 'Diabetes', '13', '140', '4.5', '9.5', '25', '12', '30', '1', '150000', 'Normal', 'Normal', '../uploads/patient_images/default.jpg');
-
---
--- Triggers `addpatient`
---
-DELIMITER $$
-CREATE TRIGGER `adddetialsvideotable` AFTER INSERT ON `addpatient` FOR EACH ROW INSERT INTO patientvideotable(doctorid,patient_id)VALUES(NEW.doctorid,NEW.patient_id)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `addpatientLogin` AFTER INSERT ON `addpatient` FOR EACH ROW INSERT INTO patientlogin(doctorid,patient_id,username,password) VALUES(NEW.doctorid,NEW.patient_id,CONCAT(NEW.patient_id,"@trachcare.com"),"welcome")
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `addpatientdetials` AFTER INSERT ON `addpatient` FOR EACH ROW INSERT INTO patientdetials(doctorid,patient_id,name,age,address,imagepath) VALUES(NEW.doctorid,NEW.patient_id,NEW.name,NEW.age,NEW.address,NEW.Patient_imag_path)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `deletelogin` AFTER DELETE ON `addpatient` FOR EACH ROW DELETE FROM patientlogin WHERE patient_id = OLD.patient_id
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `deletepatientdetials` AFTER DELETE ON `addpatient` FOR EACH ROW DELETE FROM patientdetials WHERE patient_id = OLD.patient_id
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `deletevideourl` AFTER DELETE ON `addpatient` FOR EACH ROW DELETE FROM patientvideotable WHERE patient_id = OLD.patient_id
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -217,7 +181,8 @@ INSERT INTO `doctorprofile` (`id`, `username`, `doctor_reg_no`, `email`, `phone_
 (8, 'siva', '192121057', 'siva@gmail.com', '123', '098', '', '2024-09-15 06:00:44'),
 (9, 'siva', '192121057', 'siva@gmail.com', '123', '098', '', '2024-09-15 06:00:51'),
 (10, 'siva', '192121057', 'siva@gmail.com', '123', '098', '', '2024-09-15 06:34:39'),
-(11, 'gch', 'chj', 'vjk@tedt.con', 'cbm', 'chk', '', '2024-09-15 06:36:02');
+(11, 'gch', 'chj', 'vjk@tedt.con', 'cbm', 'chk', '', '2024-09-15 06:36:02'),
+(12, 'ram', '123', 'a@a.com', '13', 'dfh', '', '2024-09-15 16:48:31');
 
 -- --------------------------------------------------------
 
@@ -352,10 +317,10 @@ INSERT INTO `patient_details` (`id`, `name`, `date`, `respiratory_rate`, `heart_
 --
 
 --
--- Indexes for table `addpatient`
+-- Indexes for table `addpatients`
 --
-ALTER TABLE `addpatient`
-  ADD PRIMARY KEY (`patient_id`) USING BTREE;
+ALTER TABLE `addpatients`
+  ADD UNIQUE KEY `patient_id` (`patient_id`);
 
 --
 -- Indexes for table `adminlogin`
@@ -446,7 +411,7 @@ ALTER TABLE `doctorlogin`
 -- AUTO_INCREMENT for table `doctorprofile`
 --
 ALTER TABLE `doctorprofile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `medication_schedule`

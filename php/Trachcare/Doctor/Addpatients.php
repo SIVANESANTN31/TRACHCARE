@@ -29,118 +29,58 @@ else{
 
 
 
-
-function Addpatient($conn) {
+function AddPatient($conn) {
     // Get JSON input from the request body
     $json = file_get_contents('php://input');
 
     // Decode JSON into an associative array
     $obj = json_decode($json, true);
-    $result=[];
+    $result = [];
+
     // Check if JSON is decoded successfully
     if ($obj === null) {
         die("Invalid JSON data.");
     }
 
-    
-
-    // Extract values from the associative array
+    // Extract values from the associative array with checks
     $doctorId = $obj['doctorid'];
-    $name = $obj['name'];
-    $age = $obj['age'];
-    $address = $obj['address'];
-    $bmi = $obj['bmi'];
-    $diagnosis = $obj['diagnosis'];
-    $surgeryStatus = $obj['surgery_status'];
-    $postOp = $obj['postop'];
-    $tubeNameAndSize = $obj['tubenameandsize'];
-    $baselineVitals = $obj['baselinvitals'];
-    $respiratoryRate = $obj['respiratory_rate'];
-    $heartRate = $obj['heart_rate'];
-    $spo2Room = $obj['Spo2@room'];
-    $indicationOfTracheostomy = $obj['INDICATION OF TRACHEOSTOMY'];
-    $comorbidities = $obj['COMORBIDITIES'];
-    $hemoglobin = $obj['HEMOGLOBIN'];
-    $srSodium = $obj['SR. SODIUM'];
-    $srPotassium = $obj['SR. POTASSIUM'];
-    $srCalcium = $obj['SR. CALCIUM'];
-    $srBicarbonate = $obj['SR. BICARBONATE'];
-    $pt = $obj['Pt'];
-    $aptt = $obj['APTT'];
-    $inr = $obj['INR'];
-    $platelets = $obj['PLATELETS'];
-    $liverFunctionTest = $obj['LIVER FUNCTION TEST'];
-    $renalFunctionTest = $obj['RENAL FUNCTION TEST'];
-  //  $patientImagePath = $obj['Patient_imag_path'];
-  $idgen = rand(100, 100000);
+    $name = isset($obj['name']) ? $obj['name'] : null;
+    $age = isset($obj['age']) ? $obj['age'] : null;
+    $address = isset($obj['address']) ? $obj['address'] : null;
+    $bmi = isset($obj['bmi']) ? $obj['bmi'] : null;
+    $diagnosis = isset($obj['diagnosis']) ? $obj['diagnosis'] : null;
+    $surgeryStatus = isset($obj['surgeryStatus']) ? $obj['surgeryStatus'] : null;
+    $postOpTracheostomyDay = isset($obj['postOpTracheostomyDay']) ? $obj['postOpTracheostomyDay'] : null;
+    $tubeNameSize = isset($obj['tubeNameSize']) ? $obj['tubeNameSize'] : null;
+    $baselineVitals = isset($obj['baselineVitals']) ? $obj['baselineVitals'] : null;
+    $respiratoryRate = isset($obj['respiratoryRate']) ? $obj['respiratoryRate'] : null;
+    $heartRate = isset($obj['heartRate']) ? $obj['heartRate'] : null;
+    $spo2RoomAir = isset($obj['spo2RoomAir']) ? $obj['spo2RoomAir'] : null;
+    $indicationOfTracheostomy = isset($obj['indicationOfTracheostomy']) ? $obj['indicationOfTracheostomy'] : null;
+    $comorbidities = isset($obj['comorbidities']) ? $obj['comorbidities'] : null;
+    $hemoglobin = isset($obj['hemoglobin']) ? $obj['hemoglobin'] : null;
+    $srSodium = isset($obj['srSodium']) ? $obj['srSodium'] : null;
+    $srPotassium = isset($obj['srPotassium']) ? $obj['srPotassium'] : null;
+    $srCalcium = isset($obj['srCalcium']) ? $obj['srCalcium'] : null;
+    $srBicarbonate = isset($obj['srBicarbonate']) ? $obj['srBicarbonate'] : null;
+    $pt = isset($obj['pt']) ? $obj['pt'] : null;
+    $aptt = isset($obj['aptt']) ? $obj['aptt'] : null;
+    $inr = isset($obj['inr']) ? $obj['inr'] : null;
+    $platelets = isset($obj['platelets']) ? $obj['platelets'] : null;
+    $liverFunctionTest = isset($obj['liverFunctionTest']) ? $obj['liverFunctionTest'] : null;
+    $renalFunctionTest = isset($obj['renalFunctionTest']) ? $obj['renalFunctionTest'] : null;
+
+    $idgen = rand(100, 100000);
     $name =  str_replace(' ', '', $name);
   $patientId = (string)$idgen . $name;
-    if( isset($obj['Patient_imag_path'])){
-        $base64Image = $obj['Patient_imag_path'];
 
-        // Check if base64Image is set and not empty
-        if (!empty($base64Image)) {
-            // Decode the base64 data
-            $imageData = base64_decode($base64Image);
+    // Prepare the SQL insert statement
+    $sql = "INSERT INTO addpatients (
+                doctor_id,patient_id,name, age, address, bmi, diagnosis, surgery_status, post_op_tracheostomy_day, tube_name_size, baseline_vitals, 
+                respiratory_rate, heart_rate, spo2_room_air, indication_of_tracheostomy, comorbidities, hemoglobin, sr_sodium, 
+                sr_potassium, sr_calcium, sr_bicarbonate, pt, aptt, inr, platelets, liver_function_test, renal_function_test
+            ) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            // Get image info
-            $imageInfo = getimagesizefromstring($imageData);
-            if ($imageInfo === false) {
-                echo json_encode(["status" => false, "msg" => "Invalid image data"]);
-                exit;
-            }
-
-            // Determine MIME type and generate filename
-            $mimeType = $imageInfo['mime'];
-            $number = rand(100, 100000);
-            $generateFilename = (string)$number . $name;
-            $filenames = '';
-
-            
-
-            // Determine file extension based on MIME type
-            switch ($mimeType) {
-                case 'image/jpeg':
-                    $filenames = $generateFilename . ".jpeg";
-                    break;
-                case 'image/png':
-                    $filenames = $generateFilename . ".png";
-                    break;
-                case 'image/jpg':
-                    $filenames = $generateFilename . ".jpg";
-                    break;
-                default:
-                    echo json_encode(["status" => false, "msg" => "Unknown image format"]);
-                    exit;
-            }
-
-            // Define the file path where the image will be saved
-            $filePath = "../uploads/patient_images/" . $filenames;
-
-            // Save the image file
-            if (file_put_contents($filePath, $imageData) === false) {
-                echo json_encode(["status" => false, "msg" => "Failed to save image"]);
-                exit;
-            }
-        } else {
-            // Handle case where base64Image is not set or empty
-            $filePath = '../uploads/patient_images/default.jpg';
-        }
-    }
-
-   
-
-
-  
-    // Prepare the SQL insert statement with placeholders
-    $sql = "INSERT INTO addpatient (
-                doctorid, patient_id, name, age, address, bmi, diagnosis, surgery_status, postop, 
-                tubenameandsize, baselinvitals, respiratory_rate, heart_rate, Spo2_AT_room, INDICATIONOFTRACHEOSTOMY, 
-                COMORBIDITIES,HEMOGLOBIN,SRSODIUM,SRPOTASSIUM,SRCALCIUM,SRBICARBONATE, 
-                Pt, APTT, INR, PLATELETS, LIVERFUNCTIONTEST,RENALFUNCTIONTEST,Patient_imag_path
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-    // Prepare the statement
     $stmt = $conn->prepare($sql);
 
     if ($stmt === false) {
@@ -149,29 +89,21 @@ function Addpatient($conn) {
 
     // Bind parameters to the SQL statement
     $stmt->bind_param(
-        "ssssssssssssssssssssssssssss",
-        $doctorId, $patientId, $name, $age, $address, $bmi, $diagnosis, $surgeryStatus, $postOp,
-        $tubeNameAndSize, $baselineVitals, $respiratoryRate, $heartRate, $spo2Room, $indicationOfTracheostomy,
-        $comorbidities, $hemoglobin, $srSodium, $srPotassium, $srCalcium, $srBicarbonate,
-        $pt, $aptt, $inr, $platelets, $liverFunctionTest, $renalFunctionTest, $filePath
+        'sssssssssssssssssssssssssss',
+        $doctorId,$patientId,$name, $age, $address, $bmi, $diagnosis, $surgeryStatus, $postOpTracheostomyDay, $tubeNameSize, $baselineVitals,
+        $respiratoryRate, $heartRate, $spo2RoomAir, $indicationOfTracheostomy, $comorbidities, $hemoglobin, $srSodium, 
+        $srPotassium, $srCalcium, $srBicarbonate, $pt, $aptt, $inr, $platelets, $liverFunctionTest, $renalFunctionTest
     );
 
-    // Execute the statement
     if ($stmt->execute()) {
-        $result['Status']=true;
-
-      $result['message']="Successfully Patient Added";
-      echo json_encode($result);
+        $result['Status'] = true;
+        $result['message'] = "Patient added successfully";
     } else {
-
-        $result['Status']=false;
-
-      $result['message']= $stmt->error;
-      echo json_encode($result);
-        
+        $result['Status'] = false;
+        $result['message'] = $stmt->error;
     }
 
-    // Close the statement and connection
+    echo json_encode($result);
     $stmt->close();
     $conn->close();
 }

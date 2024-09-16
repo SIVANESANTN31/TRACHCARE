@@ -19,6 +19,7 @@ class _DoctorlistState extends State<Doctorlist> {
   List<Map<String, dynamic>> Doctorlist = [];
 
 
+
   Future fetchData() async {
     final response = await http.get(Uri.parse(DoctorslistUrl)); // Use http://localhost if you're using a real device or emulator IP for Android
     if (response.statusCode == 200) {
@@ -54,11 +55,6 @@ class _DoctorlistState extends State<Doctorlist> {
     });
   }
 
-  // onsearch(String search){
-  //   setState(() {
-  //     display_list = patientslist.where((user) => main_pat.patient_name.Tolo);
-  //   });
-  // }
   @override
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);

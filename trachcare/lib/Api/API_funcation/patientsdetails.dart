@@ -9,6 +9,8 @@ import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import 'package:trachcare/Screens/Views/Doctor/Bottomnavigator/Addpatients.dart';
 import 'package:trachcare/Screens/Views/Doctor/doctorscreens/Patientsdetails.dart';
 
+import '../../Screens/Views/Doctor/Bottomnavigator/patientslist.dart';
+
 void SubmitPatientDetails(
     BuildContext context, Map<String, dynamic> patientDetails) async {
   try {
@@ -16,20 +18,28 @@ void SubmitPatientDetails(
       Uri.parse(PatientDetailsSubmitUrl),
       body: jsonEncode(patientDetails),
     );
-
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       if (data["Status"]) {
         print(data);
-        toastification.show(
-          type: ToastificationType.success,
-          style: ToastificationStyle.flatColored,
+        showDialog(
           context: context,
-          title: Text('${data['message']} 🎉'),
-          showProgressBar: false,
-          icon: const Icon(Icons.check_circle_outline, color: Colors.green),
-          showIcon: true,
-          autoCloseDuration: const Duration(seconds: 2),
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Success'),
+              content: Text('Doctor added successfully.'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
         );
         Navigator.push(
           context,

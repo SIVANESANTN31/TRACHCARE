@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:trachcare/Api/DataStore/Datastore.dart';
 import 'package:trachcare/Screens/Views/Doctor/doctorscreens/Patientsdetails.dart';
 
 import '../../../../Api/API_funcation/patientsdetails.dart';
@@ -41,65 +42,11 @@ class _AddpatientsState extends State<Addpatients> {
   String liverFunctionTest = '';
   String renalFunctionTest = '';
 
-  @override
-  Widget build(BuildContext context) {
-    Dimentions dn = Dimentions(context);
-    return Scaffold(
-      appBar: NormalAppbar(Title: "Patient Details", height: dn.height(10)),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Enter Patient Details',
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 20.0),
-                buildTextField('Name', (value) => name = value),
-                buildTextField('Age', (value) => age = value),
-                buildTextField('Address', (value) => address = value),
-                buildTextField('BMI', (value) => bmi = value),
-                buildTextField('Diagnosis', (value) => diagnosis = value),
-                buildTextField(
-                    'Surgery Status', (value) => surgeryStatus = value),
-                buildTextField('Post-Op Tracheostomy Day',
-                    (value) => postOpTracheostomyDay = value),
-                buildTextField(
-                    'Tube Name and Size', (value) => tubeNameSize = value),
-                buildTextField(
-                    'Baseline Vitals', (value) => baselineVitals = value),
-                buildTextField(
-                    'Respiratory Rate', (value) => respiratoryRate = value),
-                buildTextField('Heart Rate', (value) => heartRate = value),
-                buildTextField(
-                    'SPO2 @ Room Air', (value) => spo2RoomAir = value),
-                buildTextField('Indication of Tracheostomy',
-                    (value) => indicationOfTracheostomy = value),
-                buildTextField(
-                    'Comorbidities', (value) => comorbidities = value),
-                buildTextField('Hemoglobin', (value) => hemoglobin = value),
-                buildTextField('Sr. Sodium', (value) => srSodium = value),
-                buildTextField('Sr. Potassium', (value) => srPotassium = value),
-                buildTextField('Sr. Calcium', (value) => srCalcium = value),
-                buildTextField(
-                    'Sr. Bicarbonate', (value) => srBicarbonate = value),
-                buildTextField('PT', (value) => pt = value),
-                buildTextField('APTT', (value) => aptt = value),
-                buildTextField('INR', (value) => inr = value),
-                buildTextField('Platelets', (value) => platelets = value),
-                buildTextField('Liver Function Test',
-                    (value) => liverFunctionTest = value),
-                buildTextField('Renal Function Test',
-                    (value) => renalFunctionTest = value),
-                SizedBox(height: 20.0),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      final patientDetails = {
+  void _save(BuildContext context) {
+  if (_formKey.currentState!.validate()) {
+    // Handle form submission
+    final patientDetails = {
+      "id":Doctor_id,
                         'name': name,
                         'age': age,
                         'address': address,
@@ -124,14 +71,106 @@ class _AddpatientsState extends State<Addpatients> {
                         'inr': inr,
                         'platelets': platelets,
                         'liverFunctionTest': liverFunctionTest,
-                        'renalFunctionTest': renalFunctionTest,
-                      };
+                        'renalFunctionTest': renalFunctionTest,};
+                        SubmitPatientDetails(context, patientDetails);
 
-                      // Call the API function to submit patient details
-                      SubmitPatientDetails(context, patientDetails);
-                    }
-                  },
-                  child: Text('Save'),
+    // Clear the form fields after submission
+    // nameController.clear();
+    // ageController.clear();
+    // addressController.clear();
+    // bmiController.clear();
+    // diagnosisController.clear();
+    // surgeryStatusController.clear();
+    // postOpTracheostomyDayController.clear();
+    // tubeNameSizeController.clear();
+    // baselineVitalsController.clear();
+    // respiratoryRateController.clear();
+    // heartRateController.clear();
+    // spo2RoomAirController.clear();
+    // indicationOfTracheostomyController.clear();
+    // comorbiditiesController.clear();
+    // hemoglobinController.clear();
+    // srSodiumController.clear();
+    // srPotassiumController.clear();
+    // srCalciumController.clear();
+    // srBicarbonateController.clear();
+    // ptController.clear();
+    // apttController.clear();
+    // inrController.clear();
+    // plateletsController.clear();
+    // liverFunctionTestController.clear();
+    // renalFunctionTestController.clear();
+
+    // Optionally, reset the form state
+    _formKey.currentState!.reset();
+  }
+}
+
+  
+
+  @override
+  Widget build(BuildContext context) {
+    Dimentions dn = Dimentions(context);
+    return Scaffold(
+      appBar: NormalAppbar(Title: "Patient Details", height: dn.height(10)),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Text(
+                //   'Enter Patient Details',
+                //   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                // ),
+                SizedBox(height: 20.0),
+                buildTextField('Name', (value) => name = value),
+                buildTextField('Age', (value) => age = value),
+                buildTextField('Address', (value) => address = value),
+                buildTextField('BMI', (value) => bmi = value),
+                buildTextField('Diagnosis', (value) => diagnosis = value),
+                buildTextField('Surgery Status', (value) => surgeryStatus = value),
+                buildTextField('Post-Op Tracheostomy Day',(value) => postOpTracheostomyDay = value),
+                buildTextField('Tube Name and Size', (value) => tubeNameSize = value),
+                buildTextField('Baseline Vitals', (value) => baselineVitals = value),
+                buildTextField('Respiratory Rate', (value) => respiratoryRate = value),
+                buildTextField('Heart Rate', (value) => heartRate = value),
+                buildTextField('SPO2 @ Room Air', (value) => spo2RoomAir = value),
+                buildTextField('Indication of Tracheostomy',(value) => indicationOfTracheostomy = value),
+                buildTextField('Comorbidities', (value) => comorbidities = value),
+                buildTextField('Hemoglobin', (value) => hemoglobin = value),
+                buildTextField('Sr. Sodium', (value) => srSodium = value),
+                buildTextField('Sr. Potassium', (value) => srPotassium = value),
+                buildTextField('Sr. Calcium', (value) => srCalcium = value),
+                buildTextField('Sr. Bicarbonate', (value) => srBicarbonate = value),
+                buildTextField('PT', (value) => pt = value),
+                buildTextField('APTT', (value) => aptt = value),
+                buildTextField('INR', (value) => inr = value),
+                buildTextField('Platelets', (value) => platelets = value),
+                buildTextField('Liver Function Test',(value) => liverFunctionTest = value),
+                buildTextField('Renal Function Test',
+                (value) => renalFunctionTest = value),
+                SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => _save(context),
+                      child: Text('Save'),
+                    ),SizedBox(height: 15,),
+                    // ElevatedButton(
+                    //   style: ElevatedButton.styleFrom(
+                    //     backgroundColor: Colors.red,
+                    //   ),
+                    //   onPressed: () {
+                    //     // Handle delete logic here
+                    //     print('Details Deleted');
+                    //   },
+                    //   child: Text('Delete'),
+                    // ),
+                  ],
                 ),
                 SizedBox(height: 100),
               ],
@@ -156,6 +195,7 @@ class _AddpatientsState extends State<Addpatients> {
           onChanged(value);
         });
       },
+
     );
   }
 }
