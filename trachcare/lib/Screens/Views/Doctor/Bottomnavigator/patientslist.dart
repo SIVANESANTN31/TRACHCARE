@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trachcare/Api/DataStore/Datastore.dart';
 
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
@@ -50,7 +51,6 @@ class _patientslistState extends State<patientslist> {
           .where((user) =>
           user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
           .toList();
-      // we use the toLowerCase() method to make it case-insensitive
     }
     setState(() {
       display_list = results;
@@ -115,7 +115,11 @@ class _patientslistState extends State<patientslist> {
                     child: ListTile(
                       onTap: (){
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Patientsdetails(),),);
+                          builder: (context) => ViewPatientDetails(
+                            doctorId: Doctor_id,
+                            patientId: display_list[index]['id'],  // Pass the patient ID
+                            patientName: display_list[index]['name'],
+                          ),),);
                       },
                       leading: CircleAvatar(
                         radius: 25,

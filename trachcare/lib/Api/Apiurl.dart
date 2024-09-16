@@ -1,4 +1,4 @@
-const ip = "172.25.99.76";
+const ip = "172.20.10.4";
 
 String PatientLoginurl =
     "https://$ip/Trachcare/auth/patientAuth/PatientLogin.php";
@@ -8,7 +8,7 @@ String AdminLoginurl = "https://$ip/Trachcare/auth/AdminAuth/AdminLogin.php";
 String videourl = "https://$ip/Trachcare/Doctor/videos.php";
 String PatientDetailsSubmitUrl = "https://$ip/Trachcare/Doctor/Addpatients.php";
 String UpdatePatientDetailsUrl = "https://$ip/Trachcare/Doctor/videos.php";
-String ViewPatientDetailsUrl = "https://$ip/Trachcare/Doctor/videos.php";
+String ViewPatientDetailsUrl = "https://$ip/Trachcare/Doctor/viewpatientdetails.php";
 String SubmitVitalsUrl = "https://$ip/Trachcare/Doctor/videos.php";
 String ViewDailyVitalsUrl = "https://$ip/Trachcare/Doctor/videos.php";
 String DoctorslistUrl = "https://$ip/Trachcare/Doctorlist.php";

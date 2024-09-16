@@ -7,7 +7,7 @@ $response = array();
 
 try {
     // SQL query to fetch data
-    $sql = "SELECT * FROM ";
+    $sql = "SELECT * FROM addpatients";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {

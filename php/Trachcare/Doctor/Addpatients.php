@@ -319,6 +319,7 @@ function GetPatientsdetials($conn) {
     }
 
     $doctorId = $_GET['doctorid'];
+    $patientId = $_GET['pstient_id'];
 
     // Prepare the SQL SELECT statement to fetch patients associated with the doctor ID
     $sql = "SELECT 
@@ -339,7 +340,7 @@ function GetPatientsdetials($conn) {
     }
 
     // Bind the doctor ID parameter to the SQL statement
-    $stmt->bind_param("s", $doctorId);
+    $stmt->bind_param("ss", $doctorId, $patientId);
 
     // Execute the statement
     if ($stmt->execute()) {

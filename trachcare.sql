@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2024 at 10:59 AM
+-- Generation Time: Sep 16, 2024 at 08:21 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -56,6 +56,14 @@ CREATE TABLE `addpatients` (
   `liver_function_test` varchar(500) DEFAULT NULL,
   `renal_function_test` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `addpatients`
+--
+
+INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `name`, `age`, `address`, `bmi`, `diagnosis`, `surgery_status`, `post_op_tracheostomy_day`, `tube_name_size`, `baseline_vitals`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `indication_of_tracheostomy`, `comorbidities`, `hemoglobin`, `sr_sodium`, `sr_potassium`, `sr_calcium`, `sr_bicarbonate`, `pt`, `aptt`, `inr`, `platelets`, `liver_function_test`, `renal_function_test`) VALUES
+('1', '52527ghz', 'ghz', 'bzh', 'xh', 'zbz', 'zvz', 'ss', 'ss', 'xxxccds', 'z', 'z', 'z', 'c', 'zx', 'ds', 'zz', 'zzc', 'ccas', 'vvb', 'bdz', 'cvv', 'zag', 'xv', 'zc', 'dv', 'nh'),
+('123', '62585JohnDoe', 'JohnDoe', '45', '123 Main St', '25.5', 'Flu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 

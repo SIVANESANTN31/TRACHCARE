@@ -46,7 +46,7 @@ class _AddpatientsState extends State<Addpatients> {
   if (_formKey.currentState!.validate()) {
     // Handle form submission
     final patientDetails = {
-      "id":Doctor_id,
+                        'doctorid': Doctor_id,
                         'name': name,
                         'age': age,
                         'address': address,
