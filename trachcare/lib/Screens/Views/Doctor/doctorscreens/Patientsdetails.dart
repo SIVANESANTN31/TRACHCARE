@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../../Api/Apiurl.dart';
-import '../../../../Api/DataStore/Datastore.dart';
+// import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../components/NAppbar.dart';
-import 'package:trachcare/components/NAppbar.dart';
-import '../../../../components/profilefeild.dart';
+// import 'package:trachcare/components/NAppbar.dart';
+// import '../../../../components/profilefeild.dart';
 import '../../../../style/utils/Dimention.dart';
 
 class ViewPatientDetails extends StatefulWidget {
@@ -14,7 +14,7 @@ class ViewPatientDetails extends StatefulWidget {
   final String doctorId;  // Optional, in case you want to pass the name
 
 
-  const ViewPatientDetails({Key? key, required this.patientId, required this.patientName,required this.doctorId,}) : super(key: key);
+  const ViewPatientDetails({super.key, required this.patientId, required this.patientName,required this.doctorId,});
   @override
   _ViewPatientDetailsState createState() => _ViewPatientDetailsState();
 }
@@ -87,7 +87,7 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
                     buildTextView('Renal Function Test', patientDetails['renalFunctionTest']),
                   ],
                 )
-              : Center(child: CircularProgressIndicator()), // Show a loading spinner while fetching data
+              : const Center(child: CircularProgressIndicator()), // Show a loading spinner while fetching data
         ),
       ),
     );
@@ -100,7 +100,7 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('$label:', style: TextStyle(fontWeight: FontWeight.bold)),
+          Text('$label:', style: const TextStyle(fontWeight: FontWeight.bold)),
           Text(value),
         ],
       ),
