@@ -115,8 +115,8 @@ class _patientslistState extends State<patientslist> {
                     child: ListTile(
                       onTap: (){
                         Navigator.of(context).push(MaterialPageRoute(    builder: (context) => ViewPatientDetails(
-                            doctorId: Doctor_id,
-                            patientId: display_list[index]['id'],  // Pass the patient ID
+                            patientId: display_list[index]['patient_id'].toString(),
+                            // patientId: display_list[index]['patient_id'],  // Pass the patient ID
                             patientName: display_list[index]['name'],
                           ),),);
                       },
@@ -128,7 +128,7 @@ class _patientslistState extends State<patientslist> {
                         color: Colors.black,
                       )),
                       subtitle:Text(
-                        display_list[index]["username"].toString(),
+                        display_list[index]["patient_id"].toString(),
                         style: const TextStyle(fontSize: 12, color:Color.fromARGB(255, 0, 0, 0)),
                       ),
                     ),

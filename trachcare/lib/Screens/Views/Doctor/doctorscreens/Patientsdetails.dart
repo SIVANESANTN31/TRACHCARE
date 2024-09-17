@@ -11,10 +11,10 @@ import '../../../../style/utils/Dimention.dart';
 class ViewPatientDetails extends StatefulWidget {
   final String patientId;
   final String patientName;
-  final String doctorId;  // Optional, in case you want to pass the name
+   // Optional, in case you want to pass the name
 
 
-  const ViewPatientDetails({super.key, required this.patientId, required this.patientName,required this.doctorId,});
+  const ViewPatientDetails({super.key, required this.patientId, required this.patientName,});
   @override
   _ViewPatientDetailsState createState() => _ViewPatientDetailsState();
 }
@@ -32,21 +32,49 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
 
   // Function to fetch patient details from the server
   Future<void> fetchPatientDetails() async {
-    try {
-      // Replace with your API URL
-      final response = await http.get(Uri.parse(ViewPatientDetailsUrl));
+    final String url = '$ViewPatientDetailsUrl?patient_id=${widget.patientId}';
+  try {
+    final response = await http.get(Uri.parse(url));
 
-      if (response.statusCode == 200) {
-        setState(() {
-          patientDetails = json.decode(response.body);
-        });
-      } else {
-        print('Failed to load patient details');
-      }
-    } catch (e) {
-      print('Error fetching patient details: $e');
+    if (response.statusCode == 200) {
+       print(response.body);
+      final Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        patientDetails = {
+          'name': data['name'] ,
+          'age': data['age'] ?? 'NIL',
+          'address': data['address'] ?? 'NIL',
+          'bmi': data['bmi'] ?? 'NIL',
+          'diagnosis': data['diagnosis'] ?? 'NIL',
+          'surgeryStatus': data['surgeryStatus'] ?? 'NIL',
+          'postOpTracheostomyDay': data['postOpTracheostomyDay'] ?? 'NIL',
+          'tubeNameSize': data['tubeNameSize'] ?? 'NIL',
+          'baselineVitals': data['baselineVitals'] ?? 'NIL',
+          'respiratoryRate': data['respiratoryRate'] ?? 'NIL',
+          'heartRate': data['heartRate'] ?? 'NIL',
+          'spo2RoomAir': data['spo2RoomAir'] ?? 'NIL',
+          'indicationOfTracheostomy': data['indicationOfTracheostomy'] ?? 'NIL',
+          'comorbidities': data['comorbidities'] ?? 'NIL',
+          'hemoglobin': data['hemoglobin'] ?? 'NIL',
+          'srSodium': data['srSodium'] ?? 'NIL',
+          'srPotassium': data['srPotassium'] ?? 'NIL',
+          'srCalcium': data['srCalcium'] ?? 'NIL',
+          'srBicarbonate': data['srBicarbonate'] ?? 'NIL',
+          'pt': data['pt'] ?? 'NIL',
+          'aptt': data['aptt'] ?? 'NIL',
+          'inr': data['inr'] ?? 'NIL',
+          'platelets': data['platelets'] ?? 'NIL',
+          'liverFunctionTest': data['liverFunctionTest'] ?? 'NIL',
+          'renalFunctionTest': data['renalFunctionTest'] ?? 'NIL',
+        };
+      });
+    } else {
+      print('Failed to load patient details');
     }
+  } catch (e) {
+    print('Error fetching patient details: $e');
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -60,31 +88,32 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildTextView('Name', patientDetails['name']),
-                    buildTextView('Age', patientDetails['age']),
-                    buildTextView('Address', patientDetails['address']),
-                    buildTextView('BMI', patientDetails['bmi']),
-                    buildTextView('Diagnosis', patientDetails['diagnosis']),
-                    buildTextView('Surgery Status', patientDetails['surgeryStatus']),
-                    buildTextView('Post-Op Tracheostomy Day', patientDetails['postOpTracheostomyDay']),
-                    buildTextView('Tube Name and Size', patientDetails['tubeNameSize']),
-                    buildTextView('Baseline Vitals', patientDetails['baselineVitals']),
-                    buildTextView('Respiratory Rate', patientDetails['respiratoryRate']),
-                    buildTextView('Heart Rate', patientDetails['heartRate']),
-                    buildTextView('SPO2 @ Room Air', patientDetails['spo2RoomAir']),
-                    buildTextView('Indication of Tracheostomy', patientDetails['indicationOfTracheostomy']),
-                    buildTextView('Comorbidities', patientDetails['comorbidities']),
-                    buildTextView('Hemoglobin', patientDetails['hemoglobin']),
-                    buildTextView('Sr. Sodium', patientDetails['srSodium']),
-                    buildTextView('Sr. Potassium', patientDetails['srPotassium']),
-                    buildTextView('Sr. Calcium', patientDetails['srCalcium']),
-                    buildTextView('Sr. Bicarbonate', patientDetails['srBicarbonate']),
-                    buildTextView('PT', patientDetails['pt']),
-                    buildTextView('APTT', patientDetails['aptt']),
-                    buildTextView('INR', patientDetails['inr']),
-                    buildTextView('Platelets', patientDetails['platelets']),
-                    buildTextView('Liver Function Test', patientDetails['liverFunctionTest']),
-                    buildTextView('Renal Function Test', patientDetails['renalFunctionTest']),
+                    buildTextView('Name', patientDetails['name'] as String?),
+                    buildTextView('Age', patientDetails['age'] as String?),
+                    buildTextView('Address', patientDetails['address'] as String?),
+                    buildTextView('BMI', patientDetails['bmi'] as String?),
+                    buildTextView('Diagnosis', patientDetails['diagnosis'] as String?),
+                    buildTextView('Surgery Status', patientDetails['surgeryStatus'] as String?),
+                    buildTextView('Post-Op Tracheostomy Day', patientDetails['postOpTracheostomyDay'] as String?),
+                    buildTextView('Tube Name and Size', patientDetails['tubeNameSize'] as String?),
+                    buildTextView('Baseline Vitals', patientDetails['baselineVitals'] as String?),
+                    buildTextView('Respiratory Rate', patientDetails['respiratoryRate'] as String?),
+                    buildTextView('Heart Rate', patientDetails['heartRate'] as String?),
+                    buildTextView('SPO2 @ Room Air', patientDetails['spo2RoomAir'] as String?),
+                    buildTextView('Indication of Tracheostomy', patientDetails['indicationOfTracheostomy'] as String?),
+                    buildTextView('Comorbidities', patientDetails['comorbidities'] as String?),
+                    buildTextView('Hemoglobin', patientDetails['hemoglobin'] as String?),
+                    buildTextView('Sr. Sodium', patientDetails['srSodium'] as String?),
+                    buildTextView('Sr. Potassium', patientDetails['srPotassium'] as String?),
+                    buildTextView('Sr. Calcium', patientDetails['srCalcium'] as String?),
+                    buildTextView('Sr. Bicarbonate', patientDetails['srBicarbonate'] as String?),
+                    buildTextView('Sr. Bicarbonate', patientDetails['srBicarbonate'] as String?),
+                    buildTextView('PT', patientDetails['pt'] as String?),
+                    buildTextView('APTT', patientDetails['aptt'] as String?),
+                    buildTextView('INR', patientDetails['inr'] as String?),
+                    buildTextView('Platelets', patientDetails['platelets'] as String?),
+                    buildTextView('Liver Function Test', patientDetails['liverFunctionTest'] as String?),
+                    buildTextView('Renal Function Test', patientDetails['renalFunctionTest'] as String?),
                   ],
                 )
               : const Center(child: CircularProgressIndicator()), // Show a loading spinner while fetching data
@@ -94,16 +123,17 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
   }
 
   // Function to build a text display for each field
-  Widget buildTextView(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text('$label:', style: const TextStyle(fontWeight: FontWeight.bold)),
-          Text(value),
-        ],
-      ),
-    );
-  }
+  Widget buildTextView(String label, String? value) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 10.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text('$label:', style: const TextStyle(fontWeight: FontWeight.bold)),
+        Text(value ?? 'Not available'), // Provide a default text if value is null
+      ],
+    ),
+  );
+}
+
 }

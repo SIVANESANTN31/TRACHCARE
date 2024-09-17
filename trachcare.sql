@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 16, 2024 at 08:21 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Sep 17, 2024 at 12:53 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -62,6 +62,7 @@ CREATE TABLE `addpatients` (
 --
 
 INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `name`, `age`, `address`, `bmi`, `diagnosis`, `surgery_status`, `post_op_tracheostomy_day`, `tube_name_size`, `baseline_vitals`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `indication_of_tracheostomy`, `comorbidities`, `hemoglobin`, `sr_sodium`, `sr_potassium`, `sr_calcium`, `sr_bicarbonate`, `pt`, `aptt`, `inr`, `platelets`, `liver_function_test`, `renal_function_test`) VALUES
+('1', '4313rger', 'rger', 'rger', 'er', 'gff', 'g', 'fg', 'rg', 'rg', 'rg', 'rg', 'rg', 'rg', 'rg', 'rg', 'rg', 'rg', 'fgh', 'gh', 'y', 'r', 'htr', 't', 'rh', 'thr', 'thr'),
 ('1', '52527ghz', 'ghz', 'bzh', 'xh', 'zbz', 'zvz', 'ss', 'ss', 'xxxccds', 'z', 'z', 'z', 'c', 'zx', 'ds', 'zz', 'zzc', 'ccas', 'vvb', 'bdz', 'cvv', 'zag', 'xv', 'zc', 'dv', 'nh'),
 ('123', '62585JohnDoe', 'JohnDoe', '45', '123 Main St', '25.5', 'Flu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
@@ -287,39 +288,6 @@ CREATE TABLE `patientvideotable` (
 INSERT INTO `patientvideotable` (`doctorid`, `patient_id`, `Video_url`) VALUES
 ('1', '13717JohnDoe', '/n/uploads/videos/477456981614-hd_1920_1080_30fps.mp4/n/uploads/videos/416586981614-hd_1920_1080_30fps.mp4/n/uploads/videos/595996981614-hd_1920_1080_30fps.mp4/n/uploads/videos/601046981614-hd_1920_1080_30fps.mp4/n/uploads/videos/363736981614-hd_1920_1080_30fps.mp4/n/uploads/videos/932676981614-hd_1920_1080_30fps.mp4/n/uploads/videos/710576981614-hd_1920_1080_30fps.mp4');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `patient_details`
---
-
-CREATE TABLE `patient_details` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `date` date NOT NULL,
-  `respiratory_rate` int(11) DEFAULT NULL,
-  `heart_rate` int(11) DEFAULT NULL,
-  `spo2_room_air` int(11) DEFAULT NULL,
-  `daily_dressing_done` tinyint(1) DEFAULT NULL,
-  `tracheostomy_tie_changed` tinyint(1) DEFAULT NULL,
-  `suctioning_done` tinyint(1) DEFAULT NULL,
-  `oral_feeds_started` tinyint(1) DEFAULT NULL,
-  `changed_to_green_tube` tinyint(1) DEFAULT NULL,
-  `able_to_breathe_through_nose` tinyint(1) DEFAULT NULL,
-  `secretion_color_consistency` varchar(255) DEFAULT NULL,
-  `cough_or_breathlessness` tinyint(1) DEFAULT NULL,
-  `breath_duration` varchar(255) DEFAULT NULL,
-  `image_path` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `patient_details`
---
-
-INSERT INTO `patient_details` (`id`, `name`, `date`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `daily_dressing_done`, `tracheostomy_tie_changed`, `suctioning_done`, `oral_feeds_started`, `changed_to_green_tube`, `able_to_breathe_through_nose`, `secretion_color_consistency`, `cough_or_breathlessness`, `breath_duration`, `image_path`, `created_at`) VALUES
-(1, 'John Doe', '2024-08-29', 92, 60, 98, 0, 0, 0, 0, 0, 0, 'Clear', 0, 'Normal', '/path/to/image.jpg', '2024-08-29 07:45:25');
-
 --
 -- Indexes for dumped tables
 --
@@ -388,12 +356,6 @@ ALTER TABLE `patientvideotable`
   ADD PRIMARY KEY (`doctorid`,`patient_id`);
 
 --
--- Indexes for table `patient_details`
---
-ALTER TABLE `patient_details`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -431,12 +393,6 @@ ALTER TABLE `medication_schedule`
 -- AUTO_INCREMENT for table `patientprofile`
 --
 ALTER TABLE `patientprofile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `patient_details`
---
-ALTER TABLE `patient_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
