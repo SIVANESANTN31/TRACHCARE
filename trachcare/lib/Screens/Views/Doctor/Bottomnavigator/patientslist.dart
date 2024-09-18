@@ -19,6 +19,7 @@ class patientslist extends StatefulWidget {
 }
 
 class _patientslistState extends State<patientslist> {
+  String doctor_id = Doctor_id;
   //String selectedPid = "";
   final List<dynamic> patientslist = [];
 
@@ -105,6 +106,7 @@ class _patientslistState extends State<patientslist> {
               ),
               //  SizedBox(height: 0,),
               //
+
               Expanded(
                 child: ListView.builder(
                   itemCount: display_list.length,

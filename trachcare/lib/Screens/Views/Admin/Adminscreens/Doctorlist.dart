@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trachcare/Api/Apiurl.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/doctordetails.dart';
+import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
 import "package:http/http.dart" as http;
@@ -117,13 +118,17 @@ class _DoctorlistState extends State<Doctorlist> {
                     child: ListTile(
                       onTap: (){
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Doctordetails(),),);
+                          builder: (context) => Doctordetails(
+                            doctor_id: Doctor_id,
+                            Doctor_id:  display_list[index]['Doctor_id'].toString(), 
+                            Patient_id: display_list[index]['patient_id'].toString()
+                          ),),);
                       },
                       leading: const CircleAvatar(
                         radius: 25,
                         backgroundImage: AssetImage('assets/images/doctor.png'),
                       ),
-                      title: Text(display_list[index]['id'], style:const TextStyle(
+                      title: Text(display_list[index]['doctor_id'], style:const TextStyle(
                         color: Colors.black,
                       )),
                       subtitle:Text(

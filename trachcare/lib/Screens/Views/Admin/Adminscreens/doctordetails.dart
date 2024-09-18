@@ -1,12 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:trachcare/Api/Apiurl.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class Doctordetails extends StatelessWidget {
-  Doctordetails({super.key});
-  final TextEditingController usernameController = TextEditingController(text: "Mahalakshmi E Recycler Pvt.Ltd");
-  final TextEditingController doctorRegNoController = TextEditingController(text: "0123456789");
-  final TextEditingController emailController = TextEditingController(text: "recycler@gmail.com");
-  final TextEditingController phoneNumberController = TextEditingController(text: "+14987888999");
-  final TextEditingController passwordController = TextEditingController(text: "recycler@123");
+class Doctordetails extends StatefulWidget {
+   final doctor_id;
+  final String Doctor_id;
+  final String Patient_id;
+  const Doctordetails({super.key, required this.Doctor_id, required this.Patient_id, required this.doctor_id});
+
+  @override
+  _DoctordetailsState createState() => _DoctordetailsState();
+}
+
+class _DoctordetailsState extends State<Doctordetails> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController doctorRegNoController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDoctorDetails(); // Fetch data when the widget is initialized
+  }
+
+  Future<void> fetchDoctorDetails() async {
+  final String url = '$ViewdoctordetailsUrl?doctor_id=${widget.doctor_id}';
+
+  print('API URL: $url');  // Debugging purpose
+
+  try {
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      
+      var data = json.decode(response.body);
+      print('username: ${data['data']['username']}');
+print('doctor_reg_no: ${data['data']['doctor_reg_no']}');
+// Continue for other fields
+
+      print('Response Data: $data');  // Debugging purpose
+      if (data['status'] == 'success') {
+       setState(() {
+  usernameController.text = data['data']['username'] ?? '';
+  doctorRegNoController.text = data['data']['doctor_reg_no'] ?? '';
+  emailController.text = data['data']['email'] ?? '';
+  phoneNumberController.text = data['data']['phone_number'] ?? '';
+  passwordController.text = data['data']['password'] ?? '';
+});
+
+      } else {
+        print('Error: ${data['message']}');
+      }
+    } else {
+      print('Failed to fetch doctor details');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +75,6 @@ class Doctordetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Profile Picture Section
               Center(
                 child: Column(
                   children: [
@@ -36,8 +88,6 @@ class Doctordetails extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Username Field (View Only)
               TextFormField(
                 controller: usernameController,
                 enabled: false,
@@ -49,8 +99,6 @@ class Doctordetails extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-
-              // Doctor Registration Number Field (View Only)
               TextFormField(
                 controller: doctorRegNoController,
                 enabled: false,
@@ -62,8 +110,6 @@ class Doctordetails extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-
-              // Email Field (View Only)
               TextFormField(
                 controller: emailController,
                 enabled: false,
@@ -75,8 +121,6 @@ class Doctordetails extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-
-              // Phone Number Field (View Only)
               TextFormField(
                 controller: phoneNumberController,
                 enabled: false,
@@ -88,8 +132,6 @@ class Doctordetails extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-
-              // Password Field (View Only)
               TextFormField(
                 controller: passwordController,
                 enabled: false,
