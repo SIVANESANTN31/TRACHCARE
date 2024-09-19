@@ -56,6 +56,18 @@ class _DoctorlistState extends State<Doctorlist> {
     });
   }
 
+
+
+
+  
+Future<void> onRefresh() async{
+  await Future.delayed(Duration(milliseconds: 1000));
+  await fetchData();
+  setState(() {
+    
+  });
+}
+
   @override
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
@@ -72,78 +84,81 @@ class _DoctorlistState extends State<Doctorlist> {
                   var data = snapshot.data;
                   display_list = data["data"];
                   print(display_list[0]['id']);
-         return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Container(
-                  margin: const EdgeInsets.only(top: 5, bottom:8,),
-                  width: MediaQuery.of(context).size.width,
-                  height: 55,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(color: Colors.black.withOpacity(0.15),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3))],
-                  ),
-        
-                  child: TextFormField(
-                    onChanged: (value) => onsearch(value),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Search here....",
-                      hintStyle: TextStyle(
-                        color: Colors.black.withOpacity(0.5),
-                      ),
-                      prefixIcon: const Icon(Icons.search,size: 25,),
+         return RefreshIndicator(
+          onRefresh: onRefresh,
+           child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Container(
+                    margin: const EdgeInsets.only(top: 5, bottom:8,),
+                    width: MediaQuery.of(context).size.width,
+                    height: 55,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(color: Colors.black.withOpacity(0.15),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3))],
                     ),
-                  )
-              ),
-              //  SizedBox(height: 0,),
-              //
-              Expanded(
-                child:  ListView.builder(
-                  itemCount: display_list.length,
-                  itemBuilder: (context, index){
-                  print(display_list[index]['id']);
-
-                  return Card(
-                    color: const Color.fromRGBO(255, 255, 255, 1),
-                    elevation: 4,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    child: ListTile(
-                      onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Doctordetails(
-                            doctor_id: Doctor_id,
-                            Doctor_id:  display_list[index]['Doctor_id'].toString(), 
-                            Patient_id: display_list[index]['patient_id'].toString()
-                          ),),);
-                      },
-                      leading: const CircleAvatar(
-                        radius: 25,
-                        backgroundImage: AssetImage('assets/images/doctor.png'),
-                      ),
-                      title: Text(display_list[index]['doctor_id'], style:const TextStyle(
-                        color: Colors.black,
-                      )),
-                      subtitle:Text(
-                        display_list[index]["username"].toString(),
-                        style: const TextStyle(fontSize: 12, color:Color.fromARGB(255, 0, 0, 0)),
-                      ),
-                    ),
-                  );}
-                )
                    
+                    child: TextFormField(
+                      onChanged: (value) => onsearch(value),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Search here....",
+                        hintStyle: TextStyle(
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        prefixIcon: const Icon(Icons.search,size: 25,),
+                      ),
+                    )
                 ),
-          
-            ],
-          ),
-        );}}
+                //  SizedBox(height: 0,),
+                //
+                Expanded(
+                  child:  ListView.builder(
+                    itemCount: display_list.length,
+                    itemBuilder: (context, index){
+                    print(display_list[index]['id']);
+                
+                    return Card(
+                      color: const Color.fromRGBO(255, 255, 255, 1),
+                      elevation: 4,
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: ListTile(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Doctordetails(
+                              
+                              Doctor_id:  display_list[index]['doctor_id'].toString(), 
+                             
+                            ),),);
+                        },
+                        leading: const CircleAvatar(
+                          radius: 25,
+                          backgroundImage: AssetImage('assets/images/doctor.png'),
+                        ),
+                        title: Text(display_list[index]['doctor_id'], style:const TextStyle(
+                          color: Colors.black,
+                        )),
+                        subtitle:Text(
+                          display_list[index]["username"].toString(),
+                          style: const TextStyle(fontSize: 12, color:Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                      ),
+                    );}
+                  )
+                     
+                  ),
+            
+              ],
+            ),
+                   ),
+         );}}
        else if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: CupertinoActivityIndicator(
