@@ -82,8 +82,7 @@ var screenSize = MediaQuery.of(context).size;
                             width: 60,
                             height: 60,
                             child: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage("assets/images/doctor.png"),
+                              backgroundImage: AssetImage("assets/images/doctor.png"),
                             ),
                           ),
                           Text("Doctor",

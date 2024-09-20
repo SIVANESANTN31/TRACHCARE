@@ -1,4 +1,4 @@
-const ip = "192.168.1.15";
+const ip = "172.20.10.4";
 
 //login api
 String PatientLoginurl ="https://$ip/Trachcare/auth/patientAuth/PatientLogin.php";
@@ -12,7 +12,8 @@ String videourl = "https://$ip/Trachcare/Doctor/videos.php";
 String PatientDetailsSubmitUrl = "https://$ip/Trachcare/Doctor/Addpatients.php";
 String SubmitVitalsUrl = "https://$ip/Trachcare/Doctor/videos.php";
 String UpdatePatientDetailsUrl = "https://$ip/Trachcare/Doctor/videos.php";
-String AdddoctordetailsUrl = "https://$ip/Trachcare/Adddoctordetails.php";
+String AdddoctordetailsUrl = "https://$ip/Trachcare/Admin/Adddoctordetails.php";
+String Addvideos = "https://$ip/Trachcare/Admin/addvideos.php";
 
 //view api
 String ViewPatientDetailsUrl = "https://$ip/Trachcare/Doctor/viewpatientdetails.php";
@@ -21,6 +22,6 @@ String ViewDailyVitalsUrl = "https://$ip/Trachcare/Doctor/videos.php";
 String getpatientdetialsurl = "https://$ip/Trachcare/Patient/getdetials.php";
 
 //list api
-String DoctorslistUrl = "https://$ip/Trachcare/Doctorlist.php";
-String PatientslistUrl = "https://$ip/Trachcare/Patientslist.php";
+String DoctorslistUrl = "https://$ip/Trachcare/Admin/Doctorlist.php";
+String PatientslistUrl = "https://$ip/Trachcare/Doctor/Patientslist.php";
 

@@ -17,7 +17,7 @@ class Doctorlist extends StatefulWidget {
 
 class _DoctorlistState extends State<Doctorlist> {
   //String selectedPid = "";
-  List<Map<String, dynamic>> Doctorlist = [];
+  List<dynamic> Doctorlist = [];
 
 
 
@@ -43,11 +43,11 @@ class _DoctorlistState extends State<Doctorlist> {
     List<dynamic> results = [];
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
-      results = Doctorlist;
+      results = display_list;
     } else {
-      results = Doctorlist
-          .where((user) =>
-          user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
+      results = display_list
+          .where((name) =>
+          name["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
           .toList();
       // we use the toLowerCase() method to make it case-insensitive
     }
@@ -74,7 +74,7 @@ Future<void> onRefresh() async{
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 217, 255, 215),
       appBar: NormalAppbar(
-        Title: "Patients List",height: dn.height(10),
+        Title: "Doctors List",height: dn.height(10),
       ),
       body: FutureBuilder(
          future: fetchData(),

@@ -40,8 +40,6 @@ class _DoctordetailsState extends State<Doctordetails> {
       
       var data = json.decode(response.body);
       return data;
-
-
       }
     
     else {

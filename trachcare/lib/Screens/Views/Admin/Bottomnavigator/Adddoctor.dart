@@ -1,6 +1,11 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../Api/API_funcation/doctordetails.dart';
+import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
 
 class Adddoctor extends StatelessWidget {
@@ -43,9 +48,8 @@ class Adddoctor extends StatelessWidget {
     Dimentions dn = Dimentions(context);
      return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      appBar: AppBar(
-        title: const Text('Doctor Profile'),
-        backgroundColor: const Color.fromRGBO(78, 230, 126, 1),
+      appBar: NormalAppbar(
+        Title: "Add patients",height: dn.height(10),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -61,8 +65,9 @@ class Adddoctor extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 50,
-                        backgroundColor: Colors.grey[300],
-                        child: const Icon(Icons.person, size: 50, color: Colors.blue),
+                        backgroundImage: AssetImage("assets/images/doctor.png"),
+                        // backgroundColor: Colors.grey[300],
+                        // child: const Icon(Icons.person, size: 50, color: Colors.blue),
                       ),
                       const SizedBox(height: 10),
                       ElevatedButton.icon(
@@ -199,4 +204,54 @@ class Adddoctor extends StatelessWidget {
       ),
     );
   }
+
+  // void getimage({required ImageSource source}) async {
+  //   final file =
+  //       await ImagePicker().pickImage(source: source, imageQuality: 100);
+  //   if (file != null) {
+      
+  //     final imageBytes = await file.readAsBytes();
+  //     var base64encoder = base64Encode(imageBytes);
+  //     setState(() {
+  //       base64encode = base64encoder;
+  //     });
+  //   }
+
+  //   if (file?.path != null) {
+  //     setState(() {
+  //       imagefile = File(file!.path);
+  //     });
+  //   }
+  // }
+
+  // void photo_picker() {
+  //   showCupertinoModalPopup(
+  //       context: context,
+  //       builder: (BuildContext context) => CupertinoActionSheet(
+  //             actions: [
+  //               CupertinoActionSheetAction(
+  //                   child: const Text('Camera'),
+  //                   isDefaultAction: true,
+  //                   onPressed: () {
+  //                     Navigator.of(context, rootNavigator: true).pop();
+  //                     getimage(source: ImageSource.camera);
+  //                   }),
+  //               CupertinoActionSheetAction(
+  //                   child: const Text('Gallery'),
+  //                   isDefaultAction: true,
+  //                   onPressed: () {
+  //                     getimage(source: ImageSource.gallery);
+  //                     Navigator.of(context, rootNavigator: true).pop();
+  //                   }),
+  //             ],
+  //             cancelButton: CupertinoActionSheetAction(
+  //               isDestructiveAction: true,
+  //               child: const Text("cancel"),
+  //               onPressed: () {
+  //                 Navigator.pop(context);
+  //               },
+  //             ),
+  //           ));
+  // }
+
 }

@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/Addvideos.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
+import 'package:trachcare/Screens/Views/Admin/Bottomnavigator/assigndoctor.dart';
 import "package:trachcare/components/Appbar.dart";
 import '../../../../components/Navbardrawer.dart';
 import '../../../../style/utils/Dimention.dart';
@@ -34,7 +35,7 @@ class Admindb extends StatelessWidget {
 
     List pages=[
        const Doctorlist(),
-       const Addvideos(),
+       UploadVideoPage(),
        const patients_list(),
     ];
         Dimentions dn = Dimentions(context);
