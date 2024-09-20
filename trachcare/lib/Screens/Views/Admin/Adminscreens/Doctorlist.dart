@@ -166,6 +166,7 @@ Future<void> onRefresh() async{
                   ),
                 );
               }
+              print(snapshot.hasData);
                return const Center(
                 child: Text("something went wrong!!!"),
               );

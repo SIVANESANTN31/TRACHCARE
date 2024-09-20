@@ -8,6 +8,7 @@ import 'package:trachcare/Screens/Views/Admin/Adminscreens/Doctorlist.dart';  //
 // Function to add doctor details
 Future<void> addDoctorDetails(
     BuildContext context,
+    String base64Encode,
     String username,
     String doctorRegNo,
     String email,
@@ -32,16 +33,18 @@ Future<void> addDoctorDetails(
     "email": email,
     "phone_number": phoneNumber,
     "password": password, // Should hash password before sending to backend for production
-    // "image_data": base64Image // Optional image data
+    "image_data": base64Encode // Optional image data
   };
 
   try {
     // Send POST request to the API
+    print(apiUrl);
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(requestBody),
     );
+    print(response.body);
 
     if (response.statusCode == 200) {
       // Parse the response from the server
@@ -86,6 +89,8 @@ Future<void> addDoctorDetails(
     }
   } catch (e) {
     // Exception handling
+    print(e);
+    print("ethu than athu");
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text('Error: $e'),
       backgroundColor: Colors.red,

@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/Apiurl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../../../style/Tropography.dart';
 import '../../../../style/colors.dart';
 
 class Doctordetails extends StatefulWidget {
@@ -71,6 +74,8 @@ class _DoctordetailsState extends State<Doctordetails> {
                   emailController.text = data['email'];
                    phoneNumberController.text = data['phone_number'];
                    passwordController.text = data['password'];
+                   var imagepath = data["image_path"].toString().substring(3);
+                   print(data["image_path"]);
                   return 
          SingleChildScrollView(
           child: Padding(
@@ -84,6 +89,7 @@ class _DoctordetailsState extends State<Doctordetails> {
                       CircleAvatar(
                         radius: 50,
                         backgroundColor: Colors.grey[300],
+                        backgroundImage:NetworkImage("https://$ip/Trachcare/$imagepath"),
                         child: const Icon(Icons.person, size: 50, color: Colors.blue),
                       ),
                       const SizedBox(height: 20),
@@ -92,46 +98,75 @@ class _DoctordetailsState extends State<Doctordetails> {
                 ),
                 const SizedBox(height: 20),
                TextFormField(
+                style: GoogleFonts.ibmPlexSans(
+                        textStyle: TextStyle(
+                          color: BlackColor,
+                            fontSize: 13.sp))
+                            ,
                   controller: usernameController,
                   enabled: false,
                   decoration: InputDecoration(
+                    focusColor: BlackColor,
                     labelText: 'username',
-                    border: const OutlineInputBorder(),
+                    labelStyle: TextStyle(color: BlackColor),
+                    border: const OutlineInputBorder
+                    (
+                      borderSide: BorderSide(color: BlackColor)
+                    ),
+                    
                     filled: true,
-                    fillColor: const Color.fromARGB(255, 255, 255, 255),
+                    //fillColor: const Color.fromARGB(255, 255, 255, 255),
                   ),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: doctorRegNoController,
                   enabled: false,
+                  style: GoogleFonts.ibmPlexSans(
+                        textStyle: TextStyle(
+                          color: BlackColor,
+                            fontSize: 13.sp))
+                            ,
                   decoration: InputDecoration(
                     labelText: 'Doctor_reg_no',
+                    labelStyle: TextStyle(color: BlackColor),
                     border: const OutlineInputBorder(),
                     filled: true,
-                    fillColor: Colors.orange[100],
+                   
                   ),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: emailController,
                   enabled: false,
+                  style: GoogleFonts.ibmPlexSans(
+                        textStyle: TextStyle(
+                          color: BlackColor,
+                            fontSize: 13.sp))
+                            ,
                   decoration: InputDecoration(
                     labelText: 'Email Id',
+                    labelStyle: TextStyle(color: BlackColor),
                     border: const OutlineInputBorder(),
                     filled: true,
-                    fillColor: Colors.orange[100],
+                    
                   ),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: phoneNumberController,
                   enabled: false,
+                  style: GoogleFonts.ibmPlexSans(
+                        textStyle: TextStyle(
+                          color: BlackColor,
+                            fontSize: 13.sp))
+                            ,
                   decoration: InputDecoration(
                     labelText: 'Phone Number',
+                    labelStyle: TextStyle(color: BlackColor),
                     border: const OutlineInputBorder(),
                     filled: true,
-                    fillColor: Colors.orange[100],
+                   
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -139,11 +174,17 @@ class _DoctordetailsState extends State<Doctordetails> {
                   controller: passwordController,
                   enabled: false,
                   obscureText: true,
+                  style: GoogleFonts.ibmPlexSans(
+                        textStyle: TextStyle(
+                          color: BlackColor,
+                            fontSize: 13.sp))
+                            ,
                   decoration: InputDecoration(
                     labelText: 'Password',
+                    labelStyle: TextStyle(color: BlackColor),
                     border: const OutlineInputBorder(),
                     filled: true,
-                    fillColor: Colors.orange[100],
+                    //fillColor: Colors.orange[100],
                   ),
                 ),
                 const SizedBox(height: 24),

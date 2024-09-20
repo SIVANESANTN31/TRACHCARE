@@ -1,5 +1,5 @@
 <?php 
-include "config/conn.php";
+include "../config/conn.php";
 
 // Received JSON into $json variable
 $json = file_get_contents('php://input');
@@ -24,10 +24,49 @@ if(isset($obj["username"], $obj["email"], $obj["phone_number"], $obj["password"]
     // Handle image upload if provided
     $image_file = null;
     if ($image_data !== null) {
-        $image_file = 'uploads/' . uniqid() . '.jpg';  // Save with a unique name
-        file_put_contents($image_file, base64_decode($image_data));
+        
+            // Decode the base64 data
+            $image = base64_decode($image_data);
+
+            // Get image info
+            $imageInfo = getimagesizefromstring($image);
+            if ($imageInfo === false) {
+                echo json_encode(["status" => false, "msg" => "Invalid image data"]);
+                exit;
+            }
+
+            // Determine MIME type and generate filename
+            $mimeType = $imageInfo['mime'];
+           
+            
+
+            // Determine file extension based on MIME type
+            switch ($mimeType) {
+                case 'image/jpeg':
+                    $filenames = uniqid() . ".jpeg";
+                    break;
+                case 'image/png':
+                    $filenames = uniqid() . ".png";
+                    break;
+                case 'image/jpg':
+                    $filenames = uniqid() . ".jpg";
+                    break;
+                default:
+                    echo json_encode(["status" => false, "msg" => "Unknown image format"]);
+                    exit;
+            }
+
+            // Define the file path where the image will be saved
+            $filePath = "../uploads/" . $filenames;
+
+            // Save the image file
+            if (file_put_contents($filePath, $imageData) === false) {
+                echo json_encode(["status" => false, "msg" => "Failed to save image"]);
+                exit;
+            }
+         
         $insert_sql = "INSERT INTO doctorprofile (doctor_id ,username, doctor_reg_no, email, phone_number, password, image_path) 
-                   VALUES ('$doctorId','$username', '$doctor_reg_no', '$email', '$phone_number', '$password', '$image_file')";
+                   VALUES ('$doctorId','$username', '$doctor_reg_no', '$email', '$phone_number', '$password', '$filePath')";
     }
     // Prepare the insert query
     else{

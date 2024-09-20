@@ -1,6 +1,6 @@
 <?php
 // Database connection
-include "config/conn.php"; // Assuming you have the connection stored in conn.php
+include "../config/conn.php"; // Assuming you have the connection stored in conn.php
 
 // Array to store the response
 $response = array();

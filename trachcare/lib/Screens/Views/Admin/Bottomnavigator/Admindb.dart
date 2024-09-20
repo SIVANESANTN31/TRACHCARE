@@ -10,7 +10,7 @@ import '../Adminscreens/Doctorlist.dart';
 
 class Admindb extends StatelessWidget {
    Admindb({super.key});
-
+   
   List imgList = [
     'Vector',
     'Vector-1',
@@ -29,10 +29,10 @@ class Admindb extends StatelessWidget {
     'Patients list',
 
   ];
-
+  
   @override
   Widget build(BuildContext context) {
-
+   //bool isOpendrawer = false;
     List pages=[
        const Doctorlist(),
        UploadVideoPage(),
@@ -44,6 +44,9 @@ class Admindb extends StatelessWidget {
        drawer: const drawer(
         Name: 'rajieswari',
       ),
+      // endDrawer: isOpendrawer ? drawer(
+      //   Name: 'rajieswari',
+      //    ) : null,
       body: Stack(
       children: [
         // Background image with blur effect

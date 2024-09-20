@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,16 +7,27 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../Api/API_funcation/doctordetails.dart';
 import '../../../../components/NAppbar.dart';
+import '../../../../components/profilepic.dart';
 import '../../../../style/utils/Dimention.dart';
 
-class Adddoctor extends StatelessWidget {
+class Adddoctor extends StatefulWidget {
   Adddoctor({super.key});
 
+  @override
+  State<Adddoctor> createState() => _AdddoctorState();
+}
+
+class _AdddoctorState extends State<Adddoctor> {
   final _formKey = GlobalKey<FormState>();
+
   TextEditingController usernameController = TextEditingController();
+
   TextEditingController doctorRegNoController = TextEditingController();
+
   TextEditingController emailController = TextEditingController();
+
   TextEditingController phoneNumberController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
 
   void _save(BuildContext context) {
@@ -23,6 +35,7 @@ class Adddoctor extends StatelessWidget {
       // Handle form submission
       addDoctorDetails(
         context,
+        base64encode.toString(),
         usernameController.text,
         doctorRegNoController.text,
         emailController.text,
@@ -41,7 +54,55 @@ class Adddoctor extends StatelessWidget {
       _formKey.currentState!.reset();
     }
   }
+var imagefile,base64encode;
+void getimage({required ImageSource source}) async {
+    final file =
+        await ImagePicker().pickImage(source: source, imageQuality: 100);
+    if (file != null) {
+      
+      final imageBytes = await file.readAsBytes();
+      var base64encoder = base64Encode(imageBytes);
+      setState(() {
+         base64encode = base64encoder;
+      });
+    }
 
+    if (file?.path != null) {
+      setState(() {
+         imagefile = File(file!.path);
+      });
+    }
+    }
+
+void photo_picker(BuildContext context) {
+    showCupertinoModalPopup(
+        context: context,
+        builder: (BuildContext context) => CupertinoActionSheet(
+              actions: [
+                CupertinoActionSheetAction(
+                    child: const Text('Camera'),
+                    isDefaultAction: true,
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                      getimage(source: ImageSource.camera);
+                    }),
+                CupertinoActionSheetAction(
+                    child: const Text('Gallery'),
+                    isDefaultAction: true,
+                    onPressed: () {
+                      getimage(source: ImageSource.gallery);
+                      Navigator.of(context, rootNavigator: true).pop();
+                    }),
+              ],
+              cancelButton: CupertinoActionSheetAction(
+                isDestructiveAction: true,
+                child: const Text("cancel"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +110,7 @@ class Adddoctor extends StatelessWidget {
      return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: NormalAppbar(
-        Title: "Add patients",height: dn.height(10),
+        Title: "Add Doctor",height: dn.height(10),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -63,16 +124,26 @@ class Adddoctor extends StatelessWidget {
                 Center(
                   child: Column(
                     children: [
+                      if(imagefile==null)
                       CircleAvatar(
                         radius: 50,
-                        backgroundImage: AssetImage("assets/images/doctor.png"),
+                        backgroundImage:   AssetImage("assets/images/doctor.png"),
+                        // backgroundColor: Colors.grey[300],
+                        // child: const Icon(Icons.person, size: 50, color: Colors.blue),
+                      )
+                      else 
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundImage: FileImage(imagefile),
                         // backgroundColor: Colors.grey[300],
                         // child: const Icon(Icons.person, size: 50, color: Colors.blue),
                       ),
-                      const SizedBox(height: 10),
+
+                       SizedBox(height: 10),
                       ElevatedButton.icon(
-                        onPressed: () {
-                          // Handle picture change
+                        onPressed: ()  {
+                       //Iamgepic.photo_picker(context);
+                       photo_picker(context);
                         },
                         icon: const Icon(Icons.camera_alt),
                         label: const Text('Change Picture'),
@@ -204,54 +275,4 @@ class Adddoctor extends StatelessWidget {
       ),
     );
   }
-
-  // void getimage({required ImageSource source}) async {
-  //   final file =
-  //       await ImagePicker().pickImage(source: source, imageQuality: 100);
-  //   if (file != null) {
-      
-  //     final imageBytes = await file.readAsBytes();
-  //     var base64encoder = base64Encode(imageBytes);
-  //     setState(() {
-  //       base64encode = base64encoder;
-  //     });
-  //   }
-
-  //   if (file?.path != null) {
-  //     setState(() {
-  //       imagefile = File(file!.path);
-  //     });
-  //   }
-  // }
-
-  // void photo_picker() {
-  //   showCupertinoModalPopup(
-  //       context: context,
-  //       builder: (BuildContext context) => CupertinoActionSheet(
-  //             actions: [
-  //               CupertinoActionSheetAction(
-  //                   child: const Text('Camera'),
-  //                   isDefaultAction: true,
-  //                   onPressed: () {
-  //                     Navigator.of(context, rootNavigator: true).pop();
-  //                     getimage(source: ImageSource.camera);
-  //                   }),
-  //               CupertinoActionSheetAction(
-  //                   child: const Text('Gallery'),
-  //                   isDefaultAction: true,
-  //                   onPressed: () {
-  //                     getimage(source: ImageSource.gallery);
-  //                     Navigator.of(context, rootNavigator: true).pop();
-  //                   }),
-  //             ],
-  //             cancelButton: CupertinoActionSheetAction(
-  //               isDestructiveAction: true,
-  //               child: const Text("cancel"),
-  //               onPressed: () {
-  //                 Navigator.pop(context);
-  //               },
-  //             ),
-  //           ));
-  // }
-
 }
