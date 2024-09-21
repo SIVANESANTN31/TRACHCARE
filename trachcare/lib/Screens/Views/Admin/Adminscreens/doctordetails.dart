@@ -5,8 +5,6 @@ import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/Apiurl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import '../../../../style/Tropography.dart';
 import '../../../../style/colors.dart';
 
 class Doctordetails extends StatefulWidget {

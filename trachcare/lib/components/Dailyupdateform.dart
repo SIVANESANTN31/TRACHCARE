@@ -1,374 +1,263 @@
-// ignore_for_file: override_on_non_overriding_member
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:pull_down_button/pull_down_button.dart';
-import 'package:sizer/sizer.dart';
-import 'package:trachcare/components/custom_button.dart';
-import 'package:trachcare/style/Tropography.dart';
-import 'package:trachcare/style/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class Dailyupdateform extends StatefulWidget {
-  const Dailyupdateform({super.key});
+import 'package:sizer/sizer.dart';
+
+import '../../../../style/colors.dart';
+
+class dailyupdates extends StatefulWidget {
+  dailyupdates(DateTime dateTime);
 
   @override
-  State<Dailyupdateform> createState() => _DailyupdateformState();
+  _dailyupdatesState createState() => _dailyupdatesState();
 }
 
-class _DailyupdateformState extends State<Dailyupdateform> {
+class _dailyupdatesState extends State<dailyupdates> {
+  Map<String, dynamic> patientData = {};
+  bool isLoading = true;
+
   @override
-  bool yes_selected = false;
-  bool no_selected = false;
-  TextEditingController dropmenu = TextEditingController(text: "Select the option");
-  TextEditingController dropmenu1 = TextEditingController(text: "Select the option"); 
-  TextEditingController dropmenu2 = TextEditingController(text: "Select the option");
-  TextEditingController dropmenu3 = TextEditingController(text: "Select the option");
-  TextEditingController dropmenu4 = TextEditingController(text: "Select the option");
+  void initState() {
+    super.initState();
+    fetchPatientData();
+  }
 
+  Future<void> fetchPatientData() async {
+    setState(() {
+      isLoading = true;
+    });
 
-   TextEditingController input1 = TextEditingController();
-   TextEditingController input2 = TextEditingController();
-   TextEditingController input3 = TextEditingController();
-   TextEditingController input4 = TextEditingController();
-   TextEditingController input5 = TextEditingController();
+    try {
+      final response = await http.get(Uri.parse('http://localhost/api/patient_vitals.php'));
+      
+      if (response.statusCode == 200) {
+        setState(() {
+          patientData = json.decode(response.body);
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load patient data');
+      }
+    } catch (e) {
+      print('Error fetching patient data: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> updatePatientData() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost/api/update_patient_vitals.php'),
+        body: json.encode(patientData),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Patient data updated successfully')),
+        );
+      } else {
+        throw Exception('Failed to update patient data');
+      }
+    } catch (e) {
+      print('Error updating patient data: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to update patient data')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoFormSection(
-      
-      header: const Text("Daily Update"), children: [
-      CupertinoFormRow(
-        prefix: Text(
-          
-          "Vitals",
-          style: Normal,
-          softWrap: true,
-        ),
-        child: SizedBox(
-            width: 70.w,
-            height: 6.h,
-            child: CupertinoTextField(
-              controller: input1,
-              placeholder: "Enter the values",
-            )),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Patient Vitals Form'),
       ),
-      CupertinoFormRow(
-        prefix: Text(
-          "Respiratory\nRate",
-          style: Normal,
-          softWrap: true,
-        ),
-        child: SizedBox(
-            width: 70.w,
-            height: 6.h,
-            child: CupertinoTextField(
-              controller: input2,
-              placeholder: "Enter the values",
-            )),
-      ),
-      CupertinoFormRow(
-        prefix: Text(
-          "Heart Rate",
-          style: Normal,
-        ),
-        child: SizedBox(
-            width: 70.w,
-            height: 6.h,
-            child: CupertinoTextField(
-              controller: input3,
-              placeholder: "Enter the values",
-            )),
-      ),
-      CupertinoFormRow(
-        prefix: Text(
-          "SPO2\n@Room Air",
-          style: Normal,
-        ),
-        child: SizedBox(
-            width: 70.w,
-            height: 6.h,
-            child: CupertinoTextField(
-              controller: input4,
-              placeholder: "Enter the values",
-            )),
-      ),
-      CupertinoFormRow(
-        prefix: Text(
-          "Decrease in\nurine output",
-          style: Normal,
-        ),
-        child: SizedBox(
-            width: 70.w,
-            height: 6.h,
-            child: CupertinoTextField(
-              controller: input5,
-              placeholder: "Enter the values",
-            )),
-      ),
-      CupertinoFormRow(
-          prefix: const Text("Daily dressing done ?"),
-          child: SizedBox(
-            width: 50.w,
-            height: 5.5.h,
-            child: CupertinoTextField(
-              readOnly: true,
-              placeholder: " ",
-              controller: dropmenu,
-              suffix: PullDownButton(
-                itemBuilder: (context) => [
-                  PullDownMenuItem.selectable(
-                    onTap: () {
-                      setState(() {
-                        yes_selected = true;
-                        no_selected = false;
-                        dropmenu.text = "yes";
-                      });
-                    },
-                    selected: yes_selected,
-                    title: 'Yes',
-                  ),
-                  PullDownMenuItem.selectable(
-                    onTap: () {
-                      setState(() {
-                        yes_selected = false;
-                        no_selected = true;
-                        dropmenu.text = "No";
-                      });
-                    },
-                    selected: no_selected,
-                    title: 'No',
-                    isDestructive: true,
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(child: Text('Date: ${patientData['date'] ?? 'N/A'}', style: TextStyle(fontWeight: FontWeight.bold))),
+                  SizedBox(height: 16),
+                  Namecard("Siva", "132"),
+                  SizedBox(height: 16),
+                  Text('Vitals', style: TextStyle(fontWeight: FontWeight.bold)),
+                  _buildNumberInput('Respiratory Rate', 'respiratory_rate'),
+                  _buildNumberInput('Heart Rate', 'heart_rate'),
+                  _buildNumberInput('SPO2 @ Room Air', 'spo2'),
+                  _buildYesNoQuestion('Daily dressing done?', 'daily_dressing_done'),
+                  _buildYesNoQuestion('Tracheostomy tie changed?', 'tracheostomy_tie_changed'),
+                  _buildYesNoQuestion('Suctioning done?', 'suctioning_done'),
+                  _buildYesNoQuestion('Has the patient started on oral feeds?', 'started_on_oral_feeds'),
+                  _buildYesNoQuestion('Has the patient been changed to green tube?', 'changed_to_green_tube'),
+                  _buildDropdown('Spigotting status', 'spigotting_status', ['Not Applicable', 'Option 1', 'Option 2']),
+                  _buildYesNoQuestion('Is the patient able to breathe through nose, while blocking the tube with hands?', 'able_to_breathe'),
+                  if (patientData['able_to_breathe'] == true)
+                    _buildTextInput('If Yes, How long the patient can able to breath?', 'breathing_duration'),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: updatePatientData,
+                    child: Text('Update Patient Data'),
                   ),
                 ],
-                buttonBuilder: (context, showMenu) => CupertinoButton(
-                  onPressed: showMenu,
-                  child: const Icon(
-                    CupertinoIcons.chevron_down_circle,
-                    color: Colors.blue,
-                  ),
-                ),
               ),
             ),
-          )),
-      CupertinoFormRow(
-          prefix: const Text("Trachestomy tie\nchanged ?"),
-          child: SizedBox(
-            width: 50.w,
-            height: 5.5.h,
-            child: CupertinoTextField(
-              readOnly: true,
-              placeholder: " ",
-              controller: dropmenu1,
-              suffix: PullDownButton(
-                itemBuilder: (context) => [
-                  PullDownMenuItem.selectable(
-                    onTap: () {
-                      setState(() {
-                        yes_selected = true;
-                        no_selected = false;
-                        dropmenu1.text = "yes";
-                      });
-                    },
-                    selected: yes_selected,
-                    title: 'Yes',
-                  ),
-                  PullDownMenuItem.selectable(
-                    onTap: () {
-                      setState(() {
-                        yes_selected = false;
-                        no_selected = true;
-                        dropmenu1.text = "No";
-                      });
-                    },
-                    selected: no_selected,
-                    title: 'No',
-                    isDestructive: true,
-                  ),
-                ],
-                buttonBuilder: (context, showMenu) => CupertinoButton(
-                  onPressed: showMenu,
-                  child: const Icon(
-                    CupertinoIcons.chevron_down_circle,
-                    color: Colors.blue,
-                  ),
-                ),
-              ),
-            ),
-          )),
-      CupertinoFormRow(
-          prefix: const Text("Suctioning done ?"),
-          child: SizedBox(
-            width: 50.w,
-            height: 5.5.h,
-            child: CupertinoTextField(
-              readOnly: true,
-              placeholder: " ",
-              controller: dropmenu2,
-              suffix: PullDownButton(
-                itemBuilder: (context) => [
-                  PullDownMenuItem.selectable(
-                    onTap: () {
-                      setState(() {
-                        yes_selected = true;
-                        no_selected = false;
-                        dropmenu2.text = "yes";
-                      });
-                    },
-                    selected: yes_selected,
-                    title: 'Yes',
-                  ),
-                  PullDownMenuItem.selectable(
-                    onTap: () {
-                      setState(() {
-                        yes_selected = false;
-                        no_selected = true;
-                        dropmenu2.text = "No";
-                      });
-                    },
-                    selected: no_selected,
-                    title: 'No',
-                    isDestructive: true,
-                  ),
-                ],
-                buttonBuilder: (context, showMenu) => CupertinoButton(
-                  onPressed: showMenu,
-                  child: const Icon(
-                    CupertinoIcons.chevron_down_circle,
-                    color: Colors.blue,
-                  ),
-                ),
-              ),
-            ),
-          )),
-      CupertinoFormRow(
-          prefix: const Text("Has the patient\nstarted on oral feeds ?"),
-          child: SizedBox(
-            width: 50.w,
-            height: 5.5.h,
-            child: CupertinoTextField(
-               readOnly: true,
-              placeholder: " ",
-              controller: dropmenu3,
-              suffix: PullDownButton(
-                itemBuilder: (context) => [
-                  PullDownMenuItem.selectable(
-                    onTap: () {
-                      setState(() {
-                        yes_selected = true;
-                        no_selected = false;
-                        dropmenu3.text = "yes";
-                      });
-                    },
-                    selected: yes_selected,
-                    title: 'Yes',
-                  ),
-                  PullDownMenuItem.selectable(
-                    onTap: () {
-                      setState(() {
-                        yes_selected = false;
-                        no_selected = true;
-                        dropmenu3.text = "No";
-                      });
-                    },
-                    selected: no_selected,
-                    title: 'No',
-                    isDestructive: true,
-                  ),
-                ],
-                buttonBuilder: (context, showMenu) => CupertinoButton(
-                  onPressed: showMenu,
-                  child: const Icon(
-                    CupertinoIcons.chevron_down_circle,
-                    color: Colors.blue,
-                  ),
-                ),
-              ),
-            ),
-          )),
-      CupertinoFormRow(
-          prefix: const Text("Has the patient been\nchanged to green tube?"),
-          child: SizedBox(
-            width: 50.w,
-            height: 5.5.h,
-            child: CupertinoTextField(
-               readOnly: true,
-              placeholder: " ",
-              controller: dropmenu4,
-              suffix: PullDownButton(
-                itemBuilder: (context) => [
-                  PullDownMenuItem.selectable(
-                    onTap: () {
-                      setState(() {
-                        yes_selected = true;
-                        no_selected = false;
-                        dropmenu4.text = "yes";
-                      });
-                    },
-                    selected: yes_selected,
-                    title: 'Yes',
-                  ),
-                  PullDownMenuItem.selectable(
-                    onTap: () {
-                      setState(() {
-                        yes_selected = false;
-                        no_selected = true;
-                        dropmenu4.text = "No";
-                      });
-                    },
-                    selected: no_selected,
-                    title: 'No',
-                    isDestructive: true,
-                  ),
-                ],
-                buttonBuilder: (context, showMenu) => CupertinoButton(
-                  onPressed: showMenu,
-                  child: const Icon(
-                    CupertinoIcons.chevron_down_circle,
-                    color: Colors.blue,
-                  ),
-                ),
-              ),
-            ),
-          )),
-      CupertinoFormSection(
-        header: const Text("Spigotting status"),
-        children: [
-          const CupertinoFormRow(
-              child: Text(
-                  "Is the patient able berath through noise, while blocking the tube with hands ?")),
-          CupertinoFormRow(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              custom_Button(
-                  text: "Yes",
-                  width: 40,
-                  height: 6,
-                  backgroundColor: Colors.green,
-                  textcolor: whiteColor,
-                  button_funcation: (){},
-                  textSize: 10.5),
-
-
-
-                  custom_Button(
-                  text: "No",
-                  width: 40,
-                  height: 6,
-                  button_funcation: (){},
-                  backgroundColor: Colors.red,
-                  textcolor: whiteColor,
-                  textSize: 10.5)
-            ],
-          ))
-        ],
-      ),
-
-      Gap(3.h),
-      
-       
-
-    ]);
+    );
   }
+
+  Widget _buildNumberInput(String label, String key) {
+    return Row(
+      children: [
+        Expanded(child: Text(label)),
+        SizedBox(
+          width: 100,
+          child: TextFormField(
+            initialValue: patientData[key]?.toString() ?? '',
+            keyboardType: TextInputType.number,
+            onChanged: (text) {
+              setState(() {
+                patientData[key] = int.tryParse(text) ?? patientData[key];
+              });
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildYesNoQuestion(String question, String key) {
+    return Row(
+      children: [
+        Expanded(child: Text(question)),
+        Switch(
+          value: patientData[key] ?? false,
+          onChanged: (value) {
+            setState(() {
+              patientData[key] = value;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDropdown(String label, String key, List<String> options) {
+    return Row(
+      children: [
+        Expanded(child: Text(label)),
+        DropdownButton<String>(
+          value: patientData[key] ?? options.first,
+          items: options.map((String option) {
+            return DropdownMenuItem<String>(
+              value: option,
+              child: Text(option),
+            );
+          }).toList(),
+          onChanged: (String? newValue) {
+            if (newValue != null) {
+              setState(() {
+                patientData[key] = newValue;
+              });
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTextInput(String label, String key) {
+    return Row(
+      children: [
+        Expanded(child: Text(label)),
+        SizedBox(
+          width: 100,
+          child: TextFormField(
+            initialValue: patientData[key] ?? '',
+            onChanged: (text) {
+              setState(() {
+                patientData[key] = text;
+              });
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
+
+Widget Namecard(String name, String patientId) {
+  return Container(
+    margin: const EdgeInsets.all(10),
+    width: double.infinity,
+    height: 12.h,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: BlackColor, width: 0.3)),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        const CircleAvatar(
+          minRadius: 20,
+          child: Image(image: AssetImage("assets/images/doctor.png")),
+        ),
+        Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Row(
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      "Name",
+                      style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(fontSize: 13.sp)),
+                    ),
+                    Text(
+                      "Patient Id ",
+                      style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(fontSize: 13.sp)),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text(
+                      ":",
+                      style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(fontSize: 13.sp)),
+                    ),
+                    Text(
+                      ": ",
+                      style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(fontSize: 13.sp)),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text(
+                      name,
+                      style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(fontSize: 13.sp)),
+                    ),
+                    Text(
+                      patientId,
+                      style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(fontSize: 13.sp)),
+                    )
+                  ],
+                )
+              ],
+            ))
+      ],
+    ),
+  );
 }

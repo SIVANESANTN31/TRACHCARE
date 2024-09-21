@@ -23,7 +23,7 @@ class your_daily_updates extends StatelessWidget {
           Namecard("siva", "12345"),
           
           Gap(2.h),
-          const Dailyupdateform(),
+          // const Dailyupdateform(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: custom_Button(

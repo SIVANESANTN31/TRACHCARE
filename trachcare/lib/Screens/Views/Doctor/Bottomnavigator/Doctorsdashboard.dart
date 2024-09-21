@@ -3,7 +3,7 @@ import "package:flutter/material.dart";
 import "package:flutter_carousel_widget/flutter_carousel_widget.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
-import "package:trachcare/Screens/Views/Doctor/doctorscreens/AddExVideos.dart";
+import "package:trachcare/Screens/Views/Doctor/doctorscreens/dailyupdatedetails.dart";
 import "package:trachcare/Screens/Views/Doctor/doctorscreens/DailyUpadtes_patient.dart";
 import "package:trachcare/components/Appbar.dart";
 import "package:trachcare/components/Navbardrawer.dart";
@@ -34,7 +34,7 @@ class DoctorDashBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     List pages = [
       const Addpatients(),
-      const Adexvideos(),
+      // const dailyupdates(),
       const Adsurvideos(),
     ];
     Dimentions dn = Dimentions(context);

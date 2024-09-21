@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
 
 import '../../../../Api/API_funcation/patientsdetails.dart';
+import '../../../../components/Appbar_copy.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
 
@@ -111,7 +112,7 @@ class _AddpatientsState extends State<Addpatients> {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "Patient Details", height: dn.height(10)),
+      appBar: Duplicate_Appbar(Title: "Patient Details", height: dn.height(10)),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),

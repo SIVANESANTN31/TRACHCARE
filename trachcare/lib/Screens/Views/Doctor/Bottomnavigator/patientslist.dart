@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
 
 import '../../../../Api/Apiurl.dart';
+import '../../../../components/Appbar_copy.dart';
 import '../../../../components/NAppbar.dart';
 // import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
@@ -19,7 +20,7 @@ class patientslist extends StatefulWidget {
 }
 
 class _patientslistState extends State<patientslist> {
-  String doctor_id = Doctor_id;
+  String doctor_id = Doctor_id.toString();
   //String selectedPid = "";
   final List<dynamic> patientslist = [];
 
@@ -62,9 +63,7 @@ class _patientslistState extends State<patientslist> {
     Dimentions dn = Dimentions(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 217, 255, 215),
-      appBar: NormalAppbar(
-        Title: "Patients List",height: dn.height(10),
-      ),
+      appBar: Duplicate_Appbar(Title: "Patient List", height: dn.height(10)),
       body:FutureBuilder(
         future: fetchData(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {

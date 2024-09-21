@@ -1,80 +1,71 @@
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
-import 'package:table_calendar/table_calendar.dart';
-import 'package:trachcare/Screens/Views/Doctor/doctorscreens/dailyupdatedetails.dart';
-import 'package:trachcare/components/NAppbar.dart';
-
-import '../../../../components/Dailyupdateform.dart';
 import '../../../../style/colors.dart';
 
-import '../../../../style/utils/Dimention.dart';
-
-
-class DailyUpdatePatients extends StatefulWidget {
-  const DailyUpdatePatients({super.key});
-
-  @override
-  State<DailyUpdatePatients> createState() => _DailyUpdatePatientsState();
-}
-
-class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
+class selectedDay extends StatelessWidget {
+  late final String selectedDate;
   @override
   Widget build(BuildContext context) {
-
-
-      DateTime selectedDate = DateTime.now();
-  DateTime focusedDate = DateTime.now();
-
-  void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    setState(() {
-      selectedDate = selectedDay;
-      focusedDate = focusedDay;
-                     Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>  dailyupdates(selectedDate= selectedDay )));
-                  
-    });
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Patient Vitals Form'),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(child: Text('Date: ${selectedDate ?? 'N/A'}', style: TextStyle(fontWeight: FontWeight.bold))),
+                  SizedBox(height: 16),
+                  Namecard("Siva", "132"),
+            SizedBox(height: 16),
+            Text('Vitals', style: TextStyle(fontWeight: FontWeight.bold)),
+            _buildInfoRow('Respiratory Rate', '18'),
+            _buildInfoRow('Heart Rate', '100'),
+            _buildInfoRow('SPO2 @ Room Air', '100'),
+            _buildYesNoRow('Daily dressing done?', true),
+            _buildYesNoRow('Tracheostomy tie changed?', true),
+            _buildYesNoRow('Suctioning done?', true),
+            _buildYesNoRow('has the patient started on oral feeds?', true),
+            _buildYesNoRow('has the patient been changed to green tube?', true),
+            _buildInfoRow('Spigotting status', 'Not Applicable'),
+            _buildYesNoRow('Is the patient able to breathe through nose, while\nblocking the tube with hands?', true),
+            Padding(
+              padding: EdgeInsets.only(left: 16),
+              child: _buildInfoRow('If Yes, How long the patient can able to breath?', '1 min'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
-    Dimentions dn = Dimentions(context);
-    return Scaffold(
-        appBar: NormalAppbar(Title: "Report", height: dn.height(15),),
-        body: ListView(children: [
-          Namecard("Siva", "132"),
-          TableCalendar(
-            availableGestures: AvailableGestures.all,
-            pageJumpingEnabled: true,
-            headerStyle:const HeaderStyle(formatButtonVisible: false,titleCentered: true,) ,
-              focusedDay: focusedDate,
-               firstDay: DateTime.utc(2010,1,1), 
-               lastDay: DateTime.now().add(
-                const Duration(days: 365),
-              ),
-              selectedDayPredicate: (day) => isSameDay(day, selectedDate),
-        onDaySelected: onDaySelected,
-              
-              )
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Expanded(child: Text(label)),
+          Text(value, style: TextStyle(fontWeight: FontWeight.bold)),
+        ],
+      ),
+    );
+  }
 
-        // SfCalendar(
-        //   view: CalendarView.month,
-        // )
-        ])
-        
-        
-        )
-        
-        
-        
-        ;
-
-        
+  Widget _buildYesNoRow(String question, bool value) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Expanded(child: Text(question)),
+          Text(value ? 'Yes' : 'No', style: TextStyle(fontWeight: FontWeight.bold)),
+        ],
+      ),
+    );
   }
 }
-
 
 
 

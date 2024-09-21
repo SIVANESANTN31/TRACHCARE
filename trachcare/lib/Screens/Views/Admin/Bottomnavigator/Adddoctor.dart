@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../Api/API_funcation/doctordetails.dart';
-import '../../../../components/NAppbar.dart';
-import '../../../../components/profilepic.dart';
+import '../../../../Api/DataStore/Datastore.dart';
+import '../../../../components/Appbar_copy.dart';
 import '../../../../style/utils/Dimention.dart';
 
 class Adddoctor extends StatefulWidget {
@@ -18,6 +18,9 @@ class Adddoctor extends StatefulWidget {
 }
 
 class _AdddoctorState extends State<Adddoctor> {
+  LoginDataStore store = LoginDataStore();
+
+  String username ="";
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController usernameController = TextEditingController();
@@ -109,9 +112,7 @@ void photo_picker(BuildContext context) {
     Dimentions dn = Dimentions(context);
      return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      appBar: NormalAppbar(
-        Title: "Add Doctor",height: dn.height(10),
-      ),
+      appBar: Duplicate_Appbar(Title: "Add doctor", height: dn.height(10)),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(top: 16,bottom: 70,left: 16,right: 16),
@@ -155,9 +156,21 @@ void photo_picker(BuildContext context) {
                   ),
                 ),
                 const SizedBox(height: 20),
-
                 // Username Field
                 TextFormField(
+                  validator: (value) {
+                      String pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+                final regex = RegExp(pattern);
+              if (value == null || value.isEmpty||regex.hasMatch(value)==false) {
+                return 'Please Enter vaild Email ID';
+              }
+                return null;
+            },
+            onSaved: (value) {
+                  username  = value!; 
+                  store.Setusername(username);
+                  
+                },
                   controller: usernameController,
                   decoration: InputDecoration(
                     labelText: 'Username',
@@ -165,12 +178,12 @@ void photo_picker(BuildContext context) {
                     filled: true,
                     fillColor: Colors.orange[100],
                   ),
-                  validator: (username) {
-                    if (username!.isEmpty) {
-                      return 'Please enter a username';
-                    }
-                    return null;
-                  },
+                  // validator: (username) {
+                  //   if (username!.isEmpty) {
+                  //     return 'Please enter a username';
+                  //   }
+                  //   return null;
+                  // },
                 ),
                 const SizedBox(height: 16),
 

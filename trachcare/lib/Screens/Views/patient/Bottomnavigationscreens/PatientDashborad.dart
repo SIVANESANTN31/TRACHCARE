@@ -1,6 +1,8 @@
 // import 'package:carousel_slider/carousel_controller.dart' as carousel;
 // import 'package:carousel_slider/carousel_slider.dart';
 // import 'package:carousel_slider/carousel_slider.dart';
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';

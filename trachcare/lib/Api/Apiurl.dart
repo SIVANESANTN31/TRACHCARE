@@ -1,4 +1,4 @@
-const ip = "172.20.10.9";
+const ip = "172.20.10.4";
 
 //login api
 String PatientLoginurl ="https://$ip/Trachcare/auth/patientAuth/PatientLogin.php";

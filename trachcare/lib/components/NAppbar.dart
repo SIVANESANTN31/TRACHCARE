@@ -29,7 +29,8 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
       onTap:(){
       Navigator.pop(context);
     },
-    child: const Icon(CupertinoIcons.chevron_left,color: BlackColor,size: 28.0,),),
+
+    child: Icon(CupertinoIcons.chevron_left,color: BlackColor,size: 28.0,),),
     title: Text(Title,style: GoogleFonts.ibmPlexSans(
                         textStyle: TextStyle(
                           fontWeight: FontWeight.bold,

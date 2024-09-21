@@ -8,33 +8,19 @@ import "../style/colors.dart";
 
 class Duplicate_Appbar extends StatelessWidget implements PreferredSizeWidget {
   final String Title;
-  
-   const Duplicate_Appbar({super.key, required this.Title});
+  final double height;
+   const Duplicate_Appbar({super.key, required this.Title, required this.height});
 
   @override
   Widget build(BuildContext context) {
     return  AppBar(
       backgroundColor: TitleColor,
-      leading: InkWell(
-      onTap:(){
-      Navigator.pop(context);
-    },
-    child: const Icon(CupertinoIcons.chevron_left,color: BlackColor,size: 28.0,),),
-    title: Text(Title,style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: BlackColor_light,
-                            fontSize: 15.sp)),),
-
-        centerTitle: true,
-        // actions: [
-        //     Padding(
-        //       padding: const EdgeInsets.all(8.0),
-        //       child: actionbutton,
-        //     )
-        // ],
-
-
+      title: Text(Title,style: GoogleFonts.ibmPlexSans(
+                textStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: BlackColor_light,
+                fontSize: 15.sp)),),
+                centerTitle: true,
     );
   }
   

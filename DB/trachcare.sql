@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Sep 20, 2024 at 08:33 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Sep 21, 2024 at 04:35 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -179,6 +179,7 @@ CREATE TABLE `doctorprofile` (
 --
 
 INSERT INTO `doctorprofile` (`doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`, `image_path`, `created_at`) VALUES
+('1921210587', 'siva@test.com', '1921210587', 'siva@test.com', '123456789', '12', NULL, '2024-09-21 08:51:09'),
 ('25271587', 'bsbbdx', '1587', 'njaz@ywgs.co', 'bss', 'hsjs', '', '2024-09-18 07:00:10'),
 ('672630123456789', 'John Doe', '0123456789', 'johndoe@example.com', '+1234567890', 'examplePassword123', 'uploads/66ea6cf3a786a.jpg', '2024-09-18 06:02:27'),
 ('7749614523', 'hkh', '14523', 'asd@test.com', '4546', '46546', '../uploads/66ed108dc7e43.jpg', '2024-09-20 06:05:01');

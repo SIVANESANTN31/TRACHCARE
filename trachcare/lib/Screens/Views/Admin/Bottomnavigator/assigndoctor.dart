@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trachcare/components/NAppbar.dart';
+import '../../../../components/Appbar_copy.dart';
 import '../../../../style/utils/Dimention.dart';  
 
 
@@ -10,7 +10,8 @@ class assigndoctor extends StatelessWidget {
   Widget build(BuildContext context) {
      Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "Assign Doctors to Patients", height: dn.height(10),),
+      
+      appBar: Duplicate_Appbar(Title: "Assign Doctors to Patients", height: dn.height(10)),
     );
   }
 }

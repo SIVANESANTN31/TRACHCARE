@@ -46,20 +46,12 @@ Dimentions dn = Dimentions(context);
                   width: 70.w,
                   height: 8.h,
                   child: TextFormField(
-                    validator: (value) {
-                      String pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
-                final regex = RegExp(pattern);
-              if (value == null || value.isEmpty||regex.hasMatch(value)==false) {
-                return 'Please Enter vaild Email ID';
-              }
-              
-                
-                return null;
-              
-            
-              
-              
-            },
+                    validator: (username) {
+                    if (username!.isEmpty) {
+                      return 'Please enter a username';
+                    }
+                    return null;
+                  },
             onSaved: (value) {
                   username  = value!; 
                   store.Setusername(username);

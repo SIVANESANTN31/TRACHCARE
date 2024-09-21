@@ -10,6 +10,7 @@ import 'package:trachcare/style/colors.dart';
 import 'package:trachcare/style/utils/Dimention.dart';
 
 import '../../../../Api/DataStore/Datastore.dart';
+import '../../../../components/Appbar_copy.dart';
 import '../../../../style/Tropography.dart';
 
 /// Creates list of video players
@@ -55,8 +56,9 @@ class _VideospageState extends State<Videospage> {
 
   @override
   Widget build(BuildContext context) {
+    Dimentions dn = Dimentions(context);
     return Scaffold(
-        appBar: const NormalAppbar(Title: "Videos", height: 90.0),
+        appBar: Duplicate_Appbar(Title: "Exercise videos", height: dn.height(10)),
         body: FutureBuilder(
             future: FetchVideos(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {

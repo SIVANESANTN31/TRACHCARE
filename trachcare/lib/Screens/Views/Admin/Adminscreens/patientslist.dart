@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/ViewPatientDetails.dart';
-
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
-// import '../../../../style/colors.dart';
+import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
 import "package:http/http.dart" as http;
 
