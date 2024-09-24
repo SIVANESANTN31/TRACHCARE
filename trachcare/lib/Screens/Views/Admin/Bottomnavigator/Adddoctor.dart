@@ -38,7 +38,7 @@ class _AdddoctorState extends State<Adddoctor> {
       // Handle form submission
       addDoctorDetails(
         context,
-        
+        imagefile,
         usernameController.text,
         doctorRegNoController.text,
         emailController.text,
@@ -67,14 +67,14 @@ void getimage({required ImageSource source}) async {
       var base64encoder = base64Encode(imageBytes);
       setState(() {
          base64encode = base64encoder; 
-         print(base64encoder);
+         
       });
     }
 
     if (file?.path != null) {
       setState(() {
          imagefile = File(file!.path);
-         fileimage = file.path;
+         fileimage = file!.path;
          print(fileimage);
       });
     }
@@ -164,8 +164,8 @@ void photo_picker(BuildContext context) {
                   validator: (value) {
                       String pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
                 final regex = RegExp(pattern);
-              if (value == null || value.isEmpty||regex.hasMatch(value)==false) {
-                return 'Please Enter vaild Email ID';
+              if (value == null || value.isEmpty) {
+                return 'Please Enter username';
               }
                 return null;
             },
@@ -175,6 +175,7 @@ void photo_picker(BuildContext context) {
                   
                 },
                   controller: usernameController,
+                  textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
                     labelText: 'Username',
                     border: const OutlineInputBorder(),
@@ -193,8 +194,10 @@ void photo_picker(BuildContext context) {
                 // Doctor Registration Number Field
                 TextFormField(
                   controller: doctorRegNoController,
+                  textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
                     labelText: 'Doctor_reg_no',
+                    
                     border: const OutlineInputBorder(),
                     filled: true,
                     fillColor: Colors.orange[100],
@@ -211,6 +214,7 @@ void photo_picker(BuildContext context) {
                 // Email Field
                 TextFormField(
                   controller: emailController,
+                  textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
                     labelText: 'Email Id',
                     border: const OutlineInputBorder(),
@@ -229,6 +233,7 @@ void photo_picker(BuildContext context) {
                 // Phone Number Field
                 TextFormField(
                   controller: phoneNumberController,
+                  textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
                     labelText: 'Phone Number',
                     border: const OutlineInputBorder(),
@@ -248,6 +253,8 @@ void photo_picker(BuildContext context) {
                 TextFormField(
                   controller: passwordController,
                   obscureText: true,
+                  textInputAction: TextInputAction.done,
+                  onEditingComplete:()=>_save(context) ,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     border: const OutlineInputBorder(),

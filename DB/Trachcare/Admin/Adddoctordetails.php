@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mimeType = $image_file['type'];
 
         if (!in_array($mimeType, $allowedTypes)) {
-            echo json_encode(["status" => false, "msg" => "Unsupported image format."]);
+            echo json_encode(["status" => false, "msg" => "Unsupported image format.","jfldjfkd"=>$mimeType]);
             exit;
         }
 
@@ -54,10 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Execute the query
         if ($conn->query($insert_sql) === TRUE) {
             $response['Status'] = true;
-            $response['message'] = "New user created successfully.";
+            $response['msg'] = "New user created successfully.";
         } else {
             $response['Status'] = false;
-            $response['message'] = "Error: " . $insert_sql . "<br>" . $conn->error;
+            $response['msg'] = "Error: " . $insert_sql . "<br>" . $conn->error;
         }
     } else {
         if($image_file === null){
@@ -68,18 +68,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                  // Execute the query
                  if ($conn->query($insert_sql) === TRUE) {
                  $response['Status'] = true;
-                 $response['message'] = "New user created successfully.";
+                 $response['msg'] = "New user created successfully.";
                  } else {
                  $response['Status'] = false;
-                 $response['message'] = "Error: " . $insert_sql . "<br>" . $conn->error;
+                 $response['msg'] = "Error: " . $insert_sql . "<br>" . $conn->error;
                  }} else{
         $response['Status'] = false;
-        $response['message'] = "Required fields are missing.";}
+        $response['msg'] = "Required fields are missing.";}
     }
 } else {
     
     $response['Status'] = false;
-    $response['message'] = "Invalid request method.";
+    $response['msg'] = "Invalid request method.";
 }
 
 

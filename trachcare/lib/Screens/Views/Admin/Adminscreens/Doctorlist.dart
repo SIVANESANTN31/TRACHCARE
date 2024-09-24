@@ -82,7 +82,7 @@ Future<void> onRefresh() async{
                 if (snapshot.hasData) {
                   var data = snapshot.data;
                   display_list = data["data"];
-                  print(display_list[0]['id']);
+                 // print(display_list[0]['id']);
          return RefreshIndicator.adaptive(
           onRefresh: onRefresh,
            child: Padding(
@@ -116,14 +116,17 @@ Future<void> onRefresh() async{
                       ),
                     )
                 ),
-                //  SizedBox(height: 0,),
-                //
+                if(display_list.length==0)
+                Center(
+                  heightFactor: 10.0,
+                  child: Text("Add Doctors"),)
+                else
                 Expanded(
                   child:  ListView.builder(
                     itemCount: display_list.length,
                     itemBuilder: (context, index){
-                    print(display_list[index]['id']);
-                
+                   
+                    var image_path = display_list[index]['image_path'].toString().substring(2);
                     return Card(
                       color: const Color.fromRGBO(255, 255, 255, 1),
                       elevation: 4,
@@ -137,9 +140,9 @@ Future<void> onRefresh() async{
                              
                             ),),);
                         },
-                        leading: const CircleAvatar(
+                        leading:  CircleAvatar(
                           radius: 25,
-                          backgroundImage: AssetImage('assets/images/doctor.png'),
+                          backgroundImage: NetworkImage("https://$ip/Trachcare/$image_path"),
                         ),
                         title: Text(display_list[index]['doctor_id'], style:const TextStyle(
                           color: Colors.black,

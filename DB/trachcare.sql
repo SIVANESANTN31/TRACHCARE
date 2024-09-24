@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 24, 2024 at 07:30 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Sep 24, 2024 at 11:26 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -66,15 +66,13 @@ CREATE TABLE `addpatients` (
 
 INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `age`, `address`, `bmi`, `diagnosis`, `surgery_status`, `post_op_tracheostomy_day`, `tube_name_size`, `baseline_vitals`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `indication_of_tracheostomy`, `comorbidities`, `hemoglobin`, `sr_sodium`, `sr_potassium`, `sr_calcium`, `sr_bicarbonate`, `pt`, `aptt`, `inr`, `platelets`, `liver_function_test`, `renal_function_test`) VALUES
 ('145', '123', 'pal', '', '0', '8520', '25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('1', '52527ghz', 'ghz', '', '0', '', 'bzh', 'xh', 'zbz', 'zvz', 'ss', 'ss', 'xxxccds', 'z', 'z', 'z', 'c', 'zx', 'ds', 'zz', 'zzc', 'ccas', 'vvb', 'bdz', 'cvv', 'zag', 'xv', 'zc', 'dv', 'nh'),
-('siva', '[value-2]', '[value-3]', '[value-4]', '[value-5]', '[value-6]', '[value-7]', '[value-8]', '[value-9]', '[value-10]', '[value-11]', '[value-12]', '[value-13]', '[value-14]', '[value-15]', '[value-16]', '[value-17]', '[value-18]', '[value-19]', '[value-20]', '[value-21]', '[value-22]', '[value-23]', '[value-24]', '[value-25]', '[value-26]', '[value-27]', '[value-28]', '[value-29]', '[value-30]');
+('1', '52527ghz', 'ghz', '', '0', '', 'bzh', 'xh', 'zbz', 'zvz', 'ss', 'ss', 'xxxccds', 'z', 'z', 'z', 'c', 'zx', 'ds', 'zz', 'zzc', 'ccas', 'vvb', 'bdz', 'cvv', 'zag', 'xv', 'zc', 'dv', 'nh');
 
 --
 -- Triggers `addpatients`
 --
 DELIMITER $$
-CREATE TRIGGER `insertdata` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO patientprofile (doctor_id, patient_id, username, email, phone_number, password)
-VALUES (NEW.doctor_id, NEW.patient_id, NEW.username,NEW.email,NEW.phone_number,NEW.password)
+CREATE TRIGGER `insertdata` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO patientprofile VALUES(doctor_id,patient_id,username,password,image_path)
 $$
 DELIMITER ;
 DELIMITER $$
@@ -162,11 +160,8 @@ INSERT INTO `daily_report` (`id`, `patient_id`, `date`, `respiratory_rate`, `hea
 --
 
 CREATE TABLE `doctorlogin` (
-  `doctor_id` int(11) NOT NULL,
+  `doctorid` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
-  `doctor_reg_no` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone_number` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -174,9 +169,8 @@ CREATE TABLE `doctorlogin` (
 -- Dumping data for table `doctorlogin`
 --
 
-INSERT INTO `doctorlogin` (`doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`) VALUES
-(1, 'Doctor@test.com', NULL, NULL, NULL, '12345'),
-(12, 'siva@test.com', '192121057', 'siva@test.com', '9500077434', 'hello');
+INSERT INTO `doctorlogin` (`doctorid`, `username`, `password`) VALUES
+(1, 'Doctor@test.com', '12345');
 
 -- --------------------------------------------------------
 
@@ -194,22 +188,6 @@ CREATE TABLE `doctorprofile` (
   `image_path` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `doctorprofile`
---
-
-INSERT INTO `doctorprofile` (`doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`, `image_path`, `created_at`) VALUES
-('12', 'siva@test.com', '192121057', 'siva@test.com', '9500077434', 'hello', '[value-7]', '0000-00-00 00:00:00');
-
---
--- Triggers `doctorprofile`
---
-DELIMITER $$
-CREATE TRIGGER `insertdoc` AFTER INSERT ON `doctorprofile` FOR EACH ROW INSERT INTO doctorlogin (doctor_id, username, doctor_reg_no, email, phone_number, password)
-VALUES (NEW.doctor_id,NEW.username,NEW.doctor_reg_no,NEW.email,NEW.phone_number,NEW.password)
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -260,8 +238,7 @@ CREATE TABLE `patientlogin` (
 INSERT INTO `patientlogin` (`doctor_id`, `patient_id`, `username`, `password`) VALUES
 ('', '', '', ''),
 ('1', '', '13717JohnDoe@trachcare.com', 'welcome'),
-('2', '', 'p@test.com', '12'),
-('', '', '', '');
+('2', '', 'p@test.com', '12');
 
 -- --------------------------------------------------------
 
@@ -288,8 +265,7 @@ CREATE TABLE `patientprofile` (
 INSERT INTO `patientprofile` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `image_path`, `created_at`, `updated_at`) VALUES
 ('', '', 'Dr. John Doe', 'johndoe@example.com', '+14987888999', 'password123', NULL, '2024-09-15 05:15:59', '2024-09-15 05:15:59'),
 ('', '', 'drjohnsmith', 'drjohnsmith@example.com', '9500077434', 'newpassword123', 'uploads/66d0496e30a62.jpg', '2024-08-29 10:10:11', '2024-08-29 10:11:58'),
-('', '', 'SIVANESAN', 'johndoe@example.com', '+14987888999', 'password123', NULL, '2024-09-15 05:17:44', '2024-09-15 05:17:44'),
-('siva', '[value-2]', '[value-3]', '[value-4]', '[value-5]', '[value-6]', NULL, '2024-09-24 16:53:57', '2024-09-24 16:53:57');
+('', '', 'SIVANESAN', 'johndoe@example.com', '+14987888999', 'password123', NULL, '2024-09-15 05:17:44', '2024-09-15 05:17:44');
 
 -- --------------------------------------------------------
 
@@ -345,7 +321,7 @@ ALTER TABLE `daily_report`
 -- Indexes for table `doctorlogin`
 --
 ALTER TABLE `doctorlogin`
-  ADD UNIQUE KEY `doctorid` (`doctor_id`) USING BTREE;
+  ADD PRIMARY KEY (`doctorid`);
 
 --
 -- Indexes for table `doctorprofile`
@@ -386,6 +362,12 @@ ALTER TABLE `adminlogin`
 --
 ALTER TABLE `daily_report`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `doctorlogin`
+--
+ALTER TABLE `doctorlogin`
+  MODIFY `doctorid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `medication_schedule`
