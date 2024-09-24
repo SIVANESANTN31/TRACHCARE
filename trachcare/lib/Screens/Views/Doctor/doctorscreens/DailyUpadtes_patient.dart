@@ -7,6 +7,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:trachcare/Screens/Views/Doctor/doctorscreens/dailyupdatedetails.dart';
 import 'package:trachcare/components/NAppbar.dart';
 
+import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../components/Dailyupdateform.dart';
 import '../../../../style/colors.dart';
 
@@ -21,6 +22,8 @@ class DailyUpdatePatients extends StatefulWidget {
 }
 
 class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
+    get patientId => patient_id;
+
   @override
   Widget build(BuildContext context) {
 
@@ -32,10 +35,12 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
     setState(() {
       selectedDate = selectedDay;
       focusedDate = focusedDay;
+                     
                      Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>  dailyupdates(selectedDate= selectedDay )));
+                              builder: (context) =>  Viewdailyupdates( patientId,selectedDate)
+                     ));
                   
     });
   }

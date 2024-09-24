@@ -72,7 +72,7 @@ function AddPatient($conn) {
 
     $idgen = rand(100, 100000);
     $name =  str_replace(' ', '', $name);
-  $patientId = (string)$idgen . $name;
+    $patientId = (string)$idgen . $name;
 
     // Prepare the SQL insert statement
     $sql = "INSERT INTO addpatients (

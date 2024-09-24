@@ -8,7 +8,7 @@ class PatientDashBoardApi{
 
 Future FetchDetials() async{
   var Data ={
-    "id":patient_id.toString()
+    "doctor_id":patient_id.toString()
   };
   try {
     final response = await http.post(Uri.parse(getpatientdetialsurl),body: jsonEncode(Data));

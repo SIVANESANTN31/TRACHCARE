@@ -1,109 +1,221 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
-
+import 'package:path/path.dart' as path;
+import 'package:trachcare/Api/DataStore/Datastore.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
 
-class UploadVideoPage extends StatefulWidget {
+class VideoUploadPage extends StatefulWidget {
   @override
-  _UploadVideoPageState createState() => _UploadVideoPageState();
+  _VideoUploadPageState createState() => _VideoUploadPageState();
 }
 
-class _UploadVideoPageState extends State<UploadVideoPage> {
-  File? _videoFile;
-  File? _thumbnailFile;
-  final picker = ImagePicker();
+class _VideoUploadPageState extends State<VideoUploadPage> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  String? _filePath;
+  String? _selectedCategory;
+  final List<String> _categories = ['Category A', 'Category B', 'Category C'];
+  
+  String get doctorId => Doctor_id;
+  
+  String get patientId => patient_id;
 
-  // Function to pick video
-  Future<void> _pickVideo() async {
-    final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
-    setState(() {
-      _videoFile = File(pickedFile!.path);
-    });
-  }
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
 
-  // Function to pick thumbnail
-  Future<void> _pickThumbnail() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _thumbnailFile = File(pickedFile!.path);
-    });
-  }
-
-  // Function to upload video and thumbnail to the server
-  Future<void> _uploadVideo() async {
-    if (_videoFile == null || _thumbnailFile == null) {
-      ScaffoldMessenger.of(context as BuildContext).showSnackBar(SnackBar(
-        content: Text('Please select both video and thumbnail!'),
-      ));
-      return;
+    if (result != null) {
+      setState(() {
+        _filePath = result.files.single.path;
+      });
+      print('File path: $_filePath');
+    } else {
+      print('No file selected');
     }
+  }
 
-    // Prepare the request
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse(Addvideos),
-    );
+  Future<void> _submitForm() async {
+     // Create a multipart request
+    var request = http.MultipartRequest('POST', Uri.parse(Addvideos));
 
-    // Attach the video and thumbnail files
-    request.files.add(await http.MultipartFile.fromPath('video', _videoFile!.path, filename: basename(_videoFile!.path)));
-    request.files.add(await http.MultipartFile.fromPath('thumbnail', _thumbnailFile!.path, filename: basename(_thumbnailFile!.path)));
+    // Add fields to the request
+    request.fields['doctorid'] = doctorId;
+    request.fields['patient_id'] = patientId;
 
-    // Send the request
+    // Add the video file
+    // var videoStream = http.ByteStream(videoFile.openRead());
+    // var videoLength = await videoFile.length();
+    var videoFileName = _filePath; // Extract the file name
+
+    // Add file to request as multipart
+  request.files.add(await http.MultipartFile.fromPath(
+        'video_path',
+        videoFileName!,
+        filename: path.basename(videoFileName),
+      ));
+   
+    // Send the request to the server
     var response = await request.send();
 
-    // Check response
+    // Check the response status
     if (response.statusCode == 200) {
-      ScaffoldMessenger.of(context as BuildContext).showSnackBar(SnackBar(
-        content: Text('Video uploaded successfully!'),
-      ));
+      var responseBody = await response.stream.bytesToString();
+      print('Upload success: $responseBody');
     } else {
-      ScaffoldMessenger.of(context as BuildContext).showSnackBar(SnackBar(
-        content: Text('Failed to upload video!'),
-      ));
+      print('Upload failed: ${response.statusCode}');
     }
+
+
+    //   print('Submitting form...');
+    //   var response = await request.send();
+    //   if (response.statusCode == 200) {
+    //     var jsonResponse = await response.stream.bytesToString();
+    //     // var jsonResponse = json.decode(responseData);
+    //     if (jsonResponse['status']) {
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         SnackBar(content: Text('Form submitted successfully!')),
+    //       );
+    //     } else {
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         SnackBar(content: Text('Error: ${jsonResponse['message']}')),
+    //       );
+    //     }
+    //   } else {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text('Form submission failed.')),
+    //     );
+    //     print('Submission failed with status: ${response.statusCode}');
+    //   }
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('Please fill all fields and select a file.')),
+    //   );
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
-     Dimentions dn = Dimentions(context);
+    Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(
-        Title: "Doctors List",height: dn.height(10),
-      ),
+      appBar: NormalAppbar(Title: "Multi-Form Upload", height: dn.height(10)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ElevatedButton(
-              onPressed: _pickVideo,
-              child: Text('Select Video'),
-            ),
-            _videoFile != null ? Text('Video selected: ${basename(_videoFile!.path)}') : Container(),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _pickThumbnail,
-              child: Text('Select Thumbnail'),
-            ),
-            _thumbnailFile != null ? Text('Thumbnail selected: ${basename(_thumbnailFile!.path)}') : Container(),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _uploadVideo,
-              child: Text('Upload Video'),
-            ),
-          ],
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              TextFormField(
+                controller: _titleController,
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _descriptionController,
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                maxLines: 3,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20),
+              DropdownButtonFormField<String>(
+                value: _selectedCategory,
+                hint: Text('Select Category'),
+                items: _categories.map((category) {
+                  return DropdownMenuItem<String>(
+                    value: category,
+                    child: Text(category),
+                  );
+                }).toList(),
+                onChanged: (newValue) {
+                  setState(() {
+                    _selectedCategory = newValue;
+                  });
+                },
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please select a category';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  minimumSize: Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                onPressed: _pickFile,
+                child: Text('Select File'),
+              ),
+              SizedBox(height: 20),
+              _filePath != null
+                  ? Text(
+                      'Selected file: ${_filePath!.split('/').last}',
+                      style: TextStyle(color: Colors.black54),
+                    )
+                  : Text(
+                      'No file selected.',
+                      style: TextStyle(color: Colors.red),
+                    ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  minimumSize: Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                onPressed: _submitForm,
+                child: Text(
+                  'Submit',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
-void main() => runApp(MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: UploadVideoPage(),
-));

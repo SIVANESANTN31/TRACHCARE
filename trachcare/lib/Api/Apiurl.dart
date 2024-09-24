@@ -18,7 +18,7 @@ String Addvideos = "https://$ip/Trachcare/Admin/addvideos.php";
 //view api
 String ViewPatientDetailsUrl = "https://$ip/Trachcare/Doctor/viewpatientdetails.php";
 String ViewdoctordetailsUrl = "https://$ip/Trachcare/Admin/viewdoctordetails.php";
-String ViewDailyVitalsUrl = "https://$ip/Trachcare/Doctor/videos.php";
+String ViewDailyVitalsUrl = "https://$ip/Trachcare/Doctor/Dailyupdates.php";
 String getpatientdetialsurl = "https://$ip/Trachcare/Patient/getdetials.php";
 
 //list api

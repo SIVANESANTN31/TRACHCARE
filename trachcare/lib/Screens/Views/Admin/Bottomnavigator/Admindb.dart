@@ -4,6 +4,7 @@ import 'package:trachcare/Screens/Views/Admin/Adminscreens/Addvideos.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import 'package:trachcare/Screens/Views/Admin/Bottomnavigator/assigndoctor.dart';
 import "package:trachcare/components/Appbar.dart";
+import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../components/Navbardrawer.dart';
 import '../../../../style/utils/Dimention.dart';
 import '../Adminscreens/Doctorlist.dart'; 
@@ -35,7 +36,7 @@ class Admindb extends StatelessWidget {
    //bool isOpendrawer = false;
     List pages=[
        const Doctorlist(),
-       UploadVideoPage(),
+       VideoUploadPage(),
        const patients_list(),
     ];
         Dimentions dn = Dimentions(context);

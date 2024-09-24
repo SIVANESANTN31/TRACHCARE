@@ -1,76 +1,136 @@
 <?php
+ include "../config/conn.php";
 
-include '../config/conn.php';
+ $method = $_SERVER['REQUEST_METHOD'];
 
-function UploadVideoAndThumbnail($conn) {
-    $target_dir = "uploads/";
-    $response = array();
+if($method=="POST"){
+ uploadvideos($conn);
+ }
+ elseif($method=="GET"){
+    fetchVideoDetails($conn);
 
-    // Check if it's a POST request
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        
-        // Check if video file is uploaded
-        if (!empty($_FILES['video']['name'])) {
-            $video_name = basename($_FILES["video"]["name"]);
-            $video_target = $target_dir . $video_name;
-            
-            // Upload video
-            if (move_uploaded_file($_FILES["video"]["tmp_name"], $video_target)) {
-                $response['video'] = "Video uploaded successfully";
-            } else {
-                $response['video'] = "Video upload failed";
-            }
-        } else {
-            $response['video'] = "No video file uploaded";
-        }
 
-        // Check if thumbnail file is uploaded
-        if (!empty($_FILES['thumbnail']['name'])) {
-            $thumbnail_name = basename($_FILES["thumbnail"]["name"]);
-            $thumbnail_target = $target_dir . $thumbnail_name;
-            
-            // Upload thumbnail
-            if (move_uploaded_file($_FILES["thumbnail"]["tmp_name"], $thumbnail_target)) {
-                $response['thumbnail'] = "Thumbnail uploaded successfully";
-            } else {
-                $response['thumbnail'] = "Thumbnail upload failed";
-            }
-        } else {
-            $response['thumbnail'] = "No thumbnail file uploaded";
-        }
+ }
 
-        // Optionally, store details in the database (if needed)
-        // Assuming you have a table called `videos` to store the file paths
-        $sql = "INSERT INTO videos (video_path, thumbnail_path) VALUES (?, ?)";
-        $stmt = $conn->prepare($sql);
-        
-        if ($stmt === false) {
-            die("Error preparing statement: " . $conn->error);
-        }
 
-        $stmt->bind_param("ss", $video_target, $thumbnail_target);
-        
-        if ($stmt->execute()) {
-            $response['db'] = "Video details saved to database";
-        } else {
-            $response['db'] = "Failed to save video details to database: " . $stmt->error;
-        }
+function uploadvideos($conn){
+   // No need for submit check here, we directly proceed with file upload
+$doctorid = $_POST['doctorid'];
+$patient_id = $_POST['patient_id'];
 
-        $stmt->close();
-        
-    } else {
-        echo json_encode(["message" => "Invalid request"]);
-        return;
+// Check if the file is uploaded properly
+if (isset($_FILES['video']) && $_FILES['video']['error'] == 0) {
+    // File upload configuration
+    $targetDir = "uploads/videos/";
+    
+    // Check if the directory exists, if not create it
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0755, true); // Creates the directory if it doesn't exist
     }
 
-    // Return the response as JSON
-    echo json_encode($response);
+    $fileName = basename($_FILES["video"]["name"]);
+    $targetFilePath = $targetDir . $fileName;
+    $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
 
-    // Close the database connection
-    $conn->close();
+    // Allow certain file formats
+    $allowedTypes = array('mp4', 'avi', '3gp', 'mov', 'mpeg');
+    if (in_array($fileType, $allowedTypes)) {
+        // Upload file to server
+        if (move_uploaded_file($_FILES["video"]["tmp_name"], $targetFilePath)) {
+            // Insert video file name into database
+            $insert = $conn->query("INSERT INTO patientvideotable (doctorid, patient_id, Video_url) VALUES ('$doctorid', '$patient_id', '$targetFilePath')");
+            if ($insert) {
+                echo "The file " . htmlspecialchars($fileName) . " has been uploaded successfully.";
+            } else {
+                echo "Failed to insert into the database: " . $conn->error;
+            }
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    } else {
+        echo "Sorry, only MP4, AVI, 3GP, MOV, & MPEG files are allowed to upload.";
+    }
+} else {
+    echo "No file uploaded or there was an error uploading the file.";
 }
 
-// Call the function to handle the request
-UploadVideoAndThumbnail($conn);
+// Close the database connection
+$conn->close();
+
+}
+
+
+function fetchVideoDetails($conn) {
+
+
+    if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+        echo json_encode(["status" => false, "msg" => "Invalid request method. Only GET is allowed."]);
+        exit;
+    }
+
+ 
+        if (isset($_GET['patient_id']) || isset($_GET['doctorid'])) {
+            $patient_id = $_GET['patient_id'];
+            $doctorid = $_GET['doctorid'];
+
+            // Prepare the SQL query to fetch video details
+            $sql = "SELECT  Video_url FROM patientvideotable WHERE patient_id = ? AND doctorid = ?";
+            
+            // Prepare the statement
+            $stmt = $conn->prepare($sql);
+
+            if ($stmt === false) {
+                die("Error preparing statement: " . $conn->error);
+            }
+
+            // Bind the 'patient_id' parameter to the SQL statement
+            $stmt->bind_param("ss", $patient_id,$doctorid);
+
+            // Execute the statement
+            if ($stmt->execute()) {
+                // Fetch the result
+                $result = $stmt->get_result();
+                
+                if ($result->num_rows > 0) {
+                    // Fetch all the rows as an associative array
+                    $videoDetails = $result->fetch_all(MYSQLI_ASSOC);
+                    
+                    // Return the video details as JSON response
+                    echo json_encode([
+                        "status" => true,
+                        "message" => "Video details fetched successfully.",
+                        "data" => $videoDetails
+                    ]);
+                } else {
+                    // No records found for the provided patient_id
+                    echo json_encode([
+                        "status" => false,
+                        "message" => "No video details found for the provided patient_id."
+                    ]);
+                }
+            } else {
+                // Error executing the query
+                echo json_encode([
+                    "status" => false,
+                    "message" => "Error fetching video details: " . $stmt->error
+                ]);
+            }
+
+            // Close the statement
+            $stmt->close();
+        } else {
+            // 'patient_id' parameter is missing
+            echo json_encode([
+                "status" => false,
+                "message" => "Missing 'patient_id' parameter."
+            ]);
+        }
+    } 
+
+
+
+
+
+
 
 ?>

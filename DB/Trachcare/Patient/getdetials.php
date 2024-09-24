@@ -10,7 +10,7 @@ if(isset($obj["doctor_id"])){
 
     $result=[];
 
-    $sql="SELECT * FROM  patientdetials  WHERE patient_id='{$doctor_id}'";
+    $sql="SELECT * FROM  patientprofile  WHERE patient_id='{$doctor_id}'";
     $res=$conn->query($sql);
 
 

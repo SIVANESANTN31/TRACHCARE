@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:sizer/sizer.dart';
 
 import '../../../../style/colors.dart';
+import '../Api/Apiurl.dart';
 
 class dailyupdates extends StatefulWidget {
   dailyupdates(DateTime dateTime);
@@ -30,7 +31,7 @@ class _dailyupdatesState extends State<dailyupdates> {
     });
 
     try {
-      final response = await http.get(Uri.parse('http://localhost/api/patient_vitals.php'));
+      final response = await http.get(Uri.parse(ViewDailyVitalsUrl));
       
       if (response.statusCode == 200) {
         setState(() {
