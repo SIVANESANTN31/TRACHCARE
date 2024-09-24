@@ -68,7 +68,7 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
       print('Upload success: $responseBody');
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => videolist ()),
+        MaterialPageRoute(builder: (context) => Videolist()),
       );
     } else {
       print('Upload failed: ${response.statusCode}');

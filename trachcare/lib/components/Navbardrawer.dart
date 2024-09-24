@@ -66,7 +66,7 @@ class drawer extends StatelessWidget {
               title: const Text('My Profile'),
               onTap: () {
                  Navigator.push(context, MaterialPageRoute(
-                                builder: (context) =>  ProfilePage(),)
+                                builder: (context) =>  ProfilePage())
                                 );
               },
             ),
