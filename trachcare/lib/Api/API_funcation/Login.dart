@@ -30,9 +30,9 @@ class LoginClassApi{
       
       autoCloseDuration: const Duration(seconds: 2),
     );
-    Navigator.push(
+    Navigator.pushAndRemoveUntil(
     context,
-    MaterialPageRoute(builder: (context) => const Doctormainpage()));
+    MaterialPageRoute(builder: (context) => const Doctormainpage()),(route)=>false);
     LoginData.clear();
     Doctor_id = data['userInfo']['doctorid'];
     

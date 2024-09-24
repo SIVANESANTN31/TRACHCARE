@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 import 'package:trachcare/Api/DataStore/Datastore.dart';
+import 'package:trachcare/Screens/Views/Admin/Adminscreens/videolist.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
@@ -42,8 +43,7 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
     var request = http.MultipartRequest('POST', Uri.parse(Addvideos));
 
     // Add fields to the request
-    request.fields['doctorid'] = doctorId;
-    request.fields['patient_id'] = patientId;
+    
 
     // Add the video file
     // var videoStream = http.ByteStream(videoFile.openRead());
@@ -51,8 +51,10 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
     var videoFileName = _filePath; // Extract the file name
 
     // Add file to request as multipart
+    request.fields['title'] = _titleController.text;
+  request.fields['description'] = _descriptionController.text;
   request.files.add(await http.MultipartFile.fromPath(
-        'video_path',
+        'videoFile',
         videoFileName!,
         filename: path.basename(videoFileName),
       ));
@@ -64,6 +66,10 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
     if (response.statusCode == 200) {
       var responseBody = await response.stream.bytesToString();
       print('Upload success: $responseBody');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => videolist ()),
+      );
     } else {
       print('Upload failed: ${response.statusCode}');
     }

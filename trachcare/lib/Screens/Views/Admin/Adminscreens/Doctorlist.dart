@@ -83,7 +83,7 @@ Future<void> onRefresh() async{
                   var data = snapshot.data;
                   display_list = data["data"];
                   print(display_list[0]['id']);
-         return RefreshIndicator(
+         return RefreshIndicator.adaptive(
           onRefresh: onRefresh,
            child: Padding(
             padding: const EdgeInsets.all(8.0),

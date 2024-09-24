@@ -109,7 +109,7 @@ class Admindb extends StatelessWidget {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-                      childAspectRatio: (MediaQuery.of(context).size.height - 40 - 20)/ (4*175),
+                      childAspectRatio: (1.0),
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       ),

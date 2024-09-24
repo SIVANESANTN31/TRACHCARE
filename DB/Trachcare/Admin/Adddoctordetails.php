@@ -1,91 +1,134 @@
 <?php 
-include "../config/conn.php";
+include "../config/conn.php"; // Include your database connection file
 
-// Received JSON into $json variable
-$json = file_get_contents('php://input');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-// Decoding the received JSON and storing it in $obj variable
-$obj = json_decode($json, true);
+    adddoctors($conn);
 
-// Check if required fields are present in the request
-if(isset($obj["username"], $obj["email"], $obj["phone_number"], $obj["password"], $obj["doctor_reg_no"], )) {
+}else{
+    getdetials($conn);
+}
 
-    // Escape variables for security
-    $username = mysqli_real_escape_string($conn, $obj['username']);
-    $doctor_reg_no = mysqli_real_escape_string($conn, $obj['doctor_reg_no']);
-    $email = mysqli_real_escape_string($conn, $obj['email']);
-    $phone_number = mysqli_real_escape_string($conn, $obj['phone_number']);
-    $password = mysqli_real_escape_string($conn, $obj['password']);
-    $image_data = isset($obj['image_data']) ? $obj['image_data'] : null;
 
+
+function adddoctors($conn){
+// Check if the form data is received via POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve form data
+    $username = isset($_POST['username']) ? mysqli_real_escape_string($conn, $_POST['username']) : null;
+    $email = isset($_POST['email']) ? mysqli_real_escape_string($conn, $_POST['email']) : null;
+    $phone_number = isset($_POST['phone_number']) ? mysqli_real_escape_string($conn, $_POST['phone_number']) : null;
+    $password = isset($_POST['password']) ? mysqli_real_escape_string($conn, $_POST['password']) : null;
+    $doctor_reg_no = isset($_POST['doctor_reg_no']) ? mysqli_real_escape_string($conn, $_POST['doctor_reg_no']) : null;
+    $image_file = isset($_FILES['image_data']) ? $_FILES['image_data'] : null;
+    $default_image = "../uploads/doctor.png";
     $idgen = rand(100, 100000);
     $doctorId = (string)$idgen . $doctor_reg_no;
 
-    // Handle image upload if provided
-    $image_file = null;
-    if ($image_data !== null) {
+    // Validate required fields    
+    if ($username && $email && $phone_number && $password && $doctor_reg_no && $image_file) {
+      
+        // Validate the uploaded image
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        $mimeType = $image_file['type'];
+
+        if (!in_array($mimeType, $allowedTypes)) {
+            echo json_encode(["status" => false, "msg" => "Unsupported image format."]);
+            exit;
+        }
+
+        // Generate a unique filename
+        $filenames = uniqid() . '.' . pathinfo($image_file['name'], PATHINFO_EXTENSION);
+        $filePath = "../uploads/doctorimages/" . $filenames;
+
+        // Move the uploaded file to the designated folder
+        if (!move_uploaded_file($image_file['tmp_name'], $filePath)) {
+            echo json_encode(["status" => false, "msg" => "Failed to save image."]);
+            exit;
+        }
+
+        // Prepare the insert query
+        $insert_sql = "INSERT INTO doctorprofile (doctor_id, username, doctor_reg_no, email, phone_number, password, image_path) 
+                       VALUES ('$doctorId', '$username', '$doctor_reg_no', '$email', '$phone_number', '$password', '$filePath')";
+
+        // Execute the query
+        if ($conn->query($insert_sql) === TRUE) {
+            $response['Status'] = true;
+            $response['message'] = "New user created successfully.";
+        } else {
+            $response['Status'] = false;
+            $response['message'] = "Error: " . $insert_sql . "<br>" . $conn->error;
+        }
+    } else {
+        if($image_file === null){
+            // Prepare the insert query
+            $insert_sql = "INSERT INTO doctorprofile (doctor_id, username, doctor_reg_no, email, phone_number, password, image_path) 
+            VALUES ('$doctorId', '$username', '$doctor_reg_no', '$email', '$phone_number', '$password', '$default_image')";
+     
+                 // Execute the query
+                 if ($conn->query($insert_sql) === TRUE) {
+                 $response['Status'] = true;
+                 $response['message'] = "New user created successfully.";
+                 } else {
+                 $response['Status'] = false;
+                 $response['message'] = "Error: " . $insert_sql . "<br>" . $conn->error;
+                 }} else{
+        $response['Status'] = false;
+        $response['message'] = "Required fields are missing.";}
+    }
+} else {
+    
+    $response['Status'] = false;
+    $response['message'] = "Invalid request method.";
+}
+
+
+// Convert the response array into JSON format
+$json_data = json_encode($response);
+
+// Echo the JSON data
+echo $json_data;
+}
+
+function getdetials($conn){
+
+
+
+// Check if the request method is GET
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // Retrieve the doctor ID from the query parameters
+    $doctorId = isset($_GET['doctor_id']) ? mysqli_real_escape_string($conn, $_GET['doctor_id']) : null;
+
+    // Validate the doctor ID
+    if ($doctorId) {
+        // Prepare the SQL query to fetch doctor details
+        $query = "SELECT username, doctor_reg_no, email, phone_number, image_path FROM doctorprofile WHERE doctor_id = '$doctorId'";
         
-            // Decode the base64 data
-            $image = base64_decode($image_data);
+        // Execute the query
+        $result = $conn->query($query);
 
-            // Get image info
-            $imageInfo = getimagesizefromstring($image);
-            if ($imageInfo === false) {
-                echo json_encode(["status" => false, "msg" => "Invalid image data"]);
-                exit;
+        if ($result) {
+            // Check if any rows were returned
+            if ($result->num_rows > 0) {
+                // Fetch the doctor data
+                $doctorData = $result->fetch_assoc();
+                $response['Status'] = true;
+                $response['data'] = $doctorData;
+            } else {
+                $response['Status'] = false;
+                $response['message'] = "No doctor found with the provided ID.";
             }
-
-            // Determine MIME type and generate filename
-            $mimeType = $imageInfo['mime'];
-           
-            
-
-            // Determine file extension based on MIME type
-            switch ($mimeType) {
-                case 'image/jpeg':
-                    $filenames = uniqid() . ".jpeg";
-                    break;
-                case 'image/png':
-                    $filenames = uniqid() . ".png";
-                    break;
-                case 'image/jpg':
-                    $filenames = uniqid() . ".jpg";
-                    break;
-                default:
-                    echo json_encode(["status" => false, "msg" => "Unknown image format"]);
-                    exit;
-            }
-
-            // Define the file path where the image will be saved
-            $filePath = "../uploads/" . $filenames;
-
-            // Save the image file
-            if (file_put_contents($filePath, $imageData) === false) {
-                echo json_encode(["status" => false, "msg" => "Failed to save image"]);
-                exit;
-            }
-         
-        $insert_sql = "INSERT INTO doctorprofile (doctor_id ,username, doctor_reg_no, email, phone_number, password, image_path) 
-                   VALUES ('$doctorId','$username', '$doctor_reg_no', '$email', '$phone_number', '$password', '$filePath')";
-    }
-    // Prepare the insert query
-    else{
-        $insert_sql = "INSERT INTO doctorprofile (doctor_id ,username, doctor_reg_no, email, phone_number, password, image_path) 
-                   VALUES ('$doctorId','$username', '$doctor_reg_no', '$email', '$phone_number', '$password', '$image_file')";
-    }
-    // Execute the query
-    if ($conn->query($insert_sql) === TRUE) {
-        $response['Status'] = true;
-        $response['message'] = "New user created successfully.";
+        } else {
+            $response['Status'] = false;
+            $response['message'] = "Error executing query: " . $conn->error;
+        }
     } else {
         $response['Status'] = false;
-        $response['message'] = "Error: " . $insert_sql . "<br>" . $conn->error;
+        $response['message'] = "Doctor ID is required.";
     }
-
 } else {
-    // If required fields are missing, set the Status to false and provide a message
     $response['Status'] = false;
-    $response['message'] = "Required fields are missing.";
+    $response['message'] = "Invalid request method.";
 }
 
 // Convert the response array into JSON format
@@ -93,5 +136,9 @@ $json_data = json_encode($response);
 
 // Echo the JSON data
 echo $json_data;
+
+
+
+}
 
 ?>

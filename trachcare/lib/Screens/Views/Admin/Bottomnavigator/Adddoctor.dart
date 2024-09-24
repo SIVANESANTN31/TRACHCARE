@@ -38,7 +38,7 @@ class _AdddoctorState extends State<Adddoctor> {
       // Handle form submission
       addDoctorDetails(
         context,
-        base64encode.toString(),
+        
         usernameController.text,
         doctorRegNoController.text,
         emailController.text,
@@ -57,7 +57,7 @@ class _AdddoctorState extends State<Adddoctor> {
       _formKey.currentState!.reset();
     }
   }
-var imagefile,base64encode;
+var imagefile,base64encode,fileimage;
 void getimage({required ImageSource source}) async {
     final file =
         await ImagePicker().pickImage(source: source, imageQuality: 100);
@@ -66,13 +66,16 @@ void getimage({required ImageSource source}) async {
       final imageBytes = await file.readAsBytes();
       var base64encoder = base64Encode(imageBytes);
       setState(() {
-         base64encode = base64encoder;
+         base64encode = base64encoder; 
+         print(base64encoder);
       });
     }
 
     if (file?.path != null) {
       setState(() {
          imagefile = File(file!.path);
+         fileimage = file.path;
+         print(fileimage);
       });
     }
     }

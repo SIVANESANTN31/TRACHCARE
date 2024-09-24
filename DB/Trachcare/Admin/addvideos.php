@@ -14,48 +14,63 @@ if($method=="POST"){
 
 
 function uploadvideos($conn){
-   // No need for submit check here, we directly proceed with file upload
-$doctorid = $_POST['doctorid'];
-$patient_id = $_POST['patient_id'];
 
-// Check if the file is uploaded properly
-if (isset($_FILES['video']) && $_FILES['video']['error'] == 0) {
-    // File upload configuration
-    $targetDir = "uploads/videos/";
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Define the directory where videos will be stored
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $uploadDir = '../uploads/videos/';
+        $result = [];
+        // Get the uploaded file information
+        $videoFile = $_FILES['videoFile'];
+        $videoName = basename($videoFile['name']);
+        $id= rand(100, 100000);
+        $uploadFilePath = $uploadDir . (string)$id . $videoName ;
+
+       
+        // Validate the file type
+        $allowedTypes = ['video/mp4', 'video/avi', 'video/mov', 'video/mkv'];
+        $fileType = mime_content_type($videoFile['tmp_name']);
+        
+        if (!in_array($fileType, $allowedTypes)) {
+            echo json_encode(["status" => false, "msg" => "Invalid video format. Only MP4, AVI, MOV, and MKV are allowed."]);
+            exit;
+        }
     
-    // Check if the directory exists, if not create it
-    if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0755, true); // Creates the directory if it doesn't exist
+        // Check if the file is a valid video
+        if (move_uploaded_file($videoFile['tmp_name'], $uploadFilePath)) {
+
+            $sql = "INSERT INTO patientvideotable 
+             (title,description,Video_url) VALUES ('$title','$description','$uploadFilePath')" ;
+           
+
+    // Prepare the statement
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt === false) {
+        die("Error preparing statement: " . $conn->error);
     }
 
-    $fileName = basename($_FILES["video"]["name"]);
-    $targetFilePath = $targetDir . $fileName;
-    $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+    // Execute the statement
+    if ($stmt->execute()) {
+        $result['Status'] = true;
+        $result['message'] = "Video uploaded successfully.";
+    } else {
+        $result['Status'] = false;
+        $result['message'] = "Error updating video details: " . $stmt->error;
+    }
 
-    // Allow certain file formats
-    $allowedTypes = array('mp4', 'avi', '3gp', 'mov', 'mpeg');
-    if (in_array($fileType, $allowedTypes)) {
-        // Upload file to server
-        if (move_uploaded_file($_FILES["video"]["tmp_name"], $targetFilePath)) {
-            // Insert video file name into database
-            $insert = $conn->query("INSERT INTO patientvideotable (doctorid, patient_id, Video_url) VALUES ('$doctorid', '$patient_id', '$targetFilePath')");
-            if ($insert) {
-                echo "The file " . htmlspecialchars($fileName) . " has been uploaded successfully.";
-            } else {
-                echo "Failed to insert into the database: " . $conn->error;
-            }
+    // Close the statement
+    $stmt->close();
+            // Success: Return JSON response
+            echo json_encode($result);
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            // Failure: Return JSON response
+            echo json_encode(["status" => false, "msg" => "Failed to upload video."]);
         }
     } else {
-        echo "Sorry, only MP4, AVI, 3GP, MOV, & MPEG files are allowed to upload.";
+        echo json_encode(["status" => false, "msg" => "Invalid request method."]);
     }
-} else {
-    echo "No file uploaded or there was an error uploading the file.";
-}
-
-// Close the database connection
-$conn->close();
 
 }
 

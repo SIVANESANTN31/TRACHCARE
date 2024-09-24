@@ -72,7 +72,7 @@ class _DoctordetailsState extends State<Doctordetails> {
                   emailController.text = data['email'];
                    phoneNumberController.text = data['phone_number'];
                    passwordController.text = data['password'];
-                   var imagepath = data["image_path"].toString().substring(3);
+                   var imagepath = data["image_path"].toString().substring(2);
                    print(data["image_path"]);
                   return 
          SingleChildScrollView(
@@ -86,9 +86,9 @@ class _DoctordetailsState extends State<Doctordetails> {
                     children: [
                       CircleAvatar(
                         radius: 50,
-                        backgroundColor: Colors.grey[300],
+                        //backgroundColor: Colors.grey[300],
                         backgroundImage:NetworkImage("https://$ip/Trachcare/$imagepath"),
-                        child: const Icon(Icons.person, size: 50, color: Colors.blue),
+                        //child: const Icon(Icons.person, size: 50, color: Colors.blue),
                       ),
                       const SizedBox(height: 20),
                     ],
