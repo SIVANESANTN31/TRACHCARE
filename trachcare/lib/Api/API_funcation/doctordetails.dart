@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:trachcare/Api/Apiurl.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/Doctorlist.dart'; 
-import  'package:dio/dio.dart'; // For showing UI elements like alerts
+
 
 // Function to add doctor details
 Future<void> addDoctorDetails(
@@ -25,7 +25,9 @@ Future<void> addDoctorDetails(
   // API URL
   final String apiUrl = AdddoctordetailsUrl;
 
-  final dio = Dio();
+ 
+
+
 
 try{
 
@@ -55,39 +57,58 @@ if (imagefile.path.isNotEmpty) {
           throw Exception('Unsupported image format');
       }
 
-      // Add the file to the request
-    final RequestData = FormData.fromMap({
-  "username": username,
-  "email": email,
-  "phone_number": phoneNumber,
-  "password": password,
-  "doctor_reg_no":doctorRegNo,
-  "image_data":await MultipartFile.fromFile(imagefile.path,contentType: mediaType)
-});
-final response = await dio.post(apiUrl,data: RequestData);
+    
+var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
 
-if(response.statusCode==200){
-  var data = response.data;
-  print(data.runtimeType);
-  if(data){
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(data["msg"])),
-      );
-    Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Doctorlist ()),
-      );
-  }
-  else{
-     ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(data["msg"])),
+    // Add fields to the request
+    request.fields.addAll({
+      'username': username,
+      'email': email,
+      'phone_number': phoneNumber,
+      'password': password,
+      'doctor_reg_no': doctorRegNo,
+    });
+
+request.files.add(
+        await http.MultipartFile.fromPath(
+          'image_data',
+          imagefile.path,
+          contentType: mediaType,
+        ),
       );
 
+var response = await request.send();
+
+    // Handle the response
+    if (response.statusCode == 200) {
+      var responseBody = await response.stream.bytesToString();
+      var data = jsonDecode(responseBody);
+      print(data['Status']);
+      if (data['Status']) {
+
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(data['msg']),
+          backgroundColor: Colors.green[400],
+        ));
+
+        
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(data['message']),
+          backgroundColor: Colors.red,
+        ));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Server error: ${response.statusCode}'),
+        backgroundColor: Colors.red,
+      ));
   }
+  
 }
 
     
-}
+
 
 
 

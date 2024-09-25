@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
+import '../style/utils/Dimention.dart';
+
 class custom_Button extends StatelessWidget {
   final String text;
   final double width;
@@ -27,6 +29,7 @@ class custom_Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Dimentions dn = Dimentions(context);
     return Container(
       decoration: BoxDecoration(
         boxShadow: boxShadow ?? [ 
@@ -39,8 +42,8 @@ class custom_Button extends StatelessWidget {
         ],
       ),
       alignment: Alignment.center,
-      width: width.w,
-      height: height.h,
+      width: dn.width(width),
+      height: dn.height(height),
       child: CupertinoButton(
         onPressed: button_funcation,
         color: backgroundColor,

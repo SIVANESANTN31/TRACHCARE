@@ -45,16 +45,21 @@ class _AdddoctorState extends State<Adddoctor> {
         phoneNumberController.text,
         passwordController.text,
       );
+      _formKey.currentState!.reset();
       
-      // Clear the form fields after submission
-      usernameController.clear();
+      setState(() {
+        usernameController.clear();
       doctorRegNoController.clear();
       emailController.clear();
       phoneNumberController.clear();
       passwordController.clear();
+      imagefile=null;
 
       // Optionally, reset the form state
-      _formKey.currentState!.reset();
+      
+        
+      });
+      
     }
   }
 var imagefile,base64encode,fileimage;

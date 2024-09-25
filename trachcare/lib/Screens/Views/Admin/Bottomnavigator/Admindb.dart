@@ -37,7 +37,7 @@ class Admindb extends StatelessWidget {
     List pages=[
        const Doctorlist(),
        VideoUploadPage(),
-       const patients_list(),
+        patients_list(doctor_id: '88555',),
     ];
         Dimentions dn = Dimentions(context);
     return Scaffold(

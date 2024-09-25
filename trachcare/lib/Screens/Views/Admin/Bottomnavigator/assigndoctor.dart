@@ -11,7 +11,7 @@ class assigndoctor extends StatelessWidget {
      Dimentions dn = Dimentions(context);
     return Scaffold(
       
-      appBar: Duplicate_Appbar(Title: "Assign Doctors to Patients", height: dn.height(10)),
+      appBar: Duplicate_Appbar(Title:"Video List", height: dn.height(10)),
     );
   }
 }

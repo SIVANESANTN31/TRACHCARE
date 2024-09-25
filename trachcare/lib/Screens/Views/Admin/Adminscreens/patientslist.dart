@@ -11,7 +11,8 @@ import '../../../../style/utils/Dimention.dart';
 import "package:http/http.dart" as http;
 
 class patients_list extends StatefulWidget {
-  const patients_list({super.key});
+  final String doctor_id;
+   patients_list({super.key, required this.doctor_id});
 
   @override
   State<patients_list> createState() => _patients_listState();
@@ -23,7 +24,8 @@ class _patients_listState extends State<patients_list> {
 
 
   Future fetchData() async {
-    final response = await http.get(Uri.parse(PatientslistUrl)); // Use http://localhost if you're using a real device or emulator IP for Android
+    final String url = '$PatientslistUrl?doctor_id=${widget.doctor_id}';
+    final response = await http.get(Uri.parse(url)); // Use http://localhost if you're using a real device or emulator IP for Android
     if (response.statusCode == 200) {
       // setState(() {
       //   Doctorlist = json.decode(response.body);
@@ -130,14 +132,14 @@ class _patients_listState extends State<patients_list> {
                           Navigator.of(context).push(MaterialPageRoute(    builder: (context) => ViewPatientDetails(
                               patientId: display_list[index]['patient_id'].toString(),
                               // patientId: display_list[index]['patient_id'],  // Pass the patient ID
-                              patientName: display_list[index]['name'],
+                             
                             ),),);
                         },
                         leading: const CircleAvatar(
                           radius: 25,
                           backgroundImage: AssetImage('assets/images/doctor.png'),
                         ),
-                        title: Text(display_list[index]['name'], style:const TextStyle(
+                        title: Text(display_list[index]['username'], style:const TextStyle(
                           color: Colors.black,
                         )),
                         subtitle:Text(

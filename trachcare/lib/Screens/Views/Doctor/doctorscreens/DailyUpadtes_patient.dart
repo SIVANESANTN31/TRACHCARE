@@ -39,7 +39,7 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
                      Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>  Viewdailyupdates( patientId,selectedDate)
+                              builder: (context) =>  Viewdailyupdates(selecteddate: selectedDate.toString().split(" ").first )
                      ));
                   
     });
@@ -49,7 +49,7 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
     return Scaffold(
         appBar: NormalAppbar(Title: "Report", height: dn.height(15),),
         body: ListView(children: [
-          Namecard("Siva", "132"),
+          Namecard("Siva", "132",context),
           TableCalendar(
             availableGestures: AvailableGestures.all,
             pageJumpingEnabled: true,
@@ -83,11 +83,12 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
 
 
 
-Widget Namecard(String name, String patientId) {
+Widget Namecard(String name, String patientId,BuildContext context) {
+  Dimentions dn = Dimentions(context);
   return Container(
     margin: const EdgeInsets.all(10),
     width: double.infinity,
-    height: 12.h,
+    height: dn.height(15),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: BlackColor, width: 0.3)),

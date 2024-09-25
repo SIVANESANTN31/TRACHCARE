@@ -117,9 +117,12 @@ Future<void> onRefresh() async{
                     )
                 ),
                 if(display_list.length==0)
-                Center(
-                  heightFactor: 10.0,
-                  child: Text("Add Doctors"),)
+                RefreshIndicator.adaptive(
+                  onRefresh: onRefresh,
+                  child: Center(
+                    heightFactor: 10.0,
+                    child: Text("Add Doctors"),),
+                )
                 else
                 Expanded(
                   child:  ListView.builder(

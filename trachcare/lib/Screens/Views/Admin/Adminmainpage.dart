@@ -41,9 +41,9 @@ class Adminmainpage extends StatelessWidget {
                   activeIcon: Icon(CupertinoIcons.calendar_circle_fill)
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.person_outlined),
-                  label: "Assign Doctors",
-                  activeIcon: Icon(Icons.person_sharp)
+                  icon: Icon(Icons.video_collection_outlined),
+                  label: "Video List",
+                  activeIcon: Icon(Icons.video_collection)
               ),
               
               

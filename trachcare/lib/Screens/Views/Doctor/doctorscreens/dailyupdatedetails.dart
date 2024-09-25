@@ -10,10 +10,11 @@ import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
 
 class Viewdailyupdates extends StatefulWidget {
-  Viewdailyupdates(patientId, DateTime selectedDate);
-  final String patientId = patient_id;
-  static String get selectedDate => selectedDate;
-  final String date = selectedDate;
+    final String  selecteddate ;
+  Viewdailyupdates({super.key, required this.selecteddate});
+  // final String patientId = patient_id;
+  
+  // final String date = selectedDate;
   // final selectedDate;
   @override
   _ViewdailyupdatesState createState() => _ViewdailyupdatesState();
@@ -26,33 +27,33 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
   @override
   void initState() {
     super.initState();
-    fetchPatientData();
+    //fetchPatientData();
   }
 
-  Future<void> fetchPatientData() async {
-    final String url = '$ViewPatientDetailsUrl?patient_id=${widget.patientId }&date=${widget.date}';
-    setState(() {
-      isLoading = true;
-    });
+  // Future<void> fetchPatientData() async {
+  //   final String url = '$ViewPatientDetailsUrl?patient_id=${widget.patientId }&date=${widget.date}';
+  //   setState(() {
+  //     isLoading = true;
+  //   });
 
-    try {
-      final response = await http.get(Uri.parse(ViewDailyVitalsUrl));
+  //   try {
+  //     final response = await http.get(Uri.parse(ViewDailyVitalsUrl));
       
-      if (response.statusCode == 200) {
-        setState(() {
-          patientData = json.decode(response.body);
-          isLoading = false;
-        });
-      } else {
-        throw Exception('Failed to load patient data');
-      }
-    } catch (e) {
-      print('Error fetching patient data: $e');
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
+  //     if (response.statusCode == 200) {
+  //       setState(() {
+  //         patientData = json.decode(response.body);
+  //         isLoading = false;
+  //       });
+  //     } else {
+  //       throw Exception('Failed to load patient data');
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching patient data: $e');
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
 
   Future<void> updatePatientData() async {
     try {
@@ -84,16 +85,14 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
       appBar: NormalAppbar(
         Title: "Doctors List",height: dn.height(10),
       ),
-      body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
+      body:  SingleChildScrollView(
               padding: EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(child: Text('Date: ${patientData['date'] ?? 'N/A'}', style: TextStyle(fontWeight: FontWeight.bold))),
+                  Center(child: Text('Date: ${widget.selecteddate}', style: TextStyle(fontWeight: FontWeight.bold))),
                   SizedBox(height: 16),
-                  Namecard('Name: ${patientData['name'] ?? 'N/A'}', 'Patient ID: ${patientData['patient_id'] ?? 'N/A'}'),     
+                  Namecard('siva', '45614 ',context),     
                   SizedBox(height: 16),
                   Text('Vitals', style: TextStyle(fontWeight: FontWeight.bold)),
                   _buildNumberInput('Respiratory Rate', 'respiratory_rate'),
@@ -110,7 +109,7 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
                     _buildTextInput('If Yes, How long the patient can able to breath?', 'breathing_duration'),
                   SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: fetchPatientData,
+                    onPressed: (){},
                     child: Text('Update Patient Data'),
                   ),
                 ],
@@ -201,11 +200,12 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
 
 
 
-Widget Namecard(String name, String patientId) {
+Widget Namecard(String name, String patientId,BuildContext context) {
+  Dimentions dn = Dimentions(context);
   return Container(
     margin: const EdgeInsets.all(10),
     width: double.infinity,
-    height: 12.h,
+    height: dn.height(15),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: BlackColor, width: 0.3)),

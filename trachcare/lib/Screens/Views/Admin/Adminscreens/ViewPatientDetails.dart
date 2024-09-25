@@ -10,11 +10,11 @@ import '../../../../style/utils/Dimention.dart';
 
 class ViewPatientDetails extends StatefulWidget {
   final String patientId;
-  final String patientName;
+  
    // Optional, in case you want to pass the name
 
 
-  const ViewPatientDetails({super.key, required this.patientId, required this.patientName,});
+  const ViewPatientDetails({super.key, required this.patientId, });
   @override
   _ViewPatientDetailsState createState() => _ViewPatientDetailsState();
 }
