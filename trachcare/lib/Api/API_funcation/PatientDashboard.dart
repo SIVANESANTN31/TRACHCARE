@@ -29,3 +29,26 @@ Future FetchDetials() async{
 
 
 }
+
+class DoctorDashBoardApi{
+
+Future FetchDetials(var doctor_id) async{
+  print(doctor_id);
+  
+  final String url = '$ViewdoctordetailsUrl?doctor_id= ${doctor_id}';
+  try {
+    final response = await http.get(Uri.parse(url));
+    if(response.statusCode ==200){
+      var data = jsonDecode(response.body);
+        return data;
+    
+     
+    }
+  } catch (e) {
+    print(e);
+    
+  }
+}
+
+
+}

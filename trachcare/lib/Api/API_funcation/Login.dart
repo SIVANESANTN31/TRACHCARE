@@ -34,7 +34,8 @@ class LoginClassApi{
     context,
     MaterialPageRoute(builder: (context) => const Doctormainpage()),(route)=>false);
     LoginData.clear();
-    Doctor_id = data['userInfo']['doctorid'];
+    
+    Doctor_id = data['userInfo']['doctor_id'];
     
     
 
@@ -95,9 +96,9 @@ class LoginClassApi{
       
       autoCloseDuration: const Duration(seconds: 2),
     );
-    Navigator.push(
+    Navigator.pushAndRemoveUntil(
     context,
-    MaterialPageRoute(builder: (context) => const PatientMainScreen()));
+    MaterialPageRoute(builder: (context) => const PatientMainScreen()),(route)=>false);
     LoginData.clear();
     patient_id = data['userInfo']['patient_id'];
     Doctor_id = data['userInfo']['doctorid'];
@@ -158,9 +159,9 @@ class LoginClassApi{
       
       autoCloseDuration: const Duration(seconds: 2),
     );
-    Navigator.push(
+    Navigator.pushAndRemoveUntil(
     context,
-    MaterialPageRoute(builder: (context) => const Adminmainpage()));
+    MaterialPageRoute(builder: (context) => const Adminmainpage()),(route)=>false);
     LoginData.clear();
     patient_id = data['userInfo']['patient_id'];
     

@@ -1,8 +1,11 @@
 // import "package:carousel_slider/carousel_slider.dart";
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_carousel_widget/flutter_carousel_widget.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
+import "package:trachcare/Api/API_funcation/PatientDashboard.dart";
+import "package:trachcare/Api/DataStore/Datastore.dart";
 import "package:trachcare/Screens/Views/Doctor/doctorscreens/dailyupdatedetails.dart";
 import "package:trachcare/Screens/Views/Doctor/doctorscreens/DailyUpadtes_patient.dart";
 import "package:trachcare/components/Appbar.dart";
@@ -40,171 +43,139 @@ class DoctorDashBoard extends StatelessWidget {
     Dimentions dn = Dimentions(context);
 
     List imagelist = ["assets/images/Vector-1.png"];
-    return Scaffold(
-      appBar: Appbar(
-        Name: "sivanesan",
-        bottom: Bottom(context),
-        height: dn.height(15),
-      ),
-      drawer: const drawer(
-        Name: 'siva',
-      ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 177, 255, 183),
-                borderRadius: BorderRadius.circular(10),
+    return FutureBuilder(
+      future: DoctorDashBoardApi().FetchDetials(Doctor_id),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return const Center(child: CupertinoActivityIndicator(radius: 10,),);
+        }
+        if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.hasData){
+            var patientDetials = snapshot.data;
+            var name  = patientDetials['username'].toString();
+            print(patientDetials);
+
+            Dimentions dn = Dimentions(context);
+      return Scaffold(
+        appBar: Appbar(
+          Name: name,
+          bottom: Bottom(context),
+          height: dn.height(15),
+        ),
+        drawer:  drawer(
+          Name: name,
+        ),
+        body: Column(
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 177, 255, 183),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                height: dn.height(15),
+                child: ListView.builder(
+                  itemCount: 15,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return StoryCircles(
+                      function: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const DailyUpdatePatients()));
+                      },
+                    );
+                  },
+                ),
               ),
-              height: dn.height(15),
+            ),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            SizedBox(
+              height: dn.height(15), // Set a specific height as needed
               child: ListView.builder(
-                itemCount: 15,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return StoryCircles(
-                    function: () {
+                itemCount: imgList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                    onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const DailyUpdatePatients()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => pages[index],
+                        ),
+                      );
                     },
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          gradient: const LinearGradient(
+                            colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.10),
+                              spreadRadius: 2,
+                              blurRadius: 7,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        width: dn.width(70),
+                        height: dn.height(10),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 30),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Image.asset(imagelist[index]),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('${option[index]}'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   );
                 },
               ),
             ),
-          ),
-          // SizedBox(
-          //   height: 10,
-          // ),
-          SizedBox(
-            height: dn.height(15), // Set a specific height as needed
-            child: ListView.builder(
-              itemCount: imgList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => pages[index],
-                      ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        gradient: const LinearGradient(
-                          colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.10),
-                            spreadRadius: 2,
-                            blurRadius: 7,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      width: dn.width(70),
-                      height: dn.height(10),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 30),
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Image.asset(imagelist[index]),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('${option[index]}'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
+            const SizedBox(
+              height: 15,
             ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text("Exercisers For Trach Care:",
-                style: GoogleFonts.ibmPlexSans(
-                    textStyle: TextStyle(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.bold,
-                        color: const Color(0XFF455A64)))),
-          ),
-
-          carsouleview(img, context),
-          //  carsouleview(img, context),
-          //   carsouleview(img, context)
-        ],
-      ),
-
-      //  crossAxisAlignment: CrossAxisAlignment.start,
-      //   children: [
-      //     Gap(1.h),
-      //     Padding(
-      //       padding: const EdgeInsets.only(left: 10.0),
-      //       child: Container(
-      //         width: 95.w,
-      //         height: 10.h,
-      //         decoration: BoxDecoration(border: Border.all(),borderRadius: BorderRadius.circular(15)),
-
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //           crossAxisAlignment: CrossAxisAlignment.center,
-      //           children: [
-      //           Text("Next Appointment Date to conseil is",style: GoogleFonts.ibmPlexSans(
-      //               textStyle: TextStyle(
-      //                   fontSize: 10.sp)),),
-
-      //           Container(
-      //             width: 20.w,
-      //             height: 6.h,
-      //             decoration: BoxDecoration(
-      //               border: Border.all(),borderRadius: BorderRadius.circular(10)
-      //             ),
-      //             child: Center(child: Text(" Aug 15")),
-      //           )
-      //         ],),
-      //       ),
-      //     ),
-
-      //     Gap(3.5.h),
-
-      //     Padding(
-      //       padding: const EdgeInsets.all(9.0),
-      //       child: Text("Exercisers For Trach Care :",style: GoogleFonts.ibmPlexSans(
-      //                 textStyle: TextStyle(
-
-      //                     fontSize: 15.sp,fontWeight: FontWeight.bold,color: Color(0XFF455A64)),)),
-      //     ),
-      //   carsouleview(imagelist),
-      //   Gap(1.h),
-      //   Padding(
-      //     padding: const EdgeInsets.all(8.0),
-      //     child: TaptoSpeak(context),
-      //   )
-
-      //   ],
-    );
+      
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text("Exercisers For Trach Care:",
+                  style: GoogleFonts.ibmPlexSans(
+                      textStyle: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0XFF455A64)))),
+            ),
+      
+            carsouleview(img, context),
+           
+          ],
+        ),
+      
+        
+      );}
+   }
+   return Center(child :Text("Something went wrong!!")); });
   }
 
   PreferredSizeWidget Bottom(BuildContext context) {
@@ -302,101 +273,5 @@ class DoctorDashBoard extends StatelessWidget {
     );
   }
 
-// Widget carsouleview(List Imageslist){
-//   return  Container(
-//         width: 100.w,
-//         height: 20.h,
-//         // decoration: BoxDecoration(
-//         //   image: DecorationImage(image: AssetImage(imagelist[index]),
-//         // ),
-//         child: CarouselSlider(
-//       options: CarouselOptions(),
-//       items: Imageslist
-//           .map((item) => Container(
-//                 child: Center(
-//                     child:
-//                         Image.asset(item, fit: BoxFit.cover, width: 1000)),
-//               ))
-//           .toList(),
-//       ));
 
-// }
-
-// Widget TaptoSpeak(BuildContext context){
-//   Dimentions dn = new Dimentions(context);
-//   return Container(
-//    width: dn.width(90),
-//    height: dn.height(35),
-//     decoration: BoxDecoration(gradient: maincolor ,borderRadius: BorderRadius.circular(15)),
-//     child: Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//       Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: Container(
-//           width: dn.width(90),
-//           height: dn.height(35),
-//           //color: BlackColor,
-
-//            decoration: BoxDecoration(color: whiteColor ,borderRadius: BorderRadius.circular(10)),
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//             children: [
-//               SizedBox(
-//                 width: 10.w,
-//                 height: 4.h,
-//                 child: Image.asset("assets/images/Vector.png"),
-//               ),
-//               Text("Tap to Speak",style: GoogleFonts.ibmPlexSans(
-//                         textStyle: TextStyle(
-//                             fontSize: 13.sp)),)
-//             ],
-//         )),
-//       ),
-
-//       Row(
-
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         children:[ Helpercontainer("YES",Color(0XFF82FF87),(){}) ,
-//       Helpercontainer("NO",Color(0XFFFB8A72),(){}),
-//       Helpercontainer("Help",Color(0XFFA8ECE8),(){}),
-//       Helpercontainer("More words",Color(0XFFEEECFF),(){
-//         Navigator.push(
-//     context,
-//     MaterialPageRoute(builder: (context) => AudioScreen()));
-//       })
-
-//       ])
-//     ],),
-//   );
-// }
-
-// Widget Helpercontainer(String text,Color colour,final buttonfuncation){
-//   return Padding(
-//     padding: const EdgeInsets.all(8.0),
-//     child: GestureDetector(
-//       onTap: buttonfuncation,
-//       child: Container(
-//         alignment: Alignment.center,
-//         width: 18.w,
-//         height: 8.h,
-//         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-//         color: colour,
-//         boxShadow: [
-//                       BoxShadow(
-//               color: BlackColor_light,
-//               blurRadius: 4.0,
-//             ),
-//                     ]
-//         ),
-//         child: Text(text ,textAlign: TextAlign.center,style: GoogleFonts.ibmPlexSans(
-//                           textStyle: TextStyle(
-
-//                             fontWeight: FontWeight.bold,
-//                               fontSize: 13.sp)),),
-
-//       ),
-//     ),
-//   );
-// }
 }

@@ -10,11 +10,12 @@ if(isset($obj["doctor_id"])){
 
     $result=[];
 
-    $sql="SELECT * FROM  patientprofile  WHERE patient_id='{$doctor_id}'";
+    $sql="SELECT * FROM  patientprofile  WHERE patient_id='{$id}'";
     $res=$conn->query($sql);
 
 
     if($res->num_rows>0){
+
       $row = $res->fetch_assoc();
         
         

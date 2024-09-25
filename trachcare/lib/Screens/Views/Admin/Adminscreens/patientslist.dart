@@ -146,7 +146,7 @@ class _patients_listState extends State<patients_list> {
                           display_list[index]["patient_id"].toString(),
                           style: const TextStyle(fontSize: 12, color:Color.fromARGB(255, 0, 0, 0)),
                         ),
-                        trailing: Icon(Icons.delete_forever_rounded, color: Color.fromARGB(255, 255, 127, 127)),),
+                        ),
                       ),
                     ),
                   )
