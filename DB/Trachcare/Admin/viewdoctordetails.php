@@ -2,38 +2,41 @@
 
 include '../config/conn.php';
 
-function GetPatientDetails($conn) {
-    if (!isset($_GET['doctor_id'])) {
-        echo json_encode(["status" => false, "msg" => "Patient ID not provided"]);
-        return;
-    }
+$json = file_get_contents('php://input');
+$obj = json_decode($json,true);
 
-    $DoctorId = $_GET['doctor_id'];
-    $sql = "SELECT * FROM doctorprofile WHERE doctor_id = ?";
-    $stmt = $conn->prepare($sql);
+if(isset($obj["doctor_id"])){
+    $id = mysqli_real_escape_string($conn,$obj['doctor_id']);
 
-    if ($stmt === false) {
-        die("Error preparing statement: " . $conn->error);
-    }
+    $result=[];
 
-    $stmt->bind_param("s", $DoctorId);
+    $sql="SELECT * FROM  doctorprofile  WHERE doctor_id='{$id}'";
+    $res=$conn->query($sql);
 
-    if ($stmt->execute()) {
-        $result = $stmt->get_result();
-        $data = $result->fetch_assoc();
 
-      
-    echo json_encode($data);
+    if($res->num_rows>0){
+
+      $row = $res->fetch_assoc();
         
-        }
-    else {
-        echo json_encode(["status" => false, "message" => $stmt->error]);
-    }
-
-    $stmt->close();
-    $conn->close();
+        
+        $result['Status']=true;
+        $result['message']="Successfully the id retrived from the database.";
+        
+        $result["doctorInfo"]=$row;
+        
+      }else{
+        
+        $result['Status']=false;
+        $result['message']="failed to retrieve the id from the database";
+        $result['doctorInfo']="failed to retrieve the id from the database";
+      }
+     
+     $json_data=json_encode($result);
+      
+     echo $json_data;
 }
 
-GetPatientDetails($conn);
+
+
 
 ?>

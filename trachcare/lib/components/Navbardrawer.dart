@@ -12,9 +12,13 @@ import 'package:trachcare/components/custom_button.dart';
 import 'package:trachcare/style/Tropography.dart';
 import 'package:trachcare/style/colors.dart';
 
+import '../Api/Apiurl.dart';
+
 class drawer extends StatelessWidget {
   final String Name;
-   const drawer({super.key, required this.Name});
+  final String imagepath;
+  final String reg_no;
+   const drawer({super.key, required this.Name, required this.imagepath, required this.reg_no});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +42,8 @@ class drawer extends StatelessWidget {
                         width: 35.w,
                         height: 8.h,
                         child: CircleAvatar(
-                          child: Image.asset("assets/images/patient.png"),
+                          foregroundImage: NetworkImage(
+                                  "https://$ip/Trachcare/$imagepath"),
                         )),
                     Text(
                       Name,
@@ -47,7 +52,7 @@ class drawer extends StatelessWidget {
                               fontWeight: FontWeight.bold, fontSize: 13.sp)),
                     ),
                     Text(
-                      "1921000007",
+                      reg_no,
                       style: GoogleFonts.ibmPlexSans(
                           textStyle: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 10.sp)),

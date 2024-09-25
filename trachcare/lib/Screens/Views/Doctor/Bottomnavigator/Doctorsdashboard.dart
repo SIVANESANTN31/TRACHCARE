@@ -4,7 +4,7 @@ import "package:flutter/material.dart";
 import "package:flutter_carousel_widget/flutter_carousel_widget.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
-import "package:trachcare/Api/API_funcation/PatientDashboard.dart";
+import "package:trachcare/Api/API_funcation/DashboardApi.dart";
 import "package:trachcare/Api/DataStore/Datastore.dart";
 import "package:trachcare/Screens/Views/Doctor/doctorscreens/dailyupdatedetails.dart";
 import "package:trachcare/Screens/Views/Doctor/doctorscreens/DailyUpadtes_patient.dart";
@@ -32,7 +32,7 @@ class DoctorDashBoard extends StatelessWidget {
     "assets/images/images_2.png",
     "assets/images/Images_3.png"
   ];
-
+List imagelist = ["assets/images/Vector-1.png"];
   @override
   Widget build(BuildContext context) {
     List pages = [
@@ -41,19 +41,20 @@ class DoctorDashBoard extends StatelessWidget {
       const Adsurvideos(),
     ];
     Dimentions dn = Dimentions(context);
-
-    List imagelist = ["assets/images/Vector-1.png"];
     return FutureBuilder(
-      future: DoctorDashBoardApi().FetchDetials(Doctor_id),
+      future: DoctorDashBoardApi().FetchDetials(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if(snapshot.connectionState == ConnectionState.waiting){
           return const Center(child: CupertinoActivityIndicator(radius: 10,),);
         }
-        if(snapshot.connectionState == ConnectionState.done){
+    if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasData){
-            var patientDetials = snapshot.data;
-            var name  = patientDetials['username'].toString();
-            print(patientDetials);
+            var data = snapshot.data;
+            var regno = data['Doctor_reg_no'].toString();
+            var name  = data['username'].toString();
+            var image = data["image_path"].toString().substring(2);
+                print(data["image_path"]);
+            print(data);
 
             Dimentions dn = Dimentions(context);
       return Scaffold(
@@ -64,6 +65,8 @@ class DoctorDashBoard extends StatelessWidget {
         ),
         drawer:  drawer(
           Name: name,
+          imagepath: image,
+          reg_no: regno,
         ),
         body: Column(
           children: [
@@ -173,7 +176,8 @@ class DoctorDashBoard extends StatelessWidget {
         ),
       
         
-      );}
+      );
+    }
    }
    return Center(child :Text("Something went wrong!!")); });
   }

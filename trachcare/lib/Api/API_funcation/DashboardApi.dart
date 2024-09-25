@@ -32,17 +32,22 @@ Future FetchDetials() async{
 
 class DoctorDashBoardApi{
 
-Future FetchDetials(var doctor_id) async{
-  print(doctor_id);
+Future FetchDetials() async{
+    var Data ={
+    "doctor_id":Doctor_id.toString()
+  };
   
-  final String url = '$ViewdoctordetailsUrl?doctor_id= ${doctor_id}';
+  
   try {
-    final response = await http.get(Uri.parse(url));
+    final response = await http.post(Uri.parse(ViewdoctordetailsUrl),body: jsonEncode(Data));
     if(response.statusCode ==200){
       var data = jsonDecode(response.body);
-        return data;
-    
-     
+        if(data['Status']){
+        return data['doctorInfo'];
+      }
+      else{
+        return data['doctorInfo'];
+      }
     }
   } catch (e) {
     print(e);

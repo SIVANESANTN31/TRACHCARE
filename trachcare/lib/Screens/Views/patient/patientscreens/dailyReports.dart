@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:trachcare/Api/API_funcation/PatientDashboard.dart';
+import 'package:trachcare/Api/API_funcation/DashboardApi.dart';
 import 'package:trachcare/components/NAppbar.dart';
 import 'package:trachcare/style/Tropography.dart';
 import 'package:trachcare/style/colors.dart';

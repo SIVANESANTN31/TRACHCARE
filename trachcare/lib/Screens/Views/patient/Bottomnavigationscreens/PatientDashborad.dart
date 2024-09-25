@@ -10,7 +10,7 @@ import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-import 'package:trachcare/Api/API_funcation/PatientDashboard.dart';
+import 'package:trachcare/Api/API_funcation/DashboardApi.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
 import 'package:trachcare/components/Appbar.dart';  
 import 'package:trachcare/components/Navbardrawer.dart';
@@ -39,12 +39,15 @@ class PatientDashBoard extends StatelessWidget {
           if(snapshot.hasData){
             var patientDetials = snapshot.data;
             var name  = patientDetials['username'].toString();
+            var image = patientDetials["image_path"].toString().substring(2);
 
             Dimentions dn = Dimentions(context);
 
             return Scaffold(
               appBar: Appbar(Name:name, height: dn.height(10)),
-              drawer: drawer(Name: name),
+              drawer: drawer(Name: name,
+              imagepath: image,
+          reg_no: 'regno',),
               body: SingleChildScrollView(
                 child: Column(
                   // crossAxisAlignment: CrossAxisAlignment.start,

@@ -41,23 +41,25 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
  Future<dynamic> fetchDoctorDetails() async {
-  final String url = '$ViewdoctordetailsUrl?doctor_id=${widget.username}';
-
-  print('API URL: $url');  // Debugging purpose
-
+  var Data ={
+    "doctor_id":Doctor_id.toString()
+  };
+  
+  
   try {
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      
-      var data = json.decode(response.body);
-      return data;
+    final response = await http.post(Uri.parse(ViewdoctordetailsUrl),body: jsonEncode(Data));
+    if(response.statusCode ==200){
+      var data = jsonDecode(response.body);
+        if(data['Status']){
+        return data['doctorInfo'];
       }
-    
-    else {
-      print('Failed to fetch doctor details');
+      else{
+        return data['doctorInfo'];
+      }
     }
   } catch (e) {
-    print('Error: $e');
+    print(e);
+    
   }
 }
 
@@ -126,15 +128,12 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Center(
+                Center(
                   child: Column(
                     children: [
                       CircleAvatar(
                         radius: 50,
-                        // backgroundColor: Colors.grey[300],
-                        backgroundImage: AssetImage('assets/images/doctor.png'),
-                        // backgroundImage:NetworkImage("https://$ip/Trachcare/$imagepath"),
-                        // child: const Icon(Icons.person, size: 50, color: Colors.blue),
+                        backgroundImage: NetworkImage("https://$ip/Trachcare/$imagepath"),
                       ),
                       SizedBox(height: 20),
                     ],

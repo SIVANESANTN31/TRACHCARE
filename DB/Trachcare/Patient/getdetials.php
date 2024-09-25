@@ -5,8 +5,8 @@ include '../config/conn.php';
 $json = file_get_contents('php://input');
 $obj = json_decode($json,true);
 
-if(isset($obj["doctor_id"])){
-    $id = mysqli_real_escape_string($conn,$obj['doctor_id']);
+if(isset($obj["patient_id"])){
+    $id = mysqli_real_escape_string($conn,$obj['patient_id']);
 
     $result=[];
 

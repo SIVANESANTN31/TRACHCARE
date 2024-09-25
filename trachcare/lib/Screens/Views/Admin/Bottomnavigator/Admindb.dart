@@ -31,6 +31,7 @@ class Admindb extends StatelessWidget {
 
   ];
   
+  get  image => ["assets/images/Vector-1.png"];
   @override
   Widget build(BuildContext context) {
    //bool isOpendrawer = false;
@@ -42,8 +43,10 @@ class Admindb extends StatelessWidget {
         Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: Appbar(Name: "rajieswari", height: dn.height(12),),
-       drawer: const drawer(
+       drawer: drawer(
         Name: 'rajieswari',
+          imagepath: image,
+          reg_no: 'regno',
       ),
       // endDrawer: isOpendrawer ? drawer(
       //   Name: 'rajieswari',
