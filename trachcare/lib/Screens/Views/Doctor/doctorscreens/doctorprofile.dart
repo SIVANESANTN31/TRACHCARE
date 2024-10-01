@@ -2,6 +2,7 @@ import "dart:convert";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:http/http.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/Screens/Views/Doctor/doctorscreens/editprofile.dart";
 import "../../../../Api/Apiurl.dart";
@@ -15,15 +16,12 @@ class ProfilePage extends StatefulWidget {
   
 ProfilePage( {super.key});
 
-  get username => username;
-
-
-
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  
   final TextEditingController usernameController = TextEditingController(text: "");
 
   final TextEditingController doctorRegNoController = TextEditingController();
@@ -33,6 +31,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController phoneNumberController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
+  
+  
 
   @override
   void initState() {
@@ -67,7 +67,9 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
+      
       body: SingleChildScrollView(
+        
         child: Column(
           children: [
             Stack(
@@ -106,6 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     child: Padding(
+                      
                       padding: const EdgeInsets.symmetric(horizontal: 14.0),
                       child: FutureBuilder(
 
@@ -119,7 +122,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   emailController.text = data['email'].toString();
                    phoneNumberController.text = data['phone_number'].toString();
                    passwordController.text = data['password'].toString();
-                   var imagepath = data["image_path"].toString().substring(3);
+                   var imagepath = data["image_path"].toString().substring(1);
+                   
                    print(data["image_path"]);
                   return 
          SingleChildScrollView(
@@ -128,7 +132,10 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                 Center(child: Text("My profile")),
+                 SizedBox(height: 20),
                 Center(
+                  
                   child: Column(
                     children: [
                       CircleAvatar(
@@ -254,7 +261,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 button_funcation: (){
                   Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => EditProfilePage(currentName: "currentName", currentEmail: "currentEmail")),
+        MaterialPageRoute(builder: (context) => 
+        EditProfilePage(currentName: usernameController.text,
+         currentEmail:  emailController.text,
+         currentregno: doctorRegNoController.text,
+         currentphno: phoneNumberController.text,
+         )),
       );
                 },
                 backgroundColor: sucess_color,

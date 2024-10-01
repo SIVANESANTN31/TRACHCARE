@@ -2,57 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:sizer/sizer.dart';
-
+import 'package:trachcare/Api/DataStore/Datastore.dart';
+import '../../../../Api/Apiurl.dart';
+import '../../../../components/custom_button.dart';
 import '../../../../style/colors.dart';
-import '../Api/Apiurl.dart';
+
 
 class dailyupdates extends StatefulWidget {
-  dailyupdates(DateTime dateTime);
+  dailyupdates();
 
   @override
   _dailyupdatesState createState() => _dailyupdatesState();
 }
 
 class _dailyupdatesState extends State<dailyupdates> {
+
+
   Map<String, dynamic> patientData = {};
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    fetchPatientData();
+    // fetchPatientData();
   }
 
-  Future<void> fetchPatientData() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    try {
-      final response = await http.get(Uri.parse(ViewDailyVitalsUrl));
-      
-      if (response.statusCode == 200) {
-        setState(() {
-          patientData = json.decode(response.body);
-          isLoading = false;
-        });
-      } else {
-        throw Exception('Failed to load patient data');
-      }
-    } catch (e) {
-      print('Error fetching patient data: $e');
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
 
   Future<void> updatePatientData() async {
     try {
       final response = await http.post(
-        Uri.parse('http://localhost/api/update_patient_vitals.php'),
+        Uri.parse(SubmitVitalsUrl),
         body: json.encode(patientData),
         headers: {'Content-Type': 'application/json'},
       );
@@ -85,11 +65,11 @@ class _dailyupdatesState extends State<dailyupdates> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(child: Text('Date: ${patientData['date'] ?? 'N/A'}', style: TextStyle(fontWeight: FontWeight.bold))),
                   SizedBox(height: 16),
-                  Namecard("Siva", "132"),
+                  Namecard("Siva", patient_id),
                   SizedBox(height: 16),
                   Text('Vitals', style: TextStyle(fontWeight: FontWeight.bold)),
+                  _buildNumberInput('patient ID', patient_id),
                   _buildNumberInput('Respiratory Rate', 'respiratory_rate'),
                   _buildNumberInput('Heart Rate', 'heart_rate'),
                   _buildNumberInput('SPO2 @ Room Air', 'spo2'),
@@ -103,10 +83,20 @@ class _dailyupdatesState extends State<dailyupdates> {
                   if (patientData['able_to_breathe'] == true)
                     _buildTextInput('If Yes, How long the patient can able to breath?', 'breathing_duration'),
                   SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: updatePatientData,
-                    child: Text('Update Patient Data'),
-                  ),
+                  
+          // const Dailyupdateform(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50),
+            child: custom_Button(
+                    text: "Submit",
+                    width: 30,
+                    height: 6,
+                    button_funcation: updatePatientData,
+                    backgroundColor: Colors.green,
+                    textcolor: whiteColor,
+                    textSize: 13),
+          ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),

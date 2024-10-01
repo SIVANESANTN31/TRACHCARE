@@ -8,7 +8,7 @@ import 'package:trachcare/Screens/Views/Doctor/doctorscreens/dailyupdatedetails.
 import 'package:trachcare/components/NAppbar.dart';
 
 import '../../../../Api/DataStore/Datastore.dart';
-import '../../../../components/Dailyupdateform.dart';
+
 import '../../../../style/colors.dart';
 
 import '../../../../style/utils/Dimention.dart';

@@ -7,14 +7,12 @@ import "package:sizer/sizer.dart";
 import "package:trachcare/Api/API_funcation/DashboardApi.dart";
 import "package:trachcare/Api/DataStore/Datastore.dart";
 import "package:trachcare/Screens/Views/Doctor/doctorscreens/dailyupdatedetails.dart";
-import "package:trachcare/Screens/Views/Doctor/doctorscreens/DailyUpadtes_patient.dart";
+import "package:trachcare/Screens/Views/Doctor/doctorscreens/patientreport.dart";
 import "package:trachcare/components/Appbar.dart";
 import "package:trachcare/components/Navbardrawer.dart";
 import "package:trachcare/style/colors.dart";
-
 import "../../../../components/story_circles.dart";
 import "../../../../style/utils/Dimention.dart";
-import "../doctorscreens/AddSurVideos.dart";
 import "Addpatients.dart";
 
 class DoctorDashBoard extends StatelessWidget {
@@ -38,7 +36,6 @@ List imagelist = ["assets/images/Vector-1.png"];
     List pages = [
       const Addpatients(),
       // const dailyupdates(),
-      const Adsurvideos(),
     ];
     Dimentions dn = Dimentions(context);
     return FutureBuilder(

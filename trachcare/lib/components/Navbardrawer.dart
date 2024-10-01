@@ -5,7 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
-import 'package:trachcare/Screens/Views/Doctor/doctorscreens/Profileviewpage.dart';
+import 'package:trachcare/Screens/Views/Doctor/doctorscreens/doctorprofile.dart';
 import 'package:trachcare/Screens/Views/Doctor/doctorscreens/information.dart';
 import 'package:trachcare/Screens/started/WelcomePage.dart';
 import 'package:trachcare/components/custom_button.dart';

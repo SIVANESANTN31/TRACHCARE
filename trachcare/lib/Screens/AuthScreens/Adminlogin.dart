@@ -11,7 +11,6 @@ import 'package:trachcare/Screens/Views/Doctor/Doctormainscreen.dart';
 import 'package:trachcare/components/Titlebox.dart';
 import 'package:trachcare/components/subhead.dart';
 import "package:trachcare/components/custom_button.dart";
-import 'package:trachcare/Screens/Views/Doctor/Bottomnavigator/Doctordb.dart';
 import '../../components/Loginform.dart';
 
 class AdminLogin extends StatelessWidget {

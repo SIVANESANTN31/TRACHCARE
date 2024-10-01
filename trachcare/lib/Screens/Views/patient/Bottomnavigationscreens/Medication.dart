@@ -1,12 +1,11 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
-import "package:trachcare/Screens/Views/patient/patientscreens/dailyupdates.dart";
 import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/style/colors.dart";
-
 import "../../../../style/utils/Dimention.dart";
 import "../patientscreens/dailyReports.dart";
+import "../patientscreens/dailyupdates copy.dart";
 
 class MedicationPage extends StatelessWidget {
   const MedicationPage({super.key});
@@ -23,7 +22,7 @@ class MedicationPage extends StatelessWidget {
     void daily_updates(){
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) =>const your_daily_updates()));
+    MaterialPageRoute(builder: (context) => dailyupdates()));
 }
 
 
