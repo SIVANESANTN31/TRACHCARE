@@ -8,11 +8,11 @@ $json = file_get_contents('php://input');
 $obj = json_decode($json, true);
 
 // Check if required fields are present in the request
-if (isset($obj["name"]) && isset($obj["date"])) {
+if (isset($obj["patient_id"])) {
 
     // Escape variables for security
-    $name = mysqli_real_escape_string($conn, $obj['name']);
-    $date = mysqli_real_escape_string($conn, $obj['date']);
+    $patient_id = mysqli_real_escape_string($conn, $obj['patient_id']);
+    
     $respiratory_rate = isset($obj['respiratory_rate']) ? mysqli_real_escape_string($conn, $obj['respiratory_rate']) : null;
     $heart_rate = isset($obj['heart_rate']) ? mysqli_real_escape_string($conn, $obj['heart_rate']) : null;
     $spo2_room_air = isset($obj['spo2_room_air']) ? mysqli_real_escape_string($conn, $obj['spo2_room_air']) : null;
@@ -27,13 +27,13 @@ if (isset($obj["name"]) && isset($obj["date"])) {
     $breath_duration = isset($obj['breath_duration']) ? mysqli_real_escape_string($conn, $obj['breath_duration']) : null;
     $image_path = isset($obj['image_path']) ? mysqli_real_escape_string($conn, $obj['image_path']) : null;
 
-    // Insert the new daily update into the Patientsdetails table
-    $insert_sql = "INSERT INTO daily_report (name, date, respiratory_rate, heart_rate, spo2_room_air, daily_dressing_done, 
+    // Insert the new daily update into the daily_report table
+    $insert_sql = "INSERT INTO daily_report (patient_id, respiratory_rate, heart_rate, spo2_room_air, daily_dressing_done, 
                     tracheostomy_tie_changed, suctioning_done, oral_feeds_started, changed_to_green_tube, 
-                    able_to_breathe_through_nose, secretion_color_consistency, cough_or_breathlessness, breath_duration, image_path) 
-                    VALUES ('$name', '$date', '$respiratory_rate', '$heart_rate', '$spo2_room_air', '$daily_dressing_done', 
+                    able_to_breathe_through_nose, secretion_color_consistency, cough_or_breathlessness, breath_duration, image_path, created_at, updated_at) 
+                    VALUES ('$patient_id','$respiratory_rate', '$heart_rate', '$spo2_room_air', '$daily_dressing_done', 
                     '$tracheostomy_tie_changed', '$suctioning_done', '$oral_feeds_started', '$changed_to_green_tube', 
-                    '$able_to_breathe_through_nose', '$secretion_color_consistency', '$cough_or_breathlessness', '$breath_duration', '$image_path')";
+                    '$able_to_breathe_through_nose', '$secretion_color_consistency', '$cough_or_breathlessness', '$breath_duration', '$image_path', NOW(), NOW())";
 
     if ($conn->query($insert_sql) === TRUE) {
         $result['Status'] = true;
@@ -45,7 +45,7 @@ if (isset($obj["name"]) && isset($obj["date"])) {
 } else {
     // If required fields are missing, set the Status to false and provide a message
     $result['Status'] = false;
-    $result['message'] = "Required fields 'name' and 'date' are missing.";
+    $result['message'] = "Required fields 'patient_id' and 'date' are missing.";
 }
 
 // Convert the result array into JSON format

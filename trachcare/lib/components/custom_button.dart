@@ -25,7 +25,7 @@ class custom_Button extends StatelessWidget {
       this.boxShadow,
       this.button_funcation,
       this.icon,
-      required this.textcolor, required this.textSize});
+      required this.textcolor, required this.textSize,});
 
   @override
   Widget build(BuildContext context) {

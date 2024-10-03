@@ -1,160 +1,156 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+
 import 'package:table_calendar/table_calendar.dart';
-import 'package:trachcare/Api/API_funcation/DashboardApi.dart';
+import 'package:trachcare/Screens/Views/Doctor/doctorscreens/dailyupdatedetails.dart';
 import 'package:trachcare/components/NAppbar.dart';
-import 'package:trachcare/style/Tropography.dart';
-import 'package:trachcare/style/colors.dart';
+
+import '../../../../Api/DataStore/Datastore.dart';
+
+import '../../../../style/colors.dart';
 
 import '../../../../style/utils/Dimention.dart';
 
 
-class YourdailyReports extends StatefulWidget {
-  const YourdailyReports({super.key});
+class DailyUpdatePatients extends StatefulWidget {
+  const DailyUpdatePatients({super.key});
 
   @override
-  State<YourdailyReports> createState() => _YourdailyReportsState();
+  State<DailyUpdatePatients> createState() => _DailyUpdatePatientsState();
 }
 
-class _YourdailyReportsState extends State<YourdailyReports> {
-    DateTime _selectedDate = DateTime.now();
-
-  DateTime _focusedDate = DateTime.now();
-
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    setState(() {
-      _selectedDate = selectedDay;
-      _focusedDate = focusedDay;
-    });
-  }
+class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
+    get patientId => patient_id;
 
   @override
   Widget build(BuildContext context) {
+
+
+      DateTime selectedDate = DateTime.now();
+  DateTime focusedDate = DateTime.now();
+  print(selectedDate);
+
+  void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    setState(() {
+      selectedDate = selectedDay;
+      focusedDate = focusedDay;
+      
+                     
+                     Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            
+                              builder: (context) =>  Viewdailyupdates(selecteddate: selectedDate.toString().split(" ").first )
+                     ));
+                  
+    });
+  }
+
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "YOUR DAILY RECORDS",height: dn.height(10),),
-      body:  FutureBuilder(
-        future: PatientDashBoardApi().FetchDetials(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {  
-          if(snapshot.connectionState == ConnectionState.waiting){
-          return const Center(child: CupertinoActivityIndicator(radius: 10,),);
-        }
-        if(snapshot.connectionState == ConnectionState.done){
-          if(snapshot.hasData){
-            var patientDetials = snapshot.data;
-            var name  = patientDetials['name'].toString();
-            var patientId =  patientDetials['patient_id'].toString();
-            var age = patientDetials['age'].toString();
+        appBar: NormalAppbar(Title: "Report", height: dn.height(15),),
+        body: ListView(children: [
+          Namecard(username, patient_id,context),
+          TableCalendar(
+            availableGestures: AvailableGestures.all,
+            pageJumpingEnabled: true,
+            headerStyle:const HeaderStyle(formatButtonVisible: false,titleCentered: true,) ,
+              focusedDay: focusedDate,
+               firstDay: DateTime.utc(2010,1,1), 
+               lastDay: DateTime.now().add(
+                const Duration(days: 365),
+              ),
+              selectedDayPredicate: (day) => isSameDay(day, selectedDate),
+        onDaySelected: onDaySelected,
+              
+              )
 
+        // SfCalendar(
+        //   view: CalendarView.month,
+        // )
+        ])
+        
+        
+        )
+        
+        
+        
+        ;
 
-               return Column(children: [
-         
-           
-           Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: 22,vertical: 10),
-                 child: NameCard(name, patientId, age),
-               ),
-                TableCalendar(
-              availableGestures: AvailableGestures.all,
-              pageJumpingEnabled: true,
-              headerStyle:const HeaderStyle(formatButtonVisible: false,titleCentered: true,) ,
-                focusedDay: _focusedDate,
-                 firstDay: DateTime.utc(2010,1,1), 
-                 lastDay: DateTime.now().add(
-                  const Duration(days: 365),
-                ),
-                selectedDayPredicate: (day) => isSameDay(day, _selectedDate),
-          onDaySelected: _onDaySelected,
-                
-                )
         
-          
-          
-        
-         
-          
-          
-        
-        
-        
-        
-        ],);}}
-        return Text("Something Went Wrong!!!!",style: BoldStyle,);
-  }),
-    );
   }
 }
 
 
-Widget NameCard(String name, String patientId ,String Dob){
 
-  return Container( 
-    width: 88.w,
-    height: 15.h,
-    decoration: BoxDecoration(border: Border.all(color: BlackColor,width: 1),
-    borderRadius: BorderRadius.circular(15),
-    ),
+
+Widget Namecard(String name, String patientId,BuildContext context) {
+  Dimentions dn = Dimentions(context);
+  return Container(
+    margin: const EdgeInsets.all(10),
+    width: double.infinity,
+    height: dn.height(15),
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: BlackColor, width: 0.3)),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         const CircleAvatar(
-                  minRadius: 20,
-                  child: Image(image: AssetImage("assets/images/doctor.png")),),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Row(
-    children: [
-      Column(
-        children: [
-          Text("Name",style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          
-                            fontSize: 13.sp)),),
-      Text("Patient Id ",style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                            fontSize: 13.sp)),),
-        Text("Date",style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                            fontSize: 13.sp)),)
-        ],
-      ),
-      Column(
-        children: [
-          Text(":",style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                            fontSize: 13.sp)),),
-      Text(": ",style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                            fontSize: 13.sp)),),
-      Text(": ",style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                            fontSize: 13.sp)),)
-        ],
-      ),
-      Column(
-        children: [
-          Text(name,style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                            fontSize: 13.sp)),),
-      Text(patientId,style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                            fontSize: 13.sp)),),
-        Text(Dob,style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                            fontSize: 13.sp)),)
-        ],
-      )
-    ],
-  )
+          minRadius: 20,
+          child: Image(image: AssetImage("assets/images/doctor.png")),
+        ),
+        Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Row(
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      "Name",
+                      style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(fontSize: 13.sp)),
+                    ),
+                    Text(
+                      "Patient Id ",
+                      style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(fontSize: 13.sp)),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text(
+                      ":",
+                      style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(fontSize: 13.sp)),
+                    ),
+                    Text(
+                      ": ",
+                      style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(fontSize: 13.sp)),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text(
+                      name,
+                      style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(fontSize: 13.sp)),
+                    ),
+                    Text(
+                      patientId,
+                      style: GoogleFonts.ibmPlexSans(
+                          textStyle: TextStyle(fontSize: 13.sp)),
+                    )
+                  ],
                 )
-                
-
-
-
-
-    ],),
+              ],
+            ))
+      ],
+    ),
   );
 }
-

@@ -4,7 +4,8 @@ import "package:sizer/sizer.dart";
 import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/style/colors.dart";
 import "../../../../style/utils/Dimention.dart";
-import "../patientscreens/dailyReports.dart";
+
+import "../../Doctor/doctorscreens/patientreport.dart";
 import "../patientscreens/dailyupdates copy.dart";
 
 class MedicationPage extends StatelessWidget {
@@ -22,7 +23,7 @@ class MedicationPage extends StatelessWidget {
     void daily_updates(){
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => dailyupdates()));
+    MaterialPageRoute(builder: (context) => const YourdailyReports()));
 }
 
 
@@ -30,7 +31,7 @@ class MedicationPage extends StatelessWidget {
 void daily_Reports(){
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) =>const YourdailyReports()));
+    MaterialPageRoute(builder: (context) =>const DailyUpdatePatients()));
 
 }
     Dimentions dn = Dimentions(context);

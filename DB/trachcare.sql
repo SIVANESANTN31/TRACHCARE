@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2024 at 12:44 PM
+-- Generation Time: Oct 03, 2024 at 04:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -130,7 +130,7 @@ INSERT INTO `appoinment_table` (`doctorid`, `patient_id`, `date`) VALUES
 CREATE TABLE `daily_report` (
   `id` int(11) NOT NULL,
   `patient_id` varchar(255) NOT NULL,
-  `date` date NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp(),
   `respiratory_rate` int(11) DEFAULT NULL,
   `heart_rate` int(11) DEFAULT NULL,
   `spo2_room_air` float DEFAULT NULL,
@@ -153,8 +153,8 @@ CREATE TABLE `daily_report` (
 --
 
 INSERT INTO `daily_report` (`id`, `patient_id`, `date`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `daily_dressing_done`, `tracheostomy_tie_changed`, `suctioning_done`, `oral_feeds_started`, `changed_to_green_tube`, `able_to_breathe_through_nose`, `secretion_color_consistency`, `cough_or_breathlessness`, `breath_duration`, `image_path`, `created_at`, `updated_at`) VALUES
-(1, '123', '2024-08-24', 20, 80, 98.5, 'No', 'No', 'Yes', 'Yes', 'No', 'Yes', 'Clear', 'No', 5, '/images/patient_123.png', '2024-08-25 03:56:13', '2024-08-25 03:58:31'),
-(2, '123', '2023-08-24', 20, 80, 98.5, 'Yes', 'No', 'Yes', 'Yes', 'No', 'Yes', 'Clear', 'No', 5, '/images/patient_123.png', '2024-08-25 03:56:52', '2024-08-25 03:56:52');
+(1, '123', '2024-10-02', 12, 34, 56, 'No', 'Yes', 'Yes', 'No', 'No', 'Yes', '50', 'No', 78, NULL, '2024-10-02 07:04:29', '2024-10-02 07:04:29'),
+(2, 'PAT10023John', '2024-10-02', 98, 87, 0, 'Yes', '', 'Yes', '', 'Yes', '', '', '', 0, '', '2024-10-02 07:12:26', '2024-10-02 07:12:26');
 
 -- --------------------------------------------------------
 
@@ -295,7 +295,7 @@ INSERT INTO `patientprofile` (`doctor_id`, `patient_id`, `username`, `email`, `p
 ('', '', 'drjohnsmith', 'drjohnsmith@example.com', '9500077434', 'newpassword123', 'uploads/66d0496e30a62.jpg', '2024-08-29 10:10:11', '2024-08-29 10:11:58'),
 ('2147483647', 'PAT10023John', 'john_doe', 'john.doe@example.com', '9876543210', '123', NULL, '2024-09-25 06:06:05', '2024-09-25 06:08:01'),
 ('960264655415', 'iudfgjsdbvjk\r\n', 'navin', 'fourth', '', '', NULL, '2024-09-25 05:01:44', '2024-09-25 05:01:44'),
-('', '', 'SIVANESAN', 'johndoe@example.com', '+14987888999', 'password123', NULL, '2024-09-15 05:17:44', '2024-09-15 05:17:44'),
+('', '123', 'SIVANESAN', 'johndoe@example.com', '+14987888999', 'password123', NULL, '2024-09-15 05:17:44', '2024-10-01 16:10:58'),
 ('siva', '[value-2]', '[value-3]', '[value-4]', '[value-5]', '[value-6]', NULL, '2024-09-24 16:53:57', '2024-09-24 16:53:57');
 
 -- --------------------------------------------------------
@@ -346,7 +346,7 @@ ALTER TABLE `appoinment_table`
 --
 ALTER TABLE `daily_report`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `patient_id` (`patient_id`,`date`);
+  ADD UNIQUE KEY `patient_id` (`patient_id`) USING BTREE;
 
 --
 -- Indexes for table `doctorlogin`

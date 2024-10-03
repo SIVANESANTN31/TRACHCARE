@@ -73,35 +73,6 @@ class _AddpatientsState extends State<Addpatients> {
                         'liverFunctionTest': liverFunctionTest,
                         'renalFunctionTest': renalFunctionTest,};
                         SubmitPatientDetails(context, patientDetails);
-
-    // Clear the form fields after submission
-    // nameController.clear();
-    // ageController.clear();
-    // addressController.clear();
-    // bmiController.clear();
-    // diagnosisController.clear();
-    // surgeryStatusController.clear();
-    // postOpTracheostomyDayController.clear();
-    // tubeNameSizeController.clear();
-    // baselineVitalsController.clear();
-    // respiratoryRateController.clear();
-    // heartRateController.clear();
-    // spo2RoomAirController.clear();
-    // indicationOfTracheostomyController.clear();
-    // comorbiditiesController.clear();
-    // hemoglobinController.clear();
-    // srSodiumController.clear();
-    // srPotassiumController.clear();
-    // srCalciumController.clear();
-    // srBicarbonateController.clear();
-    // ptController.clear();
-    // apttController.clear();
-    // inrController.clear();
-    // plateletsController.clear();
-    // liverFunctionTestController.clear();
-    // renalFunctionTestController.clear();
-
-    // Optionally, reset the form state
     _formKey.currentState!.reset();
   }
 }
@@ -160,16 +131,7 @@ class _AddpatientsState extends State<Addpatients> {
                       onPressed: () => _save(context),
                       child: const Text('Save'),
                     ),const SizedBox(height: 15,),
-                    // ElevatedButton(
-                    //   style: ElevatedButton.styleFrom(
-                    //     backgroundColor: Colors.red,
-                    //   ),
-                    //   onPressed: () {
-                    //     // Handle delete logic here
-                    //     print('Details Deleted');
-                    //   },
-                    //   child: Text('Delete'),
-                    // ),
+                    
                   ],
                 ),
                 const SizedBox(height: 100),
