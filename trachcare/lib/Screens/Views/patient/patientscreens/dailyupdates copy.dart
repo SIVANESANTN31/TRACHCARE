@@ -207,9 +207,9 @@ class _YourdailyReportsState extends State<YourdailyReports> {
 
 Widget NameCard(String name, String patientId) {
   return Container(
-    margin: const EdgeInsets.all(10),
+    margin: const EdgeInsets.all(8),
     width: double.infinity,
-    height: 12.h,
+    height: 15.h,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
       border: Border.all(color: BlackColor, width: 0.3),
@@ -229,11 +229,11 @@ Widget NameCard(String name, String patientId) {
                 children: [
                   Text(
                     "Name",
-                    style: GoogleFonts.ibmPlexSans(textStyle: TextStyle(fontSize: 13.sp)),
+                    style: GoogleFonts.ibmPlexSans(textStyle: TextStyle(fontSize: 10.sp)),
                   ),
                   Text(
                     "Patient Id",
-                    style: GoogleFonts.ibmPlexSans(textStyle: TextStyle(fontSize: 13.sp)),
+                    style: GoogleFonts.ibmPlexSans(textStyle: TextStyle(fontSize: 10.sp)),
                   ),
                 ],
               ),

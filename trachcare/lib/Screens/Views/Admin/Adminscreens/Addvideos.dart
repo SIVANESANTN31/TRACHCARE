@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
+import 'package:toastification/toastification.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/videolist.dart';
 import '../../../../Api/Apiurl.dart';
@@ -66,10 +67,27 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
     if (response.statusCode == 200) {
       var responseBody = await response.stream.bytesToString();
       print('Upload success: $responseBody');
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Videolist()),
-      );
+      _titleController.clear();
+      _descriptionController.clear();
+      
+      videoFileName=null;
+
+      toastification.show(
+                type: ToastificationType.success ,
+                alignment: Alignment.bottomRight,
+      style: ToastificationStyle.flatColored,
+      context: context, // optional if you use ToastificationWrapper
+      title: Text('Successfully video uploaded!!!  🎉'),
+      showProgressBar: false,
+      icon: const Icon(Icons.check_circle_outline,color: Colors.green,),
+      showIcon: true, // show or hide the icon
+      
+      autoCloseDuration: const Duration(seconds: 2),
+    );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => Videolist()),
+      // );
     } else {
       print('Upload failed: ${response.statusCode}');
     }
@@ -106,7 +124,7 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "Multi-Form Upload", height: dn.height(10)),
+      appBar: NormalAppbar(Title: "Upload videos", height: dn.height(10)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -152,35 +170,35 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
                 },
               ),
               SizedBox(height: 20),
-              DropdownButtonFormField<String>(
-                value: _selectedCategory,
-                hint: Text('Select Category'),
-                items: _categories.map((category) {
-                  return DropdownMenuItem<String>(
-                    value: category,
-                    child: Text(category),
-                  );
-                }).toList(),
-                onChanged: (newValue) {
-                  setState(() {
-                    _selectedCategory = newValue;
-                  });
-                },
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select a category';
-                  }
-                  return null;
-                },
-              ),
+              // DropdownButtonFormField<String>(
+              //   value: _selectedCategory,
+              //   hint: Text('Select Category'),
+              //   items: _categories.map((category) {
+              //     return DropdownMenuItem<String>(
+              //       value: category,
+              //       child: Text(category),
+              //     );
+              //   }).toList(),
+              //   onChanged: (newValue) {
+              //     setState(() {
+              //       _selectedCategory = newValue;
+              //     });
+              //   },
+              //   decoration: InputDecoration(
+              //     filled: true,
+              //     fillColor: Colors.white,
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(15.0),
+              //       borderSide: BorderSide.none,
+              //     ),
+              //   ),
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please select a category';
+              //     }
+              //     return null;
+              //   },
+              // ),
               SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -196,8 +214,8 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
               SizedBox(height: 20),
               _filePath != null
                   ? Text(
-                      'Selected file: ${_filePath!.split('/').last}',
-                      style: TextStyle(color: Colors.black54),
+                      'File Selected ',
+                      style: TextStyle(color: const Color.fromARGB(255, 7, 196, 0)),
                     )
                   : Text(
                       'No file selected.',

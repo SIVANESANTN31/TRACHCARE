@@ -84,12 +84,11 @@ function fetchVideoDetails($conn) {
     }
 
  
-        if (isset($_GET['patient_id']) || isset($_GET['doctorid'])) {
-            $patient_id = $_GET['patient_id'];
-            $doctorid = $_GET['doctorid'];
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+           
 
             // Prepare the SQL query to fetch video details
-            $sql = "SELECT  Video_url FROM patientvideotable WHERE patient_id = ? AND doctorid = ?";
+            $sql = "SELECT  * FROM patientvideotable ";
             
             // Prepare the statement
             $stmt = $conn->prepare($sql);
@@ -99,7 +98,7 @@ function fetchVideoDetails($conn) {
             }
 
             // Bind the 'patient_id' parameter to the SQL statement
-            $stmt->bind_param("ss", $patient_id,$doctorid);
+            
 
             // Execute the statement
             if ($stmt->execute()) {
@@ -120,7 +119,8 @@ function fetchVideoDetails($conn) {
                     // No records found for the provided patient_id
                     echo json_encode([
                         "status" => false,
-                        "message" => "No video details found for the provided patient_id."
+                        "message" => "No video Availalbe",
+                        "data" => []
                     ]);
                 }
             } else {

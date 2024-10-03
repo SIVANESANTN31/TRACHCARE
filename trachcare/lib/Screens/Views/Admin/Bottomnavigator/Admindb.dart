@@ -45,7 +45,7 @@ class Admindb extends StatelessWidget {
       appBar: Appbar(Name: "rajieswari", height: dn.height(12),),
        drawer: drawer(
         Name: 'rajieswari',
-          imagepath: image,
+          imagepath: image.toString(),
           reg_no: 'regno',
       ),
       // endDrawer: isOpendrawer ? drawer(

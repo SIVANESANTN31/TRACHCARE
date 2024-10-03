@@ -45,7 +45,7 @@ class _DoctordetailsState extends State<Doctordetails> {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
-        return data;
+        return data["doctorInfo"];
       } else {
         print('Failed to fetch doctor details');
       }

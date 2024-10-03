@@ -6,13 +6,15 @@ $json = file_get_contents('php://input');
 
 // Decoding the received JSON and storing it in $obj variable
 $obj = json_decode($json, true);
+
+
 if (!isset($_GET['doctor_id'])) {
     echo json_encode(["status" => false, "msg" => "Patient ID not provided"]);
     return;
 }
 
 $DoctorId = $_GET['doctor_id'];
-$sql = "SELECT * FROM doctorprofile WHERE username = ?";
+$sql = "SELECT * FROM doctorprofile WHERE doctor_id = ?";
 $stmt = $conn->prepare($sql);
 
 if ($stmt === false) {

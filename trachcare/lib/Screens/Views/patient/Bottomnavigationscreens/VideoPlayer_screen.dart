@@ -1,6 +1,8 @@
 import "package:chewie/chewie.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
+import "package:media_kit/media_kit.dart";
+import "package:media_kit_video/media_kit_video.dart";
 import "package:trachcare/Api/Apiurl.dart";
 import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/style/Tropography.dart";
@@ -12,8 +14,12 @@ import "../../../../style/utils/Dimention.dart";
 
 
 class video_player extends StatefulWidget {
-  //final String Videoulrl;
-   const video_player({super.key});
+
+
+  final String Videoulrl;
+  final String title;
+  final String description;
+    video_player({super.key, required this.Videoulrl, required this.title, required this.description});
 
   @override
   State<video_player> createState() => _video_playerState();
@@ -21,41 +27,23 @@ class video_player extends StatefulWidget {
 
 class _video_playerState extends State<video_player> {
 
-  late ChewieController chewieController;
-   Future<void> ? _intialltingvideoplayer; 
 
 
-
-
-final VideoPlayerController _controller = VideoPlayerController.networkUrl(Uri.parse(
-        'http://$ip/Trachcare/uploads/videos/477456981614-hd_1920_1080_30fps.mp4'),
-        videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true,), // Optional settings
-  httpHeaders: {
-    
-    "Accept": "application/json"
-  },
-        
-        ) ;
+ late final player = Player();
+  // Create a [VideoController] to handle video output from [Player].
+  late final controller = VideoController(player);
 
   @override
   void initState() {
     super.initState();
-    _intialltingvideoplayer = _controller.initialize().then((_) {
-    setState(() {
-      chewieController = ChewieController(
-  videoPlayerController: _controller,
-  autoInitialize: true,
-  autoPlay: true,
-  //materialProgressColors :ChewieProgressColors(playedColor: Colors.white,handleColor: Colors.white),
-  showOptions: false,
-  showControls: true,
-  
-);
-    }); // Update the UI once the video is initialized.
-  });
+    // Play a [Media] or [Playlist].
+    player.open(Media('https://$ip/Trachcare/${widget. Videoulrl.substring(2)}'));
+  }
 
-
-      
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
   }
 
 
@@ -66,77 +54,31 @@ final VideoPlayerController _controller = VideoPlayerController.networkUrl(Uri.p
     Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: NormalAppbar(Title: "WatchZone",height: dn.height(10),),
-      body:  FutureBuilder(
-        future: _intialltingvideoplayer, builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if(snapshot.connectionState== ConnectionState.done){
-          return Center(
-            child: Container(
-              decoration: BoxDecoration(
-                color:const Color.fromARGB(77, 223, 223, 223),
-                borderRadius: BorderRadius.circular(15)
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: AspectRatio(aspectRatio: _controller.value.aspectRatio,
-                child: Chewie(controller: chewieController),
-                 
-                
-                ),
-              ),
-            ),
-          );
-        }
-        else if(snapshot.connectionState==ConnectionState.waiting){
-          return const Center(child: CupertinoActivityIndicator(radius: 12,),);
-        }
+      
+      body: Column(
+       
+        children: [
+          
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text("Title: ${widget.title}",style: BoldStyle,),
+          ),
+          SizedBox(
 
-        return Column(
-          children: [
-            Text("Something went wrong!!!",style: BoldStyle,)
-          ],
-        );
-        
-        
-        }),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width * 9.0 / 16.0,
+               
+            child: Video(controller: controller),
+          ),
 
-      // body: _controller.value.isInitialized
-      //     ? Padding(
-      //       padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 10),
-      //       child: Stack(
-      //         alignment: Alignment.center,
-      //         children:[ AspectRatio(
-      //             aspectRatio: _controller.value.aspectRatio,
-      //             child: VideoPlayer(_controller),
-      //           ),
-      //           IconButton(onPressed: (){
-      //              setState(() {
-      //           _controller.value.isPlaying
-      //               ? _controller.pause()
-      //               : _controller.play();
-      //         });
-      //           }, icon: Icon(
-      //         _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-      //         color: whiteColor,
-      //       ),
-      //       color: const Color.fromARGB(200, 0, 0, 0),
-            
-      //       )
-
-      //       //_ControlsOverlay(controller: _controller,)
-      //                ] ),
-      //     )
-      //     : Center(child: CupertinoActivityIndicator(radius: 10,),),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Expanded(child: Text("Description:  ${widget.description}",style: Normal,)),
+          ),
+        ],
+      ),
        
     );
-  }
-
-
-
-  @override
-  void dispose() {
-   _controller.dispose();
-   
-    super.dispose();
   }
 
 }

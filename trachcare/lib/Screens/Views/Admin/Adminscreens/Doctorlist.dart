@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trachcare/Api/Apiurl.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/doctordetails.dart';
+import 'package:trachcare/style/colors.dart';
 import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
@@ -33,27 +34,22 @@ class _DoctorlistState extends State<Doctorlist> {
   }
 // This list holds the data for the list view
   List<dynamic> display_list = [];
+  String serachKeyword ="";
+
+  TextEditingController controller = new TextEditingController();
+  
   @override
   initState() {
     display_list = Doctorlist;
     super.initState();
   }
-  void onsearch(String enteredKeyword) {
-    List<dynamic> results = [];
-    if (enteredKeyword.isEmpty) {
-      // if the search field is empty or only contains white-space, we'll display all users
-      results = display_list;
-    } else {
-      results = display_list
-          .where((name) =>
-          name["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
-          .toList();
-      // we use the toLowerCase() method to make it case-insensitive
-    }
-    setState(() {
-      display_list = results;
-    });
-  }
+  List  onsearch(String enteredKeyword,List data) {
+     if (enteredKeyword.isEmpty) return data;
+    return data.where((item) => item["username"].toString().toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
+ }
+    
+   
+  
 
 
 
@@ -75,108 +71,87 @@ Future<void> onRefresh() async{
       appBar: NormalAppbar(
         Title: "Doctors List",height: dn.height(10),
       ),
-      body: FutureBuilder(
-         future: fetchData(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasData) {
-                  var data = snapshot.data;
-                  display_list = data["data"];
-                 // print(display_list[0]['id']);
-         return RefreshIndicator.adaptive(
-          onRefresh: onRefresh,
-           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Container(
-                    margin: const EdgeInsets.only(top: 5, bottom:8,),
-                    width: MediaQuery.of(context).size.width,
-                    height: 55,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(color: Colors.black.withOpacity(0.15),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3))],
-                    ),
-                   
-                    child: TextFormField(
-                      onChanged: (value) => onsearch(value),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Search here....",
-                        hintStyle: TextStyle(
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-                        prefixIcon: const Icon(Icons.search,size: 25,),
-                      ),
-                    )
-                ),
-                if(display_list.length==0)
-                RefreshIndicator.adaptive(
-                  onRefresh: onRefresh,
-                  child: Center(
-                    heightFactor: 10.0,
-                    child: Text("Add Doctors"),),
-                )
-                else
-                Expanded(
-                  child:  ListView.builder(
-                    itemCount: display_list.length,
-                    itemBuilder: (context, index){
-                   
-                    var image_path = display_list[index]['image_path'].toString().substring(2);
-                    return Card(
-                      color: const Color.fromRGBO(255, 255, 255, 1),
-                      elevation: 4,
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child: ListTile(
-                        onTap: (){
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Doctordetails(
-                              
-                              Doctor_id:  display_list[index]['doctor_id'].toString(), 
-                             
-                            ),),);
-                        },
-                        leading:  CircleAvatar(
-                          radius: 25,
-                          backgroundImage: NetworkImage("https://$ip/Trachcare/$image_path"),
-                        ),
-                        title: Text(display_list[index]['doctor_id'], style:const TextStyle(
-                          color: Colors.black,
-                        )),
-                        subtitle:Text(
-                          display_list[index]["username"].toString(),
-                          style: const TextStyle(fontSize: 12, color:Color.fromARGB(255, 0, 0, 0)),
-                        ),
-                      ),
-                    );}
-                  )
-                     
-                  ),
+      body: Column(
+        children: [
+         Padding(
+           padding: const EdgeInsets.all(8.0),
+           child: SizedBox(
+            height: dn.height(8),
+             child: CupertinoSearchTextField(
+                         backgroundColor: whiteColor,autocorrect: true,
+                         placeholder: "eg: John",
+                         controller: controller,
+                        onChanged: (value) => setState(() => serachKeyword = value),
+                       ),
+           ),
+         ),
+               
+          FutureBuilder(
+             future: fetchData(),
+                builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasData) {
+                      List filterd_list = onsearch(serachKeyword, snapshot.data["data"]);
+                  
+             return  
+             
+             Expanded(
             
-              ],
-            ),
-                   ),
-         );}}
-       else if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CupertinoActivityIndicator(
-                    radius: 12,
-                  ),
-                );
-              }
-              print(snapshot.hasData);
-               return const Center(
-                child: Text("something went wrong!!!"),
-              );
-
-       }
+                     child: 
+                     
+                      ListView.builder(
+                       itemCount: filterd_list.length,
+                       itemBuilder: (context, index){
+                      
+                       var image_path = filterd_list[index]['image_path'].toString().substring(2);
+                       return Card(
+                         color: const Color.fromRGBO(255, 255, 255, 1),
+                         elevation: 4,
+                         margin: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                         child: ListTile(
+                           onTap: (){
+                             Navigator.of(context).push(MaterialPageRoute(
+                               builder: (context) => Doctordetails(
+                                 
+                                 Doctor_id:  filterd_list[index]['doctor_id'].toString(), 
+                                
+                               ),),);
+                           },
+                           leading:  CircleAvatar(
+                             radius: 25,
+                             backgroundImage: NetworkImage("https://$ip/Trachcare/$image_path"),
+                           ),
+                           title: Text(filterd_list[index]['doctor_id'], style:const TextStyle(
+                             color: Colors.black,
+                           )),
+                           subtitle:Text(
+                             filterd_list[index]["username"].toString(),
+                             style: const TextStyle(fontSize: 12, color:Color.fromARGB(255, 0, 0, 0)),
+                           ),
+                         ),
+                       );}
+                     )
+                        
+                     
+               
+                 
+               
+             );}}
+           else if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CupertinoActivityIndicator(
+                        radius: 12,
+                      ),
+                    );
+                  }
+                 // print(snapshot.hasData);
+                   return const Center(
+                    child: Text("something went wrong!!!"),
+                  );
+          
+           }
+          ),
+        ],
       ), 
     );
   }

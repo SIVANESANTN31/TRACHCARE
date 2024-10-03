@@ -5,14 +5,17 @@ import '../Apiurl.dart';
 import 'package:http/http.dart'as http;
 
 class Video{
-Future Fetchvideo(String patientId,String doctorid)async{
+Future Fetchvideo()async{
 try {
-    final response  =  await http.get(Uri.parse("$videourl?patient_id=$patientId&doctorid=$doctorid"));
+    final response  =  await http.get(Uri.parse("$Addvideos"));
     if(response.statusCode ==200){
         var data = jsonDecode(response.body);
         if(data["status"]){
-          return data["data"][0]["Video_url"].toString().split("/n/").toList();
+          return data["data"];
 
+        }
+        else{
+          return data["data"];
         }}
   
 } catch (e) {

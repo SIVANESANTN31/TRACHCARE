@@ -32,14 +32,8 @@ class _VideospageState extends State<Videospage> {
   }
 
   Future FetchVideos() async {
-    Videourls = await Video().Fetchvideo(patient_id, Doctor_id);
-    Videourls.removeAt(0);
-    //  for (int i = 0; i<Videourls.length;i++){
-    //    String thumbpath = await gearatevedioThambline(Videourls[i]);
-    //    thumbnil.add(thumbpath);
-
-    //   }
-    //   print(thumbnil);
+    Videourls = await Video().Fetchvideo();
+    
     return Videourls;
   }
 
@@ -54,6 +48,15 @@ class _VideospageState extends State<Videospage> {
   //   return thumbnailurl.path;
   // }
 
+    
+Future<void> onRefresh() async{
+  await Future.delayed(Duration(milliseconds: 1000));
+  await FetchVideos();
+  setState(() {
+    
+  });
+}
+
   @override
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
@@ -66,23 +69,27 @@ class _VideospageState extends State<Videospage> {
                 if (snapshot.hasData) {
                   List data = snapshot.data;
 
-                  return ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // Future thumblinefilepath =  gearatevedioThambline(data[index]);
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const video_player()));
-                              },
-                              child: Videocard("assets/images/0.png",
-                                  "5 Tips for Managing Lung Disease Symptoms")),
-                        );
-                      });
+                  return RefreshIndicator.adaptive(
+                    onRefresh: onRefresh,
+                    child: ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          // Future thumblinefilepath =  gearatevedioThambline(data[index]);
+                          print(data);
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>  video_player(Videoulrl: data[index]["Video_url"].toString(), description:  data[index]["description"].toString(), title: data[index]["title"].toString(),)));
+                                },
+                                child: Videocard("assets/images/0.png",
+                                    data[index]["title"].toString())),
+                          );
+                        }),
+                  );
                 }
               } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(

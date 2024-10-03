@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:trachcare/Screens/Views/Admin/Adminscreens/videolist.dart';
 import 'package:trachcare/style/colors.dart';
 import 'Bottomnavigator/Adddoctor.dart';
 import 'Bottomnavigator/Admindb.dart';
@@ -17,7 +18,7 @@ class Adminmainpage extends StatelessWidget {
     List pages=[
        Admindb(),
        Adddoctor(),
-       const assigndoctor(),
+        Videolist(),
     ];
     return CupertinoTabScaffold(
 
