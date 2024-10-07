@@ -12,6 +12,7 @@ import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../style/colors.dart';
 
 import '../../../../style/utils/Dimention.dart';
+import '../Bottomnavigator/Doctorsdashboard.dart';
 
 
 class DailyUpdatePatients extends StatefulWidget {
@@ -47,7 +48,10 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
 
     Dimentions dn = Dimentions(context);
     return Scaffold(
-        appBar: NormalAppbar(Title: "Report", height: dn.height(15), onTap: null,),
+        appBar: NormalAppbar(Title: "Report", height: dn.height(10), onTap: (){
+        Navigator.of(context).push(MaterialPageRoute(
+                               builder: (context) => DoctorDashBoard(),),);
+      },),
         body: ListView(children: [
           Namecard("Siva", "132",context),
           TableCalendar(

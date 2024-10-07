@@ -6,6 +6,7 @@ import 'package:trachcare/Api/Apiurl.dart';
 import 'package:http/http.dart' as http;
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/Doctorlist.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/editdoctordetails.dart';
+import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientlist%20copy.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import 'package:trachcare/components/custom_button.dart';
 import 'dart:convert';
@@ -213,7 +214,7 @@ Future<dynamic> deleteDoctorDetails() async {
                               textcolor: whiteColor,
                               button_funcation: (){
                                 Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => patients_list(doctor_id: widget.Doctor_id),),);
+                            builder: (context) => patientlist(doctor_id: widget.Doctor_id),),);
                               },
                               textSize: 11),
                             ],

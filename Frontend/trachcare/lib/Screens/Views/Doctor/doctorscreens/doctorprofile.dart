@@ -12,15 +12,15 @@ import "../../../../style/colors.dart";
 import "../../../../style/utils/Dimention.dart";
 import 'package:http/http.dart' as http;
 // import 'package:onboarding/utils/profilefield.dart';
-class ProfilePage extends StatefulWidget {
+class d_ProfilePage extends StatefulWidget {
   
-ProfilePage( {super.key});
+d_ProfilePage( {super.key, });
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<d_ProfilePage> createState() => _d_ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _d_ProfilePageState extends State<d_ProfilePage> {
   
   final TextEditingController usernameController = TextEditingController(text: "");
 
@@ -41,13 +41,11 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
  Future<dynamic> fetchDoctorDetails() async {
-  var Data ={
-    "doctor_id":Doctor_id.toString()
-  };
-  
-  
+  print(Doctor_id);
   try {
-    final response = await http.post(Uri.parse(doctordetailsUrl),body: jsonEncode(Data));
+    var url = "$doctordetailsUrl?doctor_id=$Doctor_id";
+    print(url);
+    final response = await http.get(Uri.parse(url));
     if(response.statusCode ==200){
       var data = jsonDecode(response.body);
         if(data['Status']){
@@ -111,11 +109,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       
                       padding: const EdgeInsets.symmetric(horizontal: 14.0),
                       child: FutureBuilder(
-
-        future: fetchDoctorDetails(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasData) {
+      future: fetchDoctorDetails(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return const Center(child: CupertinoActivityIndicator(radius: 10,),);
+        }
+    if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.hasData){
                   var data = snapshot.data;
                   usernameController.text = data["username"].toString();
                   doctorRegNoController.text = data['doctor_reg_no'].toString();
@@ -262,10 +262,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => 
-        EditProfilePage(currentName: usernameController.text,
-         currentEmail:  emailController.text,
-         currentregno: doctorRegNoController.text,
-         currentphno: phoneNumberController.text,
+        EditProfilePage(Doctor_id: Doctor_id,
          )),
       );
                 },

@@ -8,6 +8,7 @@ import 'package:trachcare/Screens/Views/Admin/Adminscreens/videolist.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
+import '../Bottomnavigator/Admindb.dart';
 
 class VideoUploadPage extends StatefulWidget {
   @override
@@ -25,94 +26,86 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
   String get patientId => patient_id;
 
   Future<void> _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    // Validate the form first before allowing file selection
+    if (_formKey.currentState!.validate()) {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
 
-    if (result != null) {
-      setState(() {
-        _filePath = result.files.single.path;
-      });
-      print('File path: $_filePath');
+      if (result != null) {
+        setState(() {
+          _filePath = result.files.single.path;
+        });
+        print('File path: $_filePath');
+      } else {
+        print('No file selected');
+      }
     } else {
-      print('No file selected');
+      // Show error message if form validation fails
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please fill in all fields before selecting a video file.')),
+      );
     }
   }
 
   Future<void> _submitForm() async {
-    var request = http.MultipartRequest('POST', Uri.parse(Addvideos));
-    var videoFileName = _filePath; 
-    request.fields['title'] = _titleController.text;
-  request.fields['description'] = _descriptionController.text;
-  request.files.add(await http.MultipartFile.fromPath(
+    if (_formKey.currentState!.validate()) {
+      if (_filePath == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Please select a video file')),
+        );
+        return;
+      }
+
+      var request = http.MultipartRequest('POST', Uri.parse(Addvideos));
+      var videoFileName = _filePath;
+      request.fields['title'] = _titleController.text;
+      request.fields['description'] = _descriptionController.text;
+      request.files.add(await http.MultipartFile.fromPath(
         'videoFile',
         videoFileName!,
         filename: path.basename(videoFileName),
       ));
-   
-    // Send the request to the server
-    var response = await request.send();
 
-    // Check the response status
-    if (response.statusCode == 200) {
-      var responseBody = await response.stream.bytesToString();
-      print('Upload success: $responseBody');
-      _titleController.clear();
-      _descriptionController.clear();
-      
-      videoFileName=null;
+      // Send the request to the server
+      var response = await request.send();
 
-      toastification.show(
-                type: ToastificationType.success ,
-                alignment: Alignment.bottomRight,
-      style: ToastificationStyle.flatColored,
-      context: context, // optional if you use ToastificationWrapper
-      title: Text('Successfully video uploaded!!!  🎉'),
-      showProgressBar: false,
-      icon: const Icon(Icons.check_circle_outline,color: Colors.green,),
-      showIcon: true, // show or hide the icon
-      
-      autoCloseDuration: const Duration(seconds: 2),
-    );
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => Videolist()),
-      // );
-    } else {
-      print('Upload failed: ${response.statusCode}');
+      // Check the response status
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        print('Upload success: $responseBody');
+        _titleController.clear();
+        _descriptionController.clear();
+        _filePath = null;
+
+        toastification.show(
+          type: ToastificationType.success,
+          alignment: Alignment.bottomRight,
+          style: ToastificationStyle.flatColored,
+          context: context,
+          title: Text('Successfully video uploaded!!!  🎉'),
+          showProgressBar: false,
+          icon: const Icon(Icons.check_circle_outline, color: Colors.green),
+          showIcon: true,
+          autoCloseDuration: const Duration(seconds: 2),
+        );
+      } else {
+        print('Upload failed: ${response.statusCode}');
+      }
     }
-
-
-    //   print('Submitting form...');
-    //   var response = await request.send();
-    //   if (response.statusCode == 200) {
-    //     var jsonResponse = await response.stream.bytesToString();
-    //     // var jsonResponse = json.decode(responseData);
-    //     if (jsonResponse['status']) {
-    //       ScaffoldMessenger.of(context).showSnackBar(
-    //         SnackBar(content: Text('Form submitted successfully!')),
-    //       );
-    //     } else {
-    //       ScaffoldMessenger.of(context).showSnackBar(
-    //         SnackBar(content: Text('Error: ${jsonResponse['message']}')),
-    //       );
-    //     }
-    //   } else {
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(content: Text('Form submission failed.')),
-    //     );
-    //     print('Submission failed with status: ${response.statusCode}');
-    //   }
-    // } else {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(content: Text('Please fill all fields and select a file.')),
-    //   );
-    // }
   }
 
   @override
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "Upload videos", height: dn.height(10), onTap: null,),
+      appBar: NormalAppbar(
+        Title: "Upload videos",
+        height: dn.height(10),
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => Admindb(),
+          ));
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -158,36 +151,6 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
                 },
               ),
               SizedBox(height: 20),
-              // DropdownButtonFormField<String>(
-              //   value: _selectedCategory,
-              //   hint: Text('Select Category'),
-              //   items: _categories.map((category) {
-              //     return DropdownMenuItem<String>(
-              //       value: category,
-              //       child: Text(category),
-              //     );
-              //   }).toList(),
-              //   onChanged: (newValue) {
-              //     setState(() {
-              //       _selectedCategory = newValue;
-              //     });
-              //   },
-              //   decoration: InputDecoration(
-              //     filled: true,
-              //     fillColor: Colors.white,
-              //     border: OutlineInputBorder(
-              //       borderRadius: BorderRadius.circular(15.0),
-              //       borderSide: BorderSide.none,
-              //     ),
-              //   ),
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Please select a category';
-              //     }
-              //     return null;
-              //   },
-              // ),
-              SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
@@ -203,7 +166,8 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
               _filePath != null
                   ? Text(
                       'File Selected ',
-                      style: TextStyle(color: const Color.fromARGB(255, 7, 196, 0)),
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 7, 196, 0)),
                     )
                   : Text(
                       'No file selected.',

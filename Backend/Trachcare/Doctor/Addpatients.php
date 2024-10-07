@@ -24,27 +24,32 @@ else{
     echo json_encode("invalid request method");
     $conn->close();
 }
-
-
-
-
-
 function AddPatient($conn) {
     // Get JSON input from the request body
     $json = file_get_contents('php://input');
-
+    
     // Decode JSON into an associative array
     $obj = json_decode($json, true);
     $result = [];
 
     // Check if JSON is decoded successfully
     if ($obj === null) {
-        die("Invalid JSON data.");
+        echo json_encode(["status" => false, "msg" => "Invalid JSON data."]);
+        exit;
     }
 
-    // Extract values from the associative array with checks
+    // Check if doctorid is provided
+    if (!isset($obj['doctorid']) || empty($obj['doctorid'])) {
+        echo json_encode(["status" => false, "msg" => "Doctor ID not provided"]);
+        exit;
+    }
+
+    // Extract values from the associative array
     $doctorId = $obj['doctorid'];
     $name = isset($obj['name']) ? $obj['name'] : null;
+    $email = isset($obj['email']) ? $obj['email'] : null;
+    $phone_number = isset($obj['phone_number']) ? $obj['phone_number'] : null;
+    $password = isset($obj['password']) ? password_hash($obj['password'], PASSWORD_BCRYPT) : null; // Hash password securely
     $age = isset($obj['age']) ? $obj['age'] : null;
     $address = isset($obj['address']) ? $obj['address'] : null;
     $bmi = isset($obj['bmi']) ? $obj['bmi'] : null;
@@ -69,17 +74,45 @@ function AddPatient($conn) {
     $platelets = isset($obj['platelets']) ? $obj['platelets'] : null;
     $liverFunctionTest = isset($obj['liverFunctionTest']) ? $obj['liverFunctionTest'] : null;
     $renalFunctionTest = isset($obj['renalFunctionTest']) ? $obj['renalFunctionTest'] : null;
-
+    
+    $imageFile = isset($_FILES['image_data']) ? $_FILES['image_data'] : null;
+    $defaultImage = "../uploads/patient_default.png";
     $idgen = rand(100, 100000);
-    $name =  str_replace(' ', '', $name);
+    $name = str_replace(' ', '', $name);
     $patientId = (string)$idgen . $name;
+    $imagePath = $defaultImage;
+
+    // Handle image upload
+    if ($imageFile !== null) {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        $mimeType = $imageFile['type'];
+
+        if (!in_array($mimeType, $allowedTypes)) {
+            echo json_encode(["status" => false, "msg" => "Unsupported image format.", "mimeType" => $mimeType]);
+            exit;
+        }
+
+        // Generate unique file name
+        $filenames = uniqid() . '.' . pathinfo($imageFile['name'], PATHINFO_EXTENSION);
+        $filePath = "../uploads/patient_images/" . $filenames;
+
+        // Move uploaded file to the designated folder
+        if (!move_uploaded_file($imageFile['tmp_name'], $filePath)) {
+            echo json_encode(["status" => false, "msg" => "Failed to save image."]);
+            exit;
+        }
+
+        // Update image path
+        $imagePath = $filePath;
+    }
 
     // Prepare the SQL insert statement
     $sql = "INSERT INTO addpatients (
-                doctor_id,patient_id,username, age, address, bmi, diagnosis, surgery_status, post_op_tracheostomy_day, tube_name_size, baseline_vitals, 
-                respiratory_rate, heart_rate, spo2_room_air, indication_of_tracheostomy, comorbidities, hemoglobin, sr_sodium, 
-                sr_potassium, sr_calcium, sr_bicarbonate, pt, aptt, inr, platelets, liver_function_test, renal_function_test
-            ) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                doctor_id, patient_id, username, email, phone_number, password, age, address, bmi, diagnosis, 
+                surgery_status, post_op_tracheostomy_day, tube_name_size, baseline_vitals, respiratory_rate, heart_rate, 
+                spo2_room_air, indication_of_tracheostomy, comorbidities, hemoglobin, sr_sodium, sr_potassium, 
+                sr_calcium, sr_bicarbonate, pt, aptt, inr, platelets, liver_function_test, renal_function_test, image_path
+            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     $stmt = $conn->prepare($sql);
 
@@ -89,17 +122,18 @@ function AddPatient($conn) {
 
     // Bind parameters to the SQL statement
     $stmt->bind_param(
-        'sssssssssssssssssssssssssss',
-        $doctorId,$patientId,$name, $age, $address, $bmi, $diagnosis, $surgeryStatus, $postOpTracheostomyDay, $tubeNameSize, $baselineVitals,
-        $respiratoryRate, $heartRate, $spo2RoomAir, $indicationOfTracheostomy, $comorbidities, $hemoglobin, $srSodium, 
-        $srPotassium, $srCalcium, $srBicarbonate, $pt, $aptt, $inr, $platelets, $liverFunctionTest, $renalFunctionTest
+        'sssssssssssssssssssssssssssssss',
+        $doctorId, $patientId, $name, $email, $phone_number, $password, $age, $address, $bmi, $diagnosis, 
+        $surgeryStatus, $postOpTracheostomyDay, $tubeNameSize, $baselineVitals, $respiratoryRate, $heartRate, 
+        $spo2RoomAir, $indicationOfTracheostomy, $comorbidities, $hemoglobin, $srSodium, $srPotassium, 
+        $srCalcium, $srBicarbonate, $pt, $aptt, $inr, $platelets, $liverFunctionTest, $renalFunctionTest, $imagePath
     );
 
     if ($stmt->execute()) {
-        $result['Status'] = true;
+        $result['status'] = true;
         $result['message'] = "Patient added successfully";
     } else {
-        $result['Status'] = false;
+        $result['status'] = false;
         $result['message'] = $stmt->error;
     }
 

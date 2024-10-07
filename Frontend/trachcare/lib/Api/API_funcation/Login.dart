@@ -163,7 +163,7 @@ class LoginClassApi{
     context,
     MaterialPageRoute(builder: (context) => const Adminmainpage()),(route)=>false);
     LoginData.clear();
-    patient_id = data['userInfo']['patient_id'];
+    Doctor_id = data['userInfo']['doctor_id'];
     
     
 

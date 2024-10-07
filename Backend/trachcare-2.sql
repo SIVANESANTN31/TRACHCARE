@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 07, 2024 at 06:56 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Oct 07, 2024 at 12:27 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -57,22 +57,24 @@ CREATE TABLE `addpatients` (
   `inr` varchar(10) DEFAULT NULL,
   `platelets` varchar(10) DEFAULT NULL,
   `liver_function_test` varchar(500) DEFAULT NULL,
-  `renal_function_test` varchar(500) DEFAULT NULL
+  `renal_function_test` varchar(500) DEFAULT NULL,
+  `image_path` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `addpatients`
 --
 
-INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `age`, `address`, `bmi`, `diagnosis`, `surgery_status`, `post_op_tracheostomy_day`, `tube_name_size`, `baseline_vitals`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `indication_of_tracheostomy`, `comorbidities`, `hemoglobin`, `sr_sodium`, `sr_potassium`, `sr_calcium`, `sr_bicarbonate`, `pt`, `aptt`, `inr`, `platelets`, `liver_function_test`, `renal_function_test`) VALUES
-('6273312345', '62705hgflkhj', 'hgflkhj', '', '', '', 'hfjhlgh', 'ghfdhlkgj', 'jkgjfknfkh', 'kjglk', 'lfhgkfhg', 'kjgjddfh', 'dkjgfdnh', 'hgfg', 'fhgdfgnlf;', 'hvg;l', 'jjdg\'fkgh', 'sjdbffgfng;', 'hvfbg', 'jkdkbfjkdb', 'hvfhdvgf', 'jhfjhdfg', 'gfjhgdfj', 'fgjhsf', 'sjvvfhjv', 'shjdvsfh', 'vshch ', 'sjffasfh', 'sccshjfvjh', 'hcshfvhd');
+INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `age`, `address`, `bmi`, `diagnosis`, `surgery_status`, `post_op_tracheostomy_day`, `tube_name_size`, `baseline_vitals`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `indication_of_tracheostomy`, `comorbidities`, `hemoglobin`, `sr_sodium`, `sr_potassium`, `sr_calcium`, `sr_bicarbonate`, `pt`, `aptt`, `inr`, `platelets`, `liver_function_test`, `renal_function_test`, `image_path`) VALUES
+('6273312345', '27855JohnDoe', 'JohnDoe', 'john.doe@example.com', '1234567890', '$2y$10$WU88KeGCsTAXYUG.LD8UieL53ZT0dkQJizyLmwU2jLu6cjlwPBPZ2', '45', '123 Main St, Springfield', '24.5', 'Lung Disease', 'Completed', '3', '8.0mm', 'Stable', '18', '72', '96', 'Respiratory Failure', 'Hypertension, Diabetes', '14', '140', '4.5', '9', '24', '12.5', '30', '1', '250000', 'Normal', 'Normal', '../uploads/patient_default.png'),
+('6273312345', '62705hgflkhj', 'hgflkhj', '', '', '', 'hfjhlgh', 'ghfdhlkgj', 'jkgjfknfkh', 'kjglk', 'lfhgkfhg', 'kjgjddfh', 'dkjgfdnh', 'hgfg', 'fhgdfgnlf;', 'hvg;l', 'jjdg\'fkgh', 'sjdbffgfng;', 'hvfbg', 'jkdkbfjkdb', 'hvfhdvgf', 'jhfjhdfg', 'gfjhgdfj', 'fgjhsf', 'sjvvfhjv', 'shjdvsfh', 'vshch ', 'sjffasfh', 'sccshjfvjh', 'hcshfvhd', '');
 
 --
 -- Triggers `addpatients`
 --
 DELIMITER $$
-CREATE TRIGGER `insertdata` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO patientprofile (doctor_id, patient_id, username, email, phone_number, password)
-VALUES (NEW.doctor_id, NEW.patient_id, NEW.username,NEW.email,NEW.phone_number,NEW.password)
+CREATE TRIGGER `insertdata` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO patientprofile (doctor_id, patient_id, username, email, phone_number, password,image_path)
+VALUES (NEW.doctor_id, NEW.patient_id, NEW.username,NEW.email,NEW.phone_number,NEW.password,NEW.image_path)
 $$
 DELIMITER ;
 DELIMITER $$
@@ -178,6 +180,7 @@ CREATE TABLE `daily_stauts` (
 --
 
 INSERT INTO `daily_stauts` (`doctorid`, `patient_id`, `stauts_10`, `status_12`, `stauts_2`, `issues`) VALUES
+('jygj', 'jnk', 0, 1, 0, 0),
 ('jygj', 'jnk', 0, 1, 0, 0);
 
 -- --------------------------------------------------------
@@ -289,6 +292,15 @@ INSERT INTO `patientlogin` (`doctor_id`, `patient_id`, `username`, `password`) V
 ('', '', '', ''),
 ('', '', '', ''),
 ('', '', '', ''),
+('', '', '', ''),
+('', '', '', ''),
+('1', '', '13717JohnDoe@trachcare.com', 'welcome'),
+('2', '', 'p@test.com', '12'),
+('', '', '', ''),
+('', '', '', ''),
+('', '', '', ''),
+('', '', '', ''),
+('', '', '', ''),
 ('', '', '', '');
 
 -- --------------------------------------------------------
@@ -314,7 +326,8 @@ CREATE TABLE `patientprofile` (
 --
 
 INSERT INTO `patientprofile` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `image_path`, `created_at`, `updated_at`) VALUES
-('6273312345', '62705hgflkhj', 'hgflkhj', 'test@test.com\r\n', '7418596', '12345', NULL, '2024-10-06 14:54:00', '2024-10-06 16:27:11');
+('6273312345', '62705hgflkhj', 'hgflkhj', 'test@test.com\r\n', '7418596', '12345', NULL, '2024-10-06 14:54:00', '2024-10-06 16:27:11'),
+('6273312345', '27855JohnDoe', 'JohnDoe', 'john.doe@example.com', '1234567890', '$2y$10$WU88KeGCsTAXYUG.LD8UieL53ZT0dkQJizyLmwU2jLu6cjlwPBPZ2', '../uploads/patient_default.png', '2024-10-07 08:05:45', '2024-10-07 08:05:45');
 
 -- --------------------------------------------------------
 
@@ -353,8 +366,8 @@ ALTER TABLE `addpatients`
 -- Indexes for table `adminlogin`
 --
 ALTER TABLE `adminlogin`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `id` (`id`) USING BTREE;
 
 --
 -- Indexes for table `appoinment_table`
@@ -426,18 +439,6 @@ ALTER TABLE `medication_schedule`
 --
 ALTER TABLE `patientvideotable`
   MODIFY `s.no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
-DELIMITER $$
---
--- Events
---
-CREATE DEFINER=`root`@`localhost` EVENT `daily_stauts` ON SCHEDULE EVERY 1 DAY STARTS '2024-10-06 22:49:49' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts
-  SET stauts_10 = 0,status_12 =0 ,stauts_2=0,issues=0$$
-
-CREATE DEFINER=`root`@`localhost` EVENT `daily_stauts_issues_updates` ON SCHEDULE EVERY 2 HOUR STARTS '2024-10-06 22:53:21' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts
-  SET issues= 0$$
-
-DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

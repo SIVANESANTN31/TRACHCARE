@@ -289,7 +289,7 @@ class _EditdoctordetailsState extends State<Editdoctordetails> {
                           Padding(
                             padding: const EdgeInsets.all(15.0),
                             child: custom_Button(
-                              text: "Delete",
+                              text: "Save",
                               width: 48,
                               height: 8,
                               backgroundColor: Colors.red,

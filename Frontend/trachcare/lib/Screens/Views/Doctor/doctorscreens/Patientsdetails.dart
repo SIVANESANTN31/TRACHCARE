@@ -7,6 +7,7 @@ import '../../../../components/NAppbar.dart';
 // import 'package:trachcare/components/NAppbar.dart';
 // import '../../../../components/profilefeild.dart';
 import '../../../../style/utils/Dimention.dart';
+import '../Bottomnavigator/patientslist.dart';
 
 class ViewPatientDetails extends StatefulWidget {
   final String patientId;
@@ -80,7 +81,10 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "Patient Details", height: dn.height(10), onTap: null,),
+      appBar: NormalAppbar(Title: "Patient Details", height: dn.height(10), onTap: (){
+        Navigator.of(context).push(MaterialPageRoute(
+                               builder: (context) => patientslist(),),);
+      },),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),

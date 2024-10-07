@@ -17,9 +17,9 @@ import '../Api/Apiurl.dart';
 
 class drawer extends StatelessWidget {
   final String Name;
-  
+  final imagepath;
   final String reg_no;
-  drawer({super.key, required this.Name,  required this.reg_no});
+  drawer({super.key, required this.Name,  required this.reg_no, required this.imagepath});
 
 
 
@@ -101,7 +101,7 @@ void alertdilog(){
                         width: 35.w,
                         height: 8.h,
                         child: CircleAvatar(
-                          foregroundImage: AssetImage("assets/images/doctor.png"),
+                          foregroundImage: imagepath
                         )),
                     Text(
                       Name,
@@ -129,7 +129,7 @@ void alertdilog(){
               title: const Text('My Profile'),
               onTap: () {
                  Navigator.push(context, MaterialPageRoute(
-                                builder: (context) =>  ProfilePage())
+                                builder: (context) =>  d_ProfilePage())
                                 );
               },
             ),

@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
+import 'package:trachcare/Screens/Views/Doctor/Bottomnavigator/patientslist.dart';
 import '../../../../Api/Apiurl.dart';
 // import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../components/NAppbar.dart';
 // import 'package:trachcare/components/NAppbar.dart';
 // import '../../../../components/profilefeild.dart';
 import '../../../../style/utils/Dimention.dart';
+import '../Bottomnavigator/Admindb.dart';
 
 class ViewPatientDetails extends StatefulWidget {
   final String patientId;
@@ -80,7 +83,11 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "Patient Details", height: dn.height(10), onTap: null,),
+      appBar: NormalAppbar(Title: "Patient Details", height: dn.height(10), onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => patients_list(),
+          ));
+        },),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),

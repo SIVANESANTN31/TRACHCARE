@@ -1,51 +1,47 @@
 <?php 
 include "../config/conn.php";
 
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ 
+function getDoctor($conn) {
+    // Get the JSON input from the request body
+    $json = file_get_contents('php://input');
+    $obj = json_decode($json, true);
+    $result = [];
 
-$response = []; // Initialize the response array
-
-if (!isset($_GET['doctor_id'])) {
-    $response = ["status" => false, "msg" => "Doctor ID not provided"];
-    echo json_encode($response);
-    return;
-}
-
-$DoctorId = $_GET['doctor_id'];
-$sql = "SELECT * FROM doctorprofile WHERE doctor_id = ?";
-$stmt = $conn->prepare($sql);
-
-if ($stmt === false) {
-    $response = ["status" => false, "message" => "Error preparing statement: " . $conn->error];
-    echo json_encode($response);
-    return; // Exit the script
-}
-
-$stmt->bind_param("s", $DoctorId);
-
-if ($stmt->execute()) {
-    $result = $stmt->get_result();
-    $data = $result->fetch_assoc();
-    
-    if ($data) {
-        $response = ["status" => true, "message" => "Admin details fetched successfully", "data" => $data];
-    } else {
-        $response = ["status" => false, "message" => "No doctor found with this ID"];
+    // Check if JSON was decoded successfully and if doctor_id is provided
+    if ($obj === null || !isset($obj['doctor_id'])) {
+        $result['Status'] = false;
+        $result['message'] = "Doctor ID not provided or invalid JSON format.";
+        echo json_encode($result);
+        exit;
     }
-} else {
-    $response = ["status" => false, "message" => $stmt->error];
+
+    // Sanitize the input to prevent SQL injection
+    $doctorId = mysqli_real_escape_string($conn, $obj['doctor_id']);
+
+    // SQL query to fetch the doctor details
+    $sql = "SELECT `doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`, `image_path`, `created_at`
+            FROM `doctorprofile` WHERE doctor_id='{$doctorId}'";
+
+    // Execute the query
+    $res = $conn->query($sql);
+
+    if ($res->num_rows > 0) {
+        $row = $res->fetch_assoc();
+        $result['Status'] = true;
+        $result['message'] = "Doctor information retrieved successfully.";
+        $result["doctorInfo"] = $row; // Return the row as doctorInfo
+    } else {
+        $result['Status'] = false;
+        $result['message'] = "Doctor ID not found.";
+        $result['doctorInfo'] = null;
+    }
+
+    // Output the result as JSON
+    echo json_encode($result);
 }
 
-$stmt->close();
-$conn->close();
 
-// If you have a GetPatientDetails function, call it here (make sure it's defined)
-if (function_exists('GetPatientDetails')) {
-    GetPatientDetails($conn);
-}
-
-echo json_encode($response); // Output the response as JSON
 ?>

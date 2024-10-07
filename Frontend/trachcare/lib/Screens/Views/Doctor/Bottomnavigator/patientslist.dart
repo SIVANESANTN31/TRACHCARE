@@ -73,7 +73,7 @@ class _patientslistState extends State<patientslist> {
                 if (snapshot.hasData) {
                   var data = snapshot.data;
                   display_list = data["data"];
-                  print(display_list[0]['id']);
+                  // print(display_list[0]['id']);
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

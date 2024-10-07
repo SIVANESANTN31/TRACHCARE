@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
+import 'package:trachcare/Screens/Views/Doctor/doctorscreens/patientreport.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
@@ -83,7 +84,10 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
      Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: NormalAppbar(
-        Title: "Doctors List",height: dn.height(10), onTap: null,
+        Title: "Doctors List",height: dn.height(10), onTap: (){
+        Navigator.of(context).push(MaterialPageRoute(
+                               builder: (context) => DailyUpdatePatients(),),);
+      },
       ),
       body:  SingleChildScrollView(
               padding: EdgeInsets.all(16.0),

@@ -10,6 +10,7 @@ import 'package:trachcare/Api/DataStore/Datastore.dart';
 import 'package:trachcare/components/Appbar.dart';  
 import 'package:trachcare/components/Navbardrawer.dart';
 import 'package:trachcare/style/colors.dart';
+import '../../../../Api/Apiurl.dart';
 import '../../../../style/utils/Dimention.dart';
 
 class PatientDashBoard extends StatelessWidget {
@@ -34,7 +35,7 @@ class PatientDashBoard extends StatelessWidget {
           if(snapshot.hasData){
             var patientDetials = snapshot.data;
             var name  = patientDetials['username'].toString();
-            //var image = patientDetials["image_path"].toString().substring(2);
+            var imagepath = patientDetials["image_path"].toString().substring(2);
 
             Dimentions dn = Dimentions(context);
 
@@ -42,7 +43,7 @@ class PatientDashBoard extends StatelessWidget {
               appBar: Appbar(Name:name, height: dn.height(10)),
               drawer: drawer(Name: name,
              
-          reg_no: 'regno',),
+          reg_no: 'regno',imagepath: NetworkImage("https://$ip/Trachcare/$imagepath"),),
               body: SingleChildScrollView(
                 child: Column(
                   // crossAxisAlignment: CrossAxisAlignment.start,

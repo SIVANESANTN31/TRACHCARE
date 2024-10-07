@@ -1,8 +1,10 @@
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/Addvideos.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import "package:trachcare/components/Appbar.dart";
+import '../../../../Api/API_funcation/DashboardApi.dart';
 import '../../../../components/Navbardrawer.dart';
 import '../../../../style/utils/Dimention.dart';
 import '../Adminscreens/Doctorlist.dart'; 
@@ -36,15 +38,33 @@ class Admindb extends StatelessWidget {
     List pages=[
        const Doctorlist(),
        VideoUploadPage(),
-        patients_list(doctor_id: '88555',),
+        patients_list(),
     ];
         Dimentions dn = Dimentions(context);
-    return Scaffold(
+        return FutureBuilder(
+      future: AdminDashBoardApi().FetchDetials(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        print(snapshot);
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return const Center(child: CupertinoActivityIndicator(radius: 10,),);
+        }
+        print(snapshot.connectionState);
+    if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.hasData){
+            var data = snapshot.data;
+            var regno = data['Doctor_reg_no'].toString();
+            var name  = data['username'].toString();
+            var imagepath = data["image_path"].toString().substring(2);
+                print(data["image_path"]);
+            print(data);
+
+            Dimentions dn = Dimentions(context);
+      return Scaffold(
       appBar: Appbar(Name: "rajieswari", height: dn.height(12),),
        drawer: drawer(
         Name: 'rajieswari',
-          
           reg_no: 'regno',
+          imagepath: AssetImage("assets/images/doctor.png"),
       ),
 
       body: Stack(
@@ -130,5 +150,8 @@ class Admindb extends StatelessWidget {
       ],
 
     ),);
+    }
+   }
+   return Center(child :Text("Something went wrong!!")); });
   }
 }

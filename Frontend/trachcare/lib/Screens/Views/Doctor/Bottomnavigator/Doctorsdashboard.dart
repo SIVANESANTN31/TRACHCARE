@@ -11,6 +11,7 @@ import "package:trachcare/Screens/Views/Doctor/doctorscreens/patientreport.dart"
 import "package:trachcare/components/Appbar.dart";
 import "package:trachcare/components/Navbardrawer.dart";
 import "package:trachcare/style/colors.dart";
+import "../../../../Api/Apiurl.dart";
 import "../../../../components/story_circles.dart";
 import "../../../../style/utils/Dimention.dart";
 import "Addpatients.dart";
@@ -49,7 +50,7 @@ List imagelist = ["assets/images/Vector-1.png"];
             var data = snapshot.data;
             var regno = data['Doctor_reg_no'].toString();
             var name  = data['username'].toString();
-            var image = data["image_path"].toString().substring(2);
+            var imagepath = data["image_path"].toString().substring(2);
                 print(data["image_path"]);
             print(data);
 
@@ -62,8 +63,7 @@ List imagelist = ["assets/images/Vector-1.png"];
         ),
         drawer:  drawer(
           Name: name,
-          
-          reg_no: regno,
+          reg_no: regno, imagepath: NetworkImage("https://$ip/Trachcare/$imagepath"),
         ),
         body: Column(
           children: [

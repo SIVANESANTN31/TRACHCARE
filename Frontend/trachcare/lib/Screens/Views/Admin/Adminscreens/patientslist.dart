@@ -8,9 +8,11 @@ import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
 import "package:http/http.dart" as http;
 
+import '../Bottomnavigator/Admindb.dart';
+
 class patients_list extends StatefulWidget {
-  final String doctor_id;
-   patients_list({super.key, required this.doctor_id});
+
+   patients_list({super.key});
 
   @override
   State<patients_list> createState() => _patients_listState();
@@ -22,7 +24,7 @@ class _patients_listState extends State<patients_list> {
 
 
   Future fetchData() async {
-    final String url = '$PatientslistUrl?doctor_id=${widget.doctor_id}';
+    final String url = allpatientslistUrl;
     final response = await http.get(Uri.parse(url)); // Use http://localhost if you're using a real device or emulator IP for Android
     if (response.statusCode == 200) {
       // setState(() {
@@ -61,7 +63,11 @@ class _patients_listState extends State<patients_list> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: NormalAppbar(
-        Title: "Patients List",height: dn.height(10), onTap: null,
+        Title: "Patients List",height: dn.height(10), onTap:() {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => Admindb(),
+          ));
+        },
       ),
       body:Stack(
         children: [

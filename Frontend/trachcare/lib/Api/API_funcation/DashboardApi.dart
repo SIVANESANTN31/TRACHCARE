@@ -56,3 +56,33 @@ Future FetchDetials() async{
 
 
 }
+
+
+class AdminDashBoardApi{
+
+Future FetchDetials() async{
+  
+  try {
+    print(Doctor_id);
+    var url = "$admindetailsUrl?doctor_id=$Doctor_id";
+    print(url);
+    final response = await http.get(Uri.parse(url));
+    if(response.statusCode ==200){
+      print(response.body);
+      var data = jsonDecode(response.body);
+      // print(data['doctorInfo']);
+        if(data['Status']){
+        return data['doctorInfo'];
+      }
+      else{
+        return data['doctorInfo'];
+      }
+    }
+  } catch (e) {
+    print(e);
+    
+  }
+}
+
+
+}
