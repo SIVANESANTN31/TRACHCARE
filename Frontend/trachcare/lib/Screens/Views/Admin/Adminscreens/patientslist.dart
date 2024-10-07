@@ -61,7 +61,7 @@ class _patients_listState extends State<patients_list> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: NormalAppbar(
-        Title: "Patients List",height: dn.height(10),
+        Title: "Patients List",height: dn.height(10), onTap: null,
       ),
       body:Stack(
         children: [

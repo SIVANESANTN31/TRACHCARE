@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
 import 'package:trachcare/Api/Apiurl.dart';
+import 'package:trachcare/Api/DataStore/Datastore.dart';
 
 // Function to add doctor details
 Future<void> addDoctorDetails(
@@ -91,12 +92,13 @@ ScaffoldMessenger.of(context).showSnackBar(
 // Function to update doctor details
 Future<void> updateDoctorDetails(
   BuildContext context,
+  String Doctor_id,
   File imagefile,
   String username,
   String doctorRegNo,
   String email,
   String phoneNumber,
-  String password, String text,
+  String password, 
 ) async {
   // API URL for updating doctor details
   final String apiUrl = doctordetailsUrl; // Update with your actual update URL
@@ -127,6 +129,7 @@ Future<void> updateDoctorDetails(
 
       // Add fields to the request
       request.fields.addAll({
+        'doctor_id' : Doctor_id,
         'username': username,
         'email': email,
         'phone_number': phoneNumber,

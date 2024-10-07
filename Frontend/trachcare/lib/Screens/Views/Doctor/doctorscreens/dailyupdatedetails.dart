@@ -83,7 +83,7 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
      Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: NormalAppbar(
-        Title: "Doctors List",height: dn.height(10),
+        Title: "Doctors List",height: dn.height(10), onTap: null,
       ),
       body:  SingleChildScrollView(
               padding: EdgeInsets.all(16.0),

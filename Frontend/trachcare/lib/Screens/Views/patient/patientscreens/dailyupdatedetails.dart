@@ -92,7 +92,7 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
       
       
       appBar: NormalAppbar(
-        Title: "Doctors List",height: dn.height(10),
+        Title: "Doctors List",height: dn.height(10), onTap: null,
       ),
       body:  SingleChildScrollView(
               padding: EdgeInsets.all(16.0),

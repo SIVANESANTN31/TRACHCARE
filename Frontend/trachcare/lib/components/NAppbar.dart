@@ -10,9 +10,11 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String Title;
   final height;
   final   actionbutton;
+  final onTap;
    const NormalAppbar(
     {super.key,
     required this.Title,
+    required this.onTap,
     this.actionbutton, required this.height});
 
   @override
@@ -26,9 +28,7 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
     )),
 
     leading: InkWell(
-      onTap:(){
-      Navigator.pop(context);
-    },
+      onTap: onTap,
 
     child: Icon(CupertinoIcons.chevron_left,color: BlackColor,size: 28.0,),),
     title: Text(Title,style: GoogleFonts.ibmPlexSans(

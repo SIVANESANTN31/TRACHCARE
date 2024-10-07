@@ -47,7 +47,7 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
 
     Dimentions dn = Dimentions(context);
     return Scaffold(
-        appBar: NormalAppbar(Title: "Report", height: dn.height(15),),
+        appBar: NormalAppbar(Title: "Report", height: dn.height(15), onTap: null,),
         body: ListView(children: [
           Namecard("Siva", "132",context),
           TableCalendar(

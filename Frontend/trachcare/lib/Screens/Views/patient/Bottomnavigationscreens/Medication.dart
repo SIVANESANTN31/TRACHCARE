@@ -39,7 +39,7 @@ void daily_Reports(){
       appBar: NormalAppbar(
         
         Title: "Diagnostics",
-        height: dn.height(15),
+        height: dn.height(15), onTap: null,
       ),
       body: Column(
         children: [

@@ -112,7 +112,7 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "Upload videos", height: dn.height(10)),
+      appBar: NormalAppbar(Title: "Upload videos", height: dn.height(10), onTap: null,),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

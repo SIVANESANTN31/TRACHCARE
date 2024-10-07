@@ -1,11 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/doctordetails.dart';
 import '../../../../Api/API_funcation/doctordetails.dart';
@@ -65,8 +62,8 @@ class _EditdoctordetailsState extends State<Editdoctordetails> {
     if (_formKey.currentState!.validate()) {
       updateDoctorDetails(
         context,
-        widget.Doctor_id as File,
-        base64encode,
+        widget.Doctor_id ,
+         imagefile,
         usernameController.text,
         doctorRegNoController.text,
         emailController.text,
@@ -198,8 +195,8 @@ class _EditdoctordetailsState extends State<Editdoctordetails> {
                           // Username Field
                           TextFormField(
                             validator: (value) {
-                              String pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
-                              final regex = RegExp(pattern);
+                              // String pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+                              // final regex = RegExp(pattern);
                               if (value == null || value.isEmpty) {
                                 return 'Please Enter username';
                               }

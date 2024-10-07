@@ -52,7 +52,7 @@ class AudioScreen extends StatelessWidget {
               Icons.translate,
               color: whiteColor,
               size: 28,
-            )),
+            )), onTap: null,
       ),
       body: SingleChildScrollView(
         child: Column(

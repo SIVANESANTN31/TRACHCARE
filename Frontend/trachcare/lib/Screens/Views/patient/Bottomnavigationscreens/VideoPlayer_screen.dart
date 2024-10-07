@@ -53,7 +53,7 @@ class _video_playerState extends State<video_player> {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "WatchZone",height: dn.height(10),),
+      appBar: NormalAppbar(Title: "WatchZone",height: dn.height(10), onTap: null,),
       
       body: Column(
        

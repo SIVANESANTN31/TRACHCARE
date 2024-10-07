@@ -80,7 +80,7 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "Patient Details", height: dn.height(10)),
+      appBar: NormalAppbar(Title: "Patient Details", height: dn.height(10), onTap: null,),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
