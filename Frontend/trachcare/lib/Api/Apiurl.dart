@@ -1,4 +1,4 @@
-const ip = "172.20.10.9";
+const ip = "192.168.124.193";
 
 //login api
 String PatientLoginurl ="https://$ip/Trachcare/auth/patientAuth/PatientLogin.php";
@@ -6,7 +6,7 @@ String DoctorLoginUrl = "https://$ip/Trachcare/auth/DoctorAuth/DoctorLogin.php";
 String AdminLoginurl = "https://$ip/Trachcare/auth/AdminAuth/AdminLogin.php";
 
 //video api
-String videourl = "https://$ip/Trachcare/Doctor/videos.php";
+
 
 //sumbit or add api
 

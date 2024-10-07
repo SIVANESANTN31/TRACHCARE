@@ -41,7 +41,7 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
       final Map<String, dynamic> data = json.decode(response.body);
       setState(() {
         patientDetails = {
-          'name': data['name'] ,
+          'name': data['username'] ,
           'age': data['age'] ?? 'NIL',
           'address': data['address'] ?? 'NIL',
           'bmi': data['bmi'] ?? 'NIL',

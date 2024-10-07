@@ -72,7 +72,7 @@ class _AddpatientsState extends State<Addpatients> {
                         'platelets': platelets,
                         'liverFunctionTest': liverFunctionTest,
                         'renalFunctionTest': renalFunctionTest,};
-                        SubmitPatientDetails(context, patientDetails);
+      SubmitPatientDetails(context, patientDetails);
     _formKey.currentState!.reset();
   }
 }
@@ -152,6 +152,7 @@ class _AddpatientsState extends State<Addpatients> {
         }
         return null;
       },
+    textInputAction: TextInputAction.next,
       onChanged: (value) {
         setState(() {
           onChanged(value);

@@ -37,10 +37,10 @@ void SubmitPatientDetails(
             );
           },
         );
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const patientslist()),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const patientslist()),
+        // );
       } else {
         toastification.show(
           type: ToastificationType.error,

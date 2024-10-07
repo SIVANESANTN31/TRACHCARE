@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,10 +19,68 @@ class drawer extends StatelessWidget {
   final String Name;
   
   final String reg_no;
-   const drawer({super.key, required this.Name,  required this.reg_no});
+  drawer({super.key, required this.Name,  required this.reg_no});
+
+
 
   @override
   Widget build(BuildContext context) {
+
+    
+
+void alertdilog(){
+      showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('Logout'),
+        content: const Text('Are sure to Logout?'),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context,"no");
+            },
+            child: const Text('No'),
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            onPressed: () {
+
+             
+                  Navigator.of(context,rootNavigator: true).pop();
+
+                  // Fluttertoast.showToast(
+                  //   msg: "invalid username or password",
+                  //   toastLength: Toast.LENGTH_SHORT,
+                  //   gravity: ToastGravity.BOTTOM,
+                  //   timeInSecForIosWeb: 1,
+                  //   textColor: Colors.white,
+                  //   fontSize: 16.0);
+                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Welcome_page()),(route)=>false);
+                 
+             
+              
+             
+              
+                
+              
+              
+              
+            },
+            child: const Text('Yes'),
+          ),
+        
+      ]),
+    );
+
+    }
+
+  void btn_fun() {
+   alertdilog();
+  }
+
+
+
     return SafeArea(
       maintainBottomViewPadding: true,
       bottom: true,
@@ -106,11 +165,8 @@ class drawer extends StatelessWidget {
               child: custom_Button(
                   text: "Logout",
                   button_funcation: (){
-                     Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>  Welcome_page()));
-                  },
+                  btn_fun();
+                    },
                   width: 10,
                   height: 7,
                   backgroundColor: Logoutbtncolor,

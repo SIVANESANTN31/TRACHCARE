@@ -22,7 +22,7 @@ class Videospage extends StatefulWidget {
 }
 
 class _VideospageState extends State<Videospage> {
-  List Videourls = [];
+  var Videourls ;
   List thumbnil = [];
 
   @override

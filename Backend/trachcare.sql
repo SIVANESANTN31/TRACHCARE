@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 04, 2024 at 12:54 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Oct 07, 2024 at 06:56 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -65,10 +65,7 @@ CREATE TABLE `addpatients` (
 --
 
 INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `age`, `address`, `bmi`, `diagnosis`, `surgery_status`, `post_op_tracheostomy_day`, `tube_name_size`, `baseline_vitals`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `indication_of_tracheostomy`, `comorbidities`, `hemoglobin`, `sr_sodium`, `sr_potassium`, `sr_calcium`, `sr_bicarbonate`, `pt`, `aptt`, `inr`, `platelets`, `liver_function_test`, `renal_function_test`) VALUES
-('145', '123', 'pal', '', '0', '8520', '25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('1', '52527ghz', 'ghz', '', '0', '', 'bzh', 'xh', 'zbz', 'zvz', 'ss', 'ss', 'xxxccds', 'z', 'z', 'z', 'c', 'zx', 'ds', 'zz', 'zzc', 'ccas', 'vvb', 'bdz', 'cvv', 'zag', 'xv', 'zc', 'dv', 'nh'),
-('960264655415', 'iudfgjsdbvjk\r\n', 'navin', 'fourth', '', '', '', 'hfgjhjjrth', 't4543', '4534242', '4545245', '4535465', '453453', '345364563', '5434536', '5436456', '54', '5345', '543456', 'skull', 'ku', 'ghjghjk', 'ghjghj', 'dfsgr', 'dfdsg', 'dfds', 'sdfsdf', 'aQEE', 'gfgd', 'dxgrg'),
-('2147483647', 'PAT10023John', 'john_doe', 'john.doe@example.com', '9876543210', '123', '45', '123 Main St, Springfield', '22.5', 'Lung Cancer', 'Completed', '5', 'Size 7', 'BP: 120/80, Temp: 98.6F', '16', '72', '95', 'Airway obstruction', 'Diabetes, Hypertension', '13.5', '138', '4.5', '9.8', '24', '12.3', '30.2', '1.1', '250000', 'ALT: 25', 'AST: 22');
+('6273312345', '62705hgflkhj', 'hgflkhj', '', '', '', 'hfjhlgh', 'ghfdhlkgj', 'jkgjfknfkh', 'kjglk', 'lfhgkfhg', 'kjgjddfh', 'dkjgfdnh', 'hgfg', 'fhgdfgnlf;', 'hvg;l', 'jjdg\'fkgh', 'sjdbffgfng;', 'hvfbg', 'jkdkbfjkdb', 'hvfhdvgf', 'jhfjhdfg', 'gfjhgdfj', 'fgjhsf', 'sjvvfhjv', 'shjdvsfh', 'vshch ', 'sjffasfh', 'sccshjfvjh', 'hcshfvhd');
 
 --
 -- Triggers `addpatients`
@@ -164,6 +161,28 @@ INSERT INTO `daily_report` (`id`, `patient_id`, `date`, `respiratory_rate`, `hea
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `daily_stauts`
+--
+
+CREATE TABLE `daily_stauts` (
+  `doctorid` varchar(255) NOT NULL,
+  `patient_id` varchar(255) NOT NULL,
+  `stauts_10` tinyint(1) NOT NULL,
+  `status_12` tinyint(1) NOT NULL,
+  `stauts_2` tinyint(1) NOT NULL,
+  `issues` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `daily_stauts`
+--
+
+INSERT INTO `daily_stauts` (`doctorid`, `patient_id`, `stauts_10`, `status_12`, `stauts_2`, `issues`) VALUES
+('jygj', 'jnk', 0, 1, 0, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `doctorlogin`
 --
 
@@ -181,12 +200,7 @@ CREATE TABLE `doctorlogin` (
 --
 
 INSERT INTO `doctorlogin` (`doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`) VALUES
-('1', 'Doctor@test.com', NULL, NULL, NULL, '12345'),
-('318061234', 'sivanesan', '1234', 'siva@test.com', '123456789', '1234'),
-('43710123456', 'jashwanth', '123456', 'test@test.com', '123456789', '123'),
-('6273312345', 'saranya', '12345', 'sranya@test.com', '145236987', '456'),
-('80688123', 'sivanesan', '123', 'siva@test.com', '12345', '1234'),
-('96178789', 'raji', '789', 'raji@test.com', '789', '123');
+('6273312345', 'saranya', '12345', 'sranya@test.com', '145236987', '456');
 
 -- --------------------------------------------------------
 
@@ -273,6 +287,8 @@ INSERT INTO `patientlogin` (`doctor_id`, `patient_id`, `username`, `password`) V
 ('2', '', 'p@test.com', '12'),
 ('', '', '', ''),
 ('', '', '', ''),
+('', '', '', ''),
+('', '', '', ''),
 ('', '', '', '');
 
 -- --------------------------------------------------------
@@ -292,6 +308,13 @@ CREATE TABLE `patientprofile` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `patientprofile`
+--
+
+INSERT INTO `patientprofile` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `image_path`, `created_at`, `updated_at`) VALUES
+('6273312345', '62705hgflkhj', 'hgflkhj', 'test@test.com\r\n', '7418596', '12345', NULL, '2024-10-06 14:54:00', '2024-10-06 16:27:11');
 
 -- --------------------------------------------------------
 
@@ -403,6 +426,18 @@ ALTER TABLE `medication_schedule`
 --
 ALTER TABLE `patientvideotable`
   MODIFY `s.no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `daily_stauts` ON SCHEDULE EVERY 1 DAY STARTS '2024-10-06 22:49:49' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts
+  SET stauts_10 = 0,status_12 =0 ,stauts_2=0,issues=0$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `daily_stauts_issues_updates` ON SCHEDULE EVERY 2 HOUR STARTS '2024-10-06 22:53:21' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts
+  SET issues= 0$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

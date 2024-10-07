@@ -34,7 +34,7 @@ class PatientDashBoard extends StatelessWidget {
           if(snapshot.hasData){
             var patientDetials = snapshot.data;
             var name  = patientDetials['username'].toString();
-            var image = patientDetials["image_path"].toString().substring(2);
+            //var image = patientDetials["image_path"].toString().substring(2);
 
             Dimentions dn = Dimentions(context);
 

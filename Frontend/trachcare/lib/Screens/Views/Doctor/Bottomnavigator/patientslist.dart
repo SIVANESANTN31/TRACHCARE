@@ -20,13 +20,15 @@ class patientslist extends StatefulWidget {
 }
 
 class _patientslistState extends State<patientslist> {
-  String doctor_id = Doctor_id.toString();
-  //String selectedPid = "";
+  
+  
   final List<dynamic> patientslist = [];
 
 
   Future fetchData() async {
-    final response = await http.get(Uri.parse(PatientslistUrl)); // Use http://localhost if you're using a real device or emulator IP for Android
+    var url = "$PatientslistUrl?doctor_id=$Doctor_id";
+    print(url);
+    final response = await http.get(Uri.parse(url)); // Use http://localhost if you're using a real device or emulator IP for Android
     if (response.statusCode == 200) {
       // setState(() {
       //   Doctorlist = json.decode(response.body);
@@ -118,14 +120,14 @@ class _patientslistState extends State<patientslist> {
                         Navigator.of(context).push(MaterialPageRoute(    builder: (context) => ViewPatientDetails(
                             patientId: display_list[index]['patient_id'].toString(),
                             // patientId: display_list[index]['patient_id'],  // Pass the patient ID
-                            patientName: display_list[index]['name'],
+                            patientName: display_list[index]['username'],
                           ),),);
                       },
                       leading: const CircleAvatar(
                         radius: 25,
                         backgroundImage: AssetImage('assets/images/doctor.png'),
                       ),
-                      title: Text(display_list[index]['name'], style:const TextStyle(
+                      title: Text(display_list[index]['username'], style:const TextStyle(
                         color: Colors.black,
                       )),
                       subtitle:Text(
@@ -147,8 +149,8 @@ class _patientslistState extends State<patientslist> {
                   ),
                 );
               }
-               return const Center(
-                child: Text("something went wrong!!!"),
+               return  Center(
+                child: Text(snapshot.error.toString()),
               );
 
        }

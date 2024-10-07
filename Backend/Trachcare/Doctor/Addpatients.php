@@ -76,7 +76,7 @@ function AddPatient($conn) {
 
     // Prepare the SQL insert statement
     $sql = "INSERT INTO addpatients (
-                doctor_id,patient_id,name, age, address, bmi, diagnosis, surgery_status, post_op_tracheostomy_day, tube_name_size, baseline_vitals, 
+                doctor_id,patient_id,username, age, address, bmi, diagnosis, surgery_status, post_op_tracheostomy_day, tube_name_size, baseline_vitals, 
                 respiratory_rate, heart_rate, spo2_room_air, indication_of_tracheostomy, comorbidities, hemoglobin, sr_sodium, 
                 sr_potassium, sr_calcium, sr_bicarbonate, pt, aptt, inr, platelets, liver_function_test, renal_function_test
             ) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -251,7 +251,7 @@ function UpdatePatient($conn) {
 
     // Prepare the SQL update statement with placeholders
     $sql = "UPDATE addpatient SET
-                doctorid = ?, name = ?, age = ?, address = ?, bmi = ?, diagnosis = ?, surgery_status = ?, postop = ?, 
+                doctorid = ?, username = ?, age = ?, address = ?, bmi = ?, diagnosis = ?, surgery_status = ?, postop = ?, 
                 tubenameandsize = ?, baselinvitals = ?, respiratory_rate = ?, heart_rate = ?, Spo2_AT_room = ?, 
                 INDICATIONOFTRACHEOSTOMY = ?, COMORBIDITIES = ?, HEMOGLOBIN = ?, SRSODIUM = ?, SRPOTASSIUM = ?, 
                 SRCALCIUM = ?, SRBICARBONATE = ?, Pt = ?, APTT = ?, INR = ?, PLATELETS = ?, LIVERFUNCTIONTEST = ?, 
@@ -323,11 +323,7 @@ function GetPatientsdetials($conn) {
 
     // Prepare the SQL SELECT statement to fetch patients associated with the doctor ID
     $sql = "SELECT 
-                doctorid, patient_id, name, age, address, bmi, diagnosis, surgery_status, postop,
-                tubenameandsize, baselinvitals, respiratory_rate, heart_rate, Spo2_AT_room, 
-                INDICATIONOFTRACHEOSTOMY, COMORBIDITIES, HEMOGLOBIN, SRSODIUM, SRPOTASSIUM, 
-                SRCALCIUM, SRBICARBONATE, Pt, APTT, INR, PLATELETS, LIVERFUNCTIONTEST, 
-                RENALFUNCTIONTEST, Patient_imag_path
+                *
             FROM addpatient 
             WHERE doctorid = ?";
 
