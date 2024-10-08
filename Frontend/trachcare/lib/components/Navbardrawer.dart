@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
 import 'package:trachcare/Screens/Views/Doctor/doctorscreens/doctorprofile.dart';
-import 'package:trachcare/Screens/Views/Doctor/doctorscreens/information.dart';
+import 'package:trachcare/components/information.dart';
 import 'package:trachcare/Screens/started/WelcomePage.dart';
 import 'package:trachcare/components/custom_button.dart';
 import 'package:trachcare/style/Tropography.dart';
@@ -19,7 +19,8 @@ class drawer extends StatelessWidget {
   final String Name;
   final imagepath;
   final String reg_no;
-  drawer({super.key, required this.Name,  required this.reg_no, required this.imagepath});
+  final  onTap;
+  drawer({super.key, required this.Name,  required this.reg_no, required this.imagepath, required this.onTap});
 
 
 
@@ -127,11 +128,7 @@ void alertdilog(){
                 Icons.chevron_right,
               ) ,
               title: const Text('My Profile'),
-              onTap: () {
-                 Navigator.push(context, MaterialPageRoute(
-                                builder: (context) =>  d_ProfilePage())
-                                );
-              },
+              onTap: onTap,
             ),
             ListTile(
                trailing:const Icon(

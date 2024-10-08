@@ -5,8 +5,6 @@ import "package:flutter_carousel_widget/flutter_carousel_widget.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/Api/API_funcation/DashboardApi.dart";
-import "package:trachcare/Api/DataStore/Datastore.dart";
-import "package:trachcare/Screens/Views/Doctor/doctorscreens/dailyupdatedetails.dart";
 import "package:trachcare/Screens/Views/Doctor/doctorscreens/patientreport.dart";
 import "package:trachcare/components/Appbar.dart";
 import "package:trachcare/components/Navbardrawer.dart";
@@ -14,6 +12,7 @@ import "package:trachcare/style/colors.dart";
 import "../../../../Api/Apiurl.dart";
 import "../../../../components/story_circles.dart";
 import "../../../../style/utils/Dimention.dart";
+import "../doctorscreens/doctorprofile.dart";
 import "Addpatients.dart";
 
 class DoctorDashBoard extends StatelessWidget {
@@ -35,7 +34,7 @@ List imagelist = ["assets/images/Vector-1.png"];
   @override
   Widget build(BuildContext context) {
     List pages = [
-      const Addpatients(),
+       Addpatients(),
       // const dailyupdates(),
     ];
     Dimentions dn = Dimentions(context);
@@ -63,7 +62,11 @@ List imagelist = ["assets/images/Vector-1.png"];
         ),
         drawer:  drawer(
           Name: name,
-          reg_no: regno, imagepath: NetworkImage("https://$ip/Trachcare/$imagepath"),
+          reg_no: regno, 
+          imagepath: NetworkImage("https://$ip/Trachcare/$imagepath"),
+           onTap: (){
+        Navigator.of(context).push(MaterialPageRoute(
+                               builder: (context) => d_ProfilePage(),),);}
         ),
         body: Column(
           children: [

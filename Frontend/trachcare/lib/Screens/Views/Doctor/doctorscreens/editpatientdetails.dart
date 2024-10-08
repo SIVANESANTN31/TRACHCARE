@@ -1,35 +1,26 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
-import 'package:trachcare/Screens/Views/Doctor/doctorscreens/editpatientdetails.dart';
 import '../../../../Api/Apiurl.dart';
-import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../components/NAppbar.dart';
-import '../../../../components/custom_button.dart';
-import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
 import '../Bottomnavigator/patientslist.dart';
 
-class ViewPatientDetails extends StatefulWidget {
+class Editpatientdetails extends StatefulWidget {
   final String patientId;
   final String patientName;
    // Optional, in case you want to pass the name
 
 
-  const ViewPatientDetails({super.key, required this.patientId, required this.patientName,});
+  const Editpatientdetails({super.key, required this.patientId, required this.patientName,});
   @override
-  _ViewPatientDetailsState createState() => _ViewPatientDetailsState();
+  _EditpatientdetailsState createState() => _EditpatientdetailsState();
 }
 
-class _ViewPatientDetailsState extends State<ViewPatientDetails> {
+class _EditpatientdetailsState extends State<Editpatientdetails> {
 
-  // String patient_id = patientId;
+  
   Map<String, dynamic> patientDetails = {}; // To store fetched data
-
-    var imagefile, base64encode, fileimage;
 
   @override
   void initState() {
@@ -39,6 +30,7 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
 
   // Function to fetch patient details from the server
   Future<void> fetchPatientDetails() async {
+    print(widget.patientId);
     final String url = '$ViewPatientDetailsUrl?patient_id=${widget.patientId}';
   try {
     final response = await http.get(Uri.parse(url));
@@ -83,76 +75,6 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
   }
 }
 
-  void _save(BuildContext context) {
-    // if (_formKey.currentState!.validate()) {
-    //   updatepatientDetails(
-    //     context,
-    //     widget.Doctor_id ,
-    //      imagefile,
-       
-    //   );
-
-    //   _formKey.currentState!.reset();
-    //   setState(() {
-    //     usernameController.clear();
-    //     doctorRegNoController.clear();
-    //     emailController.clear();
-    //     phoneNumberController.clear();
-    //     passwordController.clear();
-    //     imagefile = null;
-    //   });
-    // }
-  }
-
-  
-  void getimage({required ImageSource source}) async {
-    final file = await ImagePicker().pickImage(source: source, imageQuality: 100);
-    if (file != null) {
-      final imageBytes = await file.readAsBytes();
-      var base64encoder = base64Encode(imageBytes);
-      setState(() {
-        base64encode = base64encoder;
-      });
-      setState(() {
-        imagefile = File(file.path);
-        fileimage = file.path;
-        print(fileimage);
-      });
-    }
-  }
-
-  void photo_picker(BuildContext context) {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (BuildContext context) => CupertinoActionSheet(
-        actions: [
-          CupertinoActionSheetAction(
-            child: const Text('Camera'),
-            isDefaultAction: true,
-            onPressed: () {
-              Navigator.of(context, rootNavigator: true).pop();
-              getimage(source: ImageSource.camera);
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: const Text('Gallery'),
-            isDefaultAction: true,
-            onPressed: () {
-              getimage(source: ImageSource.gallery);
-              Navigator.of(context, rootNavigator: true).pop();
-            },
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          isDestructiveAction: true,
-          child: const Text("Cancel"),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-    );
-  }
   @override
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
@@ -194,42 +116,12 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
                     buildTextView('Platelets', patientDetails['platelets'] as String?),
                     buildTextView('Liver Function Test', patientDetails['liverFunctionTest'] as String?),
                     buildTextView('Renal Function Test', patientDetails['renalFunctionTest'] as String?),
-                    const SizedBox(height: 24),
-                      Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                                custom_Button(
-                                text: "Edit",
-                                width: dn.width(11.5),
-                                height: dn.height(1.2),
-                                backgroundColor: Colors.green,
-                                textcolor: whiteColor,
-                                button_funcation: (){
-                                  Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Editpatientdetails(patientId: '', patientName: '',)),);
-                                },
-                                textSize: 10),
-                                 Center(
-                                   child: custom_Button(
-                                                                   text: "delete",
-                                                                   width: dn.width(12),
-                                                                   height: dn.height(1.2),
-                                                                   backgroundColor: const Color.fromARGB(255, 243, 33, 33),
-                                                                   textcolor: whiteColor,
-                                                                   button_funcation: (){
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                                                 builder: (context) => patientslist(),));
-                                                                   },
-                                                                   textSize: 10),
-                                 ),
-                              ],
-                        ),
-                      ),
-                      const SizedBox(height: 70),
+
+
+                   
                   ],
                 )
-              : const Center(child: CircularProgressIndicator()), // Show a loading spinner while fetching data 
+              : const Center(child: CircularProgressIndicator()), // Show a loading spinner while fetching data
         ),
       ),
     );

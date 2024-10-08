@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trachcare/Screens/Views/Doctor/doctorscreens/videolist.dart';
 import 'package:trachcare/style/colors.dart';
 
 import 'Bottomnavigator/Addpatients.dart';
@@ -13,7 +14,7 @@ class Doctormainpage extends StatelessWidget {
   Widget build(BuildContext context) {
     List pages=[
        DoctorDashBoard(),
-       const Addpatients(),
+        Videolist(),
        const patientslist(),
     ];
     return CupertinoTabScaffold(
@@ -34,7 +35,7 @@ class Doctormainpage extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                   icon: Icon(CupertinoIcons.calendar_circle),
-                  label: "Apponinments",
+                  label: "video list",
                   activeIcon: Icon(CupertinoIcons.calendar_circle_fill)
               ),
               BottomNavigationBarItem(

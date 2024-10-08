@@ -3,14 +3,10 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 class Editpatientprofile extends StatefulWidget {
-  final String currentName;
-  final String currentEmail;
-  final File? currentImage;
+
 
   Editpatientprofile({
-    required this.currentName,
-    required this.currentEmail,
-    this.currentImage,
+      required patient_id,
   });
 
   @override
@@ -26,9 +22,7 @@ class _EditpatientprofileState extends State<Editpatientprofile> {
   @override
   void initState() {
     super.initState();
-    _name = widget.currentName;
-    _email = widget.currentEmail;
-    _profileImage = widget.currentImage;
+   
   }
 
   Future<void> _pickImage() async {

@@ -7,7 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
+import 'package:trachcare/Screens/Views/Admin/Adminscreens/Profileviewpage.dart';
 import 'package:trachcare/Screens/Views/Doctor/doctorscreens/doctorprofile.dart';
+import '../../../../Api/API_funcation/DashboardApi.dart';
 import '../../../../Api/API_funcation/doctordetails.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../Api/DataStore/Datastore.dart';
@@ -15,17 +17,17 @@ import '../../../../style/colors.dart';
 import '../../../../components/custom_button.dart';
 import '../../../../style/utils/Dimention.dart';
 
-class Editadminprofile extends StatefulWidget {
+class admineditprofile extends StatefulWidget {
     final String Doctor_id;
   
 
-  Editadminprofile({super.key, required this.Doctor_id,});
+  admineditprofile({super.key, required this.Doctor_id,});
 
   @override
-  State<Editadminprofile> createState() => _EditadminprofileState();
+  State<admineditprofile> createState() => _admineditprofileState();
 }
 
-class _EditadminprofileState extends State<Editadminprofile> {
+class _admineditprofileState extends State<admineditprofile> {
   LoginDataStore store = LoginDataStore();
   String username = "";
   final _formKey = GlobalKey<FormState>();
@@ -45,7 +47,7 @@ class _EditadminprofileState extends State<Editadminprofile> {
   }
 
   Future<dynamic> fetchDoctorDetails() async {
-    final String url = '$doctordetailsUrl?doctor_id=${widget.Doctor_id}';
+    final String url = '$admindetailsUrl?doctor_id=${widget.Doctor_id}';
     print('API URL: $url'); // Debugging purpose
 
     try {
@@ -63,7 +65,7 @@ class _EditadminprofileState extends State<Editadminprofile> {
 
   void _save(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      updateDoctorDetails(
+      updateAdminDetails(
         context,
         widget.Doctor_id ,
         imagefile,
@@ -182,7 +184,7 @@ class _EditadminprofileState extends State<Editadminprofile> {
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                      child: FutureBuilder(
-        future: fetchDoctorDetails(),
+        future: AdminDashBoardApi().FetchDetials(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
@@ -368,7 +370,7 @@ class _EditadminprofileState extends State<Editadminprofile> {
                               button_funcation: () {
                                 _save(context);
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => d_ProfilePage(),
+                                  builder: (context) => a_ProfilePage(),
                                 ));
                               },
                               textSize: 12,

@@ -37,16 +37,16 @@ function AddPatient($conn) {
         echo json_encode(["status" => false, "msg" => "Invalid JSON data."]);
         exit;
     }
-
+    echo json_encode($obj['doctorid']);
     // Check if doctorid is provided
-    if (!isset($obj['doctorid']) || empty($obj['doctorid'])) {
-        echo json_encode(["status" => false, "msg" => "Doctor ID not provided"]);
-        exit;
-    }
+    // if (!isset($obj['doctorid']) || empty($obj['doctorid'])) {
+    //     echo json_encode(["status" => false, "msg" => "Doctor ID not provided"]);
+    //     exit;
+    // }
 
     // Extract values from the associative array
     $doctorId = $obj['doctorid'];
-    $name = isset($obj['name']) ? $obj['name'] : null;
+    $name = isset($obj['username']) ? $obj['username'] : null;
     $email = isset($obj['email']) ? $obj['email'] : null;
     $phone_number = isset($obj['phone_number']) ? $obj['phone_number'] : null;
     $password = isset($obj['password']) ? password_hash($obj['password'], PASSWORD_BCRYPT) : null; // Hash password securely

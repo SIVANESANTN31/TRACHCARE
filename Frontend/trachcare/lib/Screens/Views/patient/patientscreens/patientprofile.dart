@@ -4,27 +4,24 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:http/http.dart";
 import "package:sizer/sizer.dart";
-import "package:trachcare/Screens/Views/Admin/Bottomnavigator/Admindb.dart";
 import "package:trachcare/Screens/Views/Doctor/doctorscreens/editprofile.dart";
-import "../../../../Api/API_funcation/DashboardApi.dart";
+import "package:trachcare/Screens/Views/patient/patientscreens/editprofile.dart";
 import "../../../../Api/Apiurl.dart";
 import "../../../../Api/DataStore/Datastore.dart";
 import "../../../../components/custom_button.dart";
 import "../../../../style/colors.dart";
 import "../../../../style/utils/Dimention.dart";
 import 'package:http/http.dart' as http;
-
-import "editprofile.dart";
 // import 'package:onboarding/utils/profilefield.dart';
-class a_ProfilePage extends StatefulWidget {
+class p_ProfilePage extends StatefulWidget {
   
-a_ProfilePage( {super.key, });
+p_ProfilePage( {super.key, });
 
   @override
-  State<a_ProfilePage> createState() => _a_ProfilePageState();
+  State<p_ProfilePage> createState() => _p_ProfilePageState();
 }
 
-class _a_ProfilePageState extends State<a_ProfilePage> {
+class _p_ProfilePageState extends State<p_ProfilePage> {
   
   final TextEditingController usernameController = TextEditingController(text: "");
 
@@ -35,7 +32,8 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
   final TextEditingController phoneNumberController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
-
+  
+  
 
   @override
   void initState() {
@@ -45,17 +43,18 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
 
  Future<dynamic> fetchDoctorDetails() async {
   print(Doctor_id);
+   var Data ={
+    "patient_id":patient_id.toString()
+  };
   try {
-    var url = "$admindetailsUrl?doctor_id=$Doctor_id";
-    print(url);
-    final response = await http.get(Uri.parse(url));
+    final response = await http.post(Uri.parse(getpatientdetialsurl),body: jsonEncode(Data));
     if(response.statusCode ==200){
       var data = jsonDecode(response.body);
-        if(data['Status']){
-        return data['doctorInfo'];
+      if(data['Status']){
+        return data['pateintinfo'];
       }
       else{
-        return data['doctorInfo'];
+        return data['pateintinfo'];
       }
     }
   } catch (e) {
@@ -63,8 +62,6 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
     
   }
 }
-
-  
 
 @override
   Widget build(BuildContext context) {
@@ -90,8 +87,7 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
                   child: SafeArea(
                     child: InkWell(
                           onTap:(){
-                          Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Admindb(),));
+                          Navigator.pop(context);
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
@@ -123,7 +119,7 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
     if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasData){
                   var data = snapshot.data;
-                  usernameController.text = data['username'].toString();
+                  usernameController.text = data["username"].toString();
                   doctorRegNoController.text = data['doctor_reg_no'].toString();
                   emailController.text = data['email'].toString();
                    phoneNumberController.text = data['phone_number'].toString();
@@ -265,9 +261,10 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
                 width: 60,
                 height: 6,
                 button_funcation: (){
-                   Navigator.of(context).push(MaterialPageRoute(
-                               builder: (context) =>
-       admineditprofile(Doctor_id: Doctor_id,
+                  Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => 
+        Editpatientprofile(patient_id: Doctor_id,
          )),
       );
                 },

@@ -15,17 +15,17 @@ import '../../../../style/colors.dart';
 import '../../../../components/custom_button.dart';
 import '../../../../style/utils/Dimention.dart';
 
-class EditProfilePage extends StatefulWidget {
+class doctoreditprofile extends StatefulWidget {
     final String Doctor_id;
   
 
-  EditProfilePage({super.key, required this.Doctor_id,});
+  doctoreditprofile({super.key, required this.Doctor_id,});
 
   @override
-  State<EditProfilePage> createState() => _EditProfilePageState();
+  State<doctoreditprofile> createState() => _doctoreditprofileState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class _doctoreditprofileState extends State<doctoreditprofile> {
   LoginDataStore store = LoginDataStore();
   String username = "";
   final _formKey = GlobalKey<FormState>();
@@ -187,9 +187,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
               var data = snapshot.data;
-              usernameController.text = data["username"];
-              doctorRegNoController.text = data['doctor_reg_no'];
-              emailController.text = data['email'];
+              usernameController.text = data["username"].toString();
+              doctorRegNoController.text = data['doctor_reg_no'].toString();
+              emailController.text = data['email'].toString();
               phoneNumberController.text = data['phone_number'];
               passwordController.text = data['password'];
               var imagepath = data["image_path"].toString().substring(2);

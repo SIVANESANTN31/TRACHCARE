@@ -5,15 +5,12 @@ String PatientLoginurl ="https://$ip/Trachcare/auth/patientAuth/PatientLogin.php
 String DoctorLoginUrl = "https://$ip/Trachcare/auth/DoctorAuth/DoctorLogin.php";
 String AdminLoginurl = "https://$ip/Trachcare/auth/AdminAuth/AdminLogin.php";
 
-//video api
-String Addvideos = "https://$ip/Trachcare/Admin/addvideos.php";
 
 //sumbit or add api
 String PatientDetailsSubmitUrl = "https://$ip/Trachcare/Doctor/Addpatients.php";
 String SubmitVitalsUrl = "https://$ip/Trachcare/Patient/adddailyupdates.php";
 String UpdatePatientDetailsUrl = "https://$ip/Trachcare/Doctor/videos.php";
 String AdddoctordetailsUrl = "https://$ip/Trachcare/Admin/Adddoctordetails.php";
-
 
 //view api
 String ViewPatientDetailsUrl = "https://$ip/Trachcare/Doctor/viewpatientdetails.php";
@@ -29,3 +26,6 @@ String allpatientslistUrl = "https://$ip/Trachcare/Admin/patientlist.php";
 
 //update api
 String UpdateDoctorDetailsUrl = "https://$ip/Trachcare/Doctor/Addpatients.php";
+
+//video api
+String Addvideos = "https://$ip/Trachcare/Admin/addvideos.php";

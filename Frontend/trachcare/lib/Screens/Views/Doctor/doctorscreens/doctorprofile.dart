@@ -262,7 +262,7 @@ class _d_ProfilePageState extends State<d_ProfilePage> {
                   Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => 
-        EditProfilePage(Doctor_id: Doctor_id,
+        doctoreditprofile(Doctor_id: Doctor_id,
          )),
       );
                 },

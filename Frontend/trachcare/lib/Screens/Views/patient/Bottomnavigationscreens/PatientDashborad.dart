@@ -12,6 +12,7 @@ import 'package:trachcare/components/Navbardrawer.dart';
 import 'package:trachcare/style/colors.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../style/utils/Dimention.dart';
+import '../patientscreens/patientprofile.dart';
 
 class PatientDashBoard extends StatelessWidget {
   const PatientDashBoard({super.key});
@@ -42,8 +43,11 @@ class PatientDashBoard extends StatelessWidget {
             return Scaffold(
               appBar: Appbar(Name:name, height: dn.height(10)),
               drawer: drawer(Name: name,
-             
-          reg_no: 'regno',imagepath: NetworkImage("https://$ip/Trachcare/$imagepath"),),
+          reg_no: 'regno',
+          imagepath: NetworkImage("https://$ip/Trachcare/$imagepath"), onTap: (){
+        Navigator.of(context).push(MaterialPageRoute(
+                               builder: (context) => p_ProfilePage(),),);},),
+       
               body: SingleChildScrollView(
                 child: Column(
                   // crossAxisAlignment: CrossAxisAlignment.start,
