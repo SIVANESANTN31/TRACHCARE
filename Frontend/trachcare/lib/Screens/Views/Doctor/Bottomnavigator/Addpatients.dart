@@ -19,6 +19,9 @@ class _AddpatientsState extends State<Addpatients> {
   final _formKey = GlobalKey<FormState>();
   String name = '';
   String age = '';
+  String email = '';
+  String phonenumber = '';
+  String password = '';
   String address = '';
   String bmi = '';
   String diagnosis = '';
@@ -54,43 +57,54 @@ class _AddpatientsState extends State<Addpatients> {
       });
     }
   }
+void _save(BuildContext context) {
+  if (_formKey.currentState!.validate() && _image != null) {
+    // Handle form submission
+    addPatientDetails(
+      context,
+      _image!,
+      Doctor_id,
+      name,
+      email,
+      phonenumber,
+      password,
+      age,
+      address,
+      bmi,
+      diagnosis,
+      surgeryStatus,
+      postOpTracheostomyDay,
+      tubeNameSize,
+      baselineVitals,
+      respiratoryRate,
+      heartRate,
+      spo2RoomAir,
+      indicationOfTracheostomy,
+      comorbidities,
+      hemoglobin,
+      srSodium,
+      srPotassium,
+      srCalcium,
+      srBicarbonate,
+      pt,
+      aptt,
+      inr,
+      platelets,
+      liverFunctionTest,
+      renalFunctionTest,
+    );
 
-  void _save(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
-      // Handle form submission
-      final patientDetails = {
-        'doctorid': Doctor_id,
-        'name': name,
-        'age': age,
-        'address': address,
-        'bmi': bmi,
-        'diagnosis': diagnosis,
-        'surgeryStatus': surgeryStatus,
-        'postOpTracheostomyDay': postOpTracheostomyDay,
-        'tubeNameSize': tubeNameSize,
-        'baselineVitals': baselineVitals,
-        'respiratoryRate': respiratoryRate,
-        'heartRate': heartRate,
-        'spo2RoomAir': spo2RoomAir,
-        'indicationOfTracheostomy': indicationOfTracheostomy,
-        'comorbidities': comorbidities,
-        'hemoglobin': hemoglobin,
-        'srSodium': srSodium,
-        'srPotassium': srPotassium,
-        'srCalcium': srCalcium,
-        'srBicarbonate': srBicarbonate,
-        'pt': pt,
-        'aptt': aptt,
-        'inr': inr,
-        'platelets': platelets,
-        'liverFunctionTest': liverFunctionTest,
-        'renalFunctionTest': renalFunctionTest,
-        'imagePath': _image != null ? _image!.path : null,
-      };
-      SubmitPatientDetails(context, patientDetails);
-      _formKey.currentState!.reset();
-    }
+    _formKey.currentState!.reset();
+    setState(() {
+      _image = null;
+      
+    });
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Please select a photo and fill in all required fields.")),
+    );
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +123,9 @@ class _AddpatientsState extends State<Addpatients> {
                 _imageField(),
                 const SizedBox(height: 20.0),
                 buildTextField('Name', (value) => name = value),
+                buildTextField('Email', (value) => email = value),
+                buildTextField('Phonenumber', (value) => phonenumber = value),
+                buildTextField('Password', (value) => password = value),
                 buildTextField('Age', (value) => age = value),
                 buildTextField('Address', (value) => address = value),
                 buildTextField('BMI', (value) => bmi = value),
