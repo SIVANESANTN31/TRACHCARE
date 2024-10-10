@@ -86,7 +86,7 @@ return const Center(
                                       MaterialPageRoute(
                                           builder: (context) =>  video_player(Videoulrl: data[index]["Video_url"].toString(), description:  data[index]["description"].toString(), title: data[index]["title"].toString(),)));
                                 },
-                                child: Videocard("assets/images/0.png",
+                                child: Videocard("assets/images/images_2.png",
                                    data[index]["title"].toString())),
                           );
                         }),
@@ -112,7 +112,7 @@ return const Center(
       width: dn.width(78),
       height: dn.height(25),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.transparent),
+          borderRadius: BorderRadius.circular(15), color: const Color.fromARGB(255, 97, 97, 97)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -132,11 +132,15 @@ return const Center(
               ),
             )
           ]),
-          Text(
-            videoTitle,
-            style: Normal,
-            textAlign: TextAlign.justify,
-          )
+          Center(
+            child: Text(
+              videoTitle,
+              style: Normal,
+              textAlign: TextAlign.justify,
+            ),
+          
+          ),
+          
         ],
       ),
     );

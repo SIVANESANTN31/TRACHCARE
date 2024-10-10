@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -153,12 +153,28 @@ class _AdddoctorState extends State<Adddoctor> {
                     filled: true,
                     fillColor: Colors.orange[100],
                   ),
+                  inputFormatters: [
+    LengthLimitingTextInputFormatter(40),
+  ],
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please Enter username';
-                    }
-                    return null;
-                  },
+
+  // // Regular expression to check if the email contains any number
+   String numberPattern = r'[0-9]';
+
+  if (value == null || value.isEmpty) {
+    return 'Please enter a username';
+  }
+  if (RegExp(numberPattern).hasMatch(value)) {
+    return 'Email should not contain any numbers';
+  }
+
+  return null;
+},
+                  onChanged: (value) {
+                  setState(() {
+                   _formKey.currentState?.validate();
+                  });
+                },
                 ),
                 const SizedBox(height: 16),
 
@@ -172,32 +188,80 @@ class _AdddoctorState extends State<Adddoctor> {
                     filled: true,
                     fillColor: Colors.orange[100],
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter Doctor Registration Number';
-                    }
-                    return null;
-                  },
+                 validator: (value) {
+  // // Regular expression to check if the email contains any special character except '@'
+  String specialCharacterPattern = r'[!#$%&*+/=?^_`{|}~]';
+  if (value == null || value.isEmpty) {
+    return 'Please enter a Register no';
+  }
+  if (value.length < 5) {
+    return 'Email should be at least 5 characters long';
+  }
+  if (RegExp(specialCharacterPattern).hasMatch(value)) {
+    return 'Email should not contain any special characters';
+  }
+  return null;
+},
+                  onChanged: (value) {
+                  setState(() {
+                   _formKey.currentState?.validate();
+                  });
+                },
                 ),
                 const SizedBox(height: 16),
 
                 // Email Field
-                TextFormField(
-                  controller: emailController,
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
-                    labelText: 'Email Id',
-                    border: const OutlineInputBorder(),
-                    filled: true,
-                    fillColor: Colors.orange[100],
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty || !value.contains('@')) {
-                      return 'Please enter a valid email address';
-                    }
-                    return null;
-                  },
-                ),
+               
+
+TextFormField(
+  controller: emailController,
+  textInputAction: TextInputAction.next,
+  decoration: InputDecoration(
+    labelText: 'Email Id',
+    border: const OutlineInputBorder(),
+    filled: true,
+    fillColor: Colors.orange[100],
+  ),
+  // Limit the text input to 50 characters
+  inputFormatters: [
+    LengthLimitingTextInputFormatter(50),
+  ],
+  validator: (value) {
+  // // Regular expression to check if the email contains any special character except '@'
+  String specialCharacterPattern = r'[!#$%&*+/=?^_`{|}~]';
+
+  // // Regular expression to check if the email contains any number
+   String numberPattern = r'[0-9]';
+
+  if (value == null || value.isEmpty) {
+    return 'Please enter a valid email address';
+  }
+  
+  if (!value.contains('@')) {
+    return 'Email must contain "@"';
+  }
+
+  if (value.length < 10) {
+    return 'Email should be at least 5 characters long';
+  }
+
+  if (RegExp(specialCharacterPattern).hasMatch(value)) {
+    return 'Email should not contain any special characters other than "@"';
+  }
+
+  if (RegExp(numberPattern).hasMatch(value)) {
+    return 'Email should not contain any numbers';
+  }
+
+  return null;
+},
+  onChanged: (value) {
+    setState(() {
+      _formKey.currentState?.validate();
+    });
+  },
+),
+
                 const SizedBox(height: 16),
 
                 // Phone Number Field
@@ -216,6 +280,11 @@ class _AdddoctorState extends State<Adddoctor> {
                     }
                     return null;
                   },
+                  onChanged: (value) {
+                  setState(() {
+                   _formKey.currentState?.validate();
+                  });
+                },
                 ),
                 const SizedBox(height: 16),
 
@@ -231,12 +300,28 @@ class _AdddoctorState extends State<Adddoctor> {
                     filled: true,
                     fillColor: Colors.orange[100],
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a password';
-                    }
-                    return null;
-                  },
+                  inputFormatters: [
+    LengthLimitingTextInputFormatter(20),
+  ],
+  validator: (value) {
+
+
+  if (value == null || value.isEmpty) {
+    return 'Please enter a password';
+  }
+
+  if (value.length < 8) {
+    return 'Email should be at least 8 characters long';
+  }
+
+
+  return null;
+},
+                  onChanged: (value) {
+                  setState(() {
+                   _formKey.currentState?.validate();
+                  });
+                },
                 ),
                 const SizedBox(height: 24),
 

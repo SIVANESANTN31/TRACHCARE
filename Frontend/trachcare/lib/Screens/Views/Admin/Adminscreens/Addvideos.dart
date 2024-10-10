@@ -20,9 +20,9 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   String? _filePath;
-  
+
   String get doctorId => Doctor_id;
-  
+
   String get patientId => patient_id;
 
   Future<void> _pickFile() async {
@@ -72,9 +72,13 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         print('Upload success: $responseBody');
-        _titleController.clear();
+         _formKey.currentState!.reset();
+      setState(() {
+         _titleController.clear();
         _descriptionController.clear();
         _filePath = null;
+      });
+       
 
         toastification.show(
           type: ToastificationType.success,
@@ -129,6 +133,11 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
                   }
                   return null;
                 },
+                onChanged: (value) {
+                  setState(() {
+                   _formKey.currentState?.validate();
+                  });
+                },
               ),
               SizedBox(height: 20),
               TextFormField(
@@ -148,6 +157,11 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
                     return 'Please enter a description';
                   }
                   return null;
+                },
+                onChanged: (value) {
+                  setState(() {
+                   _formKey.currentState?.validate();
+                  });
                 },
               ),
               SizedBox(height: 20),

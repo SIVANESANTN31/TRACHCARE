@@ -47,7 +47,7 @@ List imagelist = ["assets/images/Vector-1.png"];
     if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasData){
             var data = snapshot.data;
-            var regno = data['Doctor_reg_no'].toString();
+            var regno = data['patient_id'].toString();
             var name  = data['username'].toString();
             var imagepath = data["image_path"].toString().substring(2);
                 print(data["image_path"]);

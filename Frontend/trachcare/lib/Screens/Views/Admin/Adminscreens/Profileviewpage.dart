@@ -262,7 +262,7 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
              SizedBox(height: 4.h),
             custom_Button(
                 text: "Edit Profile",
-                width: 60,
+                width: 50,
                 height: 6,
                 button_funcation: (){
                    Navigator.of(context).push(MaterialPageRoute(
@@ -273,7 +273,7 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
                 },
                 backgroundColor: sucess_color,
                 textcolor: whiteColor,
-                textSize: 13),
+                textSize: 9),
                 SizedBox(height: 10.h),
 
           ],

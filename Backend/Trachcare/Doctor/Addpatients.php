@@ -46,14 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = str_replace('', '', $username);
     $patient_id = (string)$idgen . $user;
 
-    // Check if the username already exists
-    $check_sql = "SELECT * FROM addpatients WHERE username = '$username'";
+    // Check if the patient_id already exists
+    $check_sql = "SELECT * FROM addpatients WHERE patient_id = '$patient_id'";
     $result = $conn->query($check_sql);
 
     if ($result->num_rows > 0) {
-        // If username exists, send a duplicate error response
+        // If patient_id exists, send a duplicate error response
         $response['Status'] = false;
-        $response['msg'] = "Username '$username' already exists. Please choose another.";
+        $response['msg'] = "Patient ID '$patient_id' already exists. Please try again.";
     } else {
         // Prepare the insert query
         $insert_sql = "INSERT INTO addpatients (doctor_id, patient_id, username, email, phone_number, password, age, address, bmi, diagnosis,

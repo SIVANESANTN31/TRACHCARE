@@ -181,15 +181,16 @@ Future<void> updateDoctorDetails(
 Future<void> updateAdminDetails(
   BuildContext context,
   String doctorId,
-  File imagefile,
+  dynamic imagefile,
   String username,
   String doctorRegNo,
   String email,
   String phoneNumber,
   String password, 
 ) async {
+  print(doctorId);
   // API URL for updating doctor details
-  final String apiUrl = doctordetailsUrl; // Update with your actual update URL
+  final String apiUrl = admindetailsUrl; // Update with your actual update URL
   try {
     if (imagefile.path.isNotEmpty) {
       // Get file extension and set appropriate MIME type
@@ -214,9 +215,12 @@ Future<void> updateAdminDetails(
       }
 
       var request = http.MultipartRequest("PUT", Uri.parse(apiUrl)); // Use PUT for updates
+      print("/");
+      print(doctorId);
 
       // Add fields to the request
       request.fields.addAll({
+        
         'doctor_id' : doctorId,
         'username': username,
         'email': email,
@@ -227,7 +231,7 @@ Future<void> updateAdminDetails(
 
       request.files.add(
         await http.MultipartFile.fromPath(
-          'image_data',
+          'image_path',
           imagefile.path,
           contentType: mediaType,
         ),

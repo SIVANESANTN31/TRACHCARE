@@ -62,31 +62,37 @@ class _admineditprofileState extends State<admineditprofile> {
       print('Error: $e');
     }
   }
+void _save(BuildContext context, String imagepath) {
+  // If user didn't select a new image, pass the imagepath from the API
+  dynamic finalImage;
+  finalImage = imagefile ?? imagepath;
 
-  void _save(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
-      updateAdminDetails(
-        context,
-        widget.Doctor_id ,
-        imagefile,
-        usernameController.text,
-        doctorRegNoController.text,
-        emailController.text,
-        phoneNumberController.text,
-        passwordController.text,
-      );
+  if (_formKey.currentState!.validate()) {
+    print(widget.Doctor_id);
+    
+    // Pass finalImage which is either the new imagefile or the existing imagepath
+    updateAdminDetails(
+      context,
+      widget.Doctor_id,
+      finalImage, 
+      usernameController.text,
+      doctorRegNoController.text,
+      emailController.text,
+      phoneNumberController.text,
+      passwordController.text,
+    );
 
-      _formKey.currentState!.reset();
-      setState(() {
-        usernameController.clear();
-        doctorRegNoController.clear();
-        emailController.clear();
-        phoneNumberController.clear();
-        passwordController.clear();
-        imagefile = null;
-      });
-    }
+    _formKey.currentState!.reset();
+    setState(() {
+      usernameController.clear();
+      doctorRegNoController.clear();
+      emailController.clear();
+      phoneNumberController.clear();
+      passwordController.clear();
+      imagefile = null; // Clear the selected image (if any)
+    });
   }
+}
 
   
   void getimage({required ImageSource source}) async {
@@ -315,7 +321,6 @@ class _admineditprofileState extends State<admineditprofile> {
                             controller: passwordController,
                             obscureText: true,
                             textInputAction: TextInputAction.done,
-                            onEditingComplete: () => _save(context),
                             decoration: InputDecoration(
                               labelText: 'Password',
                               border: const OutlineInputBorder(),
@@ -328,13 +333,33 @@ class _admineditprofileState extends State<admineditprofile> {
                               return null;
                             },
                           ),
-                       
-                          
+                          Center(
+                                                 child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: custom_Button(
+                              text: "Save",
+                              width: 48,
+                              height: 8,
+                              backgroundColor: const Color.fromARGB(255, 58, 182, 41),
+                              textcolor: whiteColor,
+                              button_funcation: () {
+                                _save(context,imagepath);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => a_ProfilePage(),
+                                ));
+                              },
+                              textSize: 12,
+                            ),
+                          ),),
+                                                   SizedBox(height: dn.height(5),),
                         ],
+                        
                       ),
                     ),
                   ),
+                  
                 ),
+                
               );
             }
           } else if (snapshot.connectionState == ConnectionState.waiting) {
@@ -357,26 +382,8 @@ class _admineditprofileState extends State<admineditprofile> {
                                         
                                         ],
                                         ),
-                                      
-                                               Center(
-                                                 child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: custom_Button(
-                              text: "Save",
-                              width: 48,
-                              height: 8,
-                              backgroundColor: const Color.fromARGB(255, 58, 182, 41),
-                              textcolor: whiteColor,
-                              button_funcation: () {
-                                _save(context);
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => a_ProfilePage(),
-                                ));
-                              },
-                              textSize: 12,
-                            ),
-                          ),),
-                                                   SizedBox(height: 10.h),
+                                      SizedBox(height: dn.height(10),),
+                                               
                                         ],
                                         ),
       ),);

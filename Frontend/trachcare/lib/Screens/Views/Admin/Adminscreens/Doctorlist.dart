@@ -46,15 +46,10 @@ class _DoctorlistState extends State<Doctorlist> {
   }
   List  onsearch(String enteredKeyword,List data) {
      if (enteredKeyword.isEmpty) return data;
-    return data.where((item) => item["username"].toString().toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
+    return data.where((item) => 
+    item["username"].toString().toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
  }
     
-   
-  
-
-
-
-
   
 Future<void> onRefresh() async{
   await Future.delayed(Duration(milliseconds: 1000));
