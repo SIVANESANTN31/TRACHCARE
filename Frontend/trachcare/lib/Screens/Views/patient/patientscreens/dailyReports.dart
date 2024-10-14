@@ -53,19 +53,58 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
         appBar: NormalAppbar(Title: "Report", height: dn.height(15), onTap: null,),
         body: ListView(children: [
           Namecard(username, patient_id,context),
-          TableCalendar(
-            availableGestures: AvailableGestures.all,
-            pageJumpingEnabled: true,
-            headerStyle:const HeaderStyle(formatButtonVisible: false,titleCentered: true,) ,
-              focusedDay: focusedDate,
-               firstDay: DateTime.utc(2010,1,1), 
-               lastDay: DateTime.now().add(
-                const Duration(days: 365),
-              ),
-              selectedDayPredicate: (day) => isSameDay(day, selectedDate),
-        onDaySelected: onDaySelected,
+        //   TableCalendar(
+        //     availableGestures: AvailableGestures.horizontalSwipe,
+        //     pageJumpingEnabled: true,
+        //     headerStyle:const HeaderStyle(formatButtonVisible: false,titleCentered: true,) ,
+        //       focusedDay: focusedDate,
+        //        firstDay:  DateTime(DateTime.now().year, DateTime.now().month, 1), 
+               
+               
+        //        lastDay: DateTime.now(),
+        //        enabledDayPredicate: (day) => day.isBefore(DateTime.now().add(Duration(days: 1))),
+        //       calendarStyle:CalendarStyle(
+        //         todayDecoration:BoxDecoration(gradient: maincolor)
+        //       ),
+  
+        //       selectedDayPredicate: (day) => isSameDay(day, selectedDate),
+        // onDaySelected: onDaySelected,
               
-              )
+        //       )
+        TableCalendar(
+  availableGestures: AvailableGestures.horizontalSwipe,
+  pageJumpingEnabled: true,
+  headerStyle: const HeaderStyle(
+    formatButtonVisible: false,
+    titleCentered: true,
+  ),
+  focusedDay: focusedDate,
+  firstDay: DateTime(DateTime.now().year, DateTime.now().month, 1),
+  lastDay: DateTime.now(), // Last selectable day is today
+  calendarStyle: CalendarStyle(
+   
+    disabledDecoration: BoxDecoration(
+      color: Colors.grey.shade300, // Color for disabled (future) days
+      shape: BoxShape.circle,
+    ),
+    disabledTextStyle: TextStyle(
+      color: Colors.grey, // Text style for disabled days
+    ),
+  ),
+  selectedDayPredicate: (day) => isSameDay(day, selectedDate),
+  
+  // Disable selection for future days
+  enabledDayPredicate: (day) => day.isBefore(DateTime.now().add(Duration(days: 1))),
+
+  onDaySelected: (selectedDay, focusedDay) {
+    if (selectedDay.isBefore(DateTime.now().add(Duration(days: 1)))) {
+      // Call onDaySelected only if the selected day is not in the future
+      onDaySelected(selectedDay, focusedDay);
+    }
+  },
+)
+
+
 
         // SfCalendar(
         //   view: CalendarView.month,

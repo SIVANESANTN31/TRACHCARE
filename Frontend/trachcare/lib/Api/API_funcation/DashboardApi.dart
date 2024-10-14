@@ -5,12 +5,34 @@ import "package:trachcare/Api/DataStore/Datastore.dart";
 
 class PatientDashBoardApi{
 
+Future FetchStatus() async{
+  var url = "$statusurl?patient_id=${patient_id.toString()}";
+  
+  try {
+    final response = await http.get(Uri.parse(url));
+    if(response.statusCode ==200){
+      var data = jsonDecode(response.body);
+      if(data['Status']){
+        print(data['data']);
+        return data['data'];
+      }
+      else{
+        return data['data'];
+      }
+    }
+  } catch (e) {
+    print(e);
+    
+  }
+}
+
 Future FetchDetials() async{
   var Data ={
     "patient_id":patient_id.toString()
   };
   try {
     final response = await http.post(Uri.parse(getpatientdetialsurl),body: jsonEncode(Data));
+    FetchStatus();
     if(response.statusCode ==200){
       var data = jsonDecode(response.body);
       if(data['Status']){

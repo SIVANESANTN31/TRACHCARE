@@ -28,7 +28,9 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
     )),
 
     leading: InkWell(
-      onTap: onTap,
+      onTap: (){
+        Navigator.pop(context);
+      },
 
     child: Icon(CupertinoIcons.chevron_left,color: BlackColor,size: 28.0,),),
     title: Text(Title,style: GoogleFonts.ibmPlexSans(

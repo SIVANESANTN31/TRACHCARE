@@ -16,7 +16,7 @@
     $result=[];
     
     //Select Query
-    $sql="SELECT * FROM  doctorlogin  WHERE username='{$uname}'AND password ='{$pwd}'";
+    $sql="SELECT * FROM  doctorlogin  WHERE email='{$uname}'AND password ='{$pwd}'";
     $res=$conn->query($sql);
     
     if($res->num_rows>0){

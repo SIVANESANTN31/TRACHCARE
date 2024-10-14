@@ -58,6 +58,8 @@ class _AddpatientsState extends State<Addpatients> {
     }
   }
 void _save(BuildContext context) {
+
+
   if (_formKey.currentState!.validate() && _image != null) {
     // Handle form submission
     addPatientDetails(

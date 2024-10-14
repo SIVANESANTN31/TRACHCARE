@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 10, 2024 at 11:22 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Oct 14, 2024 at 06:30 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -66,9 +66,7 @@ CREATE TABLE `addpatients` (
 --
 
 INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `age`, `address`, `bmi`, `diagnosis`, `surgery_status`, `post_op_tracheostomy_day`, `tube_name_size`, `baseline_vitals`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `indication_of_tracheostomy`, `comorbidities`, `hemoglobin`, `sr_sodium`, `sr_potassium`, `sr_calcium`, `sr_bicarbonate`, `pt`, `aptt`, `inr`, `platelets`, `liver_function_test`, `renal_function_test`, `image_path`) VALUES
-('D128', '26880sstyam', 'sstyam', 'johndoe@example.com', '1234567890', 'securepassword', '45', '123 Main Street', '23.5', 'Hypertension', 'Completed', '2', '8mm', 'Normal', '18', '75', '98', 'Airway obstruction', 'Diabetes', '14.5', '135', '4.1', '9.2', '24', '12.5', '30', '1.0', '150000', 'Normal', 'Normal', '/uploads/patient_profile/johndoe.png'),
-('D128', '30802sstyam', 'sstyam', 'johndoe@example.com', '1234567890', 'securepassword', '45', '123 Main Street', '23.5', 'Hypertension', 'Completed', '2', '8mm', 'Normal', '18', '75', '98', 'Airway obstruction', 'Diabetes', '14.5', '135', '4.1', '9.2', '24', '12.5', '30', '1.0', '150000', 'Normal', 'Normal', '/uploads/patient_profile/johndoe.png'),
-('D128', '865sstyam', 'sstyam', 'johndoe@example.com', '1234567890', 'securepassword', '45', '123 Main Street', '23.5', 'Hypertension', 'Completed', '2', '8mm', 'Normal', '18', '75', '98', 'Airway obstruction', 'Diabetes', '14.5', '135', '4.1', '9.2', '24', '12.5', '30', '1.0', '150000', 'Normal', 'Normal', '/uploads/patient_profile/johndoe.png');
+('6273312345', '88965sudhar', 'sudhar', 'test@test.com', '874512', '123', '63', 'srtfghlj', 'nhgudkfhij', 'ygwdaefubgj;o', 'ghin', 'fhjid', 'sgrhstj', 'rterterhglk', 'rgnklnh\'', 'bgdbrg', 'djgbkjdbg', 'dgjbdklsng', 'gblkgn', 'gkbkjjbg', 'gdlgn', 'gbkjkbg', 'gbkjgb\'', 'jjblkg', 'dj,gbmjsdb', 'd,gbgjsbg', 'sddgbjgb', 'dgbjdbg', 'gbgmjbgl', 'bgkjkabdg', '../uploads/patient_images/patient_670d3dc06f4424.93944911.jpg');
 
 --
 -- Triggers `addpatients`
@@ -81,6 +79,10 @@ DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `patientprofile` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO patientprofile (doctor_id, patient_id, username, email, phone_number, password,image_path)
 VALUES (NEW.doctor_id, NEW.patient_id, NEW.username,NEW.email,NEW.phone_number,NEW.password,NEW.image_path)
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `statusAdd` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO daily_stauts(doctorid,patient_id,stauts_10,status_12,stauts_2,issues)VALUES(NEW.doctor_id,NEW.patient_id,0,0,0,0)
 $$
 DELIMITER ;
 
@@ -182,8 +184,7 @@ CREATE TABLE `daily_stauts` (
 --
 
 INSERT INTO `daily_stauts` (`doctorid`, `patient_id`, `stauts_10`, `status_12`, `stauts_2`, `issues`) VALUES
-('jygj', 'jnk', 0, 1, 0, 0),
-('jygj', 'jnk', 0, 1, 0, 0);
+('6273312345', '88965sudhar', 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -289,7 +290,11 @@ CREATE TABLE `patientlogin` (
 --
 
 INSERT INTO `patientlogin` (`doctor_id`, `patient_id`, `username`, `password`) VALUES
-('D128', '865sstyam', 'sstyam', 'securepassword');
+(' 6273312345&', '88097sudharsanan&', 'sudharsanan&', '123&'),
+(' 6273312345&', '79650sudharsanan&', 'sudharsanan&', '123&'),
+('6273312345', '51448sdghjkl', 'sdghjkl', '12345'),
+('gerhes', 'asgfuiadg', 'kugdsughs', 'ajfhkshg'),
+('6273312345', '88965sudhar', 'sudhar', '123');
 
 -- --------------------------------------------------------
 
@@ -314,9 +319,7 @@ CREATE TABLE `patientprofile` (
 --
 
 INSERT INTO `patientprofile` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `image_path`, `created_at`, `updated_at`) VALUES
-('D128', '26880sstyam', 'sstyam', 'johndoe@example.com', '1234567890', 'securepassword', '/uploads/patient_profile/johndoe.png', '2024-10-10 04:28:02', '2024-10-10 04:28:02'),
-('D128', '30802sstyam', 'sstyam', 'johndoe@example.com', '1234567890', 'securepassword', '/uploads/patient_profile/johndoe.png', '2024-10-10 04:28:01', '2024-10-10 04:28:01'),
-('D128', '865sstyam', 'sstyam', 'johndoe@example.com', '1234567890', 'securepassword', '/uploads/patient_profile/johndoe.png', '2024-10-10 04:32:47', '2024-10-10 04:32:47');
+('6273312345', '88965sudhar', 'sudhar', 'test@test.com', '874512', '123', '../uploads/patient_images/patient_670d3dc06f4424.93944911.jpg', '2024-10-14 15:50:24', '2024-10-14 15:50:24');
 
 -- --------------------------------------------------------
 
@@ -352,7 +355,8 @@ INSERT INTO `patientvideotable` (`s.no`, `title`, `description`, `Video_url`) VA
 -- Indexes for table `addpatients`
 --
 ALTER TABLE `addpatients`
-  ADD UNIQUE KEY `patient_id` (`patient_id`);
+  ADD UNIQUE KEY `patient_id` (`patient_id`),
+  ADD UNIQUE KEY `email` (`email`,`phone_number`);
 
 --
 -- Indexes for table `adminlogin`
@@ -396,7 +400,8 @@ ALTER TABLE `medication_schedule`
 -- Indexes for table `patientprofile`
 --
 ALTER TABLE `patientprofile`
-  ADD UNIQUE KEY `patient_id` (`patient_id`);
+  ADD UNIQUE KEY `patient_id` (`patient_id`),
+  ADD UNIQUE KEY `email` (`email`,`phone_number`);
 
 --
 -- Indexes for table `patientvideotable`
@@ -431,6 +436,18 @@ ALTER TABLE `medication_schedule`
 --
 ALTER TABLE `patientvideotable`
   MODIFY `s.no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `daily_stauts` ON SCHEDULE EVERY 1 DAY STARTS '2024-10-06 22:49:49' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts
+  SET stauts_10 = 0,status_12 =0 ,stauts_2=0,issues=0$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `daily_stauts_issues_updates` ON SCHEDULE EVERY 2 HOUR STARTS '2024-10-06 22:53:21' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts
+  SET issues= 0$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

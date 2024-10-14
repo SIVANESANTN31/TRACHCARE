@@ -62,9 +62,7 @@ Future<void> addPatientDetails(
         case 'png':
           mediaType = MediaType('image', 'png');
           break;
-        case 'gif':
-          mediaType = MediaType('image', 'gif');
-          break;
+        
         default:
           throw Exception('Unsupported image format');
       }
@@ -139,7 +137,7 @@ Future<void> addPatientDetails(
     }
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Something went wrong !!!")),
+      SnackBar(content: Text("Something went wrong !!!"+e.toString() )),
     );
   }
 }

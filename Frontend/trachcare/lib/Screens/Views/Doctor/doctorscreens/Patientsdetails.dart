@@ -201,7 +201,7 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
                           children: [
                                 custom_Button(
                                 text: "Edit",
-                                width: dn.width(11.5),
+                                width: dn.width(10.5),
                                 height: dn.height(1.2),
                                 backgroundColor: Colors.green,
                                 textcolor: whiteColor,
@@ -213,7 +213,7 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
                                  Center(
                                    child: custom_Button(
                                                                    text: "delete",
-                                                                   width: dn.width(12),
+                                                                   width: dn.width(11),
                                                                    height: dn.height(1.2),
                                                                    backgroundColor: const Color.fromARGB(255, 243, 33, 33),
                                                                    textcolor: whiteColor,
