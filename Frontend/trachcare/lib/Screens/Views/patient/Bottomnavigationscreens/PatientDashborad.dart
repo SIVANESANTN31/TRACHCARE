@@ -4,21 +4,83 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/API_funcation/DashboardApi.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
 import 'package:trachcare/components/Appbar.dart';  
 import 'package:trachcare/components/Navbardrawer.dart';
+import 'package:trachcare/components/Spigottingsheet.dart';
 import 'package:trachcare/style/colors.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../style/utils/Dimention.dart';
 import '../patientscreens/patientprofile.dart';
 
 class PatientDashBoard extends StatelessWidget {
-  const PatientDashBoard({super.key});
+   const PatientDashBoard({super.key});
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
+List<String> notificationlist = [];
+
+void check_status(var status) {
+  TimeOfDay curtime = TimeOfDay.now(); // Get the current time
+  int currentHour = curtime.hour; // Get the current hour in 24-hour format
+
+  // Check if the status at 10 AM is null and current time is between 10 AM and 12 PM
+  if (status['status_10'] == "0" && currentHour >= 10 && currentHour < 12) {
+    notificationlist.add("10 AM");
+  }
+  // Check if the status at 12 PM is null and current time is between 12 PM and 2 PM (until 1:59 PM)
+  else if (status['status_12'] == "0" && currentHour >= 12 && currentHour < 14) {
+    notificationlist.add("12 PM");
+  }
+   else if (status['status_2'] == "0" && currentHour >= 14 && currentHour < 16) {
+    notificationlist.add("2 PM");
+  }
+  else if (status['status_4'] == "0" && currentHour >= 16 && currentHour < 18) {
+    notificationlist.add("4 PM");
+  }
+  else if (status['status_6'] == "0" && currentHour >= 18 && currentHour < 20) {
+    notificationlist.add("6 PM");
+  }
+  else{
+    
+  }
+
+print(notificationlist.isNotEmpty);
+
+}
+
+
+
+void popsheet(BuildContext context){
+  
+       showCupertinoModalBottomSheet(
+      isDismissible: true,
+      enableDrag: true,
+      expand: false,
+      backgroundColor: Colors.transparent, context: context,
+      //duration: Duration(milliseconds: 500),
+      builder: (context) => Container(
+        width: 100.w,
+        height: 60.h,
+        child: Spigottingsheet(),
+        
+       )
+      );
+    // );
+  }
+
+
+
+
     print(patient_id);
     var currentIndex = 0;
     List<String> imagelist = ["assets/images/Images_1.png","assets/images/images_2.png","assets/images/Images_3.png"];
@@ -34,14 +96,17 @@ class PatientDashBoard extends StatelessWidget {
         }
         if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasData){
-            var patientDetials = snapshot.data;
+            var patientDetials = snapshot.data['Dashboard'];
+            var status = snapshot.data['status'];
+           check_status(status);
+          
             var name  = patientDetials['username'].toString();
             var imagepath = patientDetials["image_path"].toString().substring(2);
 
             Dimentions dn = Dimentions(context);
 
             return Scaffold(
-              appBar: Appbar(Name:name, height: dn.height(10)),
+              appBar: Appbar(Name:name, height: dn.height(10), notification: notificationlist.isNotEmpty,notificationlists:notificationlist),
               drawer: drawer(Name: name,
           reg_no: 'regno',
           imagepath: NetworkImage("https://$ip/Trachcare/$imagepath"), onTap: (){
@@ -83,11 +148,15 @@ class PatientDashBoard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                      circleButton("9 am"),
-                      circleButton("9 am"),
-                      circleButton("9 am"),
-                      circleButton("9 am"),
-                      circleButton("9 am")
+                      GestureDetector(
+                        onTap: (){
+                          popsheet(context);
+                        },
+                        child: circleButton("10 am")),
+                      circleButton("12 pm"),
+                      circleButton("2 pm"),
+                      circleButton("4 pm"),
+                      circleButton("6 pm")
                     ],)
                     
 

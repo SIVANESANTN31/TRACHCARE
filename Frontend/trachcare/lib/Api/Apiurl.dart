@@ -33,3 +33,4 @@ String Addvideos = "https://$ip/Trachcare/Admin/addvideos.php";
 
 
 String statusurl = "https://$ip/Trachcare/Doctor/status.php";
+String updatestatusurl = "https://$ip/Trachcare/Doctor/updatestatus.php";

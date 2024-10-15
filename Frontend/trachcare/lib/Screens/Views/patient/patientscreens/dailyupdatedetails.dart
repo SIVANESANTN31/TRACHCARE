@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:sizer/sizer.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../Api/DataStore/Datastore.dart';
+import '../../../../components/Appbar_copy.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
@@ -91,8 +92,8 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
     return Scaffold(
       
       
-      appBar: NormalAppbar(
-        Title: "Doctors List",height: dn.height(10), onTap: null,
+      appBar: Duplicate_Appbar(
+        Title: "Doctors List",height: dn.height(10), 
       ),
       body:  SingleChildScrollView(
               padding: EdgeInsets.all(16.0),

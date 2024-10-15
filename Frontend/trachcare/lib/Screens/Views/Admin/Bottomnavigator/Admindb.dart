@@ -62,7 +62,7 @@ class Admindb extends StatelessWidget {
 
             Dimentions dn = Dimentions(context);
       return Scaffold(
-      appBar: Appbar(Name: name, height: dn.height(12),),
+      appBar: Appbar(Name: name, height: dn.height(12), notification: false,),
        drawer: drawer(
         Name: name,
           reg_no: regno,

@@ -13,8 +13,8 @@ Future FetchStatus() async{
     if(response.statusCode ==200){
       var data = jsonDecode(response.body);
       if(data['Status']){
-        print(data['data']);
-        return data['data'];
+        print(data['data'][0]['patient_id']);
+        return data['data'][0];
       }
       else{
         return data['data'];
@@ -32,11 +32,12 @@ Future FetchDetials() async{
   };
   try {
     final response = await http.post(Uri.parse(getpatientdetialsurl),body: jsonEncode(Data));
-    FetchStatus();
+    var datas = await FetchStatus();
     if(response.statusCode ==200){
       var data = jsonDecode(response.body);
       if(data['Status']){
-        return data['pateintinfo'];
+       
+        return {"Dashboard":data['pateintinfo'],"status":datas!};
       }
       else{
         return data['pateintinfo'];

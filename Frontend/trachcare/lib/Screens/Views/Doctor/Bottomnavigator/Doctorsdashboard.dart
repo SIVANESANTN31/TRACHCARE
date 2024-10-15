@@ -58,7 +58,7 @@ List imagelist = ["assets/images/Vector-1.png"];
         appBar: Appbar(
           Name: name,
           bottom: Bottom(context),
-          height: dn.height(15),
+          height: dn.height(15), notification: false,
         ),
         drawer:  drawer(
           Name: name,

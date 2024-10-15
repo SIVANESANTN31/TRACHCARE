@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2024 at 06:30 PM
+-- Generation Time: Oct 15, 2024 at 05:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -66,6 +66,7 @@ CREATE TABLE `addpatients` (
 --
 
 INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `age`, `address`, `bmi`, `diagnosis`, `surgery_status`, `post_op_tracheostomy_day`, `tube_name_size`, `baseline_vitals`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `indication_of_tracheostomy`, `comorbidities`, `hemoglobin`, `sr_sodium`, `sr_potassium`, `sr_calcium`, `sr_bicarbonate`, `pt`, `aptt`, `inr`, `platelets`, `liver_function_test`, `renal_function_test`, `image_path`) VALUES
+('6273312345', '56133siva', 'siva', 'test@test1.com', '4561', '456', '52', 'fjbjklfdb', 'ssfhsg', 'rghgskjh', 'gusdk;fh', 'ggsdk;v', 'ugsoifdv', 'jkgbkkv', 'avvsdjkvs', 'vb;ksdnvs', 'kgisdg', 'udfjksdg', 'ssdjbvkjsdb', 'dj\'dv', 'sdvksdbb', 'sbgfkjhsdb', 'jhg;sgd', 'sddgkgsdg', 'shf;ksdg', 'sd;;sg', 'jsjdfknsdg', 'sd;gs', 'gns;ukdf;sdd', 'b;sdv;', '../uploads/patient_images/patient_670e4599d11200.70515197.jpg'),
 ('6273312345', '88965sudhar', 'sudhar', 'test@test.com', '874512', '123', '63', 'srtfghlj', 'nhgudkfhij', 'ygwdaefubgj;o', 'ghin', 'fhjid', 'sgrhstj', 'rterterhglk', 'rgnklnh\'', 'bgdbrg', 'djgbkjdbg', 'dgjbdklsng', 'gblkgn', 'gkbkjjbg', 'gdlgn', 'gbkjkbg', 'gbkjgb\'', 'jjblkg', 'dj,gbmjsdb', 'd,gbgjsbg', 'sddgbjgb', 'dgbjdbg', 'gbgmjbgl', 'bgkjkabdg', '../uploads/patient_images/patient_670d3dc06f4424.93944911.jpg');
 
 --
@@ -82,7 +83,7 @@ VALUES (NEW.doctor_id, NEW.patient_id, NEW.username,NEW.email,NEW.phone_number,N
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `statusAdd` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO daily_stauts(doctorid,patient_id,stauts_10,status_12,stauts_2,issues)VALUES(NEW.doctor_id,NEW.patient_id,0,0,0,0)
+CREATE TRIGGER `statusAdd` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO daily_stauts(doctorid,patient_id,status_10,status_12,status_2,status_4,status_6,issues)VALUES(NEW.doctor_id,NEW.patient_id,0,0,0,0,0,0)
 $$
 DELIMITER ;
 
@@ -173,9 +174,11 @@ INSERT INTO `daily_report` (`id`, `patient_id`, `date`, `respiratory_rate`, `hea
 CREATE TABLE `daily_stauts` (
   `doctorid` varchar(255) NOT NULL,
   `patient_id` varchar(255) NOT NULL,
-  `stauts_10` tinyint(1) NOT NULL,
+  `status_10` tinyint(1) NOT NULL,
   `status_12` tinyint(1) NOT NULL,
-  `stauts_2` tinyint(1) NOT NULL,
+  `status_2` tinyint(1) NOT NULL,
+  `status_4` tinyint(1) NOT NULL,
+  `status_6` tinyint(1) NOT NULL,
   `issues` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -183,8 +186,11 @@ CREATE TABLE `daily_stauts` (
 -- Dumping data for table `daily_stauts`
 --
 
-INSERT INTO `daily_stauts` (`doctorid`, `patient_id`, `stauts_10`, `status_12`, `stauts_2`, `issues`) VALUES
-('6273312345', '88965sudhar', 0, 0, 0, 0);
+INSERT INTO `daily_stauts` (`doctorid`, `patient_id`, `status_10`, `status_12`, `status_2`, `status_4`, `status_6`, `issues`) VALUES
+('6273312345', '88965sudhar', 1, 0, 1, 0, 1, 2),
+('wertyuiqAWSEDRTGHI', 'AWSEDRTFGU', 0, 1, 1, 0, 0, 0),
+('aefrgrg', 'sfgdrh', 0, 0, 0, 0, 0, 0),
+('6273312345', '56133siva', 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -294,7 +300,8 @@ INSERT INTO `patientlogin` (`doctor_id`, `patient_id`, `username`, `password`) V
 (' 6273312345&', '79650sudharsanan&', 'sudharsanan&', '123&'),
 ('6273312345', '51448sdghjkl', 'sdghjkl', '12345'),
 ('gerhes', 'asgfuiadg', 'kugdsughs', 'ajfhkshg'),
-('6273312345', '88965sudhar', 'sudhar', '123');
+('6273312345', '88965sudhar', 'sudhar', '123'),
+('6273312345', '56133siva', 'siva', '456');
 
 -- --------------------------------------------------------
 
@@ -319,6 +326,7 @@ CREATE TABLE `patientprofile` (
 --
 
 INSERT INTO `patientprofile` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `image_path`, `created_at`, `updated_at`) VALUES
+('6273312345', '56133siva', 'siva', 'test@test1.com', '4561', '456', '../uploads/patient_images/patient_670e4599d11200.70515197.jpg', '2024-10-15 10:36:09', '2024-10-15 10:36:09'),
 ('6273312345', '88965sudhar', 'sudhar', 'test@test.com', '874512', '123', '../uploads/patient_images/patient_670d3dc06f4424.93944911.jpg', '2024-10-14 15:50:24', '2024-10-14 15:50:24');
 
 -- --------------------------------------------------------
@@ -441,7 +449,7 @@ DELIMITER $$
 --
 -- Events
 --
-CREATE DEFINER=`root`@`localhost` EVENT `daily_stauts` ON SCHEDULE EVERY 1 DAY STARTS '2024-10-06 22:49:49' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts
+CREATE DEFINER=`root`@`localhost` EVENT `daily_stauts` ON SCHEDULE EVERY 1 DAY STARTS '2024-10-06 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts
   SET stauts_10 = 0,status_12 =0 ,stauts_2=0,issues=0$$
 
 CREATE DEFINER=`root`@`localhost` EVENT `daily_stauts_issues_updates` ON SCHEDULE EVERY 2 HOUR STARTS '2024-10-06 22:53:21' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts

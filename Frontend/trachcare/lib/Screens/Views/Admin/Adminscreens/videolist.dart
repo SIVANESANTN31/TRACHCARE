@@ -34,16 +34,6 @@ class _VideolistState extends State<Videolist> {
     return Videourls;
   }
 
-  // Future gearatevedioThambline(String videourl) async {
-  //   XFile thumbnailurl = await VideoThumbnail.thumbnailFile(
-  //     video: "http://$ip/$videourl",
-  //     thumbnailPath: (await getTemporaryDirectory()).path,
-  //     imageFormat: ImageFormat.WEBP,
-  //     maxHeight: 64,
-  //     quality: 80,
-  //   );
-  //   return thumbnailurl.path;
-  // }
 
     
 Future<void> onRefresh() async{

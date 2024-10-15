@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trachcare/components/Loginform.dart';
 
@@ -12,4 +13,5 @@ const Logoutbtncolor = Color(0XFFB8DABD);
 const BlackColor = Colors.black;
 const grey_color = Color.fromARGB(179, 20, 20, 20);
 const sucess_color = Colors.green;
+const main_color= Color(0xFFA7DBAF);
 const maincolor = LinearGradient(colors: [Color(0xFFA7DBAF), Color(0xFFFFD9A0)],);

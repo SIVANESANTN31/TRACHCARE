@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/components/Navbardrawer.dart';
+import 'package:trachcare/components/Notificationsheet.dart';
 import 'package:trachcare/style/colors.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 // import 'package:open_whatsapp/open_whatsapp.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -11,11 +14,37 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
   final String Name;
   final double height;
   final PreferredSizeWidget? bottom;
+  final bool notification;
+  final List<String>? notificationlists;
+  
 
-  const Appbar({super.key, required this.Name, this.bottom, required this.height});
+   Appbar({super.key, required this.Name, this.bottom, required this.height, required this.notification,  this.notificationlists});
+
+
+
+
+void popsheet(BuildContext context,String Time){
+  
+       showCupertinoModalBottomSheet(
+      isDismissible: true,
+      enableDrag: true,
+      expand: false,
+      backgroundColor: Colors.transparent, context: context,
+      //duration: Duration(milliseconds: 500),
+      builder: (context) => Container(
+        width: 100.w,
+        height: 100.h,
+        child: Notificationsheetwidget(time: Time,),
+        
+       )
+      );
+    // );
+  }
+
 
   @override
   AppBar build(BuildContext context) {
+    
     return AppBar(
       backgroundColor: TitleColor,
       shape: const RoundedRectangleBorder(
@@ -38,15 +67,77 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
             textStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
       ),
       actions: [
-        IconButton(
-            onPressed: () {
-              // FlutterOpenWhatsapp.sendSingleMessage(
-              //     "9500077434", "Hello, this is a test message.");
-            },
-            icon: const Icon(
-              Icons.notifications_active_outlined,
-              color: Colors.green,
+        Stack(
+          children:[ IconButton(
+              onPressed: () {
+                if(notification){
+                  popsheet(context,notificationlists![0]);
+                }
+                else{
+                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("No notification available"),
+            
+          ));
+                }
+               
+              },
+              icon: const Icon(
+                Icons.notifications_active_outlined,
+                color: Colors.green,
+                size: 28,
+              )),
+
+             notification? Positioned(
+            right: 7,
+            top: 7,
+            child: Container(
+              padding: EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              constraints: BoxConstraints(
+                minWidth: 16,
+                minHeight: 16,
+              ),
+              child: Text(
+                '${notificationlists!.length}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            )) :  Positioned(
+            right: 7,
+            top: 7,
+            child: Container(
+              padding: EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                
+                borderRadius: BorderRadius.circular(10),
+              ),
+              constraints: BoxConstraints(
+                minWidth: 16,
+                minHeight: 16,
+              ),
+              child: Text(
+                '',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ))
+              
+              
+              
+              
+              
+              
+              ]
+        )
       ],
       bottom: bottom,
       automaticallyImplyLeading: false,
