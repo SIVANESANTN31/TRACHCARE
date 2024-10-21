@@ -127,7 +127,7 @@ void _save(BuildContext context) {
                 buildTextField('Name', (value) => name = value),
                 buildTextField('Email', (value) => email = value),
                 buildTextField('Phonenumber', (value) => phonenumber = value),
-                buildTextField('Password', (value) => password = value),
+                buildTextField('Password', (value) => password = value,obscureText: true),
                 buildTextField('Age', (value) => age = value),
                 buildTextField('Address', (value) => address = value),
                 buildTextField('BMI', (value) => bmi = value),
@@ -213,9 +213,10 @@ void _save(BuildContext context) {
   }
 
 
-  TextFormField buildTextField(String labelText, Function(String) onChanged) {
+  TextFormField buildTextField(String labelText, Function(String) onChanged,{bool obscureText = false} ) {
     return TextFormField(
       decoration: InputDecoration(labelText: labelText),
+      obscureText :obscureText,
       validator: (value) {
         if (value!.isEmpty) {
           return 'Please enter $labelText';

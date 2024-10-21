@@ -26,12 +26,12 @@ class _SpigottingsheetState extends State<Spigottingsheet> {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
 
-void updatestatus()async{
-  var apiUrl =updatestatusurl ;
+Future updatestatus_spogoting()async{
+  var apiUrl =updatestatusspogotingurl ;
 
 
 
-  try {
+  
     
 
       var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
@@ -39,7 +39,8 @@ void updatestatus()async{
       // Add fields to the request
       request.fields.addAll({
         'patient_id': patient_id,
-        'issues' : _groupValue.toString(),
+        'cough_or_breathlessness' : _groupValue==0?'YES':'NO',
+        'breath_duration':Timingcontoller.text
        
       });
 
@@ -53,6 +54,53 @@ void updatestatus()async{
         var data = jsonDecode(responseBody);
         print(data['msg']);
         if (data['Status']) {
+          return true;
+       
+        } else {
+          return false;
+         
+        }
+      }
+      return false;
+    
+  
+  
+
+
+
+
+}
+
+
+
+
+void updatestatus()async{
+  var apiUrl =updatestatusurl ;
+
+  
+  try {
+   
+
+      var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
+
+      // Add fields to the request
+      request.fields.addAll({
+        'patient_id': patient_id,
+        'issues' : _groupValue.toString(),
+       
+      });
+
+     
+
+      var response = await request.send();
+       var spogotingStatus = await updatestatus_spogoting();
+
+      // Handle the response
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var data = jsonDecode(responseBody);
+        print(data['msg']);
+        if (data['Status'] && spogotingStatus) {
 
           Navigator.of(context).pop();
 
@@ -85,9 +133,17 @@ void updatestatus()async{
 
 
 
+
 }
+
+
+
+
+
+
 void savebtn()  {
 updatestatus();
+
 
 }
 
