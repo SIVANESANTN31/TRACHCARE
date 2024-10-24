@@ -86,12 +86,12 @@ class _loginFormState extends State<loginForm> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    setState(() {
-                      password = value;
-                      widget.formKey.currentState?.validate(); // Revalidate on change
-                    });
-                  },
+                  // onChanged: (value) {
+                  //   setState(() {
+                  //     password = value;
+                  //     widget.formKey.currentState?.validate(); // Revalidate on change
+                  //   });
+                  // },
                   onSaved: (value) {
                     password = value!;
                     store.SetPassword(password);

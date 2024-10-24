@@ -2,13 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/Profileviewpage.dart';
-import 'package:trachcare/Screens/Views/Doctor/doctorscreens/doctorprofile.dart';
 import '../../../../Api/API_funcation/DashboardApi.dart';
 import '../../../../Api/API_funcation/doctordetails.dart';
 import '../../../../Api/Apiurl.dart';
@@ -66,7 +63,7 @@ void _save(BuildContext context, String imagepath) {
   // If user didn't select a new image, pass the imagepath from the API
   dynamic finalImage;
   finalImage = imagefile ?? imagepath;
-
+  print(finalImage);
   if (_formKey.currentState!.validate()) {
     print(widget.Doctor_id);
     

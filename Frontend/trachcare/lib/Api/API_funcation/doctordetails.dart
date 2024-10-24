@@ -91,9 +91,9 @@ ScaffoldMessenger.of(context).showSnackBar(
 
 // Function to update doctor details
 Future<void> updateDoctorDetails(
-  BuildContext context,
-  String Doctor_id,
-  File imagefile,
+   BuildContext context,
+  String doctorId,
+  dynamic imagefile,
   String username,
   String doctorRegNo,
   String email,
@@ -131,10 +131,11 @@ Future<void> updateDoctorDetails(
       request.fields.addAll({
         'doctor_id' : Doctor_id,
         'username': username,
+        'doctor_reg_no': doctorRegNo,
         'email': email,
         'phone_number': phoneNumber,
         'password': password,
-        'doctor_reg_no': doctorRegNo,
+        
       });
 
       request.files.add(
@@ -146,10 +147,11 @@ Future<void> updateDoctorDetails(
       );
 
       var response = await request.send();
-
+print(response);
       // Handle the response
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
+        print(responseBody);
         var data = jsonDecode(responseBody);
         print(data['Status']);
         if (data['Status']) {
@@ -189,10 +191,12 @@ Future<void> updateAdminDetails(
   String password, 
 ) async {
   print(doctorId);
+  
   // API URL for updating doctor details
-  final String apiUrl = admindetailsUrl; // Update with your actual update URL
+  final String apiUrl = "$admindetailsUrl?doctor_id=$doctorId"; // Update with your actual update URL
   try {
-    if (imagefile.path.isNotEmpty) {
+    print(imagefile);
+    if (imagefile ) {
       // Get file extension and set appropriate MIME type
       String fileExtension = path.extension(imagefile.path).toLowerCase().replaceFirst('.', '');
       MediaType mediaType;
@@ -214,14 +218,11 @@ Future<void> updateAdminDetails(
           throw Exception('Unsupported image format');
       }
 
-      var request = http.MultipartRequest("PUT", Uri.parse(apiUrl)); // Use PUT for updates
-      print("/");
-      print(doctorId);
+      var request = http.MultipartRequest("POST", Uri.parse(apiUrl)); // Use PUT for updates
 
       // Add fields to the request
       request.fields.addAll({
-        
-        'doctor_id' : doctorId,
+        'doctor_id' : Doctor_id,
         'username': username,
         'email': email,
         'phone_number': phoneNumber,
@@ -231,7 +232,7 @@ Future<void> updateAdminDetails(
 
       request.files.add(
         await http.MultipartFile.fromPath(
-          'image_path',
+          'image_data',
           imagefile.path,
           contentType: mediaType,
         ),

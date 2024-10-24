@@ -7,10 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/Doctorlist.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/editdoctordetails.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientlist%20copy.dart';
-import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import 'package:trachcare/components/custom_button.dart';
 import 'dart:convert';
-import '../../../../components/Appbar_copy.dart';
+import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
 
@@ -83,7 +82,9 @@ Future<dynamic> deleteDoctorDetails() async {
     Dimentions dn = Dimentions(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      appBar: Duplicate_Appbar(Title: "Add doctor", height: dn.height(10)),
+      appBar: NormalAppbar(Title: "Doctors Details",height: dn.height(10), onTap: (){
+        Navigator.of(context).push(MaterialPageRoute(
+                               builder: (context) => Doctorlist(),),);},),
       body: FutureBuilder(
           future: fetchDoctorDetails(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {

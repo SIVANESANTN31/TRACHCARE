@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['patient_id']) && isse
 
    
         }
-        else if($current_time_ist >=23 && $current_time_ist <24){
+        else if($current_time_ist >=18 && $current_time_ist <20){
             $sql = "UPDATE daily_stauts SET status_6 = 1, issues = ? WHERE patient_id = ?";
 
    

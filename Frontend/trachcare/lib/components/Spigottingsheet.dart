@@ -192,77 +192,79 @@ updatestatus();
       ),
       child: 
          SafeArea(
-           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(height: 15),
-              Card(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const ListTile(
-                      leading: Icon(Icons.quiz_rounded),
-                      title: Text('Spigotting Status'),
-                      subtitle: Text(
-                          'Is the patient able to breathe through the nose while blocking the tube with hands?'),
-                    ),
-                    RadioListTile<int>(
-                      title: const Text('YES'),
-                      value: 0,
-                      groupValue: _groupValue,
-                      activeColor: CupertinoColors.systemGreen,
-                      onChanged: (int? value) {
-                        setState(() {
-                          _groupValue = value;
-                        });
-                      },
-                    ),
-                    RadioListTile<int>(
-                      title: const Text('NO'),
-                      value: 1,
-                      groupValue: _groupValue,
-                      activeColor: CupertinoColors.systemRed,
-                      onChanged: (int? value) {
-                        setState(() {
-                          _groupValue = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(width: 8),
-                    if (_groupValue == 0)
-                      Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            const ListTile(
-                              leading: Icon(Icons.quiz_rounded),
-                              title: Text(
-                                  'If Yes, How long the patient can able to breath ?'),
-                              // subtitle: Text(
-                              //     'Is the patient able to breathe through the nose while blocking the tube with hands?'),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: CupertinoTextField(
-                                controller: Timingcontoller,
-                                keyboardType:TextInputType.number,
-                                placeholder: "Enter the Timing!",
+           child: SingleChildScrollView(
+             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 15),
+                Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const ListTile(
+                        leading: Icon(Icons.quiz_rounded),
+                        title: Text('Spigotting Status'),
+                        subtitle: Text(
+                            'Is the patient able to breathe through the nose while blocking the tube with hands?'),
+                      ),
+                      RadioListTile<int>(
+                        title: const Text('YES'),
+                        value: 0,
+                        groupValue: _groupValue,
+                        activeColor: CupertinoColors.systemGreen,
+                        onChanged: (int? value) {
+                          setState(() {
+                            _groupValue = value;
+                          });
+                        },
+                      ),
+                      RadioListTile<int>(
+                        title: const Text('NO'),
+                        value: 1,
+                        groupValue: _groupValue,
+                        activeColor: CupertinoColors.systemRed,
+                        onChanged: (int? value) {
+                          setState(() {
+                            _groupValue = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(width: 8),
+                      if (_groupValue == 0)
+                        Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              const ListTile(
+                                leading: Icon(Icons.quiz_rounded),
+                                title: Text(
+                                    'If Yes, How long the patient can able to breath ?'),
+                                // subtitle: Text(
+                                //     'Is the patient able to breathe through the nose while blocking the tube with hands?'),
                               ),
-                            )
-                          ]),
-                  ],
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: CupertinoTextField(
+                                  controller: Timingcontoller,
+                                  keyboardType:TextInputType.number,
+                                  placeholder: "Enter the Timing!",
+                                ),
+                              )
+                            ]),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 18),
-              custom_Button(
-                  text: "Save",
-                  width: 45,
-                  height: 6,
-                  backgroundColor: sucess_color,
-                  textcolor: CupertinoColors.white,
-                  button_funcation: savebtn,
-                  textSize: 12)
-            ],
-                   ),
+                SizedBox(height: 18),
+                custom_Button(
+                    text: "Save",
+                    width: 45,
+                    height: 6,
+                    backgroundColor: sucess_color,
+                    textcolor: CupertinoColors.white,
+                    button_funcation: savebtn,
+                    textSize: 12)
+              ],
+                     ),
+           ),
          ),
       );
     

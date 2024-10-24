@@ -58,17 +58,20 @@ class _EditdoctordetailsState extends State<Editdoctordetails> {
     }
   }
 
-  void _save(BuildContext context) {
+  void _save(BuildContext context, String imagepath) {
+  dynamic finalImage;
+  finalImage = imagefile ?? imagepath;
+
     if (_formKey.currentState!.validate()) {
       updateDoctorDetails(
-        context,
-        widget.Doctor_id ,
-         imagefile,
-        usernameController.text,
-        doctorRegNoController.text,
-        emailController.text,
-        phoneNumberController.text,
-        passwordController.text,
+      context,
+      widget.Doctor_id,
+      finalImage, 
+      usernameController.text,
+      doctorRegNoController.text,
+      emailController.text,
+      phoneNumberController.text,
+      passwordController.text,
       );
 
       _formKey.currentState!.reset();
@@ -132,7 +135,6 @@ class _EditdoctordetailsState extends State<Editdoctordetails> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
@@ -271,7 +273,7 @@ class _EditdoctordetailsState extends State<Editdoctordetails> {
                             controller: passwordController,
                             obscureText: true,
                             textInputAction: TextInputAction.done,
-                            onEditingComplete: () => _save(context),
+                            
                             decoration: InputDecoration(
                               labelText: 'Password',
                               border: const OutlineInputBorder(),
@@ -286,21 +288,23 @@ class _EditdoctordetailsState extends State<Editdoctordetails> {
                           ),
                           const SizedBox(height: 24),
                           // Buttons: Edit and Delete
-                          Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: custom_Button(
-                              text: "Save",
-                              width: 48,
-                              height: 8,
-                              backgroundColor: Colors.red,
-                              textcolor: whiteColor,
-                              button_funcation: () {
-                                _save(context);
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Doctordetails(Doctor_id: widget.Doctor_id),
-                                ));
-                              },
-                              textSize: 11,
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: custom_Button(
+                                text: "Save",
+                                width: 48,
+                                height: 8,
+                                backgroundColor: const Color.fromARGB(255, 45, 150, 33),
+                                textcolor: whiteColor,
+                                button_funcation: () {
+                                  _save(context,imagepath);
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => Doctordetails(Doctor_id: widget.Doctor_id),
+                                  ));
+                                },
+                                textSize: 11,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 24),
