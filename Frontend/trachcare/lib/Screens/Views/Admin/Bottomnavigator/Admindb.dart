@@ -130,12 +130,12 @@ class Admindb extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.all(10),
                                     child: 
-                                    Image.asset("assets/images/${imgList[index]}.png", width: 70, height: 70,),),
-                                    const SizedBox(height: 20,),
+                                    Image.asset("assets/images/${imgList[index]}.png", width: 75, height: 75,),),
+                                    SizedBox(height: dn.height(1),),
                                     Text(
                                       pages_name[index],
                                       style: TextStyle(
-                                        fontSize: 13,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black.withOpacity(0.5),
                                       ),

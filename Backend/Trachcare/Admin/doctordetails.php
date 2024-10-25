@@ -29,7 +29,7 @@ function updateDoctor($conn, $data) {
     $email = isset($data['email']) ? mysqli_real_escape_string($conn, $data['email']) : null;
     $phone_number = isset($data['phone_number']) ? mysqli_real_escape_string($conn, $data['phone_number']) : null;
     $password = isset($data['password']) ? mysqli_real_escape_string($conn, $data['password']) : null;
-    $image_path = isset($_FILES['image']['name']) ? uploadImage($_FILES['image']) : null; // Handle file upload
+    $image_path = isset($data['image_path']) ? mysqli_real_escape_string($conn, $data['image_path']) : null;
     $created_at = isset($data['created_at']) ? mysqli_real_escape_string($conn, $data['created_at']) : null;
 
     $fields = [];

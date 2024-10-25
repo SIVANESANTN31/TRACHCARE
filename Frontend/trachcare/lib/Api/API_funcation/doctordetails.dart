@@ -179,7 +179,6 @@ print(response);
   }
 }
 
-// Function to update doctor details
 Future<void> updateAdminDetails(
   BuildContext context,
   String doctorId,
@@ -188,15 +187,32 @@ Future<void> updateAdminDetails(
   String doctorRegNo,
   String email,
   String phoneNumber,
-  String password, 
+  String password,
 ) async {
   print(doctorId);
   
   // API URL for updating doctor details
-  final String apiUrl = "$admindetailsUrl?doctor_id=$doctorId"; // Update with your actual update URL
+  final String apiUrl = "$admindetailsUrl?doctor_id=$doctorId"; // Update with your actual URL
   try {
-    print(imagefile);
-    if (imagefile ) {
+    var request = http.MultipartRequest("POST", Uri.parse(apiUrl)); // Use POST or PUT for updates
+    print("Image file: $imagefile");
+
+    // Add fields to the request
+    request.fields.addAll({
+      'doctor_id': doctorId,
+      'username': username,
+      'doctor_reg_no': doctorRegNo,
+      'email': email,
+      'phone_number': phoneNumber,
+      'password': password,
+    });
+
+    print("Request Fields: ${request.fields}");
+
+    // Check if imagefile is a file (not a string/URL)
+    if (imagefile != null && imagefile is! String) {
+      print("Uploading image: ${imagefile.path}");
+
       // Get file extension and set appropriate MIME type
       String fileExtension = path.extension(imagefile.path).toLowerCase().replaceFirst('.', '');
       MediaType mediaType;
@@ -218,55 +234,50 @@ Future<void> updateAdminDetails(
           throw Exception('Unsupported image format');
       }
 
-      var request = http.MultipartRequest("POST", Uri.parse(apiUrl)); // Use PUT for updates
-
-      // Add fields to the request
-      request.fields.addAll({
-        'doctor_id' : Doctor_id,
-        'username': username,
-        'email': email,
-        'phone_number': phoneNumber,
-        'password': password,
-        'doctor_reg_no': doctorRegNo,
-      });
-
+      // Add the file to the request
       request.files.add(
         await http.MultipartFile.fromPath(
-          'image_data',
+          'image_data', // form field name in the API
           imagefile.path,
           contentType: mediaType,
         ),
       );
+    } else if (imagefile is String) {
+      // If imagefile is a string, it's likely an already uploaded URL, skip the upload
+      print("Image path (already uploaded): $imagefile");
+      request.fields['image_path'] = imagefile; // Pass the image path to the API
+    }
 
-      var response = await request.send();
+    // Send the request
+    var response = await request.send();
 
-      // Handle the response
-      if (response.statusCode == 200) {
-        var responseBody = await response.stream.bytesToString();
-        var data = jsonDecode(responseBody);
-        print(data['Status']);
-        if (data['Status']) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(data['msg']),
-            backgroundColor: Colors.green[400],
-          ));
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(data['message']),
-            backgroundColor: Colors.red,
-          ));
-        }
+    // Handle the response
+    if (response.statusCode == 200) {
+      var responseBody = await response.stream.bytesToString();
+      var data = jsonDecode(responseBody);
+      print("Response Data: $data");
+
+      if (data['Status']) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(data['msg']),
+          backgroundColor: Colors.green[400],
+        ));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Server error: ${response.statusCode}'),
+          content: Text(data['message']),
           backgroundColor: Colors.red,
         ));
       }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Server error: ${response.statusCode}'),
+        backgroundColor: Colors.red,
+      ));
     }
   } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Something went wrong !!!")),
-    );
+    print("Error: $e");
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Something went wrong! Error: $e"),
+    ));
   }
 }
-

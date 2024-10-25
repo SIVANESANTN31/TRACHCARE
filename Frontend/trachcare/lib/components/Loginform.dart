@@ -52,16 +52,17 @@ class _loginFormState extends State<loginForm> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    setState(() {
-                      username = value;
-                      widget.formKey.currentState?.validate(); // Revalidate on change
-                    });
-                  },
+                 
                   onSaved: (value) {
                     username = value!;
                     store.Setusername(username);
                   },
+                  //  onChanged: (value) {
+                  //   setState(() {
+                  //     username = value;
+                  //     widget.formKey.currentState?.validate(); // Revalidate on change
+                  //   });
+                  // },
                   cursorColor: TitleColor,
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
@@ -86,16 +87,17 @@ class _loginFormState extends State<loginForm> {
                     }
                     return null;
                   },
-                  // onChanged: (value) {
+                 
+                  onSaved: (value) {
+                    password = value!;
+                    store.SetPassword(password);
+                  },
+                  //  onChanged: (value) {
                   //   setState(() {
                   //     password = value;
                   //     widget.formKey.currentState?.validate(); // Revalidate on change
                   //   });
                   // },
-                  onSaved: (value) {
-                    password = value!;
-                    store.SetPassword(password);
-                  },
                   cursorColor: TitleColor,
                   obscureText: visiblilty,
                   decoration: InputDecoration(
