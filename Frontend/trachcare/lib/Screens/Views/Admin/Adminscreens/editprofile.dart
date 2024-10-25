@@ -60,9 +60,10 @@ class _admineditprofileState extends State<admineditprofile> {
     }
   }
 void _save(BuildContext context, String imagepath) {
+  File imageFile = File(imagepath);
   // If user didn't select a new image, pass the imagepath from the API
-  dynamic finalImage;
-  finalImage = imagefile ?? imagepath;
+  File finalImage;
+  finalImage = imagefile ?? imageFile;
   print(finalImage);
   if (_formKey.currentState!.validate()) {
     print(widget.Doctor_id);

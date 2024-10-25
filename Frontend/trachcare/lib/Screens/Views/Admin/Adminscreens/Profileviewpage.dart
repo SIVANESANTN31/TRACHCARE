@@ -2,16 +2,13 @@ import "dart:convert";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:http/http.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/Screens/Views/Admin/Bottomnavigator/Admindb.dart";
-import "package:trachcare/Screens/Views/Doctor/doctorscreens/editprofile.dart";
-import "../../../../Api/API_funcation/DashboardApi.dart";
 import "../../../../Api/Apiurl.dart";
 import "../../../../Api/DataStore/Datastore.dart";
 import "../../../../components/custom_button.dart";
 import "../../../../style/colors.dart";
-import "../../../../style/utils/Dimention.dart";
+// import "../../../../style/utils/Dimention.dart";
 import 'package:http/http.dart' as http;
 
 import "editprofile.dart";
@@ -68,7 +65,7 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
 
 @override
   Widget build(BuildContext context) {
-    Dimentions dn = Dimentions(context);
+    // Dimentions dn = Dimentions(context);
     return Scaffold(
       
       body: SafeArea(

@@ -38,6 +38,25 @@ function getDoctor($conn, $id) {
     echo json_encode($result);
 }
 
+function deleteDoctor($conn, $id) {
+    $id = mysqli_real_escape_string($conn, $id);
+    $result = [];
+
+    $sql = "DELETE FROM adminlogin WHERE doctor_id='{$id}'";
+
+    if ($conn->query($sql) === TRUE) {
+        $result['Status'] = true;
+        $result['message'] = "Doctor deleted successfully.";
+    } else {
+        $result['Status'] = false;
+        $result['message'] = "Error deleting doctor: " . $conn->error;
+    }
+
+    echo json_encode($result);
+}
+
+
+
 function updateDoctor($conn, $data) {
     $doctor_id = mysqli_real_escape_string($conn, $data['doctor_id']);
     $username = isset($data['username']) ? mysqli_real_escape_string($conn, $data['username']) : null;
@@ -91,22 +110,6 @@ function updateDoctor($conn, $data) {
     echo json_encode($result);
 }
 
-function deleteDoctor($conn, $id) {
-    $id = mysqli_real_escape_string($conn, $id);
-    $result = [];
-
-    $sql = "DELETE FROM adminlogin WHERE doctor_id='{$id}'";
-
-    if ($conn->query($sql) === TRUE) {
-        $result['Status'] = true;
-        $result['message'] = "Doctor deleted successfully.";
-    } else {
-        $result['Status'] = false;
-        $result['message'] = "Error deleting doctor: " . $conn->error;
-    }
-
-    echo json_encode($result);
-}
 
 function uploadImage($file) {
     $target_dir = "uploads/";

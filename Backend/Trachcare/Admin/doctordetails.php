@@ -22,6 +22,8 @@ function getDoctor($conn, $id) {
 
     echo json_encode($result);
 }
+
+
 function updateDoctor($conn, $data) {
     $doctor_id = mysqli_real_escape_string($conn, $data['doctor_id']);
     $username = isset($data['username']) ? mysqli_real_escape_string($conn, $data['username']) : null;
@@ -29,7 +31,7 @@ function updateDoctor($conn, $data) {
     $email = isset($data['email']) ? mysqli_real_escape_string($conn, $data['email']) : null;
     $phone_number = isset($data['phone_number']) ? mysqli_real_escape_string($conn, $data['phone_number']) : null;
     $password = isset($data['password']) ? mysqli_real_escape_string($conn, $data['password']) : null;
-    $image_path = isset($data['image_path']) ? mysqli_real_escape_string($conn, $data['image_path']) : null;
+    $image_path = isset($_FILES['image']['name']) ? uploadImage($_FILES['image']) : null; // Handle file upload
     $created_at = isset($data['created_at']) ? mysqli_real_escape_string($conn, $data['created_at']) : null;
 
     $fields = [];
@@ -74,6 +76,42 @@ function updateDoctor($conn, $data) {
 
     echo json_encode($result);
 }
+
+
+function uploadImage($file) {
+    $target_dir = "uploads/";
+    $target_file = $target_dir . basename($file["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+    // Check if image file is an actual image or fake image
+    $check = getimagesize($file["tmp_name"]);
+    if ($check === false) {
+        $uploadOk = 0;
+    }
+
+    // Check file size
+    if ($file["size"] > 500000) { // 500 KB limit
+        $uploadOk = 0;
+    }
+
+    // Allow certain file formats
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+        $uploadOk = 0;
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        return null; // Return null if upload fails
+    } else {
+        if (move_uploaded_file($file["tmp_name"], $target_file)) {
+            return $target_file; // Return the file path on success
+        } else {
+            return null;
+        }
+    }
+}
+
 
 function deleteDoctor($conn, $id) {
     $id = mysqli_real_escape_string($conn, $id);

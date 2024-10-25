@@ -6,8 +6,7 @@ import 'package:trachcare/Api/DataStore/Datastore.dart';
 
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/Appbar_copy.dart';
-import '../../../../components/NAppbar.dart';
-// import '../../../../style/colors.dart';
+
 import '../../../../style/utils/Dimention.dart';
 import '../doctorscreens/Patientsdetails.dart';
 import "package:http/http.dart" as http;

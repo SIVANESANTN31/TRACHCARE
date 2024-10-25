@@ -179,88 +179,57 @@ print(response);
   }
 }
 
+
 Future<void> updateAdminDetails(
   BuildContext context,
   String doctorId,
-  dynamic imagefile,
-  String username,
-  String doctorRegNo,
-  String email,
-  String phoneNumber,
-  String password,
+  File? imageFile,
+  String? username,
+  String? doctorRegNo,
+  String? email,
+  String? phoneNumber,
+  String? password,
+   // File type for image upload
 ) async {
-  print(doctorId);
-  
-  // API URL for updating doctor details
-  final String apiUrl = "$admindetailsUrl?doctor_id=$doctorId"; // Update with your actual URL
+  // Your API URL for updating doctor details
+  final String apiUrl = "$admindetailsUrl?doctor_id=$doctorId";
   try {
-    var request = http.MultipartRequest("POST", Uri.parse(apiUrl)); // Use POST or PUT for updates
-    print("Image file: $imagefile");
+    // Create a multipart request
+    var request = http.MultipartRequest('POST', Uri.parse(apiUrl));
 
-    // Add fields to the request
-    request.fields.addAll({
-      'doctor_id': doctorId,
-      'username': username,
-      'doctor_reg_no': doctorRegNo,
-      'email': email,
-      'phone_number': phoneNumber,
-      'password': password,
-    });
+    // Add form fields only if they are not null
+    request.fields['doctor_id'] = doctorId;
+    if (username != null) request.fields['username'] = username;
+    if (doctorRegNo != null) request.fields['doctor_reg_no'] = doctorRegNo;
+    if (email != null) request.fields['email'] = email;
+    if (phoneNumber != null) request.fields['phone_number'] = phoneNumber;
+    if (password != null) request.fields['password'] = password;
 
-    print("Request Fields: ${request.fields}");
-
-    // Check if imagefile is a file (not a string/URL)
-    if (imagefile != null && imagefile is! String) {
-      print("Uploading image: ${imagefile.path}");
-
-      // Get file extension and set appropriate MIME type
-      String fileExtension = path.extension(imagefile.path).toLowerCase().replaceFirst('.', '');
-      MediaType mediaType;
-
-      switch (fileExtension) {
-        case 'jpg':
-          mediaType = MediaType('image', 'jpg');
-          break;
-        case 'jpeg':
-          mediaType = MediaType('image', 'jpeg');
-          break;
-        case 'png':
-          mediaType = MediaType('image', 'png');
-          break;
-        case 'gif':
-          mediaType = MediaType('image', 'gif');
-          break;
-        default:
-          throw Exception('Unsupported image format');
+    // If there's an image file, add it to the request
+    if (imageFile != null) {
+        var fileStream = http.ByteStream(imageFile!.openRead());
+        var length = await imageFile!.length();
+        var multipartFile = http.MultipartFile(
+          'image',
+          fileStream,
+          length,
+  
+        );
+        request.files.add(multipartFile);
       }
-
-      // Add the file to the request
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'image_data', // form field name in the API
-          imagefile.path,
-          contentType: mediaType,
-        ),
-      );
-    } else if (imagefile is String) {
-      // If imagefile is a string, it's likely an already uploaded URL, skip the upload
-      print("Image path (already uploaded): $imagefile");
-      request.fields['image_path'] = imagefile; // Pass the image path to the API
-    }
-
     // Send the request
     var response = await request.send();
 
-    // Handle the response
-    if (response.statusCode == 200) {
-      var responseBody = await response.stream.bytesToString();
-      var data = jsonDecode(responseBody);
-      print("Response Data: $data");
+    
+   if (response.statusCode == 200) {
+   var responseBody = await response.stream.bytesToString();
+   print("Raw Response Body: $responseBody"); 
+   var data = jsonDecode(responseBody);
 
       if (data['Status']) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(data['msg']),
-          backgroundColor: Colors.green[400],
+          content: Text(data['message']),
+          backgroundColor: Colors.green,
         ));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -275,9 +244,10 @@ Future<void> updateAdminDetails(
       ));
     }
   } catch (e) {
-    print("Error: $e");
+    // Handle errors
+    print('Error: $e');
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Something went wrong! Error: $e"),
+      content: Text('An error occurred: $e'),
     ));
   }
 }

@@ -112,7 +112,7 @@ void _save(BuildContext context) {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: Duplicate_Appbar(Title: "Add Doctor", height: dn.height(10)),
+      appBar: Duplicate_Appbar(Title: "Add Patient", height: dn.height(10)),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
