@@ -151,20 +151,49 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
   }
 
   Widget _buildYesNoQuestion(String question, String key) {
-    return Row(
-      children: [
-        Expanded(child: Text(question)),
-        Switch(
-          value: patientData[key] ?? true,
-          onChanged: (value) {
-            setState(() {
-              patientData[key] = value;
-            });
-          },
-        ),
-      ],
-    );
-  }
+  return Row(
+    children: [
+      Expanded(child: Text(question)),
+      Row(
+        children: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                patientData[key] = true;
+              });
+            },
+            style: TextButton.styleFrom(
+              backgroundColor: patientData[key] == true ? Colors.blue : Colors.grey[300],
+            ),
+            child: Text(
+              "Yes",
+              style: TextStyle(
+                color: patientData[key] == true ? Colors.white : Colors.black,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                patientData[key] = false;
+              });
+            },
+            style: TextButton.styleFrom(
+              backgroundColor: patientData[key] == false ? Colors.blue : Colors.grey[300],
+            ),
+            child: Text(
+              "No",
+              style: TextStyle(
+                color: patientData[key] == false ? Colors.white : Colors.black,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
 
   Widget _buildDropdown(String label, String key, List<String> options) {
     return Row(
@@ -233,12 +262,14 @@ Widget Namecard(String name, String patientId,BuildContext context) {
             child: Row(
               children: [
                 Column(
+                 // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
                       "Name",
                       style: GoogleFonts.ibmPlexSans(
                           textStyle: TextStyle(fontSize: 13.sp)),
                     ),
+                    SizedBox(height: dn.height(10),),
                     Text(
                       "Patient Id ",
                       style: GoogleFonts.ibmPlexSans(

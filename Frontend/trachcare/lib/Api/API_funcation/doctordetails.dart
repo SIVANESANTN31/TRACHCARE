@@ -216,6 +216,7 @@ Future<void> updateAdminDetails(
   
         );
         request.files.add(multipartFile);
+        print(imageFile);
       }
     // Send the request
     var response = await request.send();

@@ -46,19 +46,25 @@ List imagelist = ["assets/images/Vector-1.png"];
         }
     if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasData){
-            var data = snapshot.data;
-            var regno = data['patient_id'].toString();
+            var data = snapshot.data["Dashboard"];
+            var status = snapshot.data["status"];
+            var notification = status.length ==0?false:true;
+            List notificationlists = status;
+            
+            // print(status.runtimeType);
+            var regno = data['doctor_reg_no'].toString();
             var name  = data['username'].toString();
             var imagepath = data["image_path"].toString().substring(2);
-                print(data["image_path"]);
-            print(data);
+            
 
             Dimentions dn = Dimentions(context);
       return Scaffold(
         appBar: Appbar(
+          doctor: true,
           Name: name,
           bottom: Bottom(context),
-          height: dn.height(15), notification: false,
+          notificationlists: notificationlists,
+          height: dn.height(15), notification: notification,
         ),
         drawer:  drawer(
           Name: name,

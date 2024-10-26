@@ -1,6 +1,6 @@
 const ip = "172.20.10.4"; 
 
-//login api
+//login apikfl;djbl;
 String PatientLoginurl ="https://$ip/Trachcare/auth/patientAuth/PatientLogin.php";
 String DoctorLoginUrl = "https://$ip/Trachcare/auth/DoctorAuth/DoctorLogin.php";
 String AdminLoginurl = "https://$ip/Trachcare/auth/AdminAuth/AdminLogin.php";
@@ -33,5 +33,6 @@ String Addvideos = "https://$ip/Trachcare/Admin/addvideos.php";
 
 
 String statusurl = "https://$ip/Trachcare/Doctor/status.php";
+String statusurlpatient = "https://$ip/Trachcare/Patient/status.php";
 String updatestatusurl = "https://$ip/Trachcare/Doctor/updatestatus.php";
 String updatestatusspogotingurl = "https://$ip/Trachcare/Doctor/spogoting_status.php";

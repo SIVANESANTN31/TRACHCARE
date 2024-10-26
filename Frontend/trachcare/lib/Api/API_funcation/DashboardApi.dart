@@ -1,4 +1,5 @@
 import "dart:convert";
+import "package:flutter/material.dart";
 import "package:http/http.dart" as http;
 import "package:trachcare/Api/Apiurl.dart";
 import "package:trachcare/Api/DataStore/Datastore.dart";
@@ -6,7 +7,7 @@ import "package:trachcare/Api/DataStore/Datastore.dart";
 class PatientDashBoardApi{
 
 Future FetchStatus() async{
-  var url = "$statusurl?patient_id=${patient_id.toString()}";
+  var url = "$statusurlpatient?patient_id=${patient_id.toString()}";
   
   try {
     final response = await http.get(Uri.parse(url));
@@ -54,18 +55,52 @@ Future FetchDetials() async{
 
 class DoctorDashBoardApi{
 
+Future FetchStatus() async{
+  var url = "$statusurl?doctorid=${Doctor_id.toString()}";
+  
+  try {
+    final response = await http.get(Uri.parse(url));
+    if(response.statusCode ==200){
+      var data = jsonDecode(response.body);
+      if(data['Status']){
+        print(data['data'][0]['patient_id']);
+        return data['data'];
+      }
+      else{
+        return data['data'];
+      }
+    }
+  } catch (e) {
+    print(e);
+    
+  }
+}
+
+
+
+
+
+
+
+
+
+
 Future FetchDetials() async{
    
   
   
+  
   try {
     var url = "$doctordetailsUrl?doctor_id=$Doctor_id";
+
     print(url);
     final response = await http.get(Uri.parse(url));
+    final status = await FetchStatus();
+    print(status);
     if(response.statusCode ==200){
       var data = jsonDecode(response.body);
         if(data['Status']){
-        return data['doctorInfo'];
+       return {"Dashboard":data['doctorInfo'],"status":status};
       }
       else{
         return data['doctorInfo'];

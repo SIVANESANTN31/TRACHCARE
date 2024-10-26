@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/components/Navbardrawer.dart';
 import 'package:trachcare/components/Notificationsheet.dart';
+import 'package:trachcare/components/doctornotification.dart';
 import 'package:trachcare/style/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -15,10 +16,11 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
   final PreferredSizeWidget? bottom;
   final bool notification;
-  final List<String>? notificationlists;
+  final List? notificationlists;
+   bool ?doctor=false;
   
 
-   Appbar({super.key, required this.Name, this.bottom, required this.height, required this.notification,  this.notificationlists});
+    Appbar({super.key, required this.Name, this.bottom, required this.height, required this.notification,  this.notificationlists, this.doctor=false});
 
 
 
@@ -35,6 +37,23 @@ void popsheet(BuildContext context,String Time){
         width: 100.w,
         height: 100.h,
         child: Notificationsheetwidget(time: Time,),
+        
+       )
+      );
+    // );
+  }
+  void doctorpopsheet(BuildContext context,List issuesList){
+  
+       showCupertinoModalBottomSheet(
+      isDismissible: true,
+      enableDrag: true,
+      expand: false,
+      backgroundColor: Colors.transparent, context: context,
+      //duration: Duration(milliseconds: 500),
+      builder: (context) => Container(
+        width: 100.w,
+        height: 100.h,
+        child: doctornotificationssheet(issuesList: issuesList,),
         
        )
       );
@@ -71,7 +90,11 @@ void popsheet(BuildContext context,String Time){
           children:[ IconButton(
               onPressed: () {
                 if(notification){
+                  if(doctor==false)
                   popsheet(context,notificationlists![0]);
+                  else{
+doctorpopsheet(context,notificationlists!);
+                  }
                 }
                 else{
                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
