@@ -30,6 +30,7 @@ class PatientDashBoard extends StatelessWidget {
 List<String> notificationlist = [];
 
 void check_status(var status) {
+
   TimeOfDay curtime = TimeOfDay.now(); // Get the current time
   int currentHour = curtime.hour; // Get the current hour in 24-hour format
 
@@ -60,23 +61,6 @@ print(notificationlist.isNotEmpty);
 
 
 
-void popsheet(BuildContext context){
-  
-       showCupertinoModalBottomSheet(
-      isDismissible: true,
-      enableDrag: true,
-      expand: false,
-      backgroundColor: Colors.transparent, context: context,
-      //duration: Duration(milliseconds: 500),
-      builder: (context) => Container(
-        width: 100.w,
-        height: 60.h,
-        child: Spigottingsheet(),
-        
-       )
-      );
-    // );
-  }
 
 
 
@@ -148,15 +132,13 @@ void popsheet(BuildContext context){
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                      GestureDetector(
-                        onTap: (){
-                          popsheet(context);
-                        },
-                        child: circleButton("10 am")),
-                      circleButton("12 pm"),
-                      circleButton("2 pm"),
-                      circleButton("4 pm"),
-                      circleButton("6 pm")
+                     
+                      circleButton("10 am",context,true),
+                      circleButton("12 pm",context,false),
+                      circleButton("2 pm",context,true),
+                      circleButton("4 pm",context,false),
+                      circleButton("6 pm",context,true),
+                      
                     ],)
                     
 
@@ -215,6 +197,24 @@ void popsheet(BuildContext context){
 
     
   }
+
+void popsheet(BuildContext context){
+  
+       showCupertinoModalBottomSheet(
+      isDismissible: true,
+      enableDrag: true,
+      expand: false,
+      backgroundColor: Colors.transparent, context: context,
+      //duration: Duration(milliseconds: 500),
+      builder: (context) => Container(
+        width: 100.w,
+        height: 60.h,
+        child: Spigottingsheet(),
+        
+       )
+      );
+    // );
+  }
   Widget carsouleview(List<String> imagesList,BuildContext context) {
     Dimentions dn = Dimentions(context);
     
@@ -254,13 +254,18 @@ void popsheet(BuildContext context){
 
 
 
-Widget circleButton(String time,){
+Widget circleButton(String time,BuildContext context,bool attendedstatus){
   return Column(
     children: [
-      const Padding(
-        padding: EdgeInsets.all(4.0),
-        child: CircleAvatar(
-          backgroundColor: admin_color,
+      GestureDetector(
+        onTap: (){
+                          popsheet(context);
+                        },
+        child: Padding(
+          padding: EdgeInsets.all(4.0),
+          child: CircleAvatar(
+            backgroundColor: attendedstatus?admin_color:whiteColor,
+          ),
         ),
       ),
       Text(time)

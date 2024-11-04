@@ -28,12 +28,6 @@ class _SpigottingsheetState extends State<Spigottingsheet> {
 
 Future updatestatus_spogoting()async{
   var apiUrl =updatestatusspogotingurl ;
-
-
-
-  
-    
-
       var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
 
       // Add fields to the request
@@ -41,7 +35,6 @@ Future updatestatus_spogoting()async{
         'patient_id': patient_id,
         'cough_or_breathlessness' : _groupValue==0?'YES':'NO',
         'breath_duration':Timingcontoller.text
-       
       });
 
      
@@ -93,7 +86,7 @@ void updatestatus()async{
      
 
       var response = await request.send();
-       var spogotingStatus = await updatestatus_spogoting();
+      var spogotingStatus = await updatestatus_spogoting();
 
       // Handle the response
       if (response.statusCode == 200) {
@@ -102,14 +95,14 @@ void updatestatus()async{
         print(data['msg']);
         if (data['Status'] && spogotingStatus) {
 
-          Navigator.of(context).pop();
+         // Navigator.of(context).pop();
 
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(data['msg']),
             backgroundColor: Colors.green[400],
           ));
         } else {
-          Navigator.of(context).pop();
+          //Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(data['message']),
             backgroundColor: Colors.red,

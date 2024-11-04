@@ -18,12 +18,6 @@ class Admindb extends StatelessWidget {
     'Vector',
     'Vector-1',
     'Vector-2',
-    // 'video.fill.badge.plus',
-    // 'Adddoctor',
-    // 'Addpatients',
-    // 'Doctor_list1',
-    // '2',
-
   ];
 
   List pages_name = [
