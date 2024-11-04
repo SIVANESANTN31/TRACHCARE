@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2024 at 07:59 PM
+-- Generation Time: Nov 04, 2024 at 05:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -66,9 +66,7 @@ CREATE TABLE `addpatients` (
 --
 
 INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `age`, `address`, `bmi`, `diagnosis`, `surgery_status`, `post_op_tracheostomy_day`, `tube_name_size`, `baseline_vitals`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `indication_of_tracheostomy`, `comorbidities`, `hemoglobin`, `sr_sodium`, `sr_potassium`, `sr_calcium`, `sr_bicarbonate`, `pt`, `aptt`, `inr`, `platelets`, `liver_function_test`, `renal_function_test`, `image_path`) VALUES
-('6273312345', '2433sudhar', 'sudhar', 'test@test2.com', '545564', '123', '45', 'adefsdvfsd', 'fsdvsdd', 'dfsd', 'fdfdsd', 'ssfdsfs', 'sdfdsf', 'ssfasdf', 'asffasf', 'asfsdfs', 'adfdssf', 'asfsdf', 'sddsf', 'sefrgeer', 'rgergh', 'fgdfhg', 'dfgdfgh', 'ffdb', 'dffdfbhth', 'bfdgheth', 'fgfgetg', 'dfghg', 'dfdgddh', 'fggh', '../uploads/patient_images/patient_6716867c4b98e7.63405046.jpg'),
-('6273312345', '56133siva', 'siva', 'test@test1.com', '4561', '456', '52', 'fjbjklfdb', 'ssfhsg', 'rghgskjh', 'gusdk;fh', 'ggsdk;v', 'ugsoifdv', 'jkgbkkv', 'avvsdjkvs', 'vb;ksdnvs', 'kgisdg', 'udfjksdg', 'ssdjbvkjsdb', 'dj\'dv', 'sdvksdbb', 'sbgfkjhsdb', 'jhg;sgd', 'sddgkgsdg', 'shf;ksdg', 'sd;;sg', 'jsjdfknsdg', 'sd;gs', 'gns;ukdf;sdd', 'b;sdv;', '../uploads/patient_images/patient_670e4599d11200.70515197.jpg'),
-('6273312345', '88965sudhar', 'sudhar', 'test@test.com', '874512', '123', '63', 'srtfghlj', 'nhgudkfhij', 'ygwdaefubgj;o', 'ghin', 'fhjid', 'sgrhstj', 'rterterhglk', 'rgnklnh\'', 'bgdbrg', 'djgbkjdbg', 'dgjbdklsng', 'gblkgn', 'gkbkjjbg', 'gdlgn', 'gbkjkbg', 'gbkjgb\'', 'jjblkg', 'dj,gbmjsdb', 'd,gbgjsbg', 'sddgbjgb', 'dgbjdbg', 'gbgmjbgl', 'bgkjkabdg', '../uploads/patient_images/patient_670d3dc06f4424.93944911.jpg');
+('1255161561561564564564564564', '53124siva', 'siva', 'test@test.com', '741856', '12345678', '51', 'gdfht', 'dhth', 'diohjdilh', 'jfiojds', 'sdhigfhsg', 'ksfgoiyfhb’', 'fx', 'fbufGBf', 'godjg', 'dfbklfdhbl', 'sdsgrag', 'fkjghfd', '‘bkdf;jbio', 'sgl’hbiofj', 'hbvklnf;lb', 'lbnkblvflb', 'aldsjgjfgl', 'fbkglifhgl', 'fglkh', 'dsvfh', 'fhtfhj', 'bvdfhb', 'fgjfgjd', '../uploads/patient_images/patient_671ca3130db878.42991464.jpg');
 
 --
 -- Triggers `addpatients`
@@ -88,7 +86,7 @@ VALUES (NEW.doctor_id, NEW.patient_id, NEW.username,NEW.email,NEW.phone_number,N
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `statusAdd` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO daily_stauts(doctorid,patient_id,status_10,status_12,status_2,status_4,status_6,issues)VALUES(NEW.doctor_id,NEW.patient_id,0,0,0,0,0,0)
+CREATE TRIGGER `statusAdd` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO daily_stauts(doctorid,patient_id,username,status_10,status_12,status_2,status_4,status_6,issues)VALUES(NEW.doctor_id,NEW.patient_id,NEW.username,0,0,0,0,0,0)
 $$
 DELIMITER ;
 
@@ -114,7 +112,7 @@ CREATE TABLE `adminlogin` (
 --
 
 INSERT INTO `adminlogin` (`id`, `doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`, `image_path`) VALUES
-(1, '12345', 'sstyam', '1452', 'johndoe@example.com', '1234567890', '123456', '../uploads/doctorimages/66f38971e18f5.jpg');
+(1, '12345', 'siva', '1452', 'john@example.com', '1234567', '1234', '../uploads/doctorimages/66f38971e18f5.jpg');
 
 -- --------------------------------------------------------
 
@@ -168,7 +166,8 @@ CREATE TABLE `daily_report` (
 
 INSERT INTO `daily_report` (`id`, `patient_id`, `date`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `daily_dressing_done`, `tracheostomy_tie_changed`, `suctioning_done`, `oral_feeds_started`, `changed_to_green_tube`, `able_to_breathe_through_nose`, `secretion_color_consistency`, `cough_or_breathlessness`, `breath_duration`, `image_path`, `created_at`, `updated_at`) VALUES
 (1, '123', '2024-10-02', 12, 34, 56, 'No', 'Yes', 'Yes', 'No', 'No', 'Yes', '50', 'No', 78, NULL, '2024-10-02 07:04:29', '2024-10-04 09:22:06'),
-(2, 'PAT10023John', '2024-10-02', 98, 87, 0, 'Yes', '', 'Yes', '', 'Yes', '', '', '', 0, '', '2024-10-02 07:12:26', '2024-10-02 07:12:26');
+(2, 'PAT10023John', '2024-10-02', 98, 87, 0, 'Yes', '', 'Yes', '', 'Yes', '', '', '', 0, '', '2024-10-02 07:12:26', '2024-10-02 07:12:26'),
+(4, '53124siva', '2024-10-26', 455, 52, 0, 'Yes', 'Yes', '', '', 'Yes', '', '', '', 0, '', '2024-10-26 08:36:32', '2024-10-26 08:36:32');
 
 -- --------------------------------------------------------
 
@@ -179,6 +178,7 @@ INSERT INTO `daily_report` (`id`, `patient_id`, `date`, `respiratory_rate`, `hea
 CREATE TABLE `daily_stauts` (
   `doctorid` varchar(255) NOT NULL,
   `patient_id` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `status_10` tinyint(1) NOT NULL,
   `status_12` tinyint(1) NOT NULL,
   `status_2` tinyint(1) NOT NULL,
@@ -191,12 +191,9 @@ CREATE TABLE `daily_stauts` (
 -- Dumping data for table `daily_stauts`
 --
 
-INSERT INTO `daily_stauts` (`doctorid`, `patient_id`, `status_10`, `status_12`, `status_2`, `status_4`, `status_6`, `issues`) VALUES
-('6273312345', '88965sudhar', 1, 0, 1, 0, 1, 0),
-('wertyuiqAWSEDRTGHI', 'AWSEDRTFGU', 0, 1, 1, 0, 0, 0),
-('aefrgrg', 'sfgdrh', 0, 0, 0, 0, 0, 0),
-('6273312345', '56133siva', 0, 0, 0, 0, 0, 0),
-('6273312345', '2433sudhar', 0, 0, 0, 0, 1, 0);
+INSERT INTO `daily_stauts` (`doctorid`, `patient_id`, `username`, `status_10`, `status_12`, `status_2`, `status_4`, `status_6`, `issues`) VALUES
+('1255161561561564564564564564', '17482surya', 'surya', 0, 0, 0, 0, 0, 0),
+('1255161561561564564564564564', '53124siva', 'siva', 0, 0, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -218,8 +215,7 @@ CREATE TABLE `doctorlogin` (
 --
 
 INSERT INTO `doctorlogin` (`doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`) VALUES
-('5707478965', 'Diane and', '78965', 'siva@test.com', '789654123', 'Siva@179564'),
-('6273312345', 'saranya', '12345', 'sranya@test.com', '145236987', '456');
+('1255161561561564564564564564', 'siva', '61561561564564564564564', 'test@test.com', '54645646', '12345678');
 
 -- --------------------------------------------------------
 
@@ -243,8 +239,7 @@ CREATE TABLE `doctorprofile` (
 --
 
 INSERT INTO `doctorprofile` (`doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`, `image_path`, `created_at`) VALUES
-('5707478965', 'Diane and', '78965', 'siva@test.com', '789654123', 'Siva@179564', '../uploads/doctorimages/67076c5b57c4e.png', '2024-10-10 05:55:39'),
-('6273312345', 'saranya', '12345', 'sranya@test.com', '145236987', '456', '../uploads/doctorimages/66ff985694a0f.png', '2024-10-04 07:25:10');
+('1255161561561564564564564564', 'siva', '61561561564564564564564', 'test@test.com', '54645646', '12345678', '../uploads/doctorimages/671c708de51b5.png', '2024-10-26 04:31:09');
 
 --
 -- Triggers `doctorprofile`
@@ -302,13 +297,7 @@ CREATE TABLE `patientlogin` (
 --
 
 INSERT INTO `patientlogin` (`doctor_id`, `patient_id`, `username`, `password`) VALUES
-(' 6273312345&', '88097sudharsanan&', 'sudharsanan&', '123&'),
-(' 6273312345&', '79650sudharsanan&', 'sudharsanan&', '123&'),
-('6273312345', '51448sdghjkl', 'sdghjkl', '12345'),
-('gerhes', 'asgfuiadg', 'kugdsughs', 'ajfhkshg'),
-('6273312345', '88965sudhar', 'sudhar', '123'),
-('6273312345', '56133siva', 'siva', '456'),
-('6273312345', '2433sudhar', 'sudhar', '123');
+('1255161561561564564564564564', '53124siva', 'siva', '12345678');
 
 -- --------------------------------------------------------
 
@@ -333,9 +322,7 @@ CREATE TABLE `patientprofile` (
 --
 
 INSERT INTO `patientprofile` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `image_path`, `created_at`, `updated_at`) VALUES
-('6273312345', '2433sudhar', 'sudhar', 'test@test2.com', '545564', '123', '../uploads/patient_images/patient_6716867c4b98e7.63405046.jpg', '2024-10-21 16:51:08', '2024-10-21 16:51:08'),
-('6273312345', '56133siva', 'siva', 'test@test1.com', '4561', '456', '../uploads/patient_images/patient_670e4599d11200.70515197.jpg', '2024-10-15 10:36:09', '2024-10-15 10:36:09'),
-('6273312345', '88965sudhar', 'sudhar', 'test@test.com', '874512', '123', '../uploads/patient_images/patient_670d3dc06f4424.93944911.jpg', '2024-10-14 15:50:24', '2024-10-14 15:50:24');
+('1255161561561564564564564564', '53124siva', 'siva', 'test@test.com', '741856', '12345678', '../uploads/patient_images/patient_671ca3130db878.42991464.jpg', '2024-10-26 08:06:43', '2024-10-26 08:06:43');
 
 -- --------------------------------------------------------
 
@@ -349,6 +336,13 @@ CREATE TABLE `patientvideotable` (
   `description` varchar(500) NOT NULL,
   `Video_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `patientvideotable`
+--
+
+INSERT INTO `patientvideotable` (`s.no`, `title`, `description`, `Video_url`) VALUES
+(15, 'sithappan', 'sivanesan videos', '../uploads/videos/29606WhatsApp Video 2024-10-03 at 2.17.31 PM-73C809E4-8284-4F52-A593-FBDA206ADD99.MP4');
 
 -- --------------------------------------------------------
 
@@ -368,7 +362,10 @@ CREATE TABLE `spiotting_status` (
 --
 
 INSERT INTO `spiotting_status` (`doctorid`, `patient_id`, `cough_or_breathlessness`, `breath_duration`) VALUES
-('6273312345', '2433sudhar', 'YES', '451');
+('1255161561561564564564564564', '17482surya', NULL, NULL),
+('1255161561561564564564564564', '34263fsyhrtj', NULL, NULL),
+('1255161561561564564564564564', '53124siva', NULL, NULL),
+('1255161561561564564564564564', '84508siba', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -402,6 +399,12 @@ ALTER TABLE `daily_report`
   ADD UNIQUE KEY `patient_id` (`patient_id`) USING BTREE;
 
 --
+-- Indexes for table `daily_stauts`
+--
+ALTER TABLE `daily_stauts`
+  ADD UNIQUE KEY `doctorid` (`doctorid`,`patient_id`);
+
+--
 -- Indexes for table `doctorlogin`
 --
 ALTER TABLE `doctorlogin`
@@ -418,6 +421,12 @@ ALTER TABLE `doctorprofile`
 --
 ALTER TABLE `medication_schedule`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `patientlogin`
+--
+ALTER TABLE `patientlogin`
+  ADD PRIMARY KEY (`patient_id`);
 
 --
 -- Indexes for table `patientprofile`
@@ -452,7 +461,7 @@ ALTER TABLE `adminlogin`
 -- AUTO_INCREMENT for table `daily_report`
 --
 ALTER TABLE `daily_report`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `medication_schedule`
@@ -464,20 +473,17 @@ ALTER TABLE `medication_schedule`
 -- AUTO_INCREMENT for table `patientvideotable`
 --
 ALTER TABLE `patientvideotable`
-  MODIFY `s.no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `s.no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 DELIMITER $$
 --
 -- Events
 --
-CREATE DEFINER=`root`@`localhost` EVENT `daily_stauts` ON SCHEDULE EVERY 1 DAY STARTS '2024-10-06 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts
-  SET stauts_10 = 0,status_12 =0 ,stauts_2=0,issues=0$$
+$$
 
-CREATE DEFINER=`root`@`localhost` EVENT `daily_stauts_issues_updates` ON SCHEDULE EVERY 2 HOUR STARTS '2024-10-06 22:53:21' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts
-  SET issues= 0$$
+$$
 
-CREATE DEFINER=`root`@`localhost` EVENT `spogotting_update` ON SCHEDULE EVERY 2 HOUR STARTS '2024-10-21 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE spiotting_status
-  SET cough_or_breathlessness=NULL,breath_duration=NULL$$
+$$
 
 DELIMITER ;
 COMMIT;

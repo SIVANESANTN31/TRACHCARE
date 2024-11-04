@@ -3,10 +3,10 @@
 include "../config/conn.php";
 $response = array();
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['patient_id'])){
-$id = $_GET['patient_id'];
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['doctorid'])){
+$id = $_GET['doctorid'];
 
-    $sql = "SELECT *FROM  daily_stauts WHERE patient_id = '$id'";
+    $sql = "SELECT *FROM  daily_stauts WHERE doctorid = '$id'AND issues!=0";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
