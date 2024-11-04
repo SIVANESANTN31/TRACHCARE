@@ -1,31 +1,25 @@
 <?php 
-include "..\config\conn.php";
-
-// Received JSON into $json variable
-$json = file_get_contents('php://input');
-
-// Decoding the received JSON and storing it in $obj variable
-$obj = json_decode($json, true);
+include "../config/conn.php";
 
 // Check if required fields are present in the request
-if (isset($obj["patient_id"])) {
+if (isset($_POST["patient_id"])) {
 
     // Escape variables for security
-    $patient_id = mysqli_real_escape_string($conn, $obj['patient_id']);
+    $patient_id = mysqli_real_escape_string($conn, $_POST['patient_id']);
     
-    $respiratory_rate = isset($obj['respiratory_rate']) ? mysqli_real_escape_string($conn, $obj['respiratory_rate']) : null;
-    $heart_rate = isset($obj['heart_rate']) ? mysqli_real_escape_string($conn, $obj['heart_rate']) : null;
-    $spo2_room_air = isset($obj['spo2_room_air']) ? mysqli_real_escape_string($conn, $obj['spo2_room_air']) : null;
-    $daily_dressing_done = isset($obj['daily_dressing_done']) ? mysqli_real_escape_string($conn, $obj['daily_dressing_done']) : null;
-    $tracheostomy_tie_changed = isset($obj['tracheostomy_tie_changed']) ? mysqli_real_escape_string($conn, $obj['tracheostomy_tie_changed']) : null;
-    $suctioning_done = isset($obj['suctioning_done']) ? mysqli_real_escape_string($conn, $obj['suctioning_done']) : null;
-    $oral_feeds_started = isset($obj['oral_feeds_started']) ? mysqli_real_escape_string($conn, $obj['oral_feeds_started']) : null;
-    $changed_to_green_tube = isset($obj['changed_to_green_tube']) ? mysqli_real_escape_string($conn, $obj['changed_to_green_tube']) : null;
-    $able_to_breathe_through_nose = isset($obj['able_to_breathe_through_nose']) ? mysqli_real_escape_string($conn, $obj['able_to_breathe_through_nose']) : null;
-    $secretion_color_consistency = isset($obj['secretion_color_consistency']) ? mysqli_real_escape_string($conn, $obj['secretion_color_consistency']) : null;
-    $cough_or_breathlessness = isset($obj['cough_or_breathlessness']) ? mysqli_real_escape_string($conn, $obj['cough_or_breathlessness']) : null;
-    $breath_duration = isset($obj['breath_duration']) ? mysqli_real_escape_string($conn, $obj['breath_duration']) : null;
-    $image_path = isset($obj['image_path']) ? mysqli_real_escape_string($conn, $obj['image_path']) : null;
+    $respiratory_rate = isset($_POST['respiratory_rate']) ? mysqli_real_escape_string($conn, $_POST['respiratory_rate']) : null;
+    $heart_rate = isset($_POST['heart_rate']) ? mysqli_real_escape_string($conn, $_POST['heart_rate']) : null;
+    $spo2_room_air = isset($_POST['spo2_room_air']) ? mysqli_real_escape_string($conn, $_POST['spo2_room_air']) : null;
+    $daily_dressing_done = isset($_POST['daily_dressing_done']) ? mysqli_real_escape_string($conn, $_POST['daily_dressing_done']) : null;
+    $tracheostomy_tie_changed = isset($_POST['tracheostomy_tie_changed']) ? mysqli_real_escape_string($conn, $_POST['tracheostomy_tie_changed']) : null;
+    $suctioning_done = isset($_POST['suctioning_done']) ? mysqli_real_escape_string($conn, $_POST['suctioning_done']) : null;
+    $oral_feeds_started = isset($_POST['oral_feeds_started']) ? mysqli_real_escape_string($conn, $_POST['oral_feeds_started']) : null;
+    $changed_to_green_tube = isset($_POST['changed_to_green_tube']) ? mysqli_real_escape_string($conn, $_POST['changed_to_green_tube']) : null;
+    $able_to_breathe_through_nose = isset($_POST['able_to_breathe_through_nose']) ? mysqli_real_escape_string($conn, $_POST['able_to_breathe_through_nose']) : null;
+    $secretion_color_consistency = isset($_POST['secretion_color_consistency']) ? mysqli_real_escape_string($conn, $_POST['secretion_color_consistency']) : null;
+    $cough_or_breathlessness = isset($_POST['cough_or_breathlessness']) ? mysqli_real_escape_string($conn, $_POST['cough_or_breathlessness']) : null;
+    $breath_duration = isset($_POST['breath_duration']) ? mysqli_real_escape_string($conn, $_POST['breath_duration']) : null;
+    $image_path = isset($_POST['image_path']) ? mysqli_real_escape_string($conn, $_POST['image_path']) : null;
 
     // Insert the new daily update into the daily_report table
     $insert_sql = "INSERT INTO daily_report (patient_id, respiratory_rate, heart_rate, spo2_room_air, daily_dressing_done, 
@@ -45,7 +39,7 @@ if (isset($obj["patient_id"])) {
 } else {
     // If required fields are missing, set the Status to false and provide a message
     $result['Status'] = false;
-    $result['message'] = "Required fields 'patient_id' and 'date' are missing.";
+    $result['message'] = "Required field 'patient_id' is missing.";
 }
 
 // Convert the result array into JSON format

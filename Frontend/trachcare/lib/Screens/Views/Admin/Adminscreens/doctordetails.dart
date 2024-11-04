@@ -12,6 +12,7 @@ import 'dart:convert';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
+import '../Bottomnavigator/Admindb.dart';
 
 class Doctordetails extends StatefulWidget {
   final String Doctor_id;
@@ -217,7 +218,7 @@ Future<dynamic> deleteDoctorDetails() async {
                                 Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => patientlist(doctor_id: widget.Doctor_id),),);
                               },
-                              textSize: 11),
+                              textSize: 10),
                             ],
                       ),
                       Padding(
@@ -231,7 +232,7 @@ Future<dynamic> deleteDoctorDetails() async {
                                 button_funcation: (){
                                   deleteDoctorDetails();
                                   Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Doctorlist(),),);
+                            builder: (context) => Admindb(),),);
                                 },
                                 textSize: 11),
                       ),

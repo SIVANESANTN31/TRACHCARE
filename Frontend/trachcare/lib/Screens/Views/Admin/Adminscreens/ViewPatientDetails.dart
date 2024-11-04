@@ -2,30 +2,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
-import 'package:trachcare/Screens/Views/Doctor/Bottomnavigator/patientslist.dart';
 import '../../../../Api/Apiurl.dart';
-// import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../components/NAppbar.dart';
-// import 'package:trachcare/components/NAppbar.dart';
-// import '../../../../components/profilefeild.dart';
 import '../../../../style/utils/Dimention.dart';
-import '../Bottomnavigator/Admindb.dart';
 
 class ViewPatientDetails extends StatefulWidget {
   final String patientId;
-  
-   // Optional, in case you want to pass the name
 
-
-  const ViewPatientDetails({super.key, required this.patientId, });
+  const ViewPatientDetails({super.key, required this.patientId});
   @override
   _ViewPatientDetailsState createState() => _ViewPatientDetailsState();
 }
 
 class _ViewPatientDetailsState extends State<ViewPatientDetails> {
-
-  
   Map<String, dynamic> patientDetails = {}; // To store fetched data
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -36,92 +27,111 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
   // Function to fetch patient details from the server
   Future<void> fetchPatientDetails() async {
     final String url = '$ViewPatientDetailsUrl?patient_id=${widget.patientId}';
-  try {
-    final response = await http.get(Uri.parse(url));
-
-    if (response.statusCode == 200) {
-       print(response.body);
-      final Map<String, dynamic> data = json.decode(response.body);
-      setState(() {
-        patientDetails = {
-          'name': data['name'] ,
-          'age': data['age'] ?? 'NIL',
-          'address': data['address'] ?? 'NIL',
-          'bmi': data['bmi'] ?? 'NIL',
-          'diagnosis': data['diagnosis'] ?? 'NIL',
-          'surgery_Status': data['surgery_status'] ?? 'NIL',
-          'postOpTracheostomyDay': data['post_op_tracheostomy_day'] ?? 'NIL',
-          'tubeNameSize': data['tube_name_size'] ?? 'NIL',
-          'baselineVitals': data['baseline_vitals'] ?? 'NIL',
-          'respiratoryRate': data['respiratory_rate'] ?? 'NIL',
-          'heartRate': data['heart_rate'] ?? 'NIL',
-          'spo2RoomAir': data['spo2_room_air'] ?? 'NIL',
-          'indicationOfTracheostomy': data['indication_of_tracheostomy'] ?? 'NIL',
-          'comorbidities': data['comorbidities'] ?? 'NIL',
-          'hemoglobin': data['hemoglobin'] ?? 'NIL',
-          'srSodium': data['sr_sodium'] ?? 'NIL',
-          'srPotassium': data['sr_potassium'] ?? 'NIL',
-          'srCalcium': data['sr_calcium'] ?? 'NIL',
-          'srBicarbonate': data['sr_bicarbonate'] ?? 'NIL',
-          'pt': data['pt'] ?? 'NIL',
-          'aptt': data['aptt'] ?? 'NIL',
-          'inr': data['inr'] ?? 'NIL',
-          'platelets': data['platelets'] ?? 'NIL',
-          'liverFunctionTest': data['liver_function_test'] ?? 'NIL',
-          'renalFunctionTest': data['renal_function_test'] ?? 'NIL',
-        };
-      });
-    } else {
-      print('Failed to load patient details');
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        setState(() {
+          patientDetails = {
+            'name': data['username'],
+            'age': data['age'] ?? 'NIL',
+            'address': data['address'] ?? 'NIL',
+            'bmi': data['bmi'] ?? 'NIL',
+            'diagnosis': data['diagnosis'] ?? 'NIL',
+            'surgeryStatus': data['surgery_status'] ?? 'NIL',
+            'postOpTracheostomyDay': data['post_op_tracheostomy_day'] ?? 'NIL',
+            'tubeNameSize': data['tube_name_size'] ?? 'NIL',
+            'baselineVitals': data['baseline_vitals'] ?? 'NIL',
+            'respiratoryRate': data['respiratory_rate'] ?? 'NIL',
+            'heartRate': data['heart_rate'] ?? 'NIL',
+            'spo2RoomAir': data['spo2_room_air'] ?? 'NIL',
+            'indicationOfTracheostomy': data['indication_of_tracheostomy'] ?? 'NIL',
+            'comorbidities': data['comorbidities'] ?? 'NIL',
+            'hemoglobin': data['hemoglobin'] ?? 'NIL',
+            'srSodium': data['sr_sodium'] ?? 'NIL',
+            'srPotassium': data['sr_potassium'] ?? 'NIL',
+            'srCalcium': data['sr_calcium'] ?? 'NIL',
+            'srBicarbonate': data['sr_bicarbonate'] ?? 'NIL',
+            'pt': data['pt'] ?? 'NIL',
+            'aptt': data['aptt'] ?? 'NIL',
+            'inr': data['inr'] ?? 'NIL',
+            'platelets': data['platelets'] ?? 'NIL',
+            'liverFunctionTest': data['liver_function_test'] ?? 'NIL',
+            'renalFunctionTest': data['renal_function_test'] ?? 'NIL',
+            'image': data['image_path'].toString().substring(2),
+          };
+        });
+      } else {
+        print('Failed to load patient details');
+      }
+    } catch (e) {
+      print('Error fetching patient details: $e');
     }
-  } catch (e) {
-    print('Error fetching patient details: $e');
   }
-}
 
   @override
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "Patient Details", height: dn.height(10), onTap: () {
+      appBar: NormalAppbar(
+        Title: "Patient Details",
+        height: dn.height(10),
+        onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => patients_list(),
           ));
-        },),
+        },
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: patientDetails.isNotEmpty
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildTextView('Name', patientDetails['name'] as String?),
-                    buildTextView('Age', patientDetails['age'] as String?),
-                    buildTextView('Address', patientDetails['address'] as String?),
-                    buildTextView('BMI', patientDetails['bmi'] as String?),
-                    buildTextView('Diagnosis', patientDetails['diagnosis'] as String?),
-                    buildTextView('Surgery Status', patientDetails['surgeryStatus'] as String?),
-                    buildTextView('Post-Op Tracheostomy Day', patientDetails['postOpTracheostomyDay'] as String?),
-                    buildTextView('Tube Name and Size', patientDetails['tubeNameSize'] as String?),
-                    buildTextView('Baseline Vitals', patientDetails['baselineVitals'] as String?),
-                    buildTextView('Respiratory Rate', patientDetails['respiratoryRate'] as String?),
-                    buildTextView('Heart Rate', patientDetails['heartRate'] as String?),
-                    buildTextView('SPO2 @ Room Air', patientDetails['spo2RoomAir'] as String?),
-                    buildTextView('Indication of Tracheostomy', patientDetails['indicationOfTracheostomy'] as String?),
-                    buildTextView('Comorbidities', patientDetails['comorbidities'] as String?),
-                    buildTextView('Hemoglobin', patientDetails['hemoglobin'] as String?),
-                    buildTextView('Sr. Sodium', patientDetails['srSodium'] as String?),
-                    buildTextView('Sr. Potassium', patientDetails['srPotassium'] as String?),
-                    buildTextView('Sr. Calcium', patientDetails['srCalcium'] as String?),
-                    buildTextView('Sr. Bicarbonate', patientDetails['srBicarbonate'] as String?),
-                    buildTextView('Sr. Bicarbonate', patientDetails['srBicarbonate'] as String?),
-                    buildTextView('PT', patientDetails['pt'] as String?),
-                    buildTextView('APTT', patientDetails['aptt'] as String?),
-                    buildTextView('INR', patientDetails['inr'] as String?),
-                    buildTextView('Platelets', patientDetails['platelets'] as String?),
-                    buildTextView('Liver Function Test', patientDetails['liverFunctionTest'] as String?),
-                    buildTextView('Renal Function Test', patientDetails['renalFunctionTest'] as String?),
-                  ],
+              ? Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      
+                        Center(
+                          child: Image.network(
+                            "https://$ip/Trachcare/$patientDetails[image]",
+                            height: 100,
+                            width: 100,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Icon(Icons.person, size: 100);
+                            },
+                          ),
+                        ),
+                      SizedBox(height: 20),
+                      buildFormField('Name', patientDetails['name']),
+                      buildFormField('Age', patientDetails['age']),
+                      buildFormField('Address', patientDetails['address']),
+                      buildFormField('BMI', patientDetails['bmi']),
+                      buildFormField('Diagnosis', patientDetails['diagnosis']),
+                      buildFormField('Surgery Status', patientDetails['surgeryStatus']),
+                      buildFormField('Post-Op Tracheostomy Day', patientDetails['postOpTracheostomyDay']),
+                      buildFormField('Tube Name and Size', patientDetails['tubeNameSize']),
+                      buildFormField('Baseline Vitals', patientDetails['baselineVitals']),
+                      buildFormField('Respiratory Rate', patientDetails['respiratoryRate']),
+                      buildFormField('Heart Rate', patientDetails['heartRate']),
+                      buildFormField('SPO2 @ Room Air', patientDetails['spo2RoomAir']),
+                      buildFormField('Indication of Tracheostomy', patientDetails['indicationOfTracheostomy']),
+                      buildFormField('Comorbidities', patientDetails['comorbidities']),
+                      buildFormField('Hemoglobin', patientDetails['hemoglobin']),
+                      buildFormField('Sr. Sodium', patientDetails['srSodium']),
+                      buildFormField('Sr. Potassium', patientDetails['srPotassium']),
+                      buildFormField('Sr. Calcium', patientDetails['srCalcium']),
+                      buildFormField('Sr. Bicarbonate', patientDetails['srBicarbonate']),
+                      buildFormField('PT', patientDetails['pt']),
+                      buildFormField('APTT', patientDetails['aptt']),
+                      buildFormField('INR', patientDetails['inr']),
+                      buildFormField('Platelets', patientDetails['platelets']),
+                      buildFormField('Liver Function Test', patientDetails['liverFunctionTest']),
+                      buildFormField('Renal Function Test', patientDetails['renalFunctionTest']),
+                      SizedBox(height: dn.height(10)),
+                    ],
+                  ),
                 )
               : const Center(child: CircularProgressIndicator()), // Show a loading spinner while fetching data
         ),
@@ -129,18 +139,18 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
     );
   }
 
-  // Function to build a text display for each field
-  Widget buildTextView(String label, String? value) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 10.0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text('$label:', style: const TextStyle(fontWeight: FontWeight.bold)),
-        Text(value ?? 'Not available'), // Provide a default text if value is null
-      ],
-    ),
-  );
-}
-
+  // Function to build a form field for each patient detail
+  Widget buildFormField(String label, String? initialValue) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: TextFormField(
+        initialValue: initialValue ?? 'Not available',
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(),
+        ),
+        readOnly: true, // Set to false if you want to allow editing
+      ),
+    );
+  }
 }

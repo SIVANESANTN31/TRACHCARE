@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2024 at 05:42 AM
+-- Generation Time: Nov 04, 2024 at 07:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -73,6 +73,26 @@ INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `username`, `email`, `phon
 --
 DELIMITER $$
 CREATE TRIGGER `Add_spogotting` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO spiotting_status(doctorid,patient_id) VALUES(NEW.doctor_id,NEW.patient_id)
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `deletelogin` AFTER DELETE ON `addpatients` FOR EACH ROW DELETE FROM patientlogin
+WHERE patient_id = OLD.patient_id
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `deletepatients` AFTER DELETE ON `addpatients` FOR EACH ROW DELETE FROM patientprofile
+WHERE patient_id = OLD.patient_id
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `deletespigotting` AFTER DELETE ON `addpatients` FOR EACH ROW DELETE FROM spiotting_status
+WHERE patient_id = OLD.patient_id
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `deletestatus` AFTER DELETE ON `addpatients` FOR EACH ROW DELETE FROM daily_stauts
+WHERE patient_id = OLD.patient_id
 $$
 DELIMITER ;
 DELIMITER $$
@@ -152,7 +172,7 @@ CREATE TABLE `daily_report` (
   `oral_feeds_started` enum('Yes','No') DEFAULT 'No',
   `changed_to_green_tube` enum('Yes','No') DEFAULT 'No',
   `able_to_breathe_through_nose` enum('Yes','No') DEFAULT 'No',
-  `secretion_color_consistency` varchar(50) DEFAULT NULL,
+  `secretion_color_consistency` varchar(255) DEFAULT NULL,
   `cough_or_breathlessness` enum('Yes','No') DEFAULT 'No',
   `breath_duration` int(11) DEFAULT NULL,
   `image_path` varchar(255) DEFAULT NULL,
@@ -165,9 +185,18 @@ CREATE TABLE `daily_report` (
 --
 
 INSERT INTO `daily_report` (`id`, `patient_id`, `date`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `daily_dressing_done`, `tracheostomy_tie_changed`, `suctioning_done`, `oral_feeds_started`, `changed_to_green_tube`, `able_to_breathe_through_nose`, `secretion_color_consistency`, `cough_or_breathlessness`, `breath_duration`, `image_path`, `created_at`, `updated_at`) VALUES
-(1, '123', '2024-10-02', 12, 34, 56, 'No', 'Yes', 'Yes', 'No', 'No', 'Yes', '50', 'No', 78, NULL, '2024-10-02 07:04:29', '2024-10-04 09:22:06'),
-(2, 'PAT10023John', '2024-10-02', 98, 87, 0, 'Yes', '', 'Yes', '', 'Yes', '', '', '', 0, '', '2024-10-02 07:12:26', '2024-10-02 07:12:26'),
-(4, '53124siva', '2024-10-26', 455, 52, 0, 'Yes', 'Yes', '', '', 'Yes', '', '', '', 0, '', '2024-10-26 08:36:32', '2024-10-26 08:36:32');
+(23, '53124siva', '2024-11-04', 20, 75, 98, 'Yes', 'No', 'Yes', 'Yes', 'No', 'Yes', 'Clear', 'Yes', 10, '/images/example.jpg', '2024-11-04 18:10:29', '2024-11-04 18:10:29');
+
+--
+-- Triggers `daily_report`
+--
+DELIMITER $$
+CREATE TRIGGER `add_spigotting` AFTER INSERT ON `daily_report` FOR EACH ROW UPDATE spiotting_status
+SET cough_or_breathlessness = NEW.cough_or_breathlessness,
+    breath_duration = NEW.breath_duration
+WHERE patient_id = NEW.patient_id
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -192,8 +221,7 @@ CREATE TABLE `daily_stauts` (
 --
 
 INSERT INTO `daily_stauts` (`doctorid`, `patient_id`, `username`, `status_10`, `status_12`, `status_2`, `status_4`, `status_6`, `issues`) VALUES
-('1255161561561564564564564564', '17482surya', 'surya', 0, 0, 0, 0, 0, 0),
-('1255161561561564564564564564', '53124siva', 'siva', 0, 0, 0, 0, 0, 1);
+('1255161561561564564564564564', '53124siva', 'siva', 0, 0, 1, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -209,13 +237,6 @@ CREATE TABLE `doctorlogin` (
   `phone_number` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `doctorlogin`
---
-
-INSERT INTO `doctorlogin` (`doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`) VALUES
-('1255161561561564564564564564', 'siva', '61561561564564564564564', 'test@test.com', '54645646', '12345678');
 
 -- --------------------------------------------------------
 
@@ -235,15 +256,13 @@ CREATE TABLE `doctorprofile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `doctorprofile`
---
-
-INSERT INTO `doctorprofile` (`doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`, `image_path`, `created_at`) VALUES
-('1255161561561564564564564564', 'siva', '61561561564564564564564', 'test@test.com', '54645646', '12345678', '../uploads/doctorimages/671c708de51b5.png', '2024-10-26 04:31:09');
-
---
 -- Triggers `doctorprofile`
 --
+DELIMITER $$
+CREATE TRIGGER `deletedoctor` AFTER INSERT ON `doctorprofile` FOR EACH ROW DELETE FROM doctorlogin
+WHERE doctor_id = NEW.doctor_id
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `insertdoc` AFTER INSERT ON `doctorprofile` FOR EACH ROW INSERT INTO doctorlogin (doctor_id, username, doctor_reg_no, email, phone_number, password)
 VALUES (NEW.doctor_id,NEW.username,NEW.doctor_reg_no,NEW.email,NEW.phone_number,NEW.password)
@@ -324,6 +343,15 @@ CREATE TABLE `patientprofile` (
 INSERT INTO `patientprofile` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `image_path`, `created_at`, `updated_at`) VALUES
 ('1255161561561564564564564564', '53124siva', 'siva', 'test@test.com', '741856', '12345678', '../uploads/patient_images/patient_671ca3130db878.42991464.jpg', '2024-10-26 08:06:43', '2024-10-26 08:06:43');
 
+--
+-- Triggers `patientprofile`
+--
+DELIMITER $$
+CREATE TRIGGER `deletepatientlogin` AFTER DELETE ON `patientprofile` FOR EACH ROW DELETE FROM patientlogin
+WHERE patient_id = OLD.patient_id
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -334,15 +362,17 @@ CREATE TABLE `patientvideotable` (
   `s.no` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` varchar(500) NOT NULL,
-  `Video_url` varchar(255) DEFAULT NULL
+  `Video_url` varchar(255) DEFAULT NULL,
+  `Thumbnail_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `patientvideotable`
 --
 
-INSERT INTO `patientvideotable` (`s.no`, `title`, `description`, `Video_url`) VALUES
-(15, 'sithappan', 'sivanesan videos', '../uploads/videos/29606WhatsApp Video 2024-10-03 at 2.17.31 PM-73C809E4-8284-4F52-A593-FBDA206ADD99.MP4');
+INSERT INTO `patientvideotable` (`s.no`, `title`, `description`, `Video_url`, `Thumbnail_url`) VALUES
+(18, 'tracheostomy tie', 'How to change tracheostomy ties', '../uploads/videos/98109WhatsApp Video 2024-11-02 at 20.13.16_304640a2.mp4', '../uploads/thumbnails/98109How to succeed.png'),
+(19, 'siva', 'sivanesnsdoffical@gmail.com DS ', '../uploads/videos/80288video_20240923_103030.mp4', '../uploads/thumbnails/80288JPEG_20241104_184008_8953127561332246377.jpg');
 
 -- --------------------------------------------------------
 
@@ -362,10 +392,18 @@ CREATE TABLE `spiotting_status` (
 --
 
 INSERT INTO `spiotting_status` (`doctorid`, `patient_id`, `cough_or_breathlessness`, `breath_duration`) VALUES
-('1255161561561564564564564564', '17482surya', NULL, NULL),
-('1255161561561564564564564564', '34263fsyhrtj', NULL, NULL),
-('1255161561561564564564564564', '53124siva', NULL, NULL),
-('1255161561561564564564564564', '84508siba', NULL, NULL);
+('1255161561561564564564564564', '53124siva', 'yes', '10 ');
+
+--
+-- Triggers `spiotting_status`
+--
+DELIMITER $$
+CREATE TRIGGER `updatetoDR` BEFORE INSERT ON `spiotting_status` FOR EACH ROW UPDATE daily_report
+SET cough_or_breathlessness = NEW.cough_or_breathlessness,
+    breath_duration = NEW.breath_duration
+WHERE patient_id = NEW.patient_id
+$$
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
@@ -461,7 +499,7 @@ ALTER TABLE `adminlogin`
 -- AUTO_INCREMENT for table `daily_report`
 --
 ALTER TABLE `daily_report`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `medication_schedule`
@@ -473,7 +511,7 @@ ALTER TABLE `medication_schedule`
 -- AUTO_INCREMENT for table `patientvideotable`
 --
 ALTER TABLE `patientvideotable`
-  MODIFY `s.no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `s.no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 DELIMITER $$
 --

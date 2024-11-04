@@ -1,44 +1,51 @@
 <?php 
+include "../config/conn.php";
 
-include "..\config\conn.php";
+// Check if the patient_id and date are provided
+if (isset($_GET["patient_id"]) && isset($_GET["date"])) {
+    // Escape the input for security
+    $patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
+    $date = mysqli_real_escape_string($conn, $_GET['date']);
+    
+    // Validate date format (optional, can be adjusted as needed)
+    if (DateTime::createFromFormat('Y-m-d', $date) === false) {
+        $response['Status'] = false;
+        $response['message'] = "Invalid date format. Please use 'YYYY-MM-DD'.";
+        echo json_encode($response);
+        exit;
+    }
 
-// Received JSON into $json variable
-$json = file_get_contents('php://input');
-
-// Decoding the received JSON and storing it in $obj variable
-$obj = json_decode($json, true);
-
-// Check if required fields are present in the request
-if (isset($obj["name"]) && isset($obj["date"])) {
-
-    // Escape variables for security
-    $name = mysqli_real_escape_string($conn, $obj['name']);
-    $date = mysqli_real_escape_string($conn, $obj['date']);
-
-    // Query to select the details of the patient for the given date
-    $select_sql = "SELECT * FROM daily_report WHERE name = '$name' AND DATE(created_at) = '$date'";
-    $result = $conn->query($select_sql);
+    // SQL query to fetch daily reports for the given patient_id and date
+    $query = "SELECT * FROM daily_report WHERE patient_id = '$patient_id' AND DATE(created_at) = '$date' ORDER BY created_at DESC";
+    
+    $result = $conn->query($query);
+    
+    // Initialize an array to hold the data
+    $daily_reports = [];
 
     if ($result->num_rows > 0) {
-        // Fetch the data and prepare it for JSON output
-        $row = $result->fetch_assoc();
-        $output['Status'] = true;
-        $output['data'] = $row;
+        // Fetch all daily reports
+        while ($row = $result->fetch_assoc()) {
+            $daily_reports[] = $row;
+        }
+        // Set the response status and message
+        $response['Status'] = true;
+        $response['message'] = "Daily reports retrieved successfully.";
+        $response['data'] = $daily_reports; // Add the fetched data
     } else {
-        // If no record exists, return an error
-        $output['Status'] = false;
-        $output['message'] = "No record found for the given patient and date.";
+        // If no reports are found for the given date
+        $response['Status'] = false;
+        $response['message'] = "No daily reports found for the given patient ID on the specified date.";
     }
 } else {
-    // If required fields are missing, set the Status to false and provide a message
-    $output['Status'] = false;
-    $output['message'] = "Required fields 'name' and 'date' are missing.";
+    // If required fields are missing
+    $response['Status'] = false;
+    $response['message'] = "Required fields 'patient_id' and 'date' are missing.";
 }
 
-// Convert the result array into JSON format
-$json_data = json_encode($output);
+// Convert the response array into JSON format
+$json_data = json_encode($response);
 
 // Echo the JSON data
 echo $json_data;
-
 ?>

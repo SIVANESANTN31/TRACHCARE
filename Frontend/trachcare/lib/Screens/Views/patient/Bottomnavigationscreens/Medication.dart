@@ -4,8 +4,7 @@ import "package:sizer/sizer.dart";
 import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/style/colors.dart";
 import "../../../../style/utils/Dimention.dart";
-
-import "../../Doctor/doctorscreens/patientreport.dart";
+import "../patientscreens/dailyReports.dart";
 import "../patientscreens/dailyupdates copy.dart";
 
 class MedicationPage extends StatelessWidget {
