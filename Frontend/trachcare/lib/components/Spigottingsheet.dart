@@ -95,14 +95,14 @@ void updatestatus()async{
         print(data['msg']);
         if (data['Status'] && spogotingStatus) {
 
-         // Navigator.of(context).pop();
+         Navigator.of(context).pop();
 
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(data['msg']),
             backgroundColor: Colors.green[400],
           ));
         } else {
-          //Navigator.of(context).pop();
+          Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(data['message']),
             backgroundColor: Colors.red,

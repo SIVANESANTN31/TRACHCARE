@@ -16,15 +16,14 @@ import '../../../../Api/Apiurl.dart';
 import '../../../../style/utils/Dimention.dart';
 import '../patientscreens/patientprofile.dart';
 
-class PatientDashBoard extends StatelessWidget {
+class PatientDashBoard extends StatefulWidget {
    const PatientDashBoard({super.key});
 
+  @override
+  State<PatientDashBoard> createState() => _PatientDashBoardState();
+}
 
-
-
-
-
-
+class _PatientDashBoardState extends State<PatientDashBoard> {
   @override
   Widget build(BuildContext context) {
 List<String> notificationlist = [];
@@ -60,6 +59,14 @@ print(notificationlist.isNotEmpty);
 }
 
 
+    
+Future<void> onRefresh() async{
+  await Future.delayed(Duration(milliseconds: 1000));
+  
+  setState(() {
+    
+  });
+}
 
 
 
@@ -84,6 +91,7 @@ print(notificationlist.isNotEmpty);
             var status = snapshot.data['status'];
            check_status(status);
           
+          
             var name  = patientDetials['username'].toString();
             var imagepath = patientDetials["image_path"].toString().substring(2);
 
@@ -97,59 +105,65 @@ print(notificationlist.isNotEmpty);
         Navigator.of(context).push(MaterialPageRoute(
                                builder: (context) => p_ProfilePage(),),);},),
        
-              body: SingleChildScrollView(
-                child: Column(
+              body: RefreshIndicator.adaptive(
+                onRefresh: onRefresh,
+                color: CupertinoColors.systemBlue,
+                child: ListView(
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Gap(3.h),
                     Positioned(
-              top: 500.0, // Position from the top of the screen
-              left: 25.0, // Position from the left of the screen
-              right: 25.0, // Position from the right of the screen
-              child: Container(
-                width: dn.width(90),
-                height: dn.height(20),
-    
-                decoration: BoxDecoration(
-                  color: whiteColor,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                   color: BlackColor_light,
-                    blurRadius: 4.0,
-                   ),
-                  ]
-                ),
-                child: Column(
-                  children: [
+                              top: 500.0, // Position from the top of the screen
+                              left: 25.0, // Position from the left of the screen
+                              right: 25.0, 
+                             // width: dn.width(50),// Position from the right of the screen
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                child: Container(
+                                                width: dn.width(90),
+                                                height: dn.height(20),
+                                                  
+                                                decoration: BoxDecoration(
+                                                  color: whiteColor,
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                   color: BlackColor_light,
+                                                    blurRadius: 4.0,
+                                                   ),
+                                                  ]
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Text("Spigotting Status : How long the patient can able to breath ?",textAlign: TextAlign.justify,style: GoogleFonts.ibmPlexSans(
+                                                          textStyle: TextStyle(
+                                fontSize: 13.sp,))
+                                        ,),
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      children: [
+                                                     
+                                                      circleButton("10 am",context,status['status_10']=='1'?true:false),
+                                                      circleButton("12 pm",context,status['status_12']=='1'?true:false),
+                                                      circleButton("2 pm",context,status['status_2']=='1'?true:false),
+                                                      circleButton("4 pm",context,status['status_4']=='1'?true:false),
+                                                      circleButton("6 pm",context,status['status_6']=='1'?true:false),
+                                                      
+                                                    ],)
+                                                    
+                                
+                                
+                                                  ],
+                                                )
+                                ),
+                              ),
+                          ),
+                          Gap(3.h),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("Spigotting Status : How long the patient can able to breath ?",textAlign: TextAlign.justify,style: GoogleFonts.ibmPlexSans(
-                          textStyle: TextStyle(
-                              fontSize: 13.sp,))
-                                      ,),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                     
-                      circleButton("10 am",context,true),
-                      circleButton("12 pm",context,false),
-                      circleButton("2 pm",context,true),
-                      circleButton("4 pm",context,false),
-                      circleButton("6 pm",context,true),
-                      
-                    ],)
-                    
-
-
-                  ],
-                )
-              ),
-            ),
-            Gap(3.h),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Container(
                         width: dn.width(100),
                         height: dn.height(10),
@@ -215,6 +229,7 @@ void popsheet(BuildContext context){
       );
     // );
   }
+
   Widget carsouleview(List<String> imagesList,BuildContext context) {
     Dimentions dn = Dimentions(context);
     
@@ -251,9 +266,6 @@ void popsheet(BuildContext context){
         
   }
 
-
-
-
 Widget circleButton(String time,BuildContext context,bool attendedstatus){
   return Column(
     children: [
@@ -263,9 +275,12 @@ Widget circleButton(String time,BuildContext context,bool attendedstatus){
                         },
         child: Padding(
           padding: EdgeInsets.all(4.0),
-          child: CircleAvatar(
-            backgroundColor: attendedstatus?admin_color:whiteColor,
-          ),
+          child: attendedstatus?CircleAvatar(
+            child: Icon(CupertinoIcons.checkmark_alt,color: whiteColor,
+            ),
+            backgroundColor: CupertinoColors.systemGreen,
+          ):CircleAvatar(backgroundColor: CupertinoColors.tertiaryLabel,
+          child: Icon(CupertinoIcons.circle_fill,color: whiteColor,size: 30,),)
         ),
       ),
       Text(time)
