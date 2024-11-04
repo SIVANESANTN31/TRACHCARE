@@ -4,6 +4,7 @@ import 'package:trachcare/Api/API_funcation/VideoApi.dart';
 import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/VideoPlayer_screen.dart';
 import 'package:trachcare/style/colors.dart';
 import 'package:trachcare/style/utils/Dimention.dart';
+import '../../../../Api/Apiurl.dart';
 import '../../../../components/Appbar_copy.dart';
 import '../../../../style/Tropography.dart';
 
@@ -72,7 +73,7 @@ class _VideolistState extends State<Videolist> {
                                                 )));
                                   },
                                   child: Videocard(
-                                    data[index]["Thumbnail_url"].toString(),
+                                    data[index]["Thumbnail_url"].toString().substring(2),
                                     data[index]["title"].toString(),
                                   )),
                             );
@@ -95,42 +96,45 @@ class _VideolistState extends State<Videolist> {
   }
 
   Widget Videocard(String thumbnailUrl, String videoTitle) {
+    print(thumbnailUrl);
     Dimentions dn = Dimentions(context);
-    return Container(
-      width: dn.width(78),
-      height: dn.height(25),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: const Color.fromARGB(255, 97, 97, 97)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Stack(alignment: Alignment.center, children: [
-            SizedBox(
-              width: dn.width(100),
-              height: dn.height(19),
-              child: Image.network(
-                thumbnailUrl,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Thumbnail
+        Image.network(
+          "https://$ip/Trachcare/$thumbnailUrl",
+          width: double.infinity,
+          height: 200,
+          fit: BoxFit.cover,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      videoTitle,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const CircleAvatar(
-              backgroundColor: Colors.black45,
-              child: Icon(
-                Icons.play_arrow,
-                color: whiteColor,
-              ),
-            ),
-          ]),
-          Center(
-            child: Text(
-              videoTitle,
-              style: Normal,
-              textAlign: TextAlign.justify,
-            ),
+            ],
           ),
-        ],
-      ),
-    );
+        ),
+        Divider(),
+      ],
+    );  
   }
 }

@@ -12,66 +12,99 @@ if($method=="POST"){
 
  }
 
-
-function uploadvideos($conn){
-
+ function uploadvideos($conn) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Define the directory where videos will be stored
         $title = $_POST['title'];
         $description = $_POST['description'];
-        $uploadDir = '../uploads/videos/';
+        $uploadVideoDir = '../uploads/videos/';
+        $uploadThumbnailDir = '../uploads/thumbnails/';
         $result = [];
-        // Get the uploaded file information
+
+        // Ensure directories exist
+        if (!is_dir($uploadVideoDir)) {
+            mkdir($uploadVideoDir, 0777, true);
+        }
+        if (!is_dir($uploadThumbnailDir)) {
+            mkdir($uploadThumbnailDir, 0777, true);
+        }
+
+        // Check if both video and thumbnail files were uploaded
+        if (!isset($_FILES['videoFile']) || !isset($_FILES['thumbnailImage'])) {
+            echo json_encode(["status" => false, "msg" => "Video or thumbnail file is missing."]);
+            exit;
+        }
+
+        // Get the uploaded video file information
         $videoFile = $_FILES['videoFile'];
         $videoName = basename($videoFile['name']);
-        $id= rand(100, 100000);
-        $uploadFilePath = $uploadDir . (string)$id . $videoName ;
+        $id = rand(100, 100000);
+        $uploadVideoPath = $uploadVideoDir . (string)$id . $videoName;
 
-       
-        // Validate the file type
-        $allowedTypes = ['video/mp4', 'video/avi', 'video/mov', 'video/mkv'];
-        $fileType = mime_content_type($videoFile['tmp_name']);
+        // Validate video and thumbnail types (remaining code)
+
+        // Allowed video types by MIME and extension
+        $allowedVideoTypes = ['video/mp4', 'video/avi', 'video/mov', 'video/mkv'];
+        $allowedVideoExtensions = ['mp4', 'avi', 'mov', 'mkv'];
+
+        // Validate the video file type by MIME and extension
+        $videoFileType = mime_content_type($videoFile['tmp_name']);
+        $videoFileExtension = strtolower(pathinfo($videoFile['name'], PATHINFO_EXTENSION));
         
-        if (!in_array($fileType, $allowedTypes)) {
+        if (!in_array($videoFileType, $allowedVideoTypes) && 
+            !($videoFileType === 'application/octet-stream' && in_array($videoFileExtension, $allowedVideoExtensions))) {
             echo json_encode(["status" => false, "msg" => "Invalid video format. Only MP4, AVI, MOV, and MKV are allowed."]);
             exit;
         }
-    
-        // Check if the file is a valid video
-        if (move_uploaded_file($videoFile['tmp_name'], $uploadFilePath)) {
 
-            $sql = "INSERT INTO patientvideotable 
-             (title,description,Video_url) VALUES ('$title','$description','$uploadFilePath')" ;
-           
+        // Get the uploaded thumbnail file information
+        $thumbnailFile = $_FILES['thumbnailImage'];
+        $thumbnailName = basename($thumbnailFile['name']);
+        $uploadThumbnailPath = $uploadThumbnailDir . (string)$id . $thumbnailName;
 
-    // Prepare the statement
-    $stmt = $conn->prepare($sql);
+        // Allowed image types by MIME and extension
+        $allowedImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        $allowedImageExtensions = ['jpeg', 'jpg', 'png'];
 
-    if ($stmt === false) {
-        die("Error preparing statement: " . $conn->error);
-    }
+        // Validate the thumbnail file type by MIME and extension
+        $thumbnailFileType = mime_content_type($thumbnailFile['tmp_name']);
+        $thumbnailFileExtension = strtolower(pathinfo($thumbnailFile['name'], PATHINFO_EXTENSION));
 
-    // Execute the statement
-    if ($stmt->execute()) {
-        $result['Status'] = true;
-        $result['message'] = "Video uploaded successfully.";
-    } else {
-        $result['Status'] = false;
-        $result['message'] = "Error updating video details: " . $stmt->error;
-    }
+        if (!in_array($thumbnailFileType, $allowedImageTypes) &&
+            !($thumbnailFileType === 'application/octet-stream' && in_array($thumbnailFileExtension, $allowedImageExtensions))) {
+            echo json_encode(["status" => false, "msg" => "Invalid thumbnail format. Only JPEG, PNG, and JPG are allowed."]);
+            exit;
+        }
 
-    // Close the statement
-    $stmt->close();
-            // Success: Return JSON response
+
+        // Move both files to their respective directories
+        if (move_uploaded_file($videoFile['tmp_name'], $uploadVideoPath) &&
+            move_uploaded_file($_FILES['thumbnailImage']['tmp_name'], $uploadThumbnailPath)) {
+
+            // Insert video and thumbnail data into the database
+            $sql = "INSERT INTO patientvideotable (title, description, Video_url, Thumbnail_url) VALUES ('$title', '$description', '$uploadVideoPath', '$uploadThumbnailPath')";
+            
+            $stmt = $conn->prepare($sql);
+
+            if ($stmt === false) {
+                die("Error preparing statement: " . $conn->error);
+            }
+
+            if ($stmt->execute()) {
+                $result['status'] = true;
+                $result['message'] = "Video and thumbnail uploaded successfully.";
+            } else {
+                $result['status'] = false;
+                $result['message'] = "Error updating video details: " . $stmt->error;
+            }
+
+            $stmt->close();
             echo json_encode($result);
         } else {
-            // Failure: Return JSON response
-            echo json_encode(["status" => false, "msg" => "Failed to upload video."]);
+            echo json_encode(["status" => false, "msg" => "Failed to upload video or thumbnail."]);
         }
     } else {
         echo json_encode(["status" => false, "msg" => "Invalid request method."]);
     }
-
 }
 
 
