@@ -8,11 +8,9 @@ import "../../../../Api/Apiurl.dart";
 import "../../../../Api/DataStore/Datastore.dart";
 import "../../../../components/custom_button.dart";
 import "../../../../style/colors.dart";
-// import "../../../../style/utils/Dimention.dart";
 import 'package:http/http.dart' as http;
-
 import "editprofile.dart";
-// import 'package:onboarding/utils/profilefield.dart';
+
 class a_ProfilePage extends StatefulWidget {
   
 a_ProfilePage( {super.key, });

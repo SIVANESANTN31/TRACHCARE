@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 import 'package:toastification/toastification.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
-import 'package:trachcare/Screens/Views/Admin/Adminscreens/videolist.dart';
+
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
@@ -20,72 +20,89 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   String? _filePath;
+  String? _thumbnailPath;
 
   String get doctorId => Doctor_id;
-
   String get patientId => patient_id;
 
   Future<void> _pickFile() async {
-    // Validate the form first before allowing file selection
     if (_formKey.currentState!.validate()) {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.video);
 
       if (result != null) {
         setState(() {
           _filePath = result.files.single.path;
         });
-        print('File path: $_filePath');
+        print('Video file path: $_filePath');
       } else {
-        print('No file selected');
+        print('No video file selected');
       }
     } else {
-      // Show error message if form validation fails
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please fill in all fields before selecting a video file.')),
       );
     }
   }
 
+  Future<void> _pickThumbnail() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
+
+    if (result != null) {
+      setState(() {
+        _thumbnailPath = result.files.single.path;
+      });
+      print('Thumbnail path: $_thumbnailPath');
+    } else {
+      print('No thumbnail selected');
+    }
+  }
+
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      if (_filePath == null) {
+      if (_filePath == null || _thumbnailPath == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please select a video file')),
+          SnackBar(content: Text('Please select both a video and a thumbnail image.')),
         );
         return;
       }
 
       var request = http.MultipartRequest('POST', Uri.parse(Addvideos));
-      var videoFileName = _filePath;
       request.fields['title'] = _titleController.text;
       request.fields['description'] = _descriptionController.text;
+      
+      // Attach video file
       request.files.add(await http.MultipartFile.fromPath(
         'videoFile',
-        videoFileName!,
-        filename: path.basename(videoFileName),
+        _filePath!,
+        filename: path.basename(_filePath!),
+      ));
+      
+      // Attach thumbnail image
+      request.files.add(await http.MultipartFile.fromPath(
+        'thumbnailImage',
+        _thumbnailPath!,
+        filename: path.basename(_thumbnailPath!),
       ));
 
-      // Send the request to the server
       var response = await request.send();
 
-      // Check the response status
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         print('Upload success: $responseBody');
-         _formKey.currentState!.reset();
-      setState(() {
-         _titleController.clear();
-        _descriptionController.clear();
-        _filePath = null;
-      });
-       
+        _formKey.currentState!.reset();
+        setState(() {
+          _titleController.clear();
+          _descriptionController.clear();
+          _filePath = null;
+          _thumbnailPath = null;
+        });
 
         toastification.show(
           type: ToastificationType.success,
           alignment: Alignment.bottomRight,
           style: ToastificationStyle.flatColored,
           context: context,
-          title: Text('Successfully video uploaded!!!  🎉'),
+          title: Text('Successfully uploaded video and thumbnail! 🎉'),
           showProgressBar: false,
           icon: const Icon(Icons.check_circle_outline, color: Colors.green),
           showIcon: true,
@@ -133,11 +150,6 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
                   }
                   return null;
                 },
-                onChanged: (value) {
-                  setState(() {
-                   _formKey.currentState?.validate();
-                  });
-                },
               ),
               SizedBox(height: 20),
               TextFormField(
@@ -158,11 +170,6 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
                   }
                   return null;
                 },
-                onChanged: (value) {
-                  setState(() {
-                   _formKey.currentState?.validate();
-                  });
-                },
               ),
               SizedBox(height: 20),
               ElevatedButton(
@@ -174,17 +181,38 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
                   ),
                 ),
                 onPressed: _pickFile,
-                child: Text('Select File'),
+                child: Text('Select Video File'),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               _filePath != null
                   ? Text(
-                      'File Selected ',
-                      style: TextStyle(
-                          color: const Color.fromARGB(255, 7, 196, 0)),
+                      'Video file selected',
+                      style: TextStyle(color: Colors.green),
                     )
                   : Text(
-                      'No file selected.',
+                      'No video file selected.',
+                      style: TextStyle(color: Colors.red),
+                    ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  minimumSize: Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                onPressed: _pickThumbnail,
+                child: Text('Select Thumbnail Image'),
+              ),
+              SizedBox(height: 10),
+              _thumbnailPath != null
+                  ? Text(
+                      'Thumbnail selected',
+                      style: TextStyle(color: Colors.green),
+                    )
+                  : Text(
+                      'No thumbnail selected.',
                       style: TextStyle(color: Colors.red),
                     ),
               SizedBox(height: 20),
