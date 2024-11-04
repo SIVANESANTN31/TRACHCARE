@@ -8,7 +8,8 @@ import 'package:trachcare/components/custom_button.dart';
 import 'package:trachcare/style/colors.dart';
 import 'package:trachcare/style/utils/Dimention.dart';
 
-import '../Api/Apiurl.dart'; // Assuming you're using Sizer for responsive design
+import '../Api/Apiurl.dart';
+import '../Screens/Views/patient/Bottomnavigationscreens/PatientDashborad.dart'; // Assuming you're using Sizer for responsive design
 
 class Spigottingsheet extends StatefulWidget {
   const Spigottingsheet({super.key});
@@ -93,23 +94,30 @@ void updatestatus()async{
         var responseBody = await response.stream.bytesToString();
         var data = jsonDecode(responseBody);
         print(data['msg']);
+        print(spogotingStatus);
         if (data['Status'] && spogotingStatus) {
 
-         Navigator.of(context).pop();
+         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+            builder: (context) => PatientDashBoard(),
+          ),(route)=>false);
 
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(data['msg']),
             backgroundColor: Colors.green[400],
           ));
         } else {
-          Navigator.of(context).pop();
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+            builder: (context) => PatientDashBoard(),
+          ),(route)=>false);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(data['message']),
             backgroundColor: Colors.red,
           ));
         }
       } else {
-        Navigator.of(context).pop();
+       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+            builder: (context) => PatientDashBoard(),
+          ),(route)=>false);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Server error: ${response.statusCode}'),
           backgroundColor: Colors.red,
@@ -117,7 +125,9 @@ void updatestatus()async{
       }
     }
    catch (e) {
-    Navigator.of(context).pop();
+    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+            builder: (context) => PatientDashBoard(),
+          ),(route)=>false);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text("Something went wrong !!!"+e.toString() )),
     );

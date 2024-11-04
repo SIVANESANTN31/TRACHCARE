@@ -241,11 +241,14 @@ void popsheet(BuildContext context){
                   itemCount:imagesList.length,
                   itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
                   Container(
+                    
                  child: Stack(
+                  
                   alignment: material.Alignment.center,
                   children: [
                  
                  Center(child: Image.asset(imagesList[itemIndex], fit: BoxFit.cover, width: 1000)),
+                 
                     const CircleAvatar(
                 backgroundColor: Colors.black45,
                 child: Icon(Icons.play_arrow,color: whiteColor,),
@@ -259,8 +262,10 @@ void popsheet(BuildContext context){
                   autoPlayCurve: material.Curves.easeIn,
                   enableInfiniteScroll: true,
                  ),
+                 
     
                 ),
+                
              
           );
         

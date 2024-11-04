@@ -68,6 +68,7 @@ class _VideolistState extends State<Videolist> {
                                                   Videoulrl: data[index]["Video_url"].toString(),
                                                   description: data[index]["description"].toString(),
                                                   title: data[index]["title"].toString(),
+                                                  
                                                 )));
                                   },
                                   child: Videocard(
