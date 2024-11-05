@@ -1,11 +1,11 @@
 <?php 
 include "../config/conn.php";
 
-// Check if the patient_id and date are provided
-if (isset($_GET["patient_id"]) && isset($_GET["date"])) {
+// Check if the patient_id and date are provided in POST data
+if (isset($_POST["patient_id"]) && isset($_POST["date"])) {
     // Escape the input for security
-    $patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
-    $date = mysqli_real_escape_string($conn, $_GET['date']);
+    $patient_id = mysqli_real_escape_string($conn, $_POST['patient_id']);
+    $date = mysqli_real_escape_string($conn, $_POST['date']);
     
     // Validate date format (optional, can be adjusted as needed)
     if (DateTime::createFromFormat('Y-m-d', $date) === false) {

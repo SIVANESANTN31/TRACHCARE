@@ -68,16 +68,9 @@ Future<void> onRefresh() async{
   });
 }
 
-
-
-
-
     print(patient_id);
     var currentIndex = 0;
     List<String> imagelist = ["assets/images/Images_1.png","assets/images/images_2.png","assets/images/Images_3.png"];
-    
-    // Instantiate the CarouselController
-    // final carousel.CarouselController controller = carousel.CarouselController();
 
     return FutureBuilder(
       future: PatientDashBoardApi().FetchDetials(),

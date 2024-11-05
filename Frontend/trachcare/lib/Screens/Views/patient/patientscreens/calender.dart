@@ -17,7 +17,13 @@ import '../Bottomnavigationscreens/Medication.dart';
 
 
 class DailyUpdatePatients extends StatefulWidget {
-  const DailyUpdatePatients({super.key});
+   final String name;
+  final String imagePath;
+  const DailyUpdatePatients({
+    Key? key,
+    required this.name,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
   State<DailyUpdatePatients> createState() => _DailyUpdatePatientsState();
@@ -41,7 +47,7 @@ class _DailyUpdatePatientsState extends State<DailyUpdatePatients> {
                      Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>  Viewdailyupdates(selecteddate: selectedDate.toString().split(" ").first )
+                              builder: (context) =>  Viewdailyupdates(selecteddate: selectedDate.toString().split(" ").first,patientId: patientId, imagePath: widget.imagePath , name: widget.name )
                      ));
                   
     });
