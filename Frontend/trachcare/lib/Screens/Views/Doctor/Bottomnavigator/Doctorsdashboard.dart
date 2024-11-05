@@ -12,6 +12,7 @@ import "package:trachcare/style/colors.dart";
 import "../../../../Api/Apiurl.dart";
 import "../../../../components/story_circles.dart";
 import "../../../../style/utils/Dimention.dart";
+import "../../patient/patientscreens/calender.dart";
 import "../doctorscreens/doctorprofile.dart";
 import "Addpatients.dart";
 
@@ -96,7 +97,7 @@ List imagelist = ["assets/images/Vector-1.png"];
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const DailyUpdatePatients()));
+                                builder: (context) => const DailyUpdatePatients(name: '', imagePath: '',)));
                       },
                     );
                   },
