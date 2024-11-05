@@ -123,7 +123,7 @@ class _YourdailyReportsState extends State<YourdailyReports> {
               if (patientData['oral_feeds_started'] == true)
                 buildYesNoQuestion('If Yes, experiencing cough or breathlessness?', 'cough_or_breathlessness'),
               buildYesNoQuestion('Has the patient been changed to green tube?', 'changed_to_green_tube'),
-              buildDropdown('Spigotting status', 'spigotting_status', ['Not Applicable', 'Option 1', 'Option 2']),
+              buildDropdown('Spigotting status', ),
               buildYesNoQuestion(
                   'Is the patient able to breathe through nose while blocking the tube?',
                   'able_to_breathe_through_nose'),
@@ -215,26 +215,11 @@ class _YourdailyReportsState extends State<YourdailyReports> {
     );
   }
 
-  Widget buildDropdown(String label, String key, List<String> options) {
+  Widget buildDropdown(String label, ) {
     return Row(
       children: [
-        Expanded(child: Text(label)),
-        DropdownButton<String>(
-          value: patientData[key] ?? options.first,
-          items: options.map((String option) {
-            return DropdownMenuItem<String>(
-              value: option,
-              child: Text(option),
-            );
-          }).toList(),
-          onChanged: (String? newValue) {
-            if (newValue != null) {
-              setState(() {
-                patientData[key] = newValue;
-              });
-            }
-          },
-        ),
+        Expanded(child: Text(label,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.5,decoration: TextDecoration.underline),)),
+       
       ],
     );
   }

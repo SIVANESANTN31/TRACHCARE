@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -52,7 +53,7 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
       
       setState(() {
         patientData = data['patient_details'][0]; 
-        print(patientData['patient_id']);// Update the patient data with the fetched data
+        print(patientData['daily_dressing_done']);// Update the patient data with the fetched data
         isLoading = false; // Hide loading indicator
       });
     } else {
@@ -71,14 +72,13 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
 }
 
 
-
   @override
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: 
 NormalAppbar(
-        Title: "Doctors List",
+        Title: "Dialy updates Reports",
         height: dn.height(10),
         onTap: () {
           Navigator.of(context).push(
@@ -99,43 +99,54 @@ NormalAppbar(
             children: [
               Namecard(widget.name, patientId, widget.imagePath, context),
               SizedBox(height: 16),
-              Text('Vitals', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('Vitals', style: TextStyle(fontWeight: FontWeight.bold,decoration: TextDecoration.underline,fontSize: 16.5)),
               buildTextField('Respiratory Rate', (value) {
                 value= patientData['respiratory_rate'] ;
-              }, isNumber: true),
+              }, patientData['respiratory_rate'], isNumber: true),
+
+
               buildTextField('Heart Rate', (value) {
                 patientData['heart_rate'] = value;
-              }, isNumber: true),
+              },patientData['heart_rate'], isNumber: true),
+
+
               buildTextField('SPO2 @ Room Air', (value) {
                 patientData['spo2_room_air'] = value;
-              }, isNumber: true),
+              },patientData['spo2_room_air'], isNumber: true),
               SizedBox(height: 10),
+
+
               buildYesNoQuestion('Daily dressing done?', 'daily_dressing_done'),
+
               buildYesNoQuestion('Tracheostomy tie changed?', 'tracheostomy_tie_changed'),
+
               buildYesNoQuestion('Suctioning done?', 'suctioning_done'),
-              if (patientData['suctioning_done'] == true)
+
+              if (patientData['suctioning_done'] == "Yes")
                 buildTextField('Secretion color and consistency?', (value) {
                   patientData['secretion_color_consistency'] = value;
-                }),
+                },patientData['secretion_color_consistency']),
+
+
               buildYesNoQuestion('Has the patient started on oral feeds?', 'oral_feeds_started'),
-              if (patientData['oral_feeds_started'] == true)
+              if (patientData['oral_feeds_started'] == 'Yes')
+
+
                 buildYesNoQuestion('If Yes, experiencing cough or breathlessness?', 'cough_or_breathlessness'),
+
               buildYesNoQuestion('Has the patient been changed to green tube?', 'changed_to_green_tube'),
-              buildDropdown('Spigotting status', 'spigotting_status', ['Not Applicable', 'Option 1', 'Option 2']),
+
+              buildDropdown('Spigotting status'),
+
               buildYesNoQuestion(
                   'Is the patient able to breathe through nose while blocking the tube?',
                   'able_to_breathe_through_nose'),
+
               if (patientData['able_to_breathe_through_nose'] == true)
                 buildTextField('If Yes, breath duration', (value) {
                   patientData['breath_duration'] = value;
-                }),
-              SizedBox(height: 20),
-               ElevatedButton(
-                    onPressed: () {
-                      // Implement update logic if needed
-                    },
-                    child: Text('Update Patient Data'),
-                  ),
+                },patientData['breath_duration']),
+              
             ],
           ),
         ),
@@ -143,7 +154,7 @@ NormalAppbar(
     );
   }
 
-  Widget buildTextField(String labelText, Function(String) onChanged, {bool isNumber = false}) {
+  Widget buildTextField(String labelText, Function(String) onChanged,String value,{bool isNumber = false} ) {
     return Row(
       children: [
         Expanded(child: Text(labelText)),
@@ -151,6 +162,7 @@ NormalAppbar(
           width: 100,
           child: TextFormField(
             keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+            initialValue: value,
             validator: (value) {
               if (value!.isEmpty) return 'Please enter $labelText';
               return null;
@@ -167,66 +179,30 @@ NormalAppbar(
       children: [
         Expanded(child: Text(question)),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  patientData[key] = true;
-                });
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: patientData[key] == true ? Colors.blue : Colors.grey[300],
-              ),
-              child: Text(
-                "Yes",
-                style: TextStyle(
-                  color: patientData[key] == true ? Colors.white : Colors.black,
-                ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Chip(label: Text("Yes"),
+              backgroundColor: patientData[key]=="Yes"?CupertinoColors.systemGreen:CupertinoColors.systemGrey4,
+              
               ),
             ),
-            SizedBox(width: 8),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  patientData[key] = false;
-                });
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: patientData[key] == false ? Colors.blue : Colors.grey[300],
-              ),
-              child: Text(
-                "No",
-                style: TextStyle(
-                  color: patientData[key] == false ? Colors.white : Colors.black,
-                ),
-              ),
-            ),
+
+            Chip(label: Text("No"),
+            backgroundColor:    patientData[key]=="No"?CupertinoColors.systemRed:CupertinoColors.systemGrey4
+            )
           ],
         ),
       ],
     );
   }
 
-  Widget buildDropdown(String label, String key, List<String> options) {
+  Widget buildDropdown(String label) {
     return Row(
       children: [
-        Expanded(child: Text(label)),
-        DropdownButton<String>(
-          value: patientData[key] ?? options.first,
-          items: options.map((String option) {
-            return DropdownMenuItem<String>(
-              value: option,
-              child: Text(option),
-            );
-          }).toList(),
-          onChanged: (String? newValue) {
-            if (newValue != null) {
-              setState(() {
-                patientData[key] = newValue;
-              });
-            }
-          },
-        ),
+        Expanded(child: Text(label,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.5,decoration: TextDecoration.underline),)),
+        
       ],
     );
   }
