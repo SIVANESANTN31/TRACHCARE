@@ -1,4 +1,6 @@
 // import "package:carousel_slider/carousel_slider.dart";
+import "dart:convert";
+import "package:http/http.dart" as http;
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_carousel_widget/flutter_carousel_widget.dart";
@@ -32,6 +34,35 @@ class DoctorDashBoard extends StatelessWidget {
     "assets/images/Images_3.png"
   ];
 List imagelist = ["assets/images/Vector-1.png"];
+
+
+
+
+Future<List<dynamic>> fetchDailyReport(String doctorId) async {
+  final String apiUrl = 'http://localhost/your_project_folder/path/to/your_script.php'; // Update this URL
+
+  // Construct the full URL with query parameters
+  final Uri uri = Uri.parse('$apiUrl?doctor_id=$doctorId');
+
+  try {
+    // Send the GET request
+    final response = await http.get(uri);
+
+    // Check the response status
+    if (response.statusCode == 200) {
+      // Parse the JSON response
+      final List<dynamic> reports = json.decode(response.body);
+      return reports; // Return the list of reports
+    } else {
+      throw Exception('Failed to load reports: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+    return []; // Return an empty list on error
+  }
+}
+
+
   @override
   Widget build(BuildContext context) {
     List pages = [
