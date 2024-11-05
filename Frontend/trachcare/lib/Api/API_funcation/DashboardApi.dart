@@ -96,11 +96,11 @@ Future FetchDetials() async{
     print(url);
     final response = await http.get(Uri.parse(url));
     final status = await FetchStatus();
-    print(status);
+    print(status.runtimeType);
     if(response.statusCode ==200){
       var data = jsonDecode(response.body);
         if(data['Status']){
-       return {"Dashboard":data['doctorInfo'],"status":status};
+       return {"Dashboard":data['doctorInfo'],"status":status==null?[]:status};
       }
       else{
         return data['doctorInfo'];
