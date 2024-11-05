@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:trachcare/Screens/Views/patient/patientscreens/dailyReports.dart';
+import 'package:trachcare/Screens/Views/Doctor/doctorscreens/dailyupdatedetails.dart';
 import 'package:trachcare/components/NAppbar.dart';
 import '../../../../Api/Apiurl.dart';
-import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
 
 class calender extends StatefulWidget {
+  final String patientId;
   final String name;
   final String imagePath;
 
   const calender({
     Key? key,
+    required this.patientId,
     required this.name,
-    required this.imagePath,
+    required this.imagePath, 
   }) : super(key: key);
 
   @override
@@ -26,7 +27,6 @@ class calender extends StatefulWidget {
 class _calenderState extends State<calender> {
   DateTime selectedDate = DateTime.now();
   DateTime focusedDate = DateTime.now();
-get patientId => patient_id;
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
       selectedDate = selectedDay;
@@ -35,7 +35,7 @@ get patientId => patient_id;
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Viewdailyupdates(selecteddate: selectedDate.toString().split(" ").first, patientId: patientId, imagePath: widget.imagePath , name: widget.name,),
+          builder: (context) => Viewdailyupdates(selecteddate: selectedDate.toString().substring(2).split(" ").first, patientId: widget.patientId, imagePath: widget.imagePath , name: widget.name,),
         ),
       );
     });
@@ -47,12 +47,13 @@ get patientId => patient_id;
     return Scaffold(
       appBar: NormalAppbar(
         Title: "Report",
-        height: dn.height(15),
+        height: dn.height(10),
         onTap: null,
       ),
       body: ListView(
         children: [
-           Namecard(widget.name, patientId, widget.imagePath, context),  // Replace "patient_id" with the actual patientId
+          SizedBox(height: dn.height(5),),
+           Namecard(widget.name, widget.patientId, widget.imagePath, context),  // Replace "patient_id" with the actual patientId
           TableCalendar(
             availableGestures: AvailableGestures.horizontalSwipe,
             pageJumpingEnabled: true,
@@ -89,6 +90,7 @@ get patientId => patient_id;
 }
 
 Widget Namecard(String name, String patientId, String imagePath, BuildContext context) {
+  print(imagePath);
   Dimentions dn = Dimentions(context);
   return Container(
     margin: const EdgeInsets.all(10),
@@ -128,7 +130,7 @@ Widget Namecard(String name, String patientId, String imagePath, BuildContext co
               Column(
                 children: [
                   Text(
-                    ":",
+                    ": ",
                     style: GoogleFonts.ibmPlexSans(
                       textStyle: TextStyle(fontSize: 13.sp),
                     ),

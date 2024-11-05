@@ -92,17 +92,19 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       
-                        Center(
-                          child: Image.network(
-                            "https://$ip/Trachcare/$patientDetails[image]",
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Icon(Icons.person, size: 100);
-                            },
-                          ),
-                        ),
+                          Center(
+  child: ClipOval(
+    child: Image.network(
+      "https://$ip/Trachcare/${patientDetails['image']}",  // Ensure full URL
+      height: dn.height(20),
+      width: dn.height(20),
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Icon(Icons.person, size: 100); // Placeholder if image fails to load
+      },
+    ),
+  ),
+),
                       SizedBox(height: 20),
                       buildFormField('Name', patientDetails['name']),
                       buildFormField('Age', patientDetails['age']),

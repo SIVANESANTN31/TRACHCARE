@@ -123,8 +123,8 @@ Future<void> onRefresh() async{
                          child: ListTile(
                            onTap: (){
                              Navigator.of(context).push(MaterialPageRoute(
-                               builder: (context) =>  ViewPatientDetails(
-                              patientId: filterd_list[index]['patient_id'].toString(), patientName: '', 
+                               builder: (context) =>  PatientDetails(
+                              patientId: filterd_list[index]['patient_id'].toString(), 
                               // patientId: display_list[index]['patient_id'],  // Pass the patient ID
                              
                             ),),);

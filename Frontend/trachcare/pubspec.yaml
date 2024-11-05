@@ -39,16 +39,13 @@ dependencies:
   cupertino_icons: ^1.0.6
   google_fonts: ^6.2.1
   gap: ^3.0.1
-  sizer: ^2.0.15
-  
+  sizer: ^2.0.15 
   animate_do: ^3.3.4
-  # carousel_slider: ^4.2.1
   flutter_carousel_widget: ^2.3.0
   http: ^1.2.2
   toastification: ^2.1.0
   video_player: ^2.9.1
   chewie: ^1.8.3
-
   path_provider: ^2.1.4
   pull_down_button: ^0.10.1
   table_calendar: ^3.1.2

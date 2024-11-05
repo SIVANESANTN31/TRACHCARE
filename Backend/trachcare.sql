@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2024 at 07:46 AM
+-- Generation Time: Nov 05, 2024 at 06:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -73,6 +73,11 @@ INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `username`, `email`, `phon
 --
 DELIMITER $$
 CREATE TRIGGER `Add_spogotting` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO spiotting_status(doctorid,patient_id) VALUES(NEW.doctor_id,NEW.patient_id)
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `addDR` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO daily_report (doctor_id, patient_id, username, image_path)
+VALUES (NEW.doctor_id, NEW.patient_id,NEW.username, NEW.image_path)
 $$
 DELIMITER ;
 DELIMITER $$
@@ -161,7 +166,9 @@ INSERT INTO `appoinment_table` (`doctorid`, `patient_id`, `date`) VALUES
 
 CREATE TABLE `daily_report` (
   `id` int(11) NOT NULL,
+  `doctor_id` varchar(255) NOT NULL,
   `patient_id` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `date` date NOT NULL DEFAULT current_timestamp(),
   `respiratory_rate` int(11) DEFAULT NULL,
   `heart_rate` int(11) DEFAULT NULL,
@@ -184,8 +191,8 @@ CREATE TABLE `daily_report` (
 -- Dumping data for table `daily_report`
 --
 
-INSERT INTO `daily_report` (`id`, `patient_id`, `date`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `daily_dressing_done`, `tracheostomy_tie_changed`, `suctioning_done`, `oral_feeds_started`, `changed_to_green_tube`, `able_to_breathe_through_nose`, `secretion_color_consistency`, `cough_or_breathlessness`, `breath_duration`, `image_path`, `created_at`, `updated_at`) VALUES
-(23, '53124siva', '2024-11-04', 20, 75, 98, 'Yes', 'No', 'Yes', 'Yes', 'No', 'Yes', 'Clear', 'Yes', 10, '/images/example.jpg', '2024-11-04 18:10:29', '2024-11-04 18:10:29');
+INSERT INTO `daily_report` (`id`, `doctor_id`, `patient_id`, `username`, `date`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `daily_dressing_done`, `tracheostomy_tie_changed`, `suctioning_done`, `oral_feeds_started`, `changed_to_green_tube`, `able_to_breathe_through_nose`, `secretion_color_consistency`, `cough_or_breathlessness`, `breath_duration`, `image_path`, `created_at`, `updated_at`) VALUES
+(23, '49882192121057', '53124siva', 'siva', '2024-11-05', 20, 75, 98, 'Yes', 'No', 'Yes', 'Yes', 'No', 'Yes', 'Clear', 'Yes', 10, '../uploads/patient_images/patient_671ca3130db878.42991464.jpg', '2024-11-04 18:10:29', '2024-11-05 16:07:51');
 
 --
 -- Triggers `daily_report`
@@ -226,21 +233,6 @@ INSERT INTO `daily_stauts` (`doctorid`, `patient_id`, `username`, `status_10`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `doctorlogin`
---
-
-CREATE TABLE `doctorlogin` (
-  `doctor_id` varchar(500) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `doctor_reg_no` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone_number` varchar(255) DEFAULT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `doctorprofile`
 --
 
@@ -254,6 +246,13 @@ CREATE TABLE `doctorprofile` (
   `image_path` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `doctorprofile`
+--
+
+INSERT INTO `doctorprofile` (`doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`, `image_path`, `created_at`) VALUES
+('49882192121057', 'hariharan', '192121057', 'test@test.com', '9500077434', '12345678', '../uploads/doctorimages/6729e472a388e.jpg', '2024-11-05 09:25:06');
 
 --
 -- Triggers `doctorprofile`
@@ -392,13 +391,13 @@ CREATE TABLE `spiotting_status` (
 --
 
 INSERT INTO `spiotting_status` (`doctorid`, `patient_id`, `cough_or_breathlessness`, `breath_duration`) VALUES
-('1255161561561564564564564564', '53124siva', 'yes', '10 ');
+('1255161561561564564564564564', '53124siva', 'NO', '');
 
 --
 -- Triggers `spiotting_status`
 --
 DELIMITER $$
-CREATE TRIGGER `updatetoDR` BEFORE INSERT ON `spiotting_status` FOR EACH ROW UPDATE daily_report
+CREATE TRIGGER `updatetoDR` AFTER INSERT ON `spiotting_status` FOR EACH ROW UPDATE daily_report
 SET cough_or_breathlessness = NEW.cough_or_breathlessness,
     breath_duration = NEW.breath_duration
 WHERE patient_id = NEW.patient_id
@@ -441,12 +440,6 @@ ALTER TABLE `daily_report`
 --
 ALTER TABLE `daily_stauts`
   ADD UNIQUE KEY `doctorid` (`doctorid`,`patient_id`);
-
---
--- Indexes for table `doctorlogin`
---
-ALTER TABLE `doctorlogin`
-  ADD UNIQUE KEY `doctorid` (`doctor_id`) USING BTREE;
 
 --
 -- Indexes for table `doctorprofile`

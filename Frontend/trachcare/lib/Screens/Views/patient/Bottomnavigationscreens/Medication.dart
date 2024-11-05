@@ -6,8 +6,8 @@ import 'package:trachcare/components/NAppbar.dart';
 import 'package:trachcare/style/colors.dart';
 import '../../../../Api/API_funcation/DashboardApi.dart';
 import '../../../../style/utils/Dimention.dart';
-import '../patientscreens/dailyReports.dart';
-import '../patientscreens/dailyupdates copy.dart';
+import '../patientscreens/calender.dart';
+import '../patientscreens/dailyupdates.dart';
 class MedicationPage extends StatelessWidget {
   const MedicationPage({super.key});
 
@@ -29,7 +29,7 @@ class MedicationPage extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => DailyUpdatePatients(
+          builder: (context) => calender(
             name: name,
             imagePath: imagePath,
           ),

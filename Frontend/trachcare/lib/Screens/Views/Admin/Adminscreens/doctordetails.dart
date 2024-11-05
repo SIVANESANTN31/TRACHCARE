@@ -60,6 +60,50 @@ Future<dynamic> deleteDoctorDetails() async {
   }
 }
 
+void alertdilog(){
+      showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('Delete'),
+        content: const Text('Are sure you want to delete this user?'),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context,"no");
+            },
+            child: const Text('No'),
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            onPressed: () {
+
+             
+                  Navigator.of(context,rootNavigator: true).pop();
+
+                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Admindb()),(route)=>false);
+                 
+             
+              
+             
+              
+                
+              
+              
+              
+            },
+            child: const Text('Yes'),
+          ),
+        
+      ]),
+    );
+
+    }
+
+  void btn_fun() {
+   alertdilog();
+  }
+
   Future<dynamic> fetchDoctorDetails() async {
     final String url = '$doctordetailsUrl?doctor_id=${widget.Doctor_id}';
 
@@ -230,9 +274,7 @@ Future<dynamic> deleteDoctorDetails() async {
                                 backgroundColor: Colors.red,
                                 textcolor: whiteColor,
                                 button_funcation: (){
-                                  deleteDoctorDetails();
-                                  Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Admindb(),),);
+                                 btn_fun();
                                 },
                                 textSize: 11),
                       ),

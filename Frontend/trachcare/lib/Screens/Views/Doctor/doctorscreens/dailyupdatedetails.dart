@@ -27,7 +27,6 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
   final _formKey = GlobalKey<FormState>();
 
   // Replace with actual patient ID retrieval
-  get patientId => patient_id;
   var patientData = {};
   bool isLoading = true;
 
@@ -97,7 +96,7 @@ NormalAppbar(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Namecard(widget.name, patientId, widget.imagePath, context),
+              Namecard(widget.name, widget.patientId, widget.imagePath, context),
               SizedBox(height: 16),
               Text('Vitals', style: TextStyle(fontWeight: FontWeight.bold,decoration: TextDecoration.underline,fontSize: 16.5)),
               buildTextField('Respiratory Rate', (value) {
@@ -142,11 +141,12 @@ NormalAppbar(
                   'Is the patient able to breathe through nose while blocking the tube?',
                   'able_to_breathe_through_nose'),
 
-              if (patientData['able_to_breathe_through_nose'] == true)
+              if (patientData['able_to_breathe_through_nose'] == 'Yes')
                 buildTextField('If Yes, breath duration', (value) {
                   patientData['breath_duration'] = value;
                 },patientData['breath_duration']),
-              
+
+              SizedBox(height: dn.height(10),)
             ],
           ),
         ),

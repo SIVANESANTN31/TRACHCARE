@@ -70,96 +70,105 @@ void popsheet(BuildContext context,String Time){
           borderRadius: BorderRadius.vertical(
         bottom: Radius.circular(10),
       )),
-      leading: Builder(builder: (BuildContext context) {
-        return IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-        );
-      }),
+      leading: Padding(
+        padding: const EdgeInsets.only(top: 25),
+        child: Builder(builder: (BuildContext context) {
+          return IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          );
+        }),
+      ),
       centerTitle: true,
-      title: Text(
-        "Hi,$Name",
-        style: GoogleFonts.ibmPlexSans(
-            textStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
+      title: Padding(
+        padding:const EdgeInsets.only(top: 25),
+        child: Text(
+          "Hi,$Name",
+          style: GoogleFonts.ibmPlexSans(
+              textStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
+        ),
       ),
       actions: [
-        Stack(
-          children:[ IconButton(
-              onPressed: () {
-                if(notification){
-                  if(doctor==false)
-                  popsheet(context,notificationlists![0]);
-                  else{
-doctorpopsheet(context,notificationlists!);
+        Padding(
+          padding: const EdgeInsets.only(top: 25),
+          child: Stack(
+            children:[ IconButton(
+                onPressed: () {
+                  if(notification){
+                    if(doctor==false)
+                    popsheet(context,notificationlists![0]);
+                    else{
+          doctorpopsheet(context,notificationlists!);
+                    }
                   }
-                }
-                else{
-                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("No notification available"),
-            
-          ));
-                }
-               
-              },
-              icon: const Icon(
-                Icons.notifications_active_outlined,
-                color: Colors.green,
-                size: 28,
-              )),
-
-             notification? Positioned(
-            right: 7,
-            top: 7,
-            child: Container(
-              padding: EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              constraints: BoxConstraints(
-                minWidth: 16,
-                minHeight: 16,
-              ),
-              child: Text(
-                '${notificationlists!.length}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
+                  else{
+                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("No notification available"),
+              
+            ));
+                  }
+                 
+                },
+                icon: const Icon(
+                  Icons.notifications_active_outlined,
+                  color: Colors.green,
+                  size: 28,
+                )),
+          
+               notification? Positioned(
+              right: 7,
+              top: 7,
+              child: Container(
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                textAlign: TextAlign.center,
-              ),
-            )) :  Positioned(
-            right: 7,
-            top: 7,
-            child: Container(
-              padding: EdgeInsets.all(2),
-              decoration: BoxDecoration(
+                constraints: BoxConstraints(
+                  minWidth: 16,
+                  minHeight: 16,
+                ),
+                child: Text(
+                  '${notificationlists!.length}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              )) :  Positioned(
+              right: 7,
+              top: 7,
+              child: Container(
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                constraints: BoxConstraints(
+                  minWidth: 16,
+                  minHeight: 16,
+                ),
+                child: Text(
+                  '',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ))
                 
-                borderRadius: BorderRadius.circular(10),
-              ),
-              constraints: BoxConstraints(
-                minWidth: 16,
-                minHeight: 16,
-              ),
-              child: Text(
-                '',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ))
-              
-              
-              
-              
-              
-              
-              ]
+                
+                
+                
+                
+                
+                ]
+          ),
         )
       ],
       bottom: bottom,

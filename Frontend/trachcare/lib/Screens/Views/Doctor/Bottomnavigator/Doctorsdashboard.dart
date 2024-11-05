@@ -1,45 +1,76 @@
-// import "package:carousel_slider/carousel_slider.dart";
 import "dart:convert";
 import "package:http/http.dart" as http;
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:flutter_carousel_widget/flutter_carousel_widget.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
 import "package:trachcare/Api/API_funcation/DashboardApi.dart";
-import "package:trachcare/Screens/Views/Doctor/doctorscreens/patientreport.dart";
 import "package:trachcare/components/Appbar.dart";
 import "package:trachcare/components/Navbardrawer.dart";
 import "package:trachcare/style/colors.dart";
+import "../../../../Api/API_funcation/VideoApi.dart";
 import "../../../../Api/Apiurl.dart";
+import "../../../../Api/DataStore/Datastore.dart";
 import "../../../../components/story_circles.dart";
 import "../../../../style/utils/Dimention.dart";
-import "../../patient/patientscreens/calender.dart";
+import "../doctorscreens/VideoPlayer_screen.dart";
+import "../doctorscreens/calender.dart";
 import "../doctorscreens/doctorprofile.dart";
 import "Addpatients.dart";
 
-class DoctorDashBoard extends StatelessWidget {
+class DoctorDashBoard extends StatefulWidget {
   DoctorDashBoard({super.key});
 
+  @override
+  State<DoctorDashBoard> createState() => _DoctorDashBoardState();
+}
+
+class _DoctorDashBoardState extends State<DoctorDashBoard> {
   List imgList = [
     'Vector',
   ];
+
   List option = [
     'Add new Patient',
   ];
 
-  List<String> img = [
-    "assets/images/Images_1.png",
-    "assets/images/images_2.png",
-    "assets/images/Images_3.png"
-  ];
+ 
+ 
+
 List imagelist = ["assets/images/Vector-1.png"];
 
+ List<dynamic> reports = [];
+  bool isLoading = true;
+   List Videourls = [];
 
+  Future FetchVideos() async {
+    Videourls = await Video().Fetchvideo();
+    return Videourls;
+  }
 
+  
+  Future<void> onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    await FetchVideos();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchReports();
+    FetchVideos();
+  }
+
+  Future<void> fetchReports() async {
+    reports = await fetchDailyReport(Doctor_id);
+    setState(() {
+      isLoading = false;
+    });
+  }
 
 Future<List<dynamic>> fetchDailyReport(String doctorId) async {
-  final String apiUrl = 'http://localhost/your_project_folder/path/to/your_script.php'; // Update this URL
+  final String apiUrl = viewstory; // Update this URL
 
   // Construct the full URL with query parameters
   final Uri uri = Uri.parse('$apiUrl?doctor_id=$doctorId');
@@ -52,6 +83,7 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
     if (response.statusCode == 200) {
       // Parse the JSON response
       final List<dynamic> reports = json.decode(response.body);
+      print(reports);
       return reports; // Return the list of reports
     } else {
       throw Exception('Failed to load reports: ${response.statusCode}');
@@ -62,14 +94,13 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
   }
 }
 
-
   @override
   Widget build(BuildContext context) {
+     Dimentions dn = Dimentions(context);
     List pages = [
        Addpatients(),
       // const dailyupdates(),
     ];
-    Dimentions dn = Dimentions(context);
     return FutureBuilder(
       future: DoctorDashBoardApi().FetchDetials(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -94,9 +125,8 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
         appBar: Appbar(
           doctor: true,
           Name: name,
-          bottom: Bottom(context),
           notificationlists: notificationlists,
-          height: dn.height(15), notification: notification,
+          height: dn.height(12), notification: notification,
         ),
         drawer:  drawer(
           Name: name,
@@ -106,111 +136,124 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
         Navigator.of(context).push(MaterialPageRoute(
                                builder: (context) => d_ProfilePage(),),);}
         ),
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 177, 255, 183),
-                  borderRadius: BorderRadius.circular(10),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 177, 255, 183),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  height: dn.height(15),
+                  child: reports.isEmpty
+    ? Center(child: Text("No data available"))
+    : ListView.builder(
+        itemCount: reports.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          final update = reports[index];
+          return StoryCircles(
+            function: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => calender(
+                    key: UniqueKey(),
+                    patientId: update['patient_id'],
+                    name: update['username'], // Assuming 'username' is a field in your data
+                    imagePath: update['image_path'].toString().substring(2), // Assuming 'image_path' is a field in your data
+                  ),
                 ),
-                height: dn.height(15),
+              );
+            },
+          );
+        },
+      ),
+
+                ),
+              ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              SizedBox(
+                height: dn.height(15), // Set a specific height as needed
                 child: ListView.builder(
-                  itemCount: 15,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return StoryCircles(
-                      function: () {
+                  itemCount: imgList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const DailyUpdatePatients(name: '', imagePath: '',)));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => pages[index],
+                          ),
+                        );
                       },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            gradient: const LinearGradient(
+                              colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.10),
+                                spreadRadius: 2,
+                                blurRadius: 7,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          width: dn.width(70),
+                          height: dn.height(10),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Image.asset(imagelist[index]),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('${option[index]}'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     );
                   },
                 ),
               ),
-            ),
-            // SizedBox(
-            //   height: 10,
-            // ),
-            SizedBox(
-              height: dn.height(15), // Set a specific height as needed
-              child: ListView.builder(
-                itemCount: imgList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => pages[index],
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          gradient: const LinearGradient(
-                            colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.10),
-                              spreadRadius: 2,
-                              blurRadius: 7,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        width: dn.width(70),
-                        height: dn.height(10),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 30),
-                              child: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Image.asset(imagelist[index]),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('${option[index]}'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
+              const SizedBox(
+                height: 15,
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-      
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text("Exercisers For Trach Care:",
-                  style: GoogleFonts.ibmPlexSans(
-                      textStyle: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.bold,
-                          color: const Color(0XFF455A64)))),
-            ),
-      
-            carsouleview(img, context),
-           
-          ],
+                
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text("Exercisers For Trach Care:",
+                    style: GoogleFonts.ibmPlexSans(
+                        textStyle: TextStyle(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0XFF455A64)))),
+              ),
+                
+              carsouleview(Videourls, context),
+             
+            ],
+          ),
         ),
       
         
@@ -220,53 +263,7 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
    return Center(child :Text("Something went wrong!!")); });
   }
 
-  PreferredSizeWidget Bottom(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(5.0),
-      child: Column(
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 0),
-            child: Container(
-                margin: const EdgeInsets.only(
-                  top: 0,
-                  bottom: 10,
-                ),
-                width: MediaQuery.of(context).size.width,
-                height: 6.h,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(0.15),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3))
-                  ],
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Search here....",
-                    hintStyle: TextStyle(
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.search,
-                      size: 25,
-                    ),
-                  ),
-                )),
-          ),
-          //  SizedBox(height: 10),
-        ],
-      ),
-    );
-  }
-
+             
   Widget circleButton(
     String time,
   ) {
@@ -282,38 +279,110 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
       ],
     );
   }
+Widget carsouleview(List imagesList, BuildContext context) {
+  Dimentions dn = Dimentions(context);
 
-  Widget carsouleview(List<String> imagesList, BuildContext context) {
-    Dimentions dn = Dimentions(context);
-
-    return SizedBox(
-      width: dn.width(100),
-      height: dn.height(17),
-      child: FlutterCarousel.builder(
-        itemCount: imagesList.length,
-        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-            Container(
-                child: Stack(alignment: Alignment.center, children: [
-          Center(
-              child: Image.asset(imagesList[itemIndex],
-                  fit: BoxFit.cover, width: 1000)),
-          const CircleAvatar(
-            backgroundColor: Colors.black45,
-            child: Icon(
-              Icons.play_arrow,
-              color: whiteColor,
+  return SizedBox(
+    width: dn.width(130),
+    height: dn.height(35),
+    child: FutureBuilder(
+      future: FetchVideos(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            List data = snapshot.data;
+            print(data);
+            if (data.isEmpty) {
+              return const Center(
+                child: Text("No videos Available"),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: data.length < 3 ? data.length : 3, // Limit to 3 videos
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => videoplayer(
+                              Videoulrl: data[index]["Video_url"].toString(),
+                              description: data[index]["description"].toString(),
+                              title: data[index]["title"].toString(),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Videocard(
+                        data[index]["Thumbnail_url"].toString().substring(2),
+                        data[index]["title"].toString(),
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+          }
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CupertinoActivityIndicator(
+              radius: 12,
             ),
-          )
-        ])),
-        options: CarouselOptions(
-          autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 2),
-          autoPlayCurve: Curves.easeIn,
-          enableInfiniteScroll: true,
+          );
+        }
+
+        return const Center(
+          child: Text("Something went wrong!!!"),
+        );
+      },
+    ),
+  );
+}
+
+
+
+  Widget Videocard(String thumbnailUrl, String videoTitle) {
+    print(thumbnailUrl);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Thumbnail
+        Image.network(
+          "https://$ip/Trachcare/$thumbnailUrl",
+          width: double.infinity,
+          height: 200,
+          fit: BoxFit.cover,
         ),
-      ),
-    );
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      videoTitle,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Divider(),
+      ],
+    );  
   }
-
-
 }
