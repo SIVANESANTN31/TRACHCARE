@@ -49,11 +49,15 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
     if (response.statusCode == 200) {
       // Parse the JSON data from the response
       var data = jsonDecode(response.body);
+      print(data);
 
-      
       setState(() {
-        patientData = data['patient_details'][0]; 
-        print(patientData['daily_dressing_done']);// Update the patient data with the fetched data
+        if (data['patient_details'] != null && data['patient_details'].isNotEmpty) {
+          patientData = data['patient_details'][0];
+          print(patientData); 
+        } else {
+          patientData = {}; // Set to empty if no data is available
+        }
         isLoading = false; // Hide loading indicator
       });
     } else {
@@ -71,89 +75,69 @@ class _ViewdailyupdatesState extends State<Viewdailyupdates> {
   }
 }
 
-
-  @override
-  Widget build(BuildContext context) {
-    Dimentions dn = Dimentions(context);
-    return Scaffold(
-      appBar: 
-NormalAppbar(
-        Title: "Dialy updates Reports",
-        height: dn.height(10),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => MedicationPage(),
-            ),
-          );
-        },
-      ),
-      body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Namecard(widget.name, patientId, widget.imagePath, context),
-              SizedBox(height: 16),
-              Text('Vitals', style: TextStyle(fontWeight: FontWeight.bold,decoration: TextDecoration.underline,fontSize: 16.5)),
-              buildTextField('Respiratory Rate', (value) {
-                value= patientData['respiratory_rate'] ;
-              }, patientData['respiratory_rate'], isNumber: true),
-
-
-              buildTextField('Heart Rate', (value) {
-                patientData['heart_rate'] = value;
-              },patientData['heart_rate'], isNumber: true),
-
-
-              buildTextField('SPO2 @ Room Air', (value) {
-                patientData['spo2_room_air'] = value;
-              },patientData['spo2_room_air'], isNumber: true),
-              SizedBox(height: 10),
-
-
-              buildYesNoQuestion('Daily dressing done?', 'daily_dressing_done'),
-
-              buildYesNoQuestion('Tracheostomy tie changed?', 'tracheostomy_tie_changed'),
-
-              buildYesNoQuestion('Suctioning done?', 'suctioning_done'),
-
-              if (patientData['suctioning_done'] == "Yes")
-                buildTextField('Secretion color and consistency?', (value) {
-                  patientData['secretion_color_consistency'] = value;
-                },patientData['secretion_color_consistency']),
-
-
-              buildYesNoQuestion('Has the patient started on oral feeds?', 'oral_feeds_started'),
-              if (patientData['oral_feeds_started'] == 'Yes')
-
-
-                buildYesNoQuestion('If Yes, experiencing cough or breathlessness?', 'cough_or_breathlessness'),
-
-              buildYesNoQuestion('Has the patient been changed to green tube?', 'changed_to_green_tube'),
-
-              buildDropdown('Spigotting status'),
-
-              buildYesNoQuestion(
-                  'Is the patient able to breathe through nose while blocking the tube?',
-                  'able_to_breathe_through_nose'),
-
-              if (patientData['able_to_breathe_through_nose'] == "Yes")
-                buildTextField('If Yes, breath duration', (value) {
-                  patientData['breath_duration'] = value;
-                },patientData['breath_duration']),
-              
-              SizedBox(height: dn.height(20),)
-            ],
+@override
+Widget build(BuildContext context) {
+  Dimentions dn = Dimentions(context);
+  return Scaffold(
+    appBar: NormalAppbar(
+      Title: "Daily Queries Reports",
+      height: dn.height(10),
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => MedicationPage(),
           ),
-        ),
-      ),  
-    );
-  }
+        );
+      },
+    ),
+    body: isLoading
+        ? Center(child: CircularProgressIndicator())
+        : patientData['respiratory_rate']== null
+            ? Center(child: Text("No data available for this date"))
+            : SingleChildScrollView(
+                padding: EdgeInsets.all(16.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Namecard(widget.name, widget.patientId, widget.imagePath, context),
+                      SizedBox(height: 16),
+                      Text('Vitals', style: TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline, fontSize: 16.5)),
+                      buildTextField('Respiratory Rate', (value) {
+                        value = patientData['respiratory_rate'];
+                      }, patientData['respiratory_rate'], isNumber: true),
+                      buildTextField('Heart Rate', (value) {
+                        patientData['heart_rate'] = value;
+                      }, patientData['heart_rate'], isNumber: true),
+                      buildTextField('SPO2 @ Room Air', (value) {
+                        patientData['spo2_room_air'] = value;
+                      }, patientData['spo2_room_air'], isNumber: true),
+                      SizedBox(height: 10),
+                      buildYesNoQuestion('Daily dressing done?', 'daily_dressing_done'),
+                      buildYesNoQuestion('Tracheostomy tie changed?', 'tracheostomy_tie_changed'),
+                      buildYesNoQuestion('Suctioning done?', 'suctioning_done'),
+                      if (patientData['suctioning_done'] == "Yes")
+                        buildTextField('Secretion color and consistency?', (value) {
+                          patientData['secretion_color_consistency'] = value;
+                        }, patientData['secretion_color_consistency']),
+                      buildYesNoQuestion('Has the patient started on oral feeds?', 'oral_feeds_started'),
+                      if (patientData['oral_feeds_started'] == 'Yes')
+                        buildYesNoQuestion('If Yes, experiencing cough or breathlessness?', 'cough_or_breathlessness'),
+                      buildYesNoQuestion('Has the patient been changed to green tube?', 'changed_to_green_tube'),
+                      buildDropdown('Spigotting status'),
+                      buildYesNoQuestion('Is the patient able to breathe through nose while blocking the tube?', 'able_to_breathe_through_nose'),
+                      if (patientData['able_to_breathe_through_nose'] == "Yes")
+                        buildTextField('If Yes, breath duration', (value) {
+                          patientData['breath_duration'] = value;
+                        }, patientData['breath_duration']),
+                      SizedBox(height: dn.height(20)),
+                    ],
+                  ),
+                ),
+              ),
+  );
+}
 
   Widget buildTextField(String labelText, Function(String) onChanged,String value,{bool isNumber = false} ) {
     return Row(

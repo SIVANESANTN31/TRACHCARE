@@ -17,6 +17,7 @@ import "../doctorscreens/VideoPlayer_screen.dart";
 import "../doctorscreens/calender.dart";
 import "../doctorscreens/doctorprofile.dart";
 import "Addpatients.dart";
+import 'dart:async';
 
 class DoctorDashBoard extends StatefulWidget {
   DoctorDashBoard({super.key});
@@ -120,7 +121,7 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
             var imagepath = data["image_path"].toString().substring(2);
             
 
-            Dimentions dn = Dimentions(context);
+            // Dimentions dn = Dimentions(context);
       return Scaffold(
         appBar: Appbar(
           doctor: true,
@@ -149,7 +150,7 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
                     color: const Color.fromARGB(255, 177, 255, 183),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  height: dn.height(15),
+                  height: dn.height(12),
                   child: reports.isEmpty
     ? Center(child: Text("No data available"))
     : ListView.builder(
@@ -170,7 +171,7 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
                   ),
                 ),
               );
-            },
+            }, url: update['image_path'].toString().substring(2),
           );
         },
       ),
@@ -279,110 +280,129 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
       ],
     );
   }
+  
+  
+
+
 Widget carsouleview(List imagesList, BuildContext context) {
   Dimentions dn = Dimentions(context);
+  final PageController pageController = PageController();
+  Timer? carouselTimer;
+
+  // Set up the timer for automatic scrolling
+  void startAutoScroll() {
+    carouselTimer = Timer.periodic(Duration(seconds: 3), (timer) {
+      if (pageController.hasClients) {
+        int nextPage = pageController.page!.toInt() + 1;
+        if (nextPage >= imagesList.length) {
+          nextPage = 0; // Loop back to the first page
+        }
+        pageController.animateToPage(
+          nextPage,
+          duration: Duration(milliseconds: 3),
+          curve: Curves.easeIn,
+        );
+      }
+    });
+  }
+
+  // Stop the timer when the widget is disposed
+  @override
+  void dispose() {
+    carouselTimer?.cancel();
+    pageController.dispose();
+    super.dispose();
+  }
+
+  // Start the auto-scrolling when the widget is initialized
+  @override
+  void initState() {
+    super.initState();
+    startAutoScroll();
+  }
 
   return SizedBox(
     width: dn.width(130),
-    height: dn.height(35),
+    height: dn.height(55),
     child: FutureBuilder(
       future: FetchVideos(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CupertinoActivityIndicator(radius: 12),
+          );
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            print("Error: ${snapshot.error}");
+            return const Center(child: Text("Failed to load videos!"));
+          } else if (snapshot.hasData && snapshot.data != null) {
             List data = snapshot.data;
-            print(data);
             if (data.isEmpty) {
-              return const Center(
-                child: Text("No videos Available"),
-              );
+              return const Center(child: Text("No videos available"));
             } else {
-              return ListView.builder(
-                itemCount: data.length < 3 ? data.length : 3, // Limit to 3 videos
+              return PageView.builder(
+                controller: pageController,
+                itemCount: data.length < 3 ? data.length : 3,
+                scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => videoplayer(
-                              Videoulrl: data[index]["Video_url"].toString(),
-                              description: data[index]["description"].toString(),
-                              title: data[index]["title"].toString(),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => videoplayer(
+                            Videoulrl: data[index]["Video_url"]?.toString() ?? "",
+                            description: data[index]["description"]?.toString() ?? "",
+                            title: data[index]["title"]?.toString() ?? "",
+                          ),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      width: dn.width(100),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: dn.height(30),
+                              width: double.infinity,
+                              child: Image.network(
+                                'https://$ip/Trachcare/${data[index]["Thumbnail_url"]?.toString().substring(2) ?? ""}',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        );
-                      },
-                      child: Videocard(
-                        data[index]["Thumbnail_url"].toString().substring(2),
-                        data[index]["title"].toString(),
+                          const SizedBox(height: 8),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              data[index]["title"]?.toString() ?? "Untitled",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const Divider(),
+                        ],
                       ),
                     ),
                   );
                 },
               );
             }
+          } else {
+            return const Center(child: Text("No videos available"));
           }
-        } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CupertinoActivityIndicator(
-              radius: 12,
-            ),
-          );
         }
 
-        return const Center(
-          child: Text("Something went wrong!!!"),
-        );
+        return const Center(child: Text("Something went wrong!!!"));
       },
     ),
   );
 }
-
-
-
-  Widget Videocard(String thumbnailUrl, String videoTitle) {
-    print(thumbnailUrl);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Thumbnail
-        Image.network(
-          "https://$ip/Trachcare/$thumbnailUrl",
-          width: double.infinity,
-          height: 200,
-          fit: BoxFit.cover,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      videoTitle,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        Divider(),
-      ],
-    );  
-  }
 }

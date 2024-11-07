@@ -94,18 +94,29 @@ class _VideospageState extends State<Videospage> {
             }));
   }
 
-  Widget Videocard(String thumbnailUrl, String videoTitle) {
+  Widget Videocard(String thumbnailUrl, String videoTitle ,) {
     print(thumbnailUrl);
-    Dimentions dn = Dimentions(context);
+    // Dimentions dn = Dimentions(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Thumbnail
-        Image.network(
-          "https://$ip/Trachcare/$thumbnailUrl",
-          width: double.infinity,
-          height: 200,
-          fit: BoxFit.cover,
+        Stack(
+          alignment: Alignment.center,
+          children: [Image.network(
+            "https://$ip/Trachcare/$thumbnailUrl",
+            width: double.infinity,
+            height: 200,
+            fit: BoxFit.cover,
+          ),
+          IconButton(
+            
+            onPressed: (){
+              
+            },
+            color: Colors.black54,
+            icon: Icon(CupertinoIcons.play_circle_fill,size: 40,))
+          ]
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),

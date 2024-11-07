@@ -54,7 +54,7 @@ class Admindb extends StatelessWidget {
                 print(data["image_path"]);
             print(data);
 
-            Dimentions dn = Dimentions(context);
+            // Dimentions dn = Dimentions(context);
       return Scaffold(
       appBar: Appbar(Name: name, height: dn.height(12), notification: false,),
        drawer: drawer(

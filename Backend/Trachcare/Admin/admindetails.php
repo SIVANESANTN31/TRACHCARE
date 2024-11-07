@@ -58,7 +58,7 @@ function deleteDoctor($conn, $id) {
 
 
 function updateDoctor($conn, $data) {
-    $doctor_id = mysqli_real_escape_string($conn, $data['doctor_id']);
+    $doctor_id = isset($data['doctor_id']) ? mysqli_real_escape_string($conn, $data['doctor_id']) : null;
     $username = isset($data['username']) ? mysqli_real_escape_string($conn, $data['username']) : null;
     $doctor_reg_no = isset($data['doctor_reg_no']) ? mysqli_real_escape_string($conn, $data['doctor_reg_no']) : null;
     $email = isset($data['email']) ? mysqli_real_escape_string($conn, $data['email']) : null;
@@ -112,7 +112,7 @@ function updateDoctor($conn, $data) {
 
 
 function uploadImage($file) {
-    $target_dir = "uploads/";
+    $target_dir = "../uploads/";
     $target_file = $target_dir . basename($file["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));

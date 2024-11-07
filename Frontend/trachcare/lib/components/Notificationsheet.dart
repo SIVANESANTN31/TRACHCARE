@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:trachcare/components/Appbar.dart';
-import 'package:trachcare/style/colors.dart';
+// import 'package:trachcare/components/Appbar.dart';
+// import 'package:trachcare/style/colors.dart';
 import 'package:trachcare/style/utils/Dimention.dart';
 
 

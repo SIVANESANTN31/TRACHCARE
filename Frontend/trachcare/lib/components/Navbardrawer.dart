@@ -1,5 +1,4 @@
-// ignore_for_file: unused_import
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -14,6 +13,7 @@ import 'package:trachcare/style/Tropography.dart';
 import 'package:trachcare/style/colors.dart';
 
 import '../Api/Apiurl.dart';
+import '../style/utils/Dimention.dart';
 
 class drawer extends StatelessWidget {
   final String Name;
@@ -26,8 +26,23 @@ class drawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    
+Dimentions dn = Dimentions(context);
+Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
+}
+}
+  Future<void> _launchURLmail(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
+}
+}  
 
 void alertdilog(){
       showCupertinoModalPopup<void>(
@@ -137,11 +152,23 @@ void alertdilog(){
               leading: const Icon(
                 Icons.info_outline,
               ),
-              title: const Text('Information'),
+              title: const Text('About us'),
                onTap: () {
                  Navigator.push(context, MaterialPageRoute(
                                 builder: (context) => const Information(),)
                                 );
+              },
+            ),
+             ListTile(
+               trailing:const Icon(
+                Icons.chevron_right,
+              ) ,
+              leading: const Icon(
+                CupertinoIcons.lock_shield
+              ),
+              title: const Text('Privacy policy'),
+              onTap: () {
+                _launchInBrowser(Uri.parse('http://180.235.121.245/Trachcare/privacy_police.html'));
               },
             ),
             ListTile(
@@ -153,10 +180,12 @@ void alertdilog(){
               ),
               title: const Text('contacts'),
               onTap: () {
-                Navigator.pop(context);
+                _launchURLmail(
+                  Uri(scheme: 'mailto', path: 'sivanesansoffical@gmail.com')
+                );
               },
             ),
-            Gap(30.h),
+            SizedBox(height: dn.height(20),),
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: custom_Button(

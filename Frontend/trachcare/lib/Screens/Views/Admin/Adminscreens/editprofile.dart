@@ -59,11 +59,7 @@ class _admineditprofileState extends State<admineditprofile> {
       print('Error: $e');
     }
   }
-void _save(BuildContext context, String imagepath) {
-  File imageFile = File(imagepath);
-  // If user didn't select a new image, pass the imagepath from the API
-  File finalImage;
-  finalImage = imagefile ?? imageFile;
+void _save(BuildContext context,File finalImage) {
   print(finalImage);
   if (_formKey.currentState!.validate()) {
     print(widget.Doctor_id);
@@ -96,15 +92,9 @@ void _save(BuildContext context, String imagepath) {
   void getimage({required ImageSource source}) async {
     final file = await ImagePicker().pickImage(source: source, imageQuality: 100);
     if (file != null) {
-      final imageBytes = await file.readAsBytes();
-      var base64encoder = base64Encode(imageBytes);
-      setState(() {
-        base64encode = base64encoder;
-      });
       setState(() {
         imagefile = File(file.path);
-        fileimage = file.path;
-        print(fileimage);
+        print(imagefile);
       });
     }
   }
@@ -199,7 +189,7 @@ void _save(BuildContext context, String imagepath) {
               phoneNumberController.text = data['phone_number'];
               passwordController.text = data['password'];
               var imagepath = data["image_path"].toString().substring(2);
-              print(data["image_path"]);
+             
               return Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: SingleChildScrollView(
@@ -223,12 +213,15 @@ void _save(BuildContext context, String imagepath) {
                                   CircleAvatar(
                                     radius: 50,
                                     backgroundImage: FileImage(imagefile),
+                                    
                                   ),
                                 SizedBox(height: 10),
                                 ElevatedButton.icon(
                                   onPressed: () {
                                     photo_picker(context);
+                                    
                                   },
+                                  
                                   icon: const Icon(Icons.camera_alt),
                                   label: const Text('Change Picture'),
                                   style: ElevatedButton.styleFrom(
@@ -341,7 +334,10 @@ void _save(BuildContext context, String imagepath) {
                               backgroundColor: const Color.fromARGB(255, 58, 182, 41),
                               textcolor: whiteColor,
                               button_funcation: () {
-                                _save(context,imagepath);
+                                print(imagefile);
+                               File image_path = File(imagepath);
+                                    File finalImage = imagefile ?? image_path;
+                                _save(context, finalImage);
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => a_ProfilePage(),
                                 ));

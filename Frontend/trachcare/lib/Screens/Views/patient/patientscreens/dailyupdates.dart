@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -28,7 +30,7 @@ class _YourdailyReportsState extends State<YourdailyReports> {
   get patientId => patient_id;
 
   Map<String, dynamic> patientData = {
-    'patient_id': '', // Corresponds to patient_id in the SQL
+    'patient_id': patient_id, // Corresponds to patient_id in the SQL
     'respiratory_rate': '',
     'heart_rate': '',
     'spo2_room_air': '',
@@ -42,7 +44,7 @@ class _YourdailyReportsState extends State<YourdailyReports> {
     'cough_or_breathlessness': false,
     'breath_duration': '',
     'spigotting_status': 'Not Applicable',
-    'image_path': '',
+    
   };
 
   Future<void> updatePatientData() async {
@@ -50,7 +52,7 @@ class _YourdailyReportsState extends State<YourdailyReports> {
       var request = http.MultipartRequest('POST', Uri.parse(SubmitVitalsUrl));
 
       request.headers.addAll({'Content-Type': 'multipart/form-data'});
-
+      
       patientData.forEach((key, value) {
         if (value is bool) {
           request.fields[key] = value ? 'Yes' : 'No';
@@ -58,11 +60,12 @@ class _YourdailyReportsState extends State<YourdailyReports> {
           request.fields[key] = value.toString();
         }
       });
-
+      print(patientData);
       var response = await request.send();
       var responseBody = await response.stream.bytesToString();
 
       if (response.statusCode == 200) {
+      print(jsonDecode(responseBody));
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => MedicationPage()),
           (route) => false,
@@ -91,7 +94,7 @@ class _YourdailyReportsState extends State<YourdailyReports> {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: Duplicate_Appbar(Title: "Patient List", height: dn.height(20)),
+      appBar: Duplicate_Appbar(Title: "Daily Queries", height: dn.height(20)),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Form(

@@ -20,7 +20,7 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
    bool ?doctor=false;
   
 
-    Appbar({super.key, required this.Name, this.bottom, required this.height, required this.notification,  this.notificationlists, this.doctor=false});
+  Appbar({super.key, required this.Name, this.bottom, required this.height, required this.notification,  this.notificationlists, this.doctor=false});
 
 
 

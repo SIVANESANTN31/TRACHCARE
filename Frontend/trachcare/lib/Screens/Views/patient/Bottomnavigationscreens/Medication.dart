@@ -55,7 +55,7 @@ class MedicationPage extends StatelessWidget {
             return Scaffold(
               appBar: NormalAppbar(
                 Title: "Diagnostics",
-                height: dn.height(15),
+                height: dn.height(10),
                 onTap: null,
               ),
               body: Column(

@@ -46,7 +46,7 @@ get patientId => patient_id;
     Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: NormalAppbar(
-        Title: "Report",
+        Title: "Daily Queries Reports",
         height: dn.height(15),
         onTap: null,
       ),

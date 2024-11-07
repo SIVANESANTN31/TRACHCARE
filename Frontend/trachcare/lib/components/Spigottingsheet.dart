@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
 import 'package:trachcare/components/custom_button.dart';
 import 'package:trachcare/style/colors.dart';
-import 'package:trachcare/style/utils/Dimention.dart';
+// import 'package:trachcare/style/utils/Dimention.dart';
 import '../Api/Apiurl.dart';
 import '../Screens/Views/patient/Bottomnavigationscreens/PatientDashborad.dart'; // Assuming you're using Sizer for responsive design
 
@@ -24,7 +24,7 @@ class _SpigottingsheetState extends State<Spigottingsheet> {
 
   @override
   Widget build(BuildContext context) {
-    Dimentions dn = Dimentions(context);
+    // Dimentions dn = Dimentions(context);
 
 Future updatestatus_spogoting()async{
   var apiUrl =updatestatusspogotingurl ;

@@ -16,7 +16,7 @@
     $result=[];
     
     //Select Query
-    $sql="SELECT * FROM  adminlogin  WHERE username='{$uname}'AND password =$pwd";
+    $sql="SELECT * FROM  adminlogin  WHERE username='{$uname}'AND password ='$pwd'";
     //echo json_encode($sql);
     $res=$conn->query($sql);
     

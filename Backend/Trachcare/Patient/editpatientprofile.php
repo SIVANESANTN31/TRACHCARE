@@ -1,24 +1,19 @@
 <?php 
 include "../config/conn.php";
 
-// Received JSON into $json variable
-$json = file_get_contents('php://input');
-
-// Decoding the received JSON and storing it in $obj variable
-$obj = json_decode($json, true);
-
 // Check if required fields are present in the request
-if (isset($obj["username"])) {
+if (isset($_POST["patient_id"])) {
 
     // Escape variables for security
-    $username = mysqli_real_escape_string($conn, $obj['username']);
-    $email = isset($obj['email']) ? mysqli_real_escape_string($conn, $obj['email']) : null;
-    $phone_number = isset($obj['phone_number']) ? mysqli_real_escape_string($conn, $obj['phone_number']) : null;
-    $password = isset($obj['password']) ? mysqli_real_escape_string($conn, $obj['password']) : null;
-    $image_data = isset($obj['image_data']) ? $obj['image_data'] : null;
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $email = isset($_POST['email']) ? mysqli_real_escape_string($conn, $_POST['email']) : null;
+    $phone_number = isset($_POST['phone_number']) ? mysqli_real_escape_string($conn, $_POST['phone_number']) : null;
+    $password = isset($_POST['password']) ? mysqli_real_escape_string($conn, $_POST['password']) : null;
+    $patient_id = isset($_POST['patient_id']) ? mysqli_real_escape_string($conn, $_POST['patient_id']) : null;
+    $image_data = isset($_FILES['image']['name']) ? uploadImage($_FILES['image']) : "siva";
 
     // Check if the user exists
-    $check_sql = "SELECT * FROM patientprofile WHERE username = '$username'";
+    $check_sql = "SELECT * FROM patientprofile WHERE patient_id = '$patient_id'";
     $check_result = $conn->query($check_sql);
 
     if ($check_result->num_rows > 0) {
@@ -36,14 +31,14 @@ if (isset($obj["username"])) {
         }
         if ($image_data !== null) {
             // Decode base64 image data and save the file
-            $image_file = 'uploads/' . uniqid() . '.jpg';  // Save with a unique name
-            file_put_contents($image_file, base64_decode($image_data));
+            $image_file = '../uploads/patient_images/' . uniqid() . '.jpg';  // Save with a unique name
+            // file_put_contents($image_file, base64_decode($image_data));
             $update_fields[] = "image_path = '$image_file'";
         }
 
         // If there are fields to update
         if (!empty($update_fields)) {
-            $update_sql = "UPDATE patientprofile SET " . implode(', ', $update_fields) . " WHERE username = '$username'";
+            $update_sql = "UPDATE patientprofile SET " . implode(', ', $update_fields) . " WHERE patient_id = '$patient_id'";
 
             if ($conn->query($update_sql) === TRUE) {
                 $response['Status'] = true;
@@ -74,5 +69,41 @@ $json_data = json_encode($response);
 
 // Echo the JSON data
 echo $json_data;
+
+
+function uploadImage($file) {
+    $target_dir = "../uploads/patient_images/";
+    $target_file = $target_dir . basename($file["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+    // Check if image file is an actual image or fake image
+    $check = getimagesize($file["tmp_name"]);
+    if ($check === false) {
+        $uploadOk = 0;
+    }
+
+    // Check file size
+    if ($file["size"] > 500000) { // 500 KB limit
+        $uploadOk = 0;
+    }
+
+    // Allow certain file formats
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+        $uploadOk = 0;
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        return null; // Return null if upload fails
+    } else {
+        if (move_uploaded_file($file["tmp_name"], $target_file)) {
+            return $target_file; // Return the file path on success
+        } else {
+            return null;
+        }
+    }
+}
+
 
 ?>

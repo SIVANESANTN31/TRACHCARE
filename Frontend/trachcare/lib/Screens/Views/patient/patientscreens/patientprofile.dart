@@ -2,9 +2,7 @@ import "dart:convert";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:http/http.dart";
 import "package:sizer/sizer.dart";
-import "package:trachcare/Screens/Views/Doctor/doctorscreens/editprofile.dart";
 import "package:trachcare/Screens/Views/patient/patientscreens/editprofile.dart";
 import "../../../../Api/Apiurl.dart";
 import "../../../../Api/DataStore/Datastore.dart";
@@ -76,7 +74,7 @@ class _p_ProfilePageState extends State<p_ProfilePage> {
               children: [
                 Container(
                   alignment: Alignment.topLeft,
-                  height: 25.h,
+                  height: dn.height(25),
                   decoration: const BoxDecoration(
                     color: TitleColor,
                     borderRadius: BorderRadius.only(
@@ -171,23 +169,23 @@ class _p_ProfilePageState extends State<p_ProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
-                  controller: doctorRegNoController,
-                  enabled: false,
-                  style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(
-                          color: BlackColor,
-                            fontSize: 13.sp))
-                            ,
-                  decoration: InputDecoration(
-                    labelText: 'Doctor_reg_no',
-                    labelStyle: TextStyle(color: BlackColor),
-                    border: const OutlineInputBorder(),
-                    filled: true,
-                    fillColor: const Color.fromARGB(255, 255, 255, 255),
-                  ),
-                ),
-                const SizedBox(height: 16),
+                // TextFormField(
+                //   controller: doctorRegNoController,
+                //   enabled: false,
+                //   style: GoogleFonts.ibmPlexSans(
+                //         textStyle: TextStyle(
+                //           color: BlackColor,
+                //             fontSize: 13.sp))
+                //             ,
+                //   decoration: InputDecoration(
+                //     labelText: 'Doctor_reg_no',
+                //     labelStyle: TextStyle(color: BlackColor),
+                //     border: const OutlineInputBorder(),
+                //     filled: true,
+                //     fillColor: const Color.fromARGB(255, 255, 255, 255),
+                //   ),
+                // ),
+                // const SizedBox(height: 16),
                 TextFormField(
                   controller: emailController,
                   enabled: false,
@@ -264,7 +262,7 @@ class _p_ProfilePageState extends State<p_ProfilePage> {
                   Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => 
-        Editpatientprofile(patient_id: Doctor_id,
+        Editpatientprofile(patient_id: patient_id,
          )),
       );
                 },

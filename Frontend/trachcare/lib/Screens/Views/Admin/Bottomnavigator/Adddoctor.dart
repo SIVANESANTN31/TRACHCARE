@@ -1,4 +1,4 @@
-import 'dart:convert';
+// import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,6 +65,7 @@ class _AdddoctorState extends State<Adddoctor> {
     if (file != null) {
       setState(() {
         imagefile = File(file.path);
+        print(imagefile);
       });
     }
   }

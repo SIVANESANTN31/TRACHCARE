@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2024 at 06:41 PM
+-- Generation Time: Nov 07, 2024 at 06:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -66,18 +66,13 @@ CREATE TABLE `addpatients` (
 --
 
 INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `age`, `address`, `bmi`, `diagnosis`, `surgery_status`, `post_op_tracheostomy_day`, `tube_name_size`, `baseline_vitals`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `indication_of_tracheostomy`, `comorbidities`, `hemoglobin`, `sr_sodium`, `sr_potassium`, `sr_calcium`, `sr_bicarbonate`, `pt`, `aptt`, `inr`, `platelets`, `liver_function_test`, `renal_function_test`, `image_path`) VALUES
-('1255161561561564564564564564', '53124siva', 'siva', 'test@test.com', '741856', '12345678', '51', 'gdfht', 'dhth', 'diohjdilh', 'jfiojds', 'sdhigfhsg', 'ksfgoiyfhb’', 'fx', 'fbufGBf', 'godjg', 'dfbklfdhbl', 'sdsgrag', 'fkjghfd', '‘bkdf;jbio', 'sgl’hbiofj', 'hbvklnf;lb', 'lbnkblvflb', 'aldsjgjfgl', 'fbkglifhgl', 'fglkh', 'dsvfh', 'fhtfhj', 'bvdfhb', 'fgjfgjd', '../uploads/patient_images/patient_671ca3130db878.42991464.jpg');
+('83026192121057', '74785patient ', 'patient ', 'testuser@test.com', '1234567890', 'password', '21', 'test at, Test city', '24.5', 'sample ', 'Completed', 'Day 3', 'Type A,  size 5', 'normal ', '18', '72', '98', 'routine', 'none', '13.5', '135', '4.2', '9.5', '24', '11.5', '28.0', '1.0', '250000', 'normal ', 'normal ', '../uploads/patient_images/patient_672b1d0d28b485.77837409.jpg');
 
 --
 -- Triggers `addpatients`
 --
 DELIMITER $$
 CREATE TRIGGER `Add_spogotting` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO spiotting_status(doctorid,patient_id) VALUES(NEW.doctor_id,NEW.patient_id)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `addDR` AFTER INSERT ON `addpatients` FOR EACH ROW INSERT INTO daily_report (doctor_id, patient_id, username, image_path)
-VALUES (NEW.doctor_id, NEW.patient_id,NEW.username, NEW.image_path)
 $$
 DELIMITER ;
 DELIMITER $$
@@ -137,7 +132,7 @@ CREATE TABLE `adminlogin` (
 --
 
 INSERT INTO `adminlogin` (`id`, `doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`, `image_path`) VALUES
-(1, '12345', 'siva', '1452', 'john@example.com', '1234567', '1234', '../uploads/doctorimages/66f38971e18f5.jpg');
+(1, '192121057', 'admin', '192121057', 'admin@trachcare.com', '9500077434', '123456', '../uploads/doctor.png');
 
 -- --------------------------------------------------------
 
@@ -150,13 +145,6 @@ CREATE TABLE `appoinment_table` (
   `patient_id` varchar(255) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `appoinment_table`
---
-
-INSERT INTO `appoinment_table` (`doctorid`, `patient_id`, `date`) VALUES
-('23', '556', '2023-08-28');
 
 -- --------------------------------------------------------
 
@@ -192,7 +180,7 @@ CREATE TABLE `daily_report` (
 --
 
 INSERT INTO `daily_report` (`id`, `doctor_id`, `patient_id`, `username`, `date`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `daily_dressing_done`, `tracheostomy_tie_changed`, `suctioning_done`, `oral_feeds_started`, `changed_to_green_tube`, `able_to_breathe_through_nose`, `secretion_color_consistency`, `cough_or_breathlessness`, `breath_duration`, `image_path`, `created_at`, `updated_at`) VALUES
-(23, '49882192121057', '53124siva', 'siva', '2024-11-05', 20, 75, 98, 'Yes', 'No', 'Yes', 'Yes', 'No', 'Yes', 'Clear', 'Yes', 10, '../uploads/patient_images/patient_671ca3130db878.42991464.jpg', '2024-11-04 18:10:29', '2024-11-05 16:07:51');
+(4, '83026192121057', '74785patient ', 'patient ', '2024-11-07', 55, 89, 88, 'No', 'No', 'No', 'No', 'No', 'No', '', 'No', 0, '../uploads/patient_images/patient_672b1d0d28b485.77837409.jpg', '2024-11-07 05:06:36', '2024-11-07 05:06:36');
 
 --
 -- Triggers `daily_report`
@@ -228,7 +216,7 @@ CREATE TABLE `daily_stauts` (
 --
 
 INSERT INTO `daily_stauts` (`doctorid`, `patient_id`, `username`, `status_10`, `status_12`, `status_2`, `status_4`, `status_6`, `issues`) VALUES
-('1255161561561564564564564564', '53124siva', 'siva', 0, 0, 1, 0, 0, 1);
+('83026192121057', '74785patient ', 'patient ', 1, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -252,21 +240,7 @@ CREATE TABLE `doctorprofile` (
 --
 
 INSERT INTO `doctorprofile` (`doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`, `image_path`, `created_at`) VALUES
-('49882192121057', 'hariharan', '192121057', 'test@test.com', '9500077434', '12345678', '../uploads/doctorimages/6729e472a388e.jpg', '2024-11-05 09:25:06');
-
---
--- Triggers `doctorprofile`
---
-DELIMITER $$
-CREATE TRIGGER `deletedoctor` AFTER INSERT ON `doctorprofile` FOR EACH ROW DELETE FROM doctorlogin
-WHERE doctor_id = NEW.doctor_id
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `insertdoc` AFTER INSERT ON `doctorprofile` FOR EACH ROW INSERT INTO doctorlogin (doctor_id, username, doctor_reg_no, email, phone_number, password)
-VALUES (NEW.doctor_id,NEW.username,NEW.doctor_reg_no,NEW.email,NEW.phone_number,NEW.password)
-$$
-DELIMITER ;
+('83026192121057', 'sivanesan', '192121057', 'test@test.com', '1234567890', '12345678', '../uploads/doctorimages/672b1a5fada58.jpg', '2024-11-06 07:27:27');
 
 -- --------------------------------------------------------
 
@@ -288,15 +262,6 @@ CREATE TABLE `medication_schedule` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `medication_schedule`
---
-
-INSERT INTO `medication_schedule` (`id`, `patient_id`, `date`, `tablet_name`, `morning_before_food`, `morning_after_food`, `afternoon_before_food`, `afternoon_after_food`, `night_before_food`, `night_after_food`, `created_at`) VALUES
-(1, 123, '2024-08-29', 'Paracetamol', 1, 0, 1, 0, 0, 1, '2024-08-29 07:07:05'),
-(2, 12345, '2024-08-29', 'Paracetamol', 1, 0, 1, 0, 1, 1, '2024-08-29 08:23:13'),
-(3, 12345, '2024-08-29', 'Paracetamol', 1, 0, 1, 0, 1, 1, '2024-08-29 08:23:23');
-
 -- --------------------------------------------------------
 
 --
@@ -315,7 +280,7 @@ CREATE TABLE `patientlogin` (
 --
 
 INSERT INTO `patientlogin` (`doctor_id`, `patient_id`, `username`, `password`) VALUES
-('1255161561561564564564564564', '53124siva', 'siva', '12345678');
+('83026192121057', '74785patient ', 'patient ', 'password');
 
 -- --------------------------------------------------------
 
@@ -340,7 +305,7 @@ CREATE TABLE `patientprofile` (
 --
 
 INSERT INTO `patientprofile` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `image_path`, `created_at`, `updated_at`) VALUES
-('1255161561561564564564564564', '53124siva', 'siva', 'test@test.com', '741856', '12345678', '../uploads/patient_images/patient_671ca3130db878.42991464.jpg', '2024-10-26 08:06:43', '2024-10-26 08:06:43');
+('83026192121057', '74785patient ', 'patient ', 'testuser@test.com', '1234567890', 'password', '../uploads/patient_images/patient_672b1d0d28b485.77837409.jpg', '2024-11-06 07:38:53', '2024-11-06 07:38:53');
 
 --
 -- Triggers `patientprofile`
@@ -370,8 +335,8 @@ CREATE TABLE `patientvideotable` (
 --
 
 INSERT INTO `patientvideotable` (`s.no`, `title`, `description`, `Video_url`, `Thumbnail_url`) VALUES
-(18, 'tracheostomy tie', 'How to change tracheostomy ties', '../uploads/videos/98109WhatsApp Video 2024-11-02 at 20.13.16_304640a2.mp4', '../uploads/thumbnails/98109How to succeed.png'),
-(19, 'siva', 'sivanesnsdoffical@gmail.com DS ', '../uploads/videos/80288video_20240923_103030.mp4', '../uploads/thumbnails/80288JPEG_20241104_184008_8953127561332246377.jpg');
+(1, 'Tracheostomy Tie', 'How to change tracheostomy tie', '../uploads/videos/43811VID_20241106_114338_580.mp4', '../uploads/thumbnails/43811JPEG_20241106_125837_1487491544511205671.jpg'),
+(2, 'Tracheostomy dressing', 'How to change tracheostomy dressing', '../uploads/videos/62899VID_20241106_125602_863.mp4', '../uploads/thumbnails/62899JPEG_20241106_125951_4974202568391824599.jpg');
 
 -- --------------------------------------------------------
 
@@ -391,7 +356,7 @@ CREATE TABLE `spiotting_status` (
 --
 
 INSERT INTO `spiotting_status` (`doctorid`, `patient_id`, `cough_or_breathlessness`, `breath_duration`) VALUES
-('1255161561561564564564564564', '53124siva', 'NO', '');
+('83026192121057', '74785patient ', 'YES', '500');
 
 --
 -- Triggers `spiotting_status`
@@ -492,29 +457,29 @@ ALTER TABLE `adminlogin`
 -- AUTO_INCREMENT for table `daily_report`
 --
 ALTER TABLE `daily_report`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `medication_schedule`
 --
 ALTER TABLE `medication_schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `patientvideotable`
 --
 ALTER TABLE `patientvideotable`
-  MODIFY `s.no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `s.no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 DELIMITER $$
 --
 -- Events
 --
-$$
+CREATE DEFINER=`root`@`localhost` EVENT `daily_status` ON SCHEDULE EVERY 1 DAY STARTS '2024-11-06 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts SET status_10=0,status_12=0,status_2=0,status_4=0,status_6=0$$
 
-$$
+CREATE DEFINER=`root`@`localhost` EVENT `daily_status_issues` ON SCHEDULE EVERY 2 HOUR STARTS '2024-11-06 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE daily_stauts SET issues=0$$
 
-$$
+CREATE DEFINER=`root`@`localhost` EVENT `spogoting_update` ON SCHEDULE EVERY 2 HOUR STARTS '2024-11-06 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE spiotting_status SET cough_or_breathlessness=NULL,breath_duration=NULL$$
 
 DELIMITER ;
 COMMIT;

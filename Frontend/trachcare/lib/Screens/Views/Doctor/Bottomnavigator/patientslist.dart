@@ -1,13 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:trachcare/Api/DataStore/Datastore.dart';
-
+// import 'package:trachcare/Api/DataStore/Datastore.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/Appbar_copy.dart';
-
-import '../../../../components/NAppbar.dart';
+// import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
 import '../doctorscreens/Patientsdetails.dart';

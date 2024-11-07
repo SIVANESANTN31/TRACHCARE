@@ -11,7 +11,7 @@ class AudioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
+    // final orientation = MediaQuery.of(context).orientation;
 
     List words = [
       "YES",

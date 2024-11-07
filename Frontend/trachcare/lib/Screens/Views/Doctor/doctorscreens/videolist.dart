@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trachcare/Api/API_funcation/VideoApi.dart';
 import 'package:trachcare/Screens/Views/Doctor/doctorscreens/VideoPlayer_screen.dart';
-import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/VideoPlayer_screen.dart';
 import 'package:trachcare/style/utils/Dimention.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/Appbar_copy.dart';
@@ -99,7 +98,7 @@ class _VideolistState extends State<Videolist> {
 
   Widget Videocard(String thumbnailUrl, String videoTitle) {
     print(thumbnailUrl);
-    Dimentions dn = Dimentions(context);
+    // Dimentions dn = Dimentions(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
