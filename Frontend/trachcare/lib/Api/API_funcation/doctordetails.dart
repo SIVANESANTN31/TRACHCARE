@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
 import 'package:trachcare/Api/Apiurl.dart';
-import 'package:trachcare/Api/DataStore/Datastore.dart';
 
 // Function to add doctor details
 Future<void> addDoctorDetails(
@@ -89,206 +88,37 @@ ScaffoldMessenger.of(context).showSnackBar(
       );
 } }
 
-// Function to update doctor details
 Future<void> updateDoctorDetails(
-   BuildContext context,
-  String doctorId,
-  dynamic imagefile,
-  String username,
-  String doctorRegNo,
-  String email,
-  String phoneNumber,
-  String password, 
-) async {
-  // API URL for updating doctor details
-  final String apiUrl = doctordetailsUrl; // Update with your actual update URL
-  try {
-    if (imagefile.path.isNotEmpty) {
-      // Get file extension and set appropriate MIME type
-      String fileExtension = path.extension(imagefile.path).toLowerCase().replaceFirst('.', '');
-      MediaType mediaType;
-
-      switch (fileExtension) {
-        case 'jpg':
-          mediaType = MediaType('image', 'jpg');
-          break;
-        case 'jpeg':
-          mediaType = MediaType('image', 'jpeg');
-          break;
-        case 'png':
-          mediaType = MediaType('image', 'png');
-          break;
-        case 'gif':
-          mediaType = MediaType('image', 'gif');
-          break;
-        default:
-          throw Exception('Unsupported image format');
-      }
-
-      var request = http.MultipartRequest("PUT", Uri.parse(apiUrl)); // Use PUT for updates
-
-      // Add fields to the request
-      request.fields.addAll({
-        'doctor_id' : Doctor_id,
-        'username': username,
-        'doctor_reg_no': doctorRegNo,
-        'email': email,
-        'phone_number': phoneNumber,
-        'password': password,
-        
-      });
-
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'image_data',
-          imagefile.path,
-          contentType: mediaType,
-        ),
-      );
-
-      var response = await request.send();
-print(response);
-      // Handle the response
-      if (response.statusCode == 200) {
-        var responseBody = await response.stream.bytesToString();
-        print(responseBody);
-        var data = jsonDecode(responseBody);
-        print(data['Status']);
-        if (data['Status']) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(data['msg']),
-            backgroundColor: Colors.green[400],
-          ));
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(data['message']),
-            backgroundColor: Colors.red,
-          ));
-        }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Server error: ${response.statusCode}'),
-          backgroundColor: Colors.red,
-        ));
-      }
-    }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Something went wrong !!!")),
-    );
-  }
-}
-
-
-Future<void> updateAdminDetails(
   BuildContext context,
   String doctorId,
-  File imagefile,
+  dynamic imageFile,
   String username,
   String doctorRegNo,
   String email,
   String phoneNumber,
   String password,
-   // File type for image upload
 ) async {
-  // Your API URL for updating doctor details
-  final String apiUrl = "$admindetailsUrl";
+  final String apiUrl = "$doctordetailsUrl"; // Replace with your actual API URL
+
   try {
-if (imagefile.path.isNotEmpty) {
-      // Get file extension and set appropriate MIME type
-      String fileExtension = path.extension(imagefile.path).toLowerCase().replaceFirst('.', '');     
-      // Map the extension to the appropriate media type
-      MediaType mediaType;
-      switch (fileExtension) {
-        case 'jpg':
-         mediaType = MediaType('image', 'jpg');
-          break;
-        case 'jpeg':
-          mediaType = MediaType('image', 'jpeg');
-          break;
-        case 'png':
-          mediaType = MediaType('image', 'png');
-          break;
-        case 'gif':
-          mediaType = MediaType('image', 'gif');
-          break;
-        default:
-          throw Exception('Unsupported image format');
-      }   
-var request = http.MultipartRequest("POST", Uri.parse(admindetailsUrl));
+    var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
+
     // Add fields to the request
     request.fields.addAll({
-      'doctot_id': doctorId,
+      'doctor_id': doctorId,
       'username': username,
+      'doctor_reg_no': doctorRegNo,
       'email': email,
       'phone_number': phoneNumber,
       'password': password,
-      'doctor_reg_no': doctorRegNo,
     });
-request.files.add(
-        await http.MultipartFile.fromPath(
-          'image_data',
-          imagefile.path,
-          contentType: mediaType,
-        ),
-      );
-      print(request.fields);
-var response = await request.send();
-    // Handle the response
-    if (response.statusCode == 200) {
-      var responseBody = await response.stream.bytesToString();
-      print(responseBody);
-      var data = jsonDecode(responseBody);
-      print(data['Status']);
-      if (data['Status']) {
 
-         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(data['msg']),
-          backgroundColor: Colors.green[400],
-        ));      
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(data['message']),
-          backgroundColor: Colors.red,
-        ));
-      }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Server error: ${response.statusCode}'),
-        backgroundColor: Colors.red,
-      ));
-  }
-}
-} catch (e) {
-    // Handle errors
-    print('Error: $e');
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('An error occurred: $e'),
-    ));
-  }
-}
-
-
-
-// Function to update doctor details
-Future<void> updatePatientDetails(
-   BuildContext context,
-  String doctorId,
-  dynamic imagefile,
-  String username,
- 
-  String email,
-  String phoneNumber,
-  String password, 
-) async {
-  // API URL for updating doctor details
-  final String apiUrl = UpdatePatientDetailsUrl; // Update with your actual update URL
-  try {
-    if (imagefile.path.isNotEmpty) {
-      // Get file extension and set appropriate MIME type
-      String fileExtension = path.extension(imagefile.path).toLowerCase().replaceFirst('.', '');
+    // Check if an image file is provided
+    if (imageFile != null && imageFile.path.isNotEmpty) {
+      String fileExtension = path.extension(imageFile.path).toLowerCase().replaceFirst('.', '');
       MediaType mediaType;
 
+      // Map file extension to MIME type
       switch (fileExtension) {
         case 'jpg':
           mediaType = MediaType('image', 'jpg');
@@ -306,55 +136,247 @@ Future<void> updatePatientDetails(
           throw Exception('Unsupported image format');
       }
 
-      var request = http.MultipartRequest("POST", Uri.parse(apiUrl)); // Use PUT for updates
-
-      // Add fields to the request
-      request.fields.addAll({
-        'patient_id' : patient_id,
-        'username': username,
-        'email': email,
-        'phone_number': phoneNumber,
-        'password': password,
-        
-      });
-
       request.files.add(
         await http.MultipartFile.fromPath(
-          'image_data',
-          imagefile.path,
+          'image', // The key must match the server's expected key for image
+          imageFile.path,
           contentType: mediaType,
         ),
       );
+    }
 
-      var response = await request.send();
-print(response);
-      // Handle the response
-      if (response.statusCode == 200) {
-        var responseBody = await response.stream.bytesToString();
-        print(responseBody);
-        var data = jsonDecode(responseBody);
-        print(data['Status']);
-        if (data['Status']) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(data['msg']),
-            backgroundColor: Colors.green[400],
-          ));
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    // Send the request
+    var response = await request.send();
+
+    // Handle the response
+    if (response.statusCode == 200) {
+      var responseBody = await response.stream.bytesToString();
+      var data = jsonDecode(responseBody);
+
+      if (data['Status']) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(data['message']),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
             content: Text(data['message']),
             backgroundColor: Colors.red,
-          ));
-        }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          ),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
           content: Text('Server error: ${response.statusCode}'),
           backgroundColor: Colors.red,
-        ));
-      }
+        ),
+      );
     }
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Something went wrong !!!")),
+      SnackBar(
+        content: Text('An error occurred: $e'),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+}
+
+Future<void> updateAdminDetails(
+  BuildContext context,
+  String doctorId,
+  dynamic imageFile,
+  String username,
+  String doctorRegNo,
+  String email,
+  String phoneNumber,
+  String password,
+) async {
+  final String apiUrl = "$admindetailsUrl"; // Replace with your actual API URL
+
+  try {
+    var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
+
+    // Add fields to the request
+    request.fields.addAll({
+      'doctor_id': doctorId,
+      'username': username,
+      'doctor_reg_no': doctorRegNo,
+      'email': email,
+      'phone_number': phoneNumber,
+      'password': password,
+    });
+
+    // Check if an image file is provided
+    if (imageFile != null && imageFile.path.isNotEmpty) {
+      String fileExtension = path.extension(imageFile.path).toLowerCase().replaceFirst('.', '');
+      MediaType mediaType;
+
+      // Map file extension to MIME type
+      switch (fileExtension) {
+        case 'jpg':
+          mediaType = MediaType('image', 'jpg');
+          break;
+        case 'jpeg':
+          mediaType = MediaType('image', 'jpeg');
+          break;
+        case 'png':
+          mediaType = MediaType('image', 'png');
+          break;
+        case 'gif':
+          mediaType = MediaType('image', 'gif');
+          break;
+        default:
+          throw Exception('Unsupported image format');
+      }
+
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'image', // The key must match the server's expected key for image
+          imageFile.path,
+          contentType: mediaType,
+        ),
+      );
+    }
+
+    // Send the request
+    var response = await request.send();
+
+    // Handle the response
+    if (response.statusCode == 200) {
+      var responseBody = await response.stream.bytesToString();
+      var data = jsonDecode(responseBody);
+
+      if (data['Status']) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(data['message']),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(data['message']),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Server error: ${response.statusCode}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('An error occurred: $e'),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+}
+
+
+Future<void> updatePatientDetails(
+  BuildContext context,
+  String patientId,
+  dynamic imageFile,
+  String username,
+  String email,
+  String phoneNumber,
+  String password,
+) async {
+  final String apiUrl = "$UpdatePatientDetailsUrl"; // Replace with your actual API URL
+
+  try {
+    var request = http.MultipartRequest("POST", Uri.parse(apiUrl));
+
+    // Add fields to the request
+    request.fields.addAll({
+      'patient_id': patientId,
+      'username': username,
+      'email': email,
+      'phone_number': phoneNumber,
+      'password': password,
+    });
+
+    // Check if an image file is provided
+    if (imageFile != null && imageFile.path.isNotEmpty) {
+      String fileExtension = path.extension(imageFile.path).toLowerCase().replaceFirst('.', '');
+      MediaType mediaType;
+
+      // Map file extension to MIME type
+      switch (fileExtension) {
+        case 'jpg':
+          mediaType = MediaType('image', 'jpg');
+          break;
+        case 'jpeg':
+          mediaType = MediaType('image', 'jpeg');
+          break;
+        case 'png':
+          mediaType = MediaType('image', 'png');
+          break;
+        case 'gif':
+          mediaType = MediaType('image', 'gif');
+          break;
+        default:
+          throw Exception('Unsupported image format');
+      }
+
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'image', // The key must match the server's expected key for image
+          imageFile.path,
+          contentType: mediaType,
+        ),
+      );
+    }
+
+    // Send the request
+    var response = await request.send();
+
+    // Handle the response
+    if (response.statusCode == 200) {
+      var responseBody = await response.stream.bytesToString();
+      var data = jsonDecode(responseBody);
+
+      if (data['Status']) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(data['message']),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(data['message']),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Server error: ${response.statusCode}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('An error occurred: $e'),
+        backgroundColor: Colors.red,
+      ),
     );
   }
 }

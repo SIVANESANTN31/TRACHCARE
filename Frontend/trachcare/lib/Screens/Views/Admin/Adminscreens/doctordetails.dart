@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/Apiurl.dart';
 import 'package:http/http.dart' as http;
-import 'package:trachcare/Screens/Views/Admin/Adminscreens/Doctorlist.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/editdoctordetails.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientlist%20copy.dart';
 import 'package:trachcare/components/custom_button.dart';
@@ -12,6 +11,7 @@ import 'dart:convert';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
+import '../Adminmainpage.dart';
 import '../Bottomnavigator/Admindb.dart';
 
 class Doctordetails extends StatefulWidget {
@@ -39,6 +39,15 @@ class _DoctordetailsState extends State<Doctordetails> {
     super.initState();
     fetchDoctorDetails(); // Fetch data when the widget is initialized
   }
+
+  
+  Future<void> onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 200));
+    await fetchDoctorDetails();
+    setState(() {});
+  }
+
+
 Future<dynamic> deleteDoctorDetails() async {
   final String url = '$doctordetailsUrl?doctor_id=${widget.Doctor_id}';
 
@@ -78,19 +87,10 @@ void alertdilog(){
             isDestructiveAction: true,
             onPressed: () {
 
-             
+             deleteDoctorDetails();
                   Navigator.of(context,rootNavigator: true).pop();
 
-                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Admindb()),(route)=>false);
-                 
-             
-              
-             
-              
-                
-              
-              
-              
+                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Adminmainpage()),(route)=>false); 
             },
             child: const Text('Yes'),
           ),
@@ -128,8 +128,11 @@ void alertdilog(){
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: NormalAppbar(Title: "Doctors Details",height: dn.height(10), onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(
-                               builder: (context) => Doctorlist(),),);},),
+       Navigator.of(context,rootNavigator: true).pop();
+
+                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Admindb()),(route)=>false);
+                               },
+                               ),
       body: FutureBuilder(
           future: fetchDoctorDetails(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -247,10 +250,31 @@ void alertdilog(){
                               height: 8,
                               backgroundColor: Colors.green,
                               textcolor: whiteColor,
-                              button_funcation: (){
-                                Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Editdoctordetails(Doctor_id: widget.Doctor_id,)),);
-                              },
+                              button_funcation: () {
+                          var data = snapshot.data;
+                          String doctorId = widget.Doctor_id; 
+                          String imagepath = data["image_path"].toString().substring(2); 
+                          String doctorRegNo = data['doctor_reg_no'].toString();
+                          String username = data['username'].toString();
+                          String email = data['email'].toString();
+                          String phoneNumber = data['phone_number'].toString();
+                          String password = data['password'].toString();
+                          print(imagepath);
+                          // Pass the fetched data to AdminEditProfile
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => Editdoctordetails(
+                                doctorId: doctorId,
+                                imagepath: imagepath,
+                                doctorRegNo: doctorRegNo,
+                                username: username,
+                                email: email,
+                                phoneNumber: phoneNumber,
+                                password: password,
+                              ),
+                            ),
+                          );
+                        },
                               textSize: 11),
                                custom_Button(
                               text: "patients",
@@ -291,8 +315,19 @@ void alertdilog(){
               );
             }
             return Center(
-              child: Text("Something went Wrong !!!"),
-            );
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/error.gif', // Change this path if necessary
+            height: 100,
+            width: 100,
+          ),
+          const SizedBox(height: 20),
+          const Text("Something went wrong!!"),
+        ],
+      ),
+    );
           }),
     );
   }

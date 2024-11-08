@@ -54,27 +54,44 @@ class _video_playerState extends State<video_player> {
     return Scaffold(
       appBar: NormalAppbar(Title: "WatchZone",height: dn.height(10), onTap: null,),
       
-      body: Column(
-       
-        children: [
-          
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text("Title: ${widget.title}",style: BoldStyle,),
-          ),
-          SizedBox(
-
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width * 9.0 / 16.0,
-               
-            child: Video(controller: controller),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Expanded(child: Text("Description:  ${widget.description}",style: Normal,)),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+         
+          children: [
+            
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text("Title: ${widget.title}",style: BoldStyle,),
+            ),
+            SizedBox(
+        
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width * 9.0 / 16.0,
+                 
+              child: Video(controller: controller),
+            ),
+        
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Expanded(child: Text("Description:  ${widget.description}",style: Normal,)),
+            ),
+        
+             Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/2.png', // Change this path if necessary
+              height: 100,
+              width: 100,
+            ),
+            const SizedBox(height: 20),
+            const Text("Hope this video will helps you!!"),
+          ],
+        ),
+            )
+          ],
+        ),
       ),
        
     );

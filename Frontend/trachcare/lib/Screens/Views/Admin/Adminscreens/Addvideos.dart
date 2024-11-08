@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 import 'package:toastification/toastification.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
-
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
@@ -14,13 +13,13 @@ class VideoUploadPage extends StatefulWidget {
   @override
   _VideoUploadPageState createState() => _VideoUploadPageState();
 }
-
 class _VideoUploadPageState extends State<VideoUploadPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   String? _filePath;
   String? _thumbnailPath;
+  bool _isLoading = false;
 
   String get doctorId => Doctor_id;
   String get patientId => patient_id;
@@ -66,17 +65,21 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
         return;
       }
 
+      setState(() {
+        _isLoading = true;
+      });
+
       var request = http.MultipartRequest('POST', Uri.parse(Addvideos));
       request.fields['title'] = _titleController.text;
       request.fields['description'] = _descriptionController.text;
-      
+
       // Attach video file
       request.files.add(await http.MultipartFile.fromPath(
         'videoFile',
         _filePath!,
         filename: path.basename(_filePath!),
       ));
-      
+
       // Attach thumbnail image
       request.files.add(await http.MultipartFile.fromPath(
         'thumbnailImage',
@@ -95,6 +98,7 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
           _descriptionController.clear();
           _filePath = null;
           _thumbnailPath = null;
+          _isLoading = false;
         });
 
         toastification.show(
@@ -109,6 +113,9 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
           autoCloseDuration: const Duration(seconds: 2),
         );
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         print('Upload failed: ${response.statusCode}');
       }
     }
@@ -216,20 +223,22 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
                       style: TextStyle(color: Colors.red),
                     ),
               SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  minimumSize: Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                ),
-                onPressed: _submitForm,
-                child: Text(
-                  'Submit',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
+              _isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        minimumSize: Size(double.infinity, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                      onPressed: _submitForm,
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
             ],
           ),
         ),

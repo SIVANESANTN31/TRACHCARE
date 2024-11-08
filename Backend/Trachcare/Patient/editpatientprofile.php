@@ -1,75 +1,112 @@
-<?php 
-include "../config/conn.php";
+<?php
 
-// Check if required fields are present in the request
-if (isset($_POST["patient_id"])) {
+include '../config/conn.php';
 
-    // Escape variables for security
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $email = isset($_POST['email']) ? mysqli_real_escape_string($conn, $_POST['email']) : null;
-    $phone_number = isset($_POST['phone_number']) ? mysqli_real_escape_string($conn, $_POST['phone_number']) : null;
-    $password = isset($_POST['password']) ? mysqli_real_escape_string($conn, $_POST['password']) : null;
-    $patient_id = isset($_POST['patient_id']) ? mysqli_real_escape_string($conn, $_POST['patient_id']) : null;
-    $image_data = isset($_FILES['image']['name']) ? uploadImage($_FILES['image']) : "siva";
-
-    // Check if the user exists
-    $check_sql = "SELECT * FROM patientprofile WHERE patient_id = '$patient_id'";
-    $check_result = $conn->query($check_sql);
-
-    if ($check_result->num_rows > 0) {
-        // Prepare the update query
-        $update_fields = [];
-
-        if ($email !== null) {
-            $update_fields[] = "email = '$email'";
-        }
-        if ($phone_number !== null) {
-            $update_fields[] = "phone_number = '$phone_number'";
-        }
-        if ($password !== null) {
-            $update_fields[] = "password = '$password'";
-        }
-        if ($image_data !== null) {
-            // Decode base64 image data and save the file
-            $image_file = '../uploads/patient_images/' . uniqid() . '.jpg';  // Save with a unique name
-            // file_put_contents($image_file, base64_decode($image_data));
-            $update_fields[] = "image_path = '$image_file'";
-        }
-
-        // If there are fields to update
-        if (!empty($update_fields)) {
-            $update_sql = "UPDATE patientprofile SET " . implode(', ', $update_fields) . " WHERE patient_id = '$patient_id'";
-
-            if ($conn->query($update_sql) === TRUE) {
-                $response['Status'] = true;
-                $response['message'] = "User details updated successfully.";
-            } else {
-                $response['Status'] = false;
-                $response['message'] = "Error updating record: " . $conn->error;
-            }
-        } else {
-            $response['Status'] = false;
-            $response['message'] = "No fields to update.";
-        }
+// Handle incoming requests
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['patient_id'])) {
+    getDoctor($conn, $_GET['patient_id']);
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['patient_id'])) {
+        updateDoctor($conn, $_POST);
     } else {
-        // If no record is found
-        $response = [
-            'Status' => false,
-            'message' => "No user found with the provided username."
-        ];
+        echo json_encode(['Status' => false, 'message' => 'patient_id is required for update']);
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE' && isset($_GET['patient_id'])) {
+    deleteDoctor($conn, $_GET['patient_id']);
 } else {
-    // If required fields are missing, set the Status to false and provide a message
-    $response['Status'] = false;
-    $response['message'] = "Required field 'username' is missing.";
+    echo json_encode(['Status' => false, 'message' => 'Invalid request']);
 }
 
-// Convert the response array into JSON format
-$json_data = json_encode($response);
+function getDoctor($conn, $id) {
+    $id = mysqli_real_escape_string($conn, $id);
+    $result = [];
 
-// Echo the JSON data
-echo $json_data;
+    $sql = "SELECT * FROM patientprofile WHERE patient_id='{$id}'";
+    $res = $conn->query($sql);
 
+    if ($res->num_rows > 0) {
+        $row = $res->fetch_assoc();
+        $result['Status'] = true;
+        $result['message'] = "Successfully retrieved the doctor details.";
+        $result["doctorInfo"] = $row;
+    } else {
+        $result['Status'] = false;
+        $result['message'] = "Failed to retrieve the doctor details.";
+        $result['doctorInfo'] = null;
+    }
+
+    echo json_encode($result);
+}
+
+function deleteDoctor($conn, $id) {
+    $id = mysqli_real_escape_string($conn, $id);
+    $result = [];
+
+    $sql = "DELETE FROM addpatients WHERE patient_id='{$id}'";
+
+    if ($conn->query($sql) === TRUE) {
+        $result['Status'] = true;
+        $result['message'] = "Doctor deleted successfully.";
+    } else {
+        $result['Status'] = false;
+        $result['message'] = "Error deleting doctor: " . $conn->error;
+    }
+
+    echo json_encode($result);
+}
+
+function updateDoctor($conn, $data) {
+
+    $patient_id = isset($data['patient_id']) ? mysqli_real_escape_string($conn, $data['patient_id']) : null;
+    $username = isset($data['username']) ? mysqli_real_escape_string($conn, $data['username']) : null;
+    $email = isset($data['email']) ? mysqli_real_escape_string($conn, $data['email']) : null;
+    $phone_number = isset($data['phone_number']) ? mysqli_real_escape_string($conn, $data['phone_number']) : null;
+    $password = isset($data['password']) ? mysqli_real_escape_string($conn, $data['password']) : null;
+    
+    
+    $fields = [];
+    if ($username !== null) {
+        $fields[] = "username='{$username}'";
+    }
+    if ($email !== null) {
+        $fields[] = "email='{$email}'";
+    }
+    if ($phone_number !== null) {
+        $fields[] = "phone_number='{$phone_number}'";
+    }
+    if ($password !== null) {
+        $fields[] = "password='{$password}'"; // Consider hashing the password
+    }
+    if (isset($_FILES['image']) && $_FILES['image']['name'] != "") {
+        // Upload image if provided
+        $image_path = uploadImage($_FILES['image']);
+        if ($image_path !== null) {
+            $fields[] = "image_path='{$image_path}'";
+        } else {
+            echo json_encode(['Status' => false, 'message' => 'Image upload failed']);
+            return;
+        }
+    }
+    
+    $result = [];
+    
+    if (count($fields) > 0) {
+        $sql = "UPDATE patientprofile SET " . implode(", ", $fields) . " WHERE patient_id = '$patient_id'";
+    
+        if ($conn->query($sql) === TRUE) {
+            $result['Status'] = true;
+            $result['message'] = "Doctor details updated successfully.";
+        } else {
+            $result['Status'] = false;
+            $result['message'] = "Error updating doctor: " . $conn->error;
+        }
+    } else {
+        $result['Status'] = false;
+        $result['message'] = "No fields to update.";
+    }
+    
+    echo json_encode($result);
+}
 
 function uploadImage($file) {
     $target_dir = "../uploads/patient_images/";
@@ -105,5 +142,5 @@ function uploadImage($file) {
     }
 }
 
-
 ?>
+

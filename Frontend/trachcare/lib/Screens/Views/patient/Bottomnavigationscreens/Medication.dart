@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,12 +6,87 @@ import 'package:sizer/sizer.dart';
 import 'package:trachcare/components/NAppbar.dart';
 import 'package:trachcare/style/colors.dart';
 import '../../../../Api/API_funcation/DashboardApi.dart';
+import '../../../../Api/Apiurl.dart';
+import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../style/utils/Dimention.dart';
 import '../patientscreens/calender.dart';
 import '../patientscreens/dailyupdates.dart';
-class MedicationPage extends StatelessWidget {
+import "package:http/http.dart" as http;
+class MedicationPage extends StatefulWidget {
   const MedicationPage({super.key});
 
+  @override
+  State<MedicationPage> createState() => _MedicationPageState();
+}
+
+class _MedicationPageState extends State<MedicationPage> {
+
+    
+     List<dynamic> reports = [];
+     bool isLoading = true;
+   
+
+  @override
+  void initState() {
+    super.initState();
+    fetchReports();
+  }
+   
+void alertdilog(){
+      showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('Multiple Reports'),
+        content: const Text('You have already uupdated your daily Queries.'),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context,"no");
+            },
+            child: const Text('No'),
+          ),
+          
+        
+      ]),
+    );
+
+    }
+
+  void btn_fun() {
+   alertdilog();
+  }
+  
+Future<List<dynamic>> fetchDailyReport(String doctorId) async {
+  final String apiUrl = dailyreport; // Update this URL
+
+  // Construct the full URL with query parameters
+  final Uri uri = Uri.parse('$apiUrl?patient_id=$patient_id');
+
+  try {
+    // Send the GET request
+    final response = await http.get(uri);
+
+    // Check the response status
+    if (response.statusCode == 200) {
+      // Parse the JSON response
+      final List<dynamic> reports = json.decode(response.body);
+      print(reports);
+      return reports; // Return the list of reports
+    } else {
+      throw Exception('Failed to load reports: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error: $e');
+    return []; // Return an empty list on error
+  }
+}
+  Future<void> fetchReports() async {
+    reports = await fetchDailyReport(patient_id);
+    setState(() {
+      isLoading = false;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     void navigateToDailyUpdates(String name, String imagePath) {
@@ -77,7 +153,13 @@ class MedicationPage extends StatelessWidget {
                     children: [
                       // Daily Updates
                       GestureDetector(
-                        onTap: () => navigateToDailyUpdates(name, imagePath),
+                       onTap: () {
+    if (reports.length > 0) {
+      btn_fun();
+    } else {
+      navigateToDailyUpdates(name, imagePath);
+    }
+  },
                         child: Container(
                           width: 42.w,
                           height: 20.h,
@@ -100,7 +182,7 @@ class MedicationPage extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  "Update your Daily Reports",
+                                  "Update your Daily Queries",
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.ibmPlexSans(
                                     textStyle: TextStyle(
@@ -159,11 +241,37 @@ class MedicationPage extends StatelessWidget {
               ),
             );
           } else {
-            return const Center(child: Text("No data available."));
+            return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/error.gif', // Change this path if necessary
+            height: 100,
+            width: 100,
+          ),
+          const SizedBox(height: 20),
+          const Text("Sorry server error!!"),
+        ],
+      ),
+    );
           }
         }
 
-        return const Center(child: Text("Error fetching data."));
+        return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/error.gif', // Change this path if necessary
+            height: 100,
+            width: 100,
+          ),
+          const SizedBox(height: 20),
+          const Text("Error fetching data."),
+        ],
+      ),
+    );
       },
     );
   }

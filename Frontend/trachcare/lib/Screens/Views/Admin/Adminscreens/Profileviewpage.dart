@@ -9,6 +9,7 @@ import "../../../../Api/DataStore/Datastore.dart";
 import "../../../../components/custom_button.dart";
 import "../../../../style/colors.dart";
 import 'package:http/http.dart' as http;
+import "../../../../style/utils/Dimention.dart";
 import "editprofile.dart";
 
 class a_ProfilePage extends StatefulWidget {
@@ -35,8 +36,15 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
   @override
   void initState() {
     super.initState();
-    fetchDoctorDetails(); // Fetch data when the widget is initialized
+    fetchDoctorDetails(); 
   }
+  
+  Future<void> onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 200));
+    await fetchDoctorDetails();
+    setState(() {});
+  }
+
 
  Future<dynamic> fetchDoctorDetails() async {
   print(Doctor_id);
@@ -63,7 +71,7 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
 
 @override
   Widget build(BuildContext context) {
-    // Dimentions dn = Dimentions(context);
+     Dimentions dn = Dimentions(context);
     return Scaffold(
       
       body: SafeArea(
@@ -75,7 +83,7 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
                 children: [
                   Container(
                     alignment: Alignment.topLeft,
-                    height: 25.h,
+                    height: dn.height(25),
                     decoration: const BoxDecoration(
                       color: TitleColor,
                       borderRadius: BorderRadius.only(
@@ -103,6 +111,7 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
                       bottom: 0,
                     ),
                     child: Container(
+                      
                       decoration: const BoxDecoration(
                         color: loginFormcolor,
                         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -127,8 +136,9 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
                      var imagepath = data["image_path"].toString().substring(1);
                      
                      print(data["image_path"]);
-                    return 
-           SingleChildScrollView(
+                    return RefreshIndicator.adaptive(
+                      onRefresh: onRefresh,
+          child:  SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -137,7 +147,6 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
                    Center(child: Text("My profile")),
                    SizedBox(height: 20),
                   Center(
-                    
                     child: Column(
                       children: [
                         CircleAvatar(
@@ -239,16 +248,71 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
                       fillColor: const Color.fromARGB(255, 255, 255, 255),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                   SizedBox(height: dn.height(5)),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Center(
+                      child: custom_Button(
+                        text: "Edit Profile",
+                        width: 50,
+                        height: 6,
+                        button_funcation: () {
+                          var data = snapshot.data;
+                          String doctorId = Doctor_id; 
+                          String imagepath = data["image_path"].toString().substring(2); 
+                          String doctorRegNo = data['doctor_reg_no'].toString();
+                          String username = data['username'].toString();
+                          String email = data['email'].toString();
+                          String phoneNumber = data['phone_number'].toString();
+                          String password = data['password'].toString();
+                          print(imagepath);
+                          // Pass the fetched data to AdminEditProfile
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => AdminEditProfile(
+                                doctorId: doctorId,
+                                imagepath: imagepath,
+                                doctorRegNo: doctorRegNo,
+                                username: username,
+                                email: email,
+                                phoneNumber: phoneNumber,
+                                password: password,
+                              ),
+                            ),
+                          );
+                        },
+                        backgroundColor: sucess_color,
+                        textcolor: whiteColor,
+                        textSize: 9,
+                      ),
+                      
+                    ),
+                  )
+                   
+
                 ],
+                
               ),
             ),
-                   );}
+                   ),);}
                 }
         else if(snapshot.connectionState == ConnectionState.waiting){
           return Center(child: CupertinoActivityIndicator(radius: 10,),);
         }
-        return Center(child: Text("Something went Wrong !!!"),);
+        return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/error.gif', // Change this path if necessary
+            height: 100,
+            width: 100,
+          ),
+          const SizedBox(height: 20),
+          const Text("Something went wrong!!"),
+        ],
+      ),
+    );
           }),
                       ),
                     ),
@@ -256,23 +320,7 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
                 ],
                 
               ),
-               SizedBox(height: 4.h),
-              custom_Button(
-                  text: "Edit Profile",
-                  width: 50,
-                  height: 6,
-                  button_funcation: (){
-                     Navigator.of(context).push(MaterialPageRoute(
-                                 builder: (context) =>
-         admineditprofile(Doctor_id: Doctor_id,
-           )),
-        );
-                  },
-                  backgroundColor: sucess_color,
-                  textcolor: whiteColor,
-                  textSize: 9),
-                  SizedBox(height: 10.h),
-        
+               SizedBox(height: dn.height(05)),
             ],
           ),
         ),

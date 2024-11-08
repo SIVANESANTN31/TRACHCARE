@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:trachcare/Screens/Views/patient/patientscreens/dailyReports.dart';
-import 'package:trachcare/components/NAppbar.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../Api/DataStore/Datastore.dart';
+import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
 
@@ -23,15 +23,18 @@ class calender extends StatefulWidget {
   State<calender> createState() => _calenderState();
 }
 
+
 class _calenderState extends State<calender> {
-  DateTime selectedDate = DateTime.now();
+    DateTime selectedDate = DateTime.now();
   DateTime focusedDate = DateTime.now();
-get patientId => patient_id;
+  
+  get patientId => patient_id;
+
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
       selectedDate = selectedDay;
       focusedDate = focusedDay;
-
+      // Navigate to view daily updates page
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -45,42 +48,65 @@ get patientId => patient_id;
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(
-        Title: "Daily Queries Reports",
-        height: dn.height(15),
-        onTap: null,
-      ),
+      appBar:  NormalAppbar(
+      Title: "Daily Queries Reports",
+      height: dn.height(10),
+      onTap: () {
+        Navigator.of(context).pop();
+      },
+    ),
       body: ListView(
         children: [
-           Namecard(widget.name, patientId, widget.imagePath, context),  // Replace "patient_id" with the actual patientId
-          TableCalendar(
-            availableGestures: AvailableGestures.horizontalSwipe,
-            pageJumpingEnabled: true,
-            headerStyle: const HeaderStyle(
-              formatButtonVisible: false,
-              titleCentered: true,
-            ),
-            focusedDay: focusedDate,
-            firstDay: DateTime(DateTime.now().year, DateTime.now().month, 1),
-            lastDay: DateTime.now(), // Last selectable day is today
-            calendarStyle: CalendarStyle(
-              disabledDecoration: BoxDecoration(
-                color: Colors.grey.shade300, // Color for disabled (future) days
-                shape: BoxShape.circle,
+          SizedBox(height: dn.height(5)),
+          Namecard(widget.name, patientId, widget.imagePath, context),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: dn.width(5)),
+            child: TableCalendar(
+              availableGestures: AvailableGestures.horizontalSwipe,
+              headerStyle: HeaderStyle(
+                formatButtonVisible: false,
+                titleCentered: true,
+                titleTextStyle: GoogleFonts.ibmPlexSans(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+                leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black54),
+                rightChevronIcon: Icon(Icons.chevron_right, color: Colors.black54),
               ),
-              disabledTextStyle: TextStyle(
-                color: Colors.grey, // Text style for disabled days
+              calendarStyle: CalendarStyle(
+                todayDecoration: BoxDecoration(
+                  color: Colors.blueAccent.shade100,
+                  shape: BoxShape.circle,
+                ),
+                selectedDecoration: BoxDecoration(
+                  color: Colors.greenAccent.shade700,
+                  shape: BoxShape.circle,
+                ),
+                selectedTextStyle: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+                weekendTextStyle: TextStyle(color: Colors.redAccent),
+                defaultTextStyle: TextStyle(color: Colors.black87),
+                outsideTextStyle: TextStyle(color: Colors.grey.shade400),
+                disabledDecoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  shape: BoxShape.circle,
+                ),
+                disabledTextStyle: TextStyle(color: Colors.grey),
               ),
+              focusedDay: focusedDate,
+              firstDay: DateTime(DateTime.now().year, DateTime.now().month,1),
+              lastDay: DateTime.now(),
+              selectedDayPredicate: (day) => isSameDay(day, selectedDate),
+              enabledDayPredicate: (day) => day.isBefore(DateTime.now().add(Duration(days: 1))),
+              onDaySelected: (selectedDay, focusedDay) {
+                if (selectedDay.isBefore(DateTime.now().add(Duration(days: 1)))) {
+                  onDaySelected(selectedDay, focusedDay);
+                }
+              },
             ),
-            selectedDayPredicate: (day) => isSameDay(day, selectedDate),
-            // Disable selection for future days
-            enabledDayPredicate: (day) => day.isBefore(DateTime.now().add(Duration(days: 1))),
-            onDaySelected: (selectedDay, focusedDay) {
-              if (selectedDay.isBefore(DateTime.now().add(Duration(days: 1)))) {
-                // Call onDaySelected only if the selected day is not in the future
-                onDaySelected(selectedDay, focusedDay);
-              }
-            },
           ),
         ],
       ),

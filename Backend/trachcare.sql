@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2024 at 06:23 AM
+-- Generation Time: Nov 08, 2024 at 03:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -66,7 +66,7 @@ CREATE TABLE `addpatients` (
 --
 
 INSERT INTO `addpatients` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `age`, `address`, `bmi`, `diagnosis`, `surgery_status`, `post_op_tracheostomy_day`, `tube_name_size`, `baseline_vitals`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `indication_of_tracheostomy`, `comorbidities`, `hemoglobin`, `sr_sodium`, `sr_potassium`, `sr_calcium`, `sr_bicarbonate`, `pt`, `aptt`, `inr`, `platelets`, `liver_function_test`, `renal_function_test`, `image_path`) VALUES
-('83026192121057', '74785patient ', 'patient ', 'testuser@test.com', '1234567890', 'password', '21', 'test at, Test city', '24.5', 'sample ', 'Completed', 'Day 3', 'Type A,  size 5', 'normal ', '18', '72', '98', 'routine', 'none', '13.5', '135', '4.2', '9.5', '24', '11.5', '28.0', '1.0', '250000', 'normal ', 'normal ', '../uploads/patient_images/patient_672b1d0d28b485.77837409.jpg');
+('18771192121055', '32208ragul', 'ragul', 'test@test.com', ' 1234567890', '12345678', '30', '123 Main St', '22.5', 'Diagnosis description', 'Surgery status description', '2', ' Tube details', ' Normal vitals', ' 20', ' 80', ' 95', ' Indication description', ' None', ' 13.5', ' 140', ' 4.5', ' 9.0', ' 24', ' 12', ' 30', ' 1.0', ' 150000', ' Normal', ' Normal', '../uploads/patient.png');
 
 --
 -- Triggers `addpatients`
@@ -132,7 +132,7 @@ CREATE TABLE `adminlogin` (
 --
 
 INSERT INTO `adminlogin` (`id`, `doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`, `image_path`) VALUES
-(1, '192121057', 'admin', '192121057', 'admin@trachcare.com', '9500077434', '123456', '../uploads/doctor.png');
+(1, '192121057', 'admin', '192121057', 'test@test.com', '12345', '12345', '../uploads/admin/siva.jpg');
 
 -- --------------------------------------------------------
 
@@ -180,7 +180,7 @@ CREATE TABLE `daily_report` (
 --
 
 INSERT INTO `daily_report` (`id`, `doctor_id`, `patient_id`, `username`, `date`, `respiratory_rate`, `heart_rate`, `spo2_room_air`, `daily_dressing_done`, `tracheostomy_tie_changed`, `suctioning_done`, `oral_feeds_started`, `changed_to_green_tube`, `able_to_breathe_through_nose`, `secretion_color_consistency`, `cough_or_breathlessness`, `breath_duration`, `image_path`, `created_at`, `updated_at`) VALUES
-(4, '83026192121057', '74785patient ', 'patient ', '2024-11-07', 55, 89, 88, 'No', 'No', 'No', 'No', 'No', 'No', '', 'No', 0, '../uploads/patient_images/patient_672b1d0d28b485.77837409.jpg', '2024-11-07 05:06:36', '2024-11-07 05:06:36');
+(1, '18771192121055', '32208ragul', 'ragul', '2024-11-08', 125, 147, 23, 'Yes', 'Yes', 'No', 'Yes', 'No', 'No', '', 'Yes', 0, '../uploads/patient.png', '2024-11-08 14:24:58', '2024-11-08 14:24:58');
 
 --
 -- Triggers `daily_report`
@@ -216,7 +216,7 @@ CREATE TABLE `daily_stauts` (
 --
 
 INSERT INTO `daily_stauts` (`doctorid`, `patient_id`, `username`, `status_10`, `status_12`, `status_2`, `status_4`, `status_6`, `issues`) VALUES
-('83026192121057', '74785patient ', 'patient ', 1, 0, 0, 0, 0, 0);
+('18771192121055', '32208ragul', 'ragul', 0, 0, 0, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -240,7 +240,7 @@ CREATE TABLE `doctorprofile` (
 --
 
 INSERT INTO `doctorprofile` (`doctor_id`, `username`, `doctor_reg_no`, `email`, `phone_number`, `password`, `image_path`, `created_at`) VALUES
-('83026192121057', 'sivanesan', '192121057', 'test@test.com', '1234567890', '12345678', '../uploads/doctorimages/672b1a5fada58.jpg', '2024-11-06 07:27:27');
+('18771192121055', 'varsha', '192121055', 'test@test.com', '123456789', '12345678', '../uploads/doctorimages/672e132c14553.jpg', '2024-11-08 13:33:32');
 
 -- --------------------------------------------------------
 
@@ -280,7 +280,7 @@ CREATE TABLE `patientlogin` (
 --
 
 INSERT INTO `patientlogin` (`doctor_id`, `patient_id`, `username`, `password`) VALUES
-('83026192121057', '74785patient ', 'patient ', 'password');
+('18771192121055', '32208ragul', 'ragul', '12345678');
 
 -- --------------------------------------------------------
 
@@ -305,7 +305,7 @@ CREATE TABLE `patientprofile` (
 --
 
 INSERT INTO `patientprofile` (`doctor_id`, `patient_id`, `username`, `email`, `phone_number`, `password`, `image_path`, `created_at`, `updated_at`) VALUES
-('83026192121057', '74785patient ', 'patient ', 'testuser@test.com', '1234567890', 'password', '../uploads/patient_images/patient_672b1d0d28b485.77837409.jpg', '2024-11-06 07:38:53', '2024-11-06 07:38:53');
+('18771192121055', '32208ragul', 'ragul', 'test@test.com', ' 1234567890', '12345678', '../uploads/patient.png', '2024-11-08 13:46:46', '2024-11-08 13:46:46');
 
 --
 -- Triggers `patientprofile`
@@ -356,7 +356,7 @@ CREATE TABLE `spiotting_status` (
 --
 
 INSERT INTO `spiotting_status` (`doctorid`, `patient_id`, `cough_or_breathlessness`, `breath_duration`) VALUES
-('83026192121057', '74785patient ', 'YES', '500');
+('18771192121055', '32208ragul', 'Yes', '0');
 
 --
 -- Triggers `spiotting_status`
@@ -457,7 +457,7 @@ ALTER TABLE `adminlogin`
 -- AUTO_INCREMENT for table `daily_report`
 --
 ALTER TABLE `daily_report`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `medication_schedule`

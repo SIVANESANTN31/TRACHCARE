@@ -5,7 +5,6 @@ import 'package:trachcare/Api/Apiurl.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/doctordetails.dart';
 import 'package:trachcare/Screens/Views/Admin/Bottomnavigator/Admindb.dart';
 import 'package:trachcare/style/colors.dart';
-import '../../../../Api/DataStore/Datastore.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
 import "package:http/http.dart" as http;
@@ -24,7 +23,7 @@ class _patientlistState extends State<patientlist> {
 
 
   Future fetchData() async {
-    var url = "$PatientslistUrl?doctor_id=$Doctor_id";
+    var url = "$PatientslistUrl?doctor_id=${widget.doctor_id}";
     print(url);
     final response = await http.get(Uri.parse(url)); // Use http://localhost if you're using a real device or emulator IP for Android
     if (response.statusCode == 200) {
@@ -62,7 +61,7 @@ Future<void> onRefresh() async{
     Dimentions dn = Dimentions(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 217, 255, 215),
-      appBar: NormalAppbar(Title: "Doctors List",height: dn.height(10), onTap: (){
+      appBar: NormalAppbar(Title: "Patients List",height: dn.height(10), onTap: (){
         Navigator.of(context).push(MaterialPageRoute(
                                builder: (context) => Admindb(),),);
       },),
@@ -155,9 +154,20 @@ Future<void> onRefresh() async{
                     );
                   }
                  // print(snapshot.hasData);
-                   return const Center(
-                    child: Text("something went wrong!!!"),
-                  );
+                   return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/error.gif', // Change this path if necessary
+            height: 100,
+            width: 100,
+          ),
+          const SizedBox(height: 20),
+          const Text("Something went wrong!!"),
+        ],
+      ),
+    );
           
            }
           ),

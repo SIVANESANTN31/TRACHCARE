@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +50,8 @@ class Admindb extends StatelessWidget {
     if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasData){
             var data = snapshot.data;
-            var regno = data['Doctor_reg_no'].toString();
+            var regno = data['doctor_reg_no'].toString();
+            print(regno);
             var name  = data['username'].toString();
             var imagepath = data["image_path"].toString().substring(2);
                 print(data["image_path"]);

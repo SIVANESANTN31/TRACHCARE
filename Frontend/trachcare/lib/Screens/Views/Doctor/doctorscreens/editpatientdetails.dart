@@ -121,7 +121,25 @@ class _EditpatientdetailsState extends State<Editpatientdetails> {
                    
                   ],
                 )
-              : const Center(child: CircularProgressIndicator()), // Show a loading spinner while fetching data
+              : Center(child: Column(
+                children: [
+                  CircularProgressIndicator(),
+                  Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/error.gif', // Change this path if necessary
+            height: 100,
+            width: 100,
+          ),
+          const SizedBox(height: 20),
+          const Text("Something went wrong!!"),
+        ],
+      ),
+    )
+                ],
+              )), // Show a loading spinner while fetching data
         ),
       ),
     );

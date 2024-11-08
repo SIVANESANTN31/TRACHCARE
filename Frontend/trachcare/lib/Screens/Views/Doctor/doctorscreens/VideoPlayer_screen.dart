@@ -58,27 +58,44 @@ class _videoplayerState extends State<videoplayer> {
                                builder: (context) => Videolist(),),);
       },),
       
-      body: Column(
-       
-        children: [
-          
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text("Title: ${widget.title}",style: BoldStyle,),
-          ),
-          SizedBox(
-
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width * 9.0 / 16.0,
-               
-            child: Video(controller: controller),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Expanded(child: Text("Description:  ${widget.description}",style: Normal,)),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+         
+          children: [
+            
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text("Title: ${widget.title}",style: BoldStyle,),
+            ),
+            SizedBox(
+        
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width * 9.0 / 16.0,
+                 
+              child: Video(controller: controller),
+            ),
+        
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Expanded(child: Text("Description:  ${widget.description}",style: Normal,)),
+            ),
+        
+            Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/2.png', // Change this path if necessary
+              height: 100,
+              width: 100,
+            ),
+            const SizedBox(height: 20),
+            const Text("Hope this video will helps you!!"),
+          ],
+        ),
+            )
+          ],
+        ),
       ),
        
     );
@@ -159,9 +176,6 @@ class _ControlsOverlay extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
                 vertical: 12,
                 horizontal: 16,
               ),
@@ -188,9 +202,6 @@ class _ControlsOverlay extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
                 vertical: 12,
                 horizontal: 16,
               ),

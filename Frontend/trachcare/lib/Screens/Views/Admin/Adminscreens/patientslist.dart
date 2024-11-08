@@ -162,9 +162,20 @@ Future<void> onRefresh() async{
                     );
                   }
                  // print(snapshot.hasData);
-                   return const Center(
-                    child: Text("something went wrong!!!"),
-                  );
+                   return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/error.gif', // Change this path if necessary
+            height: 100,
+            width: 100,
+          ),
+          const SizedBox(height: 20),
+          const Text("Something went wrong!!"),
+        ],
+      ),
+    );
           
            }
           ),

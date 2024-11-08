@@ -2,6 +2,21 @@
 
 include '../config/conn.php';
 
+// Handle incoming requests
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['doctor_id'])) {
+    getDoctor($conn, $_GET['doctor_id']);
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['doctor_id'])) {
+        updateDoctor($conn, $_POST);
+    } else {
+        echo json_encode(['Status' => false, 'message' => 'doctor_id is required for update']);
+    }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE' && isset($_GET['doctor_id'])) {
+    deleteDoctor($conn, $_GET['doctor_id']);
+} else {
+    echo json_encode(['Status' => false, 'message' => 'Invalid request']);
+}
+
 function getDoctor($conn, $id) {
     $id = mysqli_real_escape_string($conn, $id);
     $result = [];
@@ -12,26 +27,41 @@ function getDoctor($conn, $id) {
     if ($res->num_rows > 0) {
         $row = $res->fetch_assoc();
         $result['Status'] = true;
-        $result['message'] = "Successfully retrieved the id from the database.";
+        $result['message'] = "Successfully retrieved the doctor details.";
         $result["doctorInfo"] = $row;
     } else {
         $result['Status'] = false;
-        $result['message'] = "Failed to retrieve the id from the database.";
-        $result['doctorInfo'] = "Failed to retrieve the id from the database.";
+        $result['message'] = "Failed to retrieve the doctor details.";
+        $result['doctorInfo'] = null;
     }
 
     echo json_encode($result);
 }
 
+function deleteDoctor($conn, $id) {
+    $id = mysqli_real_escape_string($conn, $id);
+    $result = [];
+
+    $sql = "DELETE FROM doctorprofile WHERE doctor_id='{$id}'";
+
+    if ($conn->query($sql) === TRUE) {
+        $result['Status'] = true;
+        $result['message'] = "Doctor deleted successfully.";
+    } else {
+        $result['Status'] = false;
+        $result['message'] = "Error deleting doctor: " . $conn->error;
+    }
+
+    echo json_encode($result);
+}
 
 function updateDoctor($conn, $data) {
-    $doctor_id = mysqli_real_escape_string($conn, $data['doctor_id']);
+    $doctor_id = isset($data['doctor_id']) ? mysqli_real_escape_string($conn, $data['doctor_id']) : null;
     $username = isset($data['username']) ? mysqli_real_escape_string($conn, $data['username']) : null;
     $doctor_reg_no = isset($data['doctor_reg_no']) ? mysqli_real_escape_string($conn, $data['doctor_reg_no']) : null;
     $email = isset($data['email']) ? mysqli_real_escape_string($conn, $data['email']) : null;
     $phone_number = isset($data['phone_number']) ? mysqli_real_escape_string($conn, $data['phone_number']) : null;
     $password = isset($data['password']) ? mysqli_real_escape_string($conn, $data['password']) : null;
-    $image_path = isset($_FILES['image']['name']) ? uploadImage($_FILES['image']) : null; // Handle file upload
     $created_at = isset($data['created_at']) ? mysqli_real_escape_string($conn, $data['created_at']) : null;
 
     $fields = [];
@@ -50,11 +80,15 @@ function updateDoctor($conn, $data) {
     if ($password !== null) {
         $fields[] = "password='{$password}'"; // Consider hashing the password
     }
-    if ($image_path !== null) {
-        $fields[] = "image_path='{$image_path}'";
-    }
-    if ($created_at !== null) {
-        $fields[] = "created_at='{$created_at}'";
+    if (isset($_FILES['image']) && $_FILES['image']['name'] != "") {
+        // Upload image if provided
+        $image_path = uploadImage($_FILES['image']);
+        if ($image_path !== null) {
+            $fields[] = "image_path='{$image_path}'";
+        } else {
+            echo json_encode(['Status' => false, 'message' => 'Image upload failed']);
+            return;
+        }
     }
 
     $result = [];
@@ -77,9 +111,8 @@ function updateDoctor($conn, $data) {
     echo json_encode($result);
 }
 
-
 function uploadImage($file) {
-    $target_dir = "../uploads/";
+    $target_dir = "../uploads/doctorimages/";
     $target_file = $target_dir . basename($file["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -110,40 +143,6 @@ function uploadImage($file) {
             return null;
         }
     }
-}
-
-
-function deleteDoctor($conn, $id) {
-    $id = mysqli_real_escape_string($conn, $id);
-    $result = [];
-
-    $sql = "DELETE FROM doctorprofile WHERE doctor_id='{$id}'";
-
-    if ($conn->query($sql) === TRUE) {
-        $result['Status'] = true;
-        $result['message'] = "Doctor deleted successfully.";
-    } else {
-        $result['Status'] = false;
-        $result['message'] = "Error deleting doctor: " . $conn->error;
-    }
-
-    echo json_encode($result);
-}
-
-// Handle incoming requests
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['doctor_id'])) {
-    getDoctor($conn, $_GET['doctor_id']);
-} elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-    $data = json_decode(file_get_contents("php://input"), true);
-    if (isset($data['doctor_id'])) { // Check if doctor_id is provided
-        updateDoctor($conn, $data);
-    } else {
-        echo json_encode(['Status' => false, 'message' => 'doctor_id is required for update']);
-    }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE' && isset($_GET['doctor_id'])) {
-    deleteDoctor($conn, $_GET['doctor_id']);
-} else {
-    echo json_encode(['Status' => false, 'message' => 'Invalid request']);
 }
 
 ?>

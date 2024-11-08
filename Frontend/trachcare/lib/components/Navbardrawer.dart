@@ -1,18 +1,12 @@
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-import 'package:trachcare/Api/DataStore/Datastore.dart';
-import 'package:trachcare/Screens/Views/Doctor/doctorscreens/doctorprofile.dart';
 import 'package:trachcare/components/information.dart';
 import 'package:trachcare/Screens/started/WelcomePage.dart';
 import 'package:trachcare/components/custom_button.dart';
-import 'package:trachcare/style/Tropography.dart';
 import 'package:trachcare/style/colors.dart';
-
-import '../Api/Apiurl.dart';
 import '../style/utils/Dimention.dart';
 
 class drawer extends StatelessWidget {

@@ -6,7 +6,7 @@ include '../config/conn.php';
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['doctor_id'])) {
     getDoctor($conn, $_GET['doctor_id']);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['doctor_id'])) { // Check if doctor_id is provided
+    if (isset($_POST['doctor_id'])) {
         updateDoctor($conn, $_POST);
     } else {
         echo json_encode(['Status' => false, 'message' => 'doctor_id is required for update']);
@@ -55,8 +55,6 @@ function deleteDoctor($conn, $id) {
     echo json_encode($result);
 }
 
-
-
 function updateDoctor($conn, $data) {
     $doctor_id = isset($data['doctor_id']) ? mysqli_real_escape_string($conn, $data['doctor_id']) : null;
     $username = isset($data['username']) ? mysqli_real_escape_string($conn, $data['username']) : null;
@@ -64,7 +62,6 @@ function updateDoctor($conn, $data) {
     $email = isset($data['email']) ? mysqli_real_escape_string($conn, $data['email']) : null;
     $phone_number = isset($data['phone_number']) ? mysqli_real_escape_string($conn, $data['phone_number']) : null;
     $password = isset($data['password']) ? mysqli_real_escape_string($conn, $data['password']) : null;
-    $image_path = isset($_FILES['image']['name']) ? uploadImage($_FILES['image']) : null; // Handle file upload
     $created_at = isset($data['created_at']) ? mysqli_real_escape_string($conn, $data['created_at']) : null;
 
     $fields = [];
@@ -83,11 +80,15 @@ function updateDoctor($conn, $data) {
     if ($password !== null) {
         $fields[] = "password='{$password}'"; // Consider hashing the password
     }
-    if ($image_path !== null) {
-        $fields[] = "image_path='{$image_path}'";
-    }
-    if ($created_at !== null) {
-        $fields[] = "created_at='{$created_at}'";
+    if (isset($_FILES['image']) && $_FILES['image']['name'] != "") {
+        // Upload image if provided
+        $image_path = uploadImage($_FILES['image']);
+        if ($image_path !== null) {
+            $fields[] = "image_path='{$image_path}'";
+        } else {
+            echo json_encode(['Status' => false, 'message' => 'Image upload failed']);
+            return;
+        }
     }
 
     $result = [];
@@ -110,9 +111,8 @@ function updateDoctor($conn, $data) {
     echo json_encode($result);
 }
 
-
 function uploadImage($file) {
-    $target_dir = "../uploads/";
+    $target_dir = "../uploads/admin/";
     $target_file = $target_dir . basename($file["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));

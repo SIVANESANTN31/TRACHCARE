@@ -10,6 +10,7 @@ import "../../../../components/custom_button.dart";
 import "../../../../style/colors.dart";
 import "../../../../style/utils/Dimention.dart";
 import 'package:http/http.dart' as http;
+import "../patientScreenmain.dart";
 // import 'package:onboarding/utils/profilefield.dart';
 class p_ProfilePage extends StatefulWidget {
   
@@ -85,7 +86,8 @@ class _p_ProfilePageState extends State<p_ProfilePage> {
                   child: SafeArea(
                     child: InkWell(
                           onTap:(){
-                          Navigator.pop(context);
+                           Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => PatientMainScreen(),));
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
@@ -122,7 +124,7 @@ class _p_ProfilePageState extends State<p_ProfilePage> {
                   emailController.text = data['email'].toString();
                    phoneNumberController.text = data['phone_number'].toString();
                    passwordController.text = data['password'].toString();
-                   var imagepath = data["image_path"].toString().substring(1);
+                   var imagepath = data["image_path"].toString().substring(2);
                    
                    print(data["image_path"]);
                   return 
@@ -238,6 +240,45 @@ class _p_ProfilePageState extends State<p_ProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 24),
+
+                Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Center(
+                      child: custom_Button(
+                        text: "Edit Profile",
+                        width: 50,
+                        height: 6,
+                        button_funcation: () {
+                          var data = snapshot.data;
+                          String patientId = patient_id; 
+                          String imagepath = data["image_path"].toString().substring(2); 
+                          String doctorRegNo = data['doctor_reg_no'].toString();
+                          String username = data['username'].toString();
+                          String email = data['email'].toString();
+                          String phoneNumber = data['phone_number'].toString();
+                          String password = data['password'].toString();
+                          print(imagepath);
+                          // Pass the fetched data to AdminEditProfile
+                          Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(
+                              builder: (context) => Editpatientprofile(
+                                patientId: patientId,
+                                imagepath: imagepath,
+                                doctorRegNo: doctorRegNo,
+                                username: username,
+                                email: email,
+                                phoneNumber: phoneNumber,
+                                password: password,
+                              ),
+                            ),(route)=>false
+                          );
+                        },
+                        backgroundColor: sucess_color,
+                        textcolor: whiteColor,
+                        textSize: 9,
+                      ),
+                      
+                    ),
+                  )
               ],
             ),
           ),
@@ -254,22 +295,8 @@ class _p_ProfilePageState extends State<p_ProfilePage> {
               ],
             ),
              SizedBox(height: 4.h),
-            custom_Button(
-                text: "Edit Profile",
-                width: 60,
-                height: 6,
-                button_funcation: (){
-                  Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => 
-        Editpatientprofile(patient_id: patient_id,
-         )),
-      );
-                },
-                backgroundColor: sucess_color,
-                textcolor: whiteColor,
-                textSize: 13),
-                SizedBox(height: 10.h),
+            
+               
 
           ],
         ),

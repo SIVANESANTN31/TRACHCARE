@@ -1,7 +1,5 @@
-// import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-// import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -212,7 +210,7 @@ Row(
                     Gap(3.5.h),
                     Padding(
                       padding: const EdgeInsets.all(9.0),
-                      child: Text("Exercisers For Trach Care:", style: GoogleFonts.ibmPlexSans(
+                      child: Text("Exercisers For TrachCare:", style: GoogleFonts.ibmPlexSans(
                         textStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, color: const Color(0XFF455A64)))),
                     ),
                    
@@ -224,7 +222,20 @@ Row(
             );
           }
         }
-        return const Center(child: Text("No data available"));
+        return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/error.gif', // Change this path if necessary
+            height: 100,
+            width: 100,
+          ),
+          const SizedBox(height: 20),
+          const Text("No data available"),
+        ],
+      ),
+    );
       }
     );
 
@@ -345,11 +356,11 @@ Widget carsouleview(List imagesList, BuildContext context) {
 
   // Set up the timer for automatic scrolling
   void startAutoScroll() {
-    carouselTimer = Timer.periodic(Duration(seconds: 3), (timer) {
+    carouselTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (pageController.hasClients) {
         int nextPage = pageController.page!.toInt() + 1;
         if (nextPage >= imagesList.length) {
-          nextPage = 0; // Loop back to the first page
+          nextPage = 0; 
         }
         pageController.animateToPage(
           nextPage,

@@ -1,4 +1,4 @@
-const ip = "172.20.10.4"; 
+const ip = "172.20.10.2"; 
 
 //login apikfl;djbl;
 String PatientLoginurl ="https://$ip/Trachcare/auth/patientAuth/PatientLogin.php";
@@ -9,11 +9,12 @@ String AdminLoginurl = "https://$ip/Trachcare/auth/AdminAuth/AdminLogin.php";
 //sumbit or add api
 String PatientDetailsSubmitUrl = "https://$ip/Trachcare/Doctor/Addpatients.php";
 String SubmitVitalsUrl = "https://$ip/Trachcare/Patient/adddailyupdates.php";
-String UpdatePatientDetailsUrl = "https://$ip/Trachcare/Doctor/editpatientprofile.php";
+String UpdatePatientDetailsUrl = "https://$ip/Trachcare/Patient/editpatientprofile.php";
 String AdddoctordetailsUrl = "https://$ip/Trachcare/Admin/Adddoctordetails.php";
 
 //view api
 String viewstory = "https://$ip/Trachcare/Doctor/viewstory.php";
+String dailyreport= "https://$ip/Trachcare/Patient/dailyreport.php";
 String ViewPatientDetailsUrl = "https://$ip/Trachcare/Doctor/viewpatientdetails.php";
 String doctordetailsUrl = "https://$ip/Trachcare/Admin/doctordetails.php";
 String admindetailsUrl = "https://$ip/Trachcare/Admin/admindetails.php";

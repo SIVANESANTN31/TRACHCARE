@@ -126,7 +126,9 @@ class _YourdailyReportsState extends State<YourdailyReports> {
               if (patientData['oral_feeds_started'] == true)
                 buildYesNoQuestion('If Yes, experiencing cough or breathlessness?', 'cough_or_breathlessness'),
               buildYesNoQuestion('Has the patient been changed to green tube?', 'changed_to_green_tube'),
+              SizedBox(height: dn.height(2)),
               buildDropdown('Spigotting status', ),
+              SizedBox(height: dn.height(2)),
               buildYesNoQuestion(
                   'Is the patient able to breathe through nose while blocking the tube?',
                   'able_to_breathe_through_nose'),

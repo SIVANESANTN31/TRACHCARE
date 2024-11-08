@@ -90,7 +90,11 @@ NormalAppbar(
        body: isLoading
         ? Center(child: CircularProgressIndicator())
         : patientData['respiratory_rate']== null
-            ? Center(child: Text("No data available for this date"))
+            ? Center(
+      child:
+          const Text("No data available in this date!!"),
+     
+    )
             : SingleChildScrollView(
                 padding: EdgeInsets.all(16.0),
                 child: Form(
@@ -123,12 +127,13 @@ NormalAppbar(
                         buildYesNoQuestion('If Yes, experiencing cough or breathlessness?', 'cough_or_breathlessness'),
                       buildYesNoQuestion('Has the patient been changed to green tube?', 'changed_to_green_tube'),
                       buildDropdown('Spigotting status'),
+                       SizedBox(height: dn.height(2)),
                       buildYesNoQuestion('Is the patient able to breathe through nose while blocking the tube?', 'able_to_breathe_through_nose'),
                       if (patientData['able_to_breathe_through_nose'] == "Yes")
                         buildTextField('If Yes, breath duration', (value) {
                           patientData['breath_duration'] = value;
                         }, patientData['breath_duration']),
-                      SizedBox(height: dn.height(20)),
+                      SizedBox(height: dn.height(10)),
                     ],
                   ),
                 ),

@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
+import '../Doctormainscreen.dart';
 
 class PatientDetails extends StatefulWidget {
   final String patientId;
@@ -22,6 +24,63 @@ class _PatientDetailsState extends State<PatientDetails> {
   void initState() {
     super.initState();
     fetchPatientDetails(); // Fetch data when the screen loads
+  }
+
+  Future<dynamic> deletePatientDetails() async {
+  final String url = '$UpdatePatientDetailsUrl?patient_id=${widget.patientId}';
+
+  print('API URL: $url'); // Debugging purpose
+
+  try {
+    final response = await http.delete(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      return data["message"]; // Assuming the API returns a message on successful deletion
+      
+    } else {
+      print('Failed to delete doctor details: ${response.statusCode}');
+      return null; // Return null or an appropriate message
+    }
+  } catch (e) {
+    print('Error: $e');
+    return null; // Handle the error as needed
+  }
+}
+
+  
+void alertdilog(){
+      showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('Delete'),
+        content: const Text('Are sure you want to delete this user?'),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context,"no");
+            },
+            child: const Text('No'),
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            onPressed: () {
+
+             deletePatientDetails();
+                  Navigator.of(context,rootNavigator: true).pop();
+
+                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Doctormainpage()),(route)=>false); 
+            },
+            child: const Text('Yes'),
+          ),
+        
+      ]),
+    );
+
+    }
+
+  void btn_fun() {
+   alertdilog();
   }
 
   // Function to fetch patient details from the server
@@ -136,7 +195,12 @@ class _PatientDetailsState extends State<PatientDetails> {
                     ],
                   ),
                 )
-              : const Center(child: CircularProgressIndicator()), // Show a loading spinner while fetching data
+              :Center(child: Column(
+                children: [
+                  CircularProgressIndicator(),
+                  
+                ],
+              )), // Show a loading spinner while fetching data
         ),
       ),
     );

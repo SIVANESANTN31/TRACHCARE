@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
+import '../../../../components/custom_button.dart';
+import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
+import '../Adminmainpage.dart';
 
 class ViewPatientDetails extends StatefulWidget {
   final String patientId;
@@ -22,6 +26,63 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
   void initState() {
     super.initState();
     fetchPatientDetails(); // Fetch data when the screen loads
+  }
+
+  Future<dynamic> deletePatientDetails() async {
+  final String url = '$UpdatePatientDetailsUrl?patient_id=${widget.patientId}';
+
+  print('API URL: $url'); // Debugging purpose
+
+  try {
+    final response = await http.delete(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      return data["message"]; // Assuming the API returns a message on successful deletion
+      
+    } else {
+      print('Failed to delete doctor details: ${response.statusCode}');
+      return null; // Return null or an appropriate message
+    }
+  } catch (e) {
+    print('Error: $e');
+    return null; // Handle the error as needed
+  }
+}
+
+  
+void alertdilog(){
+      showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('Delete'),
+        content: const Text('Are sure you want to delete this user?'),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context,"no");
+            },
+            child: const Text('No'),
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            onPressed: () {
+
+             deletePatientDetails();
+                  Navigator.of(context,rootNavigator: true).pop();
+
+                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Adminmainpage()),(route)=>false); 
+            },
+            child: const Text('Yes'),
+          ),
+        
+      ]),
+    );
+
+    }
+
+  void btn_fun() {
+   alertdilog();
   }
 
   // Function to fetch patient details from the server
@@ -131,7 +192,25 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
                       buildFormField('Platelets', patientDetails['platelets']),
                       buildFormField('Liver Function Test', patientDetails['liverFunctionTest']),
                       buildFormField('Renal Function Test', patientDetails['renalFunctionTest']),
-                      SizedBox(height: dn.height(10)),
+                     
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Center(
+                          child: custom_Button(
+                                  text: "Delete",
+                                  width: 48,
+                                  height: 8,
+                                  backgroundColor: Colors.red,
+                                  textcolor: whiteColor,
+                                  button_funcation: (){
+                                   btn_fun();
+                                  },
+                                  textSize: 11),
+                        ),
+                      ),
+                       SizedBox(height: dn.height(10)),
+
+                          
                     ],
                   ),
                 )

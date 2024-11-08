@@ -88,9 +88,20 @@ class _VideospageState extends State<Videospage> {
                 );
               }
 
-              return const Center(
-                child: Text("Something went wrong!!!"),
-              );
+              return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/error.gif', // Change this path if necessary
+            height: 100,
+            width: 100,
+          ),
+          const SizedBox(height: 20),
+          const Text("Failed to load videos!"),
+        ],
+      ),
+    );
             }));
   }
 
