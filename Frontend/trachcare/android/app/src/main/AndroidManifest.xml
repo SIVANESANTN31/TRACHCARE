@@ -51,4 +51,12 @@
   </intent>
   
     </queries>
+    <uses-permission android:name="android.permission.INTERNET"/>
+   <uses-permission android:name="android.permission.CAMERA" />
+   <!-- For Android 11 and higher -->
+   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+<!-- For Android 12 and higher -->
+<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 </manifest>

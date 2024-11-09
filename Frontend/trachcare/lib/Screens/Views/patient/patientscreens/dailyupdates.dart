@@ -163,6 +163,7 @@ class _YourdailyReportsState extends State<YourdailyReports> {
         SizedBox(
           width: 100,
           child: TextFormField(
+            textInputAction: TextInputAction.next,
             keyboardType: isNumber ? TextInputType.number : TextInputType.text,
             validator: (value) {
               if (value!.isEmpty) return 'Please enter $labelText';

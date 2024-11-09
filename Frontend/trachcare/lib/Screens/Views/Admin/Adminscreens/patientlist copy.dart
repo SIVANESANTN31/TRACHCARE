@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trachcare/Api/Apiurl.dart';
+import 'package:trachcare/Screens/Views/Admin/Adminmainpage.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/doctordetails.dart';
-import 'package:trachcare/Screens/Views/Admin/Bottomnavigator/Admindb.dart';
+
 import 'package:trachcare/style/colors.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
@@ -63,7 +64,7 @@ Future<void> onRefresh() async{
       backgroundColor: const Color.fromARGB(255, 217, 255, 215),
       appBar: NormalAppbar(Title: "Patients List",height: dn.height(10), onTap: (){
         Navigator.of(context).push(MaterialPageRoute(
-                               builder: (context) => Admindb(),),);
+                               builder: (context) => Adminmainpage(),),);
       },),
       body: Column(
         children: [

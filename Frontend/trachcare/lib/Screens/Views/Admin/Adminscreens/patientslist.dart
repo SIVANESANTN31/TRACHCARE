@@ -2,14 +2,13 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trachcare/Screens/Views/Admin/Adminmainpage.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/ViewPatientDetails.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
 import "package:http/http.dart" as http;
-
-import '../Bottomnavigator/Admindb.dart';
 
 class patients_list extends StatefulWidget {
 
@@ -69,7 +68,7 @@ Future<void> onRefresh() async{
       appBar: NormalAppbar(
         Title: "Patients List",height: dn.height(10), onTap:() {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => Admindb(),
+            builder: (context) => Adminmainpage(),
           ));
         },
       ),

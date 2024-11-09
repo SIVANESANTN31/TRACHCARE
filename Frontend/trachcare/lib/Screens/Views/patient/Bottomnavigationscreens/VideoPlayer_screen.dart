@@ -84,6 +84,7 @@ class _video_playerState extends State<video_player> {
               'assets/images/2.png', // Change this path if necessary
               height: 100,
               width: 100,
+              colorBlendMode: BlendMode.colorBurn,
             ),
             const SizedBox(height: 20),
             const Text("Hope this video will helps you!!"),

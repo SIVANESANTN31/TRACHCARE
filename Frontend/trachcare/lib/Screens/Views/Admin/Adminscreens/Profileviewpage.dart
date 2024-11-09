@@ -3,13 +3,13 @@ import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
-import "package:trachcare/Screens/Views/Admin/Bottomnavigator/Admindb.dart";
 import "../../../../Api/Apiurl.dart";
 import "../../../../Api/DataStore/Datastore.dart";
 import "../../../../components/custom_button.dart";
 import "../../../../style/colors.dart";
 import 'package:http/http.dart' as http;
 import "../../../../style/utils/Dimention.dart";
+import "../Adminmainpage.dart";
 import "editprofile.dart";
 
 class a_ProfilePage extends StatefulWidget {
@@ -95,7 +95,7 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
                       child: InkWell(
                             onTap:(){
                             Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Admindb(),));
+                                    builder: (context) => Adminmainpage(),));
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),

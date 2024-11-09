@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
+import '../../../../components/custom_button.dart';
+import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
 import '../Doctormainscreen.dart';
 
@@ -191,6 +193,23 @@ void alertdilog(){
                       buildFormField('Platelets', patientDetails['platelets']),
                       buildFormField('Liver Function Test', patientDetails['liverFunctionTest']),
                       buildFormField('Renal Function Test', patientDetails['renalFunctionTest']),
+
+                      
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Center(
+                          child: custom_Button(
+                                  text: "Delete",
+                                  width: 48,
+                                  height: 8,
+                                  backgroundColor: Colors.red,
+                                  textcolor: whiteColor,
+                                  button_funcation: (){
+                                   btn_fun();
+                                  },
+                                  textSize: 11),
+                        ),
+                      ),
                       SizedBox(height: dn.height(10)),
                     ],
                   ),

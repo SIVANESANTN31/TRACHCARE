@@ -86,7 +86,7 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
     if (response.statusCode == 200) {
       // Parse the JSON response
       final List<dynamic> reports = json.decode(response.body);
-      print(reports);
+      print("sdfghjkl");
       return reports; // Return the list of reports
     } else {
       throw Exception('Failed to load reports: ${response.statusCode}');
@@ -142,8 +142,9 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
               ));
             },
           ),
-          body: SingleChildScrollView(
-            child: Column(
+          body: RefreshIndicator.adaptive(
+            onRefresh: onRefresh,
+            child: ListView(
               children: [
                 SizedBox(
                   height: dn.height(1),
@@ -158,10 +159,10 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
                     height: dn.height(13),
                     child: reports.isEmpty
                         ? Center(
-      child:
-          const Text("Something went wrong!!"),
-        
-    )
+                  child:
+                      const Text("patients didn't updated today queries."),
+                    
+                )
                         : ListView.builder(
                             itemCount: reports.length,
                             scrollDirection: Axis.horizontal,

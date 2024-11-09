@@ -37,14 +37,14 @@ void alertdilog(){
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
         title: const Text('Multiple Reports'),
-        content: const Text('You have already uupdated your daily Queries.'),
+        content: const Text('You have already updated your daily Queries.'),
         actions: <CupertinoDialogAction>[
           CupertinoDialogAction(
             isDefaultAction: true,
             onPressed: () {
               Navigator.pop(context,"no");
             },
-            child: const Text('No'),
+            child: const Text('OK'),
           ),
           
         

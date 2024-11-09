@@ -4,10 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 import 'package:toastification/toastification.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
+import 'package:trachcare/Screens/Views/Admin/Adminmainpage.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/utils/Dimention.dart';
-import '../Bottomnavigator/Admindb.dart';
 
 class VideoUploadPage extends StatefulWidget {
   @override
@@ -130,7 +130,7 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
         height: dn.height(10),
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => Admindb(),
+            builder: (context) => Adminmainpage(),
           ));
         },
       ),
