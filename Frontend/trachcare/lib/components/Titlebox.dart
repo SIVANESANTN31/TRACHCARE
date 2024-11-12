@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trachcare/style/colors.dart';
 
+import '../style/utils/Dimention.dart';
+
 class Titlehead extends StatelessWidget {
   final String titleName;
    const Titlehead({super.key, required this.titleName});
 
   @override
   Widget build(BuildContext context) {
+    Dimentions dn = Dimentions(context);
     return Container(
-                  width: 150,
-                  height: 50,
+                  width: dn.width(30),
+                  height: dn.height(6),
                   decoration: BoxDecoration(
                       color: TitleColor,
                       borderRadius: BorderRadius.circular(10),
@@ -27,7 +30,7 @@ class Titlehead extends StatelessWidget {
                     titleName,
                     style: GoogleFonts.ibmPlexSans(
                         textStyle: const TextStyle(
-                            fontSize: 22,
+                            fontSize: 23,
                             color: whiteColor,
                             fontWeight: FontWeight.bold)),
                   )));

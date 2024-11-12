@@ -109,7 +109,7 @@ class _VideolistState extends State<Videolist> {
 
   Widget Videocard(String thumbnailUrl, String videoTitle ,) {
     print(thumbnailUrl);
-    // Dimentions dn = Dimentions(context);
+    Dimentions dn = Dimentions(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -119,7 +119,7 @@ class _VideolistState extends State<Videolist> {
           children: [Image.network(
             "https://$ip/Trachcare/$thumbnailUrl",
             width: double.infinity,
-            height: 200,
+            height: dn.height(200),
             fit: BoxFit.cover,
           ),
           IconButton(

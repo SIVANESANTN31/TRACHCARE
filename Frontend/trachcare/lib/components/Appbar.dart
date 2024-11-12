@@ -6,7 +6,6 @@ import 'package:trachcare/components/Navbardrawer.dart';
 import 'package:trachcare/components/Notificationsheet.dart';
 import 'package:trachcare/components/doctornotification.dart';
 import 'package:trachcare/style/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

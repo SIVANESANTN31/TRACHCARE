@@ -78,9 +78,9 @@ var screenSize = MediaQuery.of(context).size;
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const SizedBox(
-                            width: 60,
-                            height: 60,
+                           SizedBox(
+                            width: dn.width(10),
+                            height: dn.height(10),
                             child: CircleAvatar(
                               backgroundImage: AssetImage("assets/images/doctor.png"),
                             ),
@@ -120,9 +120,9 @@ var screenSize = MediaQuery.of(context).size;
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const SizedBox(
-                            width: 60,
-                            height: 60,
+                           SizedBox(
+                            width: dn.width(10),
+                            height: dn.height(10),
                             child: CircleAvatar(
                               backgroundImage:
                                   AssetImage("assets/images/patient.png"),

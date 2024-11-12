@@ -100,35 +100,47 @@ void alertdilog(){
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Color(0XFFECCEA8),
-              ),
-              child: Center(
-                child: Column(
-                  children: [
-                    SizedBox(
-                        width: 35.w,
-                        height: 8.h,
-                        child: CircleAvatar(
-                          foregroundImage: imagepath
-                        )),
-                    Text(
-                      Name,
-                      style: GoogleFonts.ibmPlexSans(
-                          textStyle: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 13.sp)),
-                    ),
-                    Text(
-                      reg_no,
-                      style: GoogleFonts.ibmPlexSans(
-                          textStyle: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 10.sp)),
-                    )
-                  ],
-                ),
+            SizedBox(
+  width: dn.width(40), // Set the width for DrawerHeader
+  height: dn.width(30), // Set the height for DrawerHeader
+  child: DrawerHeader(
+    decoration: BoxDecoration(
+      color: Color(0XFFECCEA8),
+    ),
+    child: Center(
+      child: Column(
+        children: [
+          SizedBox(
+            width: dn.width(20), // Width of the CircleAvatar
+            height: dn.width(10), // Height of the CircleAvatar
+            child: CircleAvatar(
+              foregroundImage: imagepath,
+            ),
+          ),
+          Text(
+            Name,
+            style: GoogleFonts.ibmPlexSans(
+              textStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 13.sp,
               ),
             ),
+          ),
+          Text(
+            reg_no,
+            style: GoogleFonts.ibmPlexSans(
+              textStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 10.sp,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ),
+),
+
             ListTile(
               leading: const Icon(
                 Icons.person,
@@ -191,7 +203,7 @@ void alertdilog(){
                   height: 7,
                   backgroundColor: Logoutbtncolor,
                   textcolor: whiteColor,
-                  textSize: 12,
+                  textSize: 10,
                   ),
             )
           ],

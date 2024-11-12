@@ -18,8 +18,9 @@ class Admindb extends StatelessWidget {
    
   List imgList = [
     'Vector',
-    'Vector-1',
     'Vector-2',
+    'Vector-1',
+    
   ];
 
   List pages_name = [
@@ -127,14 +128,14 @@ class Admindb extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.all(10),
                                     child: 
-                                    Image.asset("assets/images/${imgList[index]}.png", width: 75, height: 75,),),
-                                    SizedBox(height: dn.height(1),),
+                                    Image.asset("assets/images/${imgList[index]}.png", width: dn.width(30), height: dn.height(30),),),
+                                    // SizedBox(height: dn.height(1),),
                                     Text(
                                       pages_name[index],
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black.withOpacity(0.5),
+                                        color: Colors.black.withOpacity(1),
                                       ),
                                     )
                                 

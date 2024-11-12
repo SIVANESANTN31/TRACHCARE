@@ -43,8 +43,8 @@ class _loginFormState extends State<loginForm> {
             children: [
               // Username Field
               SizedBox(
-                width: 70.w,
-                height: 8.h,
+                width: dn.width(75),
+                height: dn.height(7),
                 child: TextFormField(
                   validator: (username) {
                     if (username!.isEmpty) {
@@ -78,8 +78,8 @@ class _loginFormState extends State<loginForm> {
 
               // Password Field
               SizedBox(
-                width: 70.w,
-                height: 8.h,
+                width: dn.width(75),
+                height: dn.height(7),
                 child: TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
