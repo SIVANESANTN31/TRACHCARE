@@ -3,29 +3,29 @@ import "package:flutter/material.dart";
 import "package:media_kit/media_kit.dart";
 import "package:media_kit_video/media_kit_video.dart";
 import "package:trachcare/Api/Apiurl.dart";
-import "package:trachcare/Screens/Views/Doctor/doctorscreens/videolist.dart";
 import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/style/Tropography.dart";
 import "package:video_player/video_player.dart";
 
 import "../../../../style/utils/Dimention.dart";
+import "videolist.dart";
 
 
 
 
-class videoplayer extends StatefulWidget {
+class a_videoplayer extends StatefulWidget {
 
 
   final String Videoulrl;
   final String title;
   final String description;
-    videoplayer({super.key, required this.Videoulrl, required this.title, required this.description});
+    a_videoplayer({super.key, required this.Videoulrl, required this.title, required this.description});
 
   @override
-  State<videoplayer> createState() => _videoplayerState();
+  State<a_videoplayer> createState() => _a_videoplayerState();
 }
 
-class _videoplayerState extends State<videoplayer> {
+class _a_videoplayerState extends State<a_videoplayer> {
 
 
 
@@ -74,7 +74,6 @@ class _videoplayerState extends State<videoplayer> {
                  
               child: Video(controller: controller),
             ),
-        
             Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -101,7 +100,7 @@ class _videoplayerState extends State<videoplayer> {
           ),
         ),
         Divider(),
-        
+            
             Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

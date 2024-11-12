@@ -6,8 +6,8 @@ import "package:trachcare/Api/Apiurl.dart";
 import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/style/Tropography.dart";
 import "package:video_player/video_player.dart";
-
 import "../../../../style/utils/Dimention.dart";
+import "video_list.dart";
 
 
 
@@ -52,7 +52,10 @@ class _video_playerState extends State<video_player> {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      appBar: NormalAppbar(Title: "WatchZone",height: dn.height(10), onTap: null,),
+      appBar: NormalAppbar(Title: "WatchZone",height: dn.height(10), onTap: (){
+        Navigator.of(context).push(MaterialPageRoute(
+                               builder: (context) => Videospage(),),);
+      },),
       
       body: SingleChildScrollView(
         child: Column(
@@ -72,16 +75,38 @@ class _video_playerState extends State<video_player> {
             ),
         
             Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Expanded(child: Text("Description:  ${widget.description}",style: Normal,)),
-            ),
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Description:  ${widget.description}",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Divider(),
         
              Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/2.png', // Change this path if necessary
+              'assets/images/Trachcarelogo.jpg', // Change this path if necessary
               height: 100,
               width: 100,
               colorBlendMode: BlendMode.colorBurn,

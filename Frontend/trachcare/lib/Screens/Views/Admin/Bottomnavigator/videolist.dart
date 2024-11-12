@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trachcare/Api/API_funcation/VideoApi.dart';
-import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/VideoPlayer_screen.dart';
 // import 'package:trachcare/style/colors.dart';
 import 'package:trachcare/style/utils/Dimention.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/Appbar_copy.dart';
+import 'VideoPlayer_screen.dart';
 // import '../../../../style/Tropography.dart';
 
 /// Creates list of video players
@@ -65,7 +65,7 @@ class _VideolistState extends State<Videolist> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => video_player(
+                                            builder: (context) => a_videoplayer(
                                                   Videoulrl: data[index]["Video_url"].toString(),
                                                   description: data[index]["description"].toString(),
                                                   title: data[index]["title"].toString(),
@@ -107,18 +107,29 @@ class _VideolistState extends State<Videolist> {
             }));
   }
 
-  Widget Videocard(String thumbnailUrl, String videoTitle) {
+  Widget Videocard(String thumbnailUrl, String videoTitle ,) {
     print(thumbnailUrl);
     // Dimentions dn = Dimentions(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Thumbnail
-        Image.network(
-          "https://$ip/Trachcare/$thumbnailUrl",
-          width: double.infinity,
-          height: 200,
-          fit: BoxFit.cover,
+        Stack(
+          alignment: Alignment.center,
+          children: [Image.network(
+            "https://$ip/Trachcare/$thumbnailUrl",
+            width: double.infinity,
+            height: 200,
+            fit: BoxFit.cover,
+          ),
+          IconButton(
+            
+            onPressed: (){
+              
+            },
+            color: Colors.black54,
+            icon: Icon(CupertinoIcons.play_circle_fill,size: 40,))
+          ]
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),

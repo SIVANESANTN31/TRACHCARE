@@ -64,7 +64,7 @@ Future<void> onRefresh() async{
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 217, 255, 215),
       appBar: NormalAppbar(
         Title: "Patients List",height: dn.height(10), onTap:() {
           Navigator.of(context).push(MaterialPageRoute(
@@ -120,7 +120,7 @@ Future<void> onRefresh() async{
                       
                        var image_path = filterd_list[index]['image_path'].toString().substring(2);
                        return Card(
-                         color: const Color.fromARGB(255, 252, 236, 223),
+                         color: const Color.fromARGB(255, 255, 255, 255),
                          elevation: 4,
                          margin: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                          child: ListTile(

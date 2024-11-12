@@ -121,7 +121,15 @@ Widget Namecard(String name, String patientId, String imagePath, BuildContext co
     width: double.infinity,
     height: dn.height(15),
     decoration: BoxDecoration(
+      color: Colors.white,
       borderRadius: BorderRadius.circular(20),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black26,
+          blurRadius: 8,
+          offset: Offset(0, 4),
+        ),
+      ],
       border: Border.all(color: BlackColor, width: 0.3),
     ),
     child: Row(
@@ -136,6 +144,7 @@ Widget Namecard(String name, String patientId, String imagePath, BuildContext co
           child: Row(
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Name",
@@ -144,7 +153,7 @@ Widget Namecard(String name, String patientId, String imagePath, BuildContext co
                     ),
                   ),
                   Text(
-                    "Patient Id ",
+                    "Patient ID",
                     style: GoogleFonts.ibmPlexSans(
                       textStyle: TextStyle(fontSize: 13.sp),
                     ),
@@ -153,21 +162,12 @@ Widget Namecard(String name, String patientId, String imagePath, BuildContext co
               ),
               Column(
                 children: [
-                  Text(
-                    ":",
-                    style: GoogleFonts.ibmPlexSans(
-                      textStyle: TextStyle(fontSize: 13.sp),
-                    ),
-                  ),
-                  Text(
-                    ": ",
-                    style: GoogleFonts.ibmPlexSans(
-                      textStyle: TextStyle(fontSize: 13.sp),
-                    ),
-                  ),
+                  Text(": ", style: GoogleFonts.ibmPlexSans(fontSize: 13.sp)),
+                  Text(": ", style: GoogleFonts.ibmPlexSans(fontSize: 13.sp)),
                 ],
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     name,

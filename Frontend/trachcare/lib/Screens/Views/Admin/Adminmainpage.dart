@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:trachcare/Screens/Views/Admin/Adminscreens/videolist.dart';
+import 'package:trachcare/Screens/Views/Admin/Bottomnavigator/videolist.dart';
 import 'package:trachcare/style/colors.dart';
 import 'Bottomnavigator/Adddoctor.dart';
 import 'Bottomnavigator/Admindb.dart';
