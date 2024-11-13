@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trachcare/Api/API_funcation/VideoApi.dart';
-// import 'package:trachcare/style/colors.dart';
-import 'package:trachcare/style/utils/Dimention.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/Appbar_copy.dart';
+
 import 'VideoPlayer_screen.dart';
-// import '../../../../style/Tropography.dart';
 
 /// Creates list of video players
 class Videolist extends StatefulWidget {
@@ -38,126 +36,135 @@ class _VideolistState extends State<Videolist> {
 
   @override
   Widget build(BuildContext context) {
-    Dimentions dn = Dimentions(context);
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    
     return Scaffold(
-        appBar: Duplicate_Appbar(Title: "Exercise videos", height: dn.height(10)),
-        body: FutureBuilder(
-            future: FetchVideos(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasData) {
-                  List data = snapshot.data;
-                  print(data);
-                  if (data.length == 0) {
-                    return const Center(
-                      child: Text("No videos Available"),
-                    );
-                  } else {
-                    return RefreshIndicator.adaptive(
-                      onRefresh: onRefresh,
-                      child: ListView.builder(
-                          itemCount: data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => a_videoplayer(
-                                                  Videoulrl: data[index]["Video_url"].toString(),
-                                                  description: data[index]["description"].toString(),
-                                                  title: data[index]["title"].toString(),
-                                                  
-                                                )));
-                                  },
-                                  child: Videocard(
-                                    data[index]["Thumbnail_url"].toString().substring(2),
-                                    data[index]["title"].toString(),
-                                  )),
-                            );
-                          }),
-                    );
-                  }
-                }
-              } else if (snapshot.connectionState == ConnectionState.waiting) {
+      appBar: Duplicate_Appbar(
+        Title: "Exercise videos",
+        height: screenHeight * 0.1,
+      ),
+      body: FutureBuilder(
+        future: FetchVideos(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              List data = snapshot.data;
+              if (data.isEmpty) {
                 return const Center(
-                  child: CupertinoActivityIndicator(
-                    radius: 12,
+                  child: Text("No videos Available"),
+                );
+              } else {
+                return RefreshIndicator.adaptive(
+                  onRefresh: onRefresh,
+                  child: ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: screenWidth * 0.05,
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => a_videoplayer(
+                                  Videoulrl: data[index]["Video_url"].toString(),
+                                  description: data[index]["description"].toString(),
+                                  title: data[index]["title"].toString(),
+                                ),
+                              ),
+                            );
+                          },
+                          child: Videocard(
+                            data[index]["Thumbnail_url"].toString().substring(2),
+                            data[index]["title"].toString(),
+                            screenWidth,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 );
               }
+            }
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CupertinoActivityIndicator(
+                radius: 16,
+              ),
+            );
+          }
 
-              return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/error.gif', // Change this path if necessary
-            height: 100,
-            width: 100,
-          ),
-          const SizedBox(height: 20),
-          const Text("Something went wrong!!"),
-        ],
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/error.gif', // Change this path if necessary
+                  height: screenHeight * 0.15,
+                  width: screenWidth * 0.15,
+                ),
+                const SizedBox(height: 20),
+                const Text("Something went wrong!!"),
+              ],
+            ),
+          );
+        },
       ),
     );
-              
-            }));
   }
 
-  Widget Videocard(String thumbnailUrl, String videoTitle ,) {
-    print(thumbnailUrl);
-    // Dimentions dn = Dimentions(context);
+  Widget Videocard(String thumbnailUrl, String videoTitle, double screenWidth) {
+    double thumbnailHeight = screenWidth * 0.5;
+    double fontSize = screenWidth * 0.05;
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Thumbnail
         Stack(
           alignment: Alignment.center,
-          children: [Image.network(
-            "https://$ip/Trachcare/$thumbnailUrl",
-            width: double.infinity,
-            height: 200,
-            fit: BoxFit.cover,
-          ),
-          IconButton(
-            
-            onPressed: (){
-              
-            },
-            color: Colors.black54,
-            icon: Icon(CupertinoIcons.play_circle_fill,size: 40,))
-          ]
+          children: [
+            Image.network(
+              "https://$ip/Trachcare/$thumbnailUrl",
+              width: double.infinity,
+              height: thumbnailHeight,
+              fit: BoxFit.cover,
+            ),
+            IconButton(
+              onPressed: () {},
+              color: Colors.black54,
+              icon: Icon(
+                CupertinoIcons.play_circle_fill,
+                size: fontSize * 1.5,
+              ),
+            ),
+          ],
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(screenWidth * 0.03),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(width: 10),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      videoTitle,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+                child: Text(
+                  videoTitle,
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
           ),
         ),
-        Divider(),
+        Divider(thickness: 2),
       ],
-    );  
+    );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,14 +31,28 @@ Future<void> _launchInBrowser(Uri url) async {
       throw Exception('Could not launch $url');
 }
 }
-  Future<void> _launchURLmail(Uri url) async {
-    if (!await launchUrl(
+
+
+Future<void> _launchURLmail(Uri url) async {
+  // Check if the device is iOS and adjust the URL scheme
+  if (Platform.isIOS) {
+    url = Uri(
+      scheme: 'mailto',
+      path: url.path,
+      queryParameters: {'subject': 'TrachCare Support'}, // Optional subject
+    );
+  }
+
+  if (await canLaunchUrl(url)) {
+    await launchUrl(
       url,
       mode: LaunchMode.externalApplication,
-    )) {
-      throw Exception('Could not launch $url');
+    );
+  } else {
+    throw Exception('Could not launch $url');
+  }
 }
-}  
+
 
 void alertdilog(){
       showCupertinoModalPopup<void>(
@@ -102,7 +118,7 @@ void alertdilog(){
           children: [
             SizedBox(
   width: dn.width(40), // Set the width for DrawerHeader
-  height: dn.width(30), // Set the height for DrawerHeader
+  height: dn.width(60), // Set the height for DrawerHeader
   child: DrawerHeader(
     decoration: BoxDecoration(
       color: Color(0XFFECCEA8),
@@ -111,8 +127,8 @@ void alertdilog(){
       child: Column(
         children: [
           SizedBox(
-            width: dn.width(20), // Width of the CircleAvatar
-            height: dn.width(10), // Height of the CircleAvatar
+            width: dn.width(25), // Width of the CircleAvatar
+            height: dn.width(25), // Height of the CircleAvatar
             child: CircleAvatar(
               foregroundImage: imagepath,
             ),

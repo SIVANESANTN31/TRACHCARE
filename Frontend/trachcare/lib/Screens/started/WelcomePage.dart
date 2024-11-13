@@ -61,8 +61,8 @@ var screenSize = MediaQuery.of(context).size;
 
                     },
                     child: Container(
-                      width: dn.width(37),
-                      height: dn.height(17),
+                      width: dn.width(40),
+                      height: dn.height(20),
                       decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [Color(0XFFA7DBAF), Color(0XFFD2EFD7)],
@@ -77,14 +77,19 @@ var screenSize = MediaQuery.of(context).size;
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                           SizedBox(
-                            width: dn.width(10),
-                            height: dn.height(10),
-                            child: CircleAvatar(
-                              backgroundImage: AssetImage("assets/images/doctor.png"),
-                            ),
-                          ),
+                        children: [SizedBox(
+  width: dn.width(20),
+  height: dn.height(10),
+  child: Container(
+    child: ClipOval(
+      child: Image.asset(
+        "assets/images/doctor.png",
+        fit: BoxFit.cover,
+      ),
+    ),
+  ),
+),
+
                           Text("Doctor",
                               style: GoogleFonts.ibmPlexSans(
                                   textStyle: const TextStyle(
@@ -103,8 +108,8 @@ var screenSize = MediaQuery.of(context).size;
   );
                     },
                     child: Container(
-                      width: dn.width(37),
-                      height: dn.height(17),
+                      width: dn.width(40),
+                      height: dn.height(20),
                       decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
@@ -119,15 +124,17 @@ var screenSize = MediaQuery.of(context).size;
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                           SizedBox(
-                            width: dn.width(10),
-                            height: dn.height(10),
-                            child: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage("assets/images/patient.png"),
-                            ),
-                          ),
+                        children: [SizedBox(
+  width: dn.width(20),
+  height: dn.height(10),
+  child: ClipOval(
+    child: Image.asset(
+      "assets/images/patient.png",
+      fit: BoxFit.cover,
+    ),
+  ),
+),
+
                           Text("Patient",
                               style: GoogleFonts.ibmPlexSans(
                                   textStyle: const TextStyle(

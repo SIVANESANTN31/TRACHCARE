@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
+import 'package:trachcare/Screens/Views/Doctor/doctorscreens/calender.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../components/custom_button.dart';
@@ -90,10 +91,13 @@ void alertdilog(){
     final String url = '$ViewPatientDetailsUrl?patient_id=${widget.patientId}';
     try {
       final response = await http.get(Uri.parse(url));
+      print(response.body);
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
+        print(response.body);
         setState(() {
           patientDetails = {
+            'patient_id': data['patient_id'],
             'name': data['username'],
             'age': data['age'] ?? 'NIL',
             'address': data['address'] ?? 'NIL',
@@ -199,15 +203,38 @@ void alertdilog(){
                         padding: const EdgeInsets.all(15.0),
                         child: Center(
                           child: custom_Button(
+                                  text: "Daily Queries reports",
+                                  width: dn.width(25),
+                                  height: dn.height(1),
+                                  backgroundColor: const Color.fromARGB(255, 244, 174, 54),
+                                  textcolor: whiteColor,
+                                  button_funcation: (){
+                                    Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CalendarScreen(
+                                          key: UniqueKey(),
+                                          patientId: patientDetails['patient_id'],
+                                          name: patientDetails['name'], // Assuming 'username' is a field in your data
+                                          imagePath: patientDetails['image']// Assuming 'image_path' is a field in your data
+                                        ),),);
+                                  },
+                                  textSize: 12),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Center(
+                          child: custom_Button(
                                   text: "Delete",
-                                  width: 48,
-                                  height: 8,
+                                  width: dn.width(15),
+                                  height: dn.height(1),
                                   backgroundColor: Colors.red,
                                   textcolor: whiteColor,
                                   button_funcation: (){
                                    btn_fun();
                                   },
-                                  textSize: 11),
+                                  textSize: 12),
                         ),
                       ),
                       SizedBox(height: dn.height(10)),

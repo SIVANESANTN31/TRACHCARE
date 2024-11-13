@@ -12,8 +12,8 @@ class Titlehead extends StatelessWidget {
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Container(
-                  width: dn.width(30),
-                  height: dn.height(6),
+                  width: dn.width(40),
+                  height: dn.height(7),
                   decoration: BoxDecoration(
                       color: TitleColor,
                       borderRadius: BorderRadius.circular(10),
@@ -30,7 +30,7 @@ class Titlehead extends StatelessWidget {
                     titleName,
                     style: GoogleFonts.ibmPlexSans(
                         textStyle: const TextStyle(
-                            fontSize: 23,
+                            fontSize: 22,
                             color: whiteColor,
                             fontWeight: FontWeight.bold)),
                   )));

@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:trachcare/Api/DataStore/Datastore.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/Appbar_copy.dart';
-// import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
 import '../doctorscreens/Patientsdetails.dart';
@@ -64,7 +62,7 @@ Future<void> onRefresh() async{
   Widget build(BuildContext context) {
     Dimentions dn = Dimentions(context);
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 217, 255, 215),
       appBar: Duplicate_Appbar(Title: "Patient List", height: dn.height(20)),
       body:Column(
         children: [
