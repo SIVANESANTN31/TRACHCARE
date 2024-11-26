@@ -86,7 +86,7 @@ class _p_ProfilePageState extends State<p_ProfilePage> {
                   child: SafeArea(
                     child: InkWell(
                           onTap:(){
-                           Navigator.of(context).push(MaterialPageRoute(
+                         Navigator.of(context).push(CupertinoPageRoute(
                                     builder: (context) => PatientMainScreen(),));
                         },
                         child: const Padding(

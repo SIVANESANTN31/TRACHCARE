@@ -86,7 +86,7 @@ void popsheet(BuildContext context,String Time){
         child: Text(
           "Hi,$Name",
           style: GoogleFonts.ibmPlexSans(
-              textStyle: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold)),
+              textStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
         ),
       ),
       actions: [

@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../components/custom_button.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
-import '../../Doctor/Bottomnavigator/patientslist.dart';
+
 import '../../Doctor/doctorscreens/calender.dart';
 import '../Adminmainpage.dart';
 
@@ -145,7 +146,7 @@ void alertdilog(){
         height: dn.height(10),
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => patientslist(),
+            builder: (context) => patients_list(),
           ));
         },
       ),
@@ -162,13 +163,13 @@ void alertdilog(){
                           Center(
   child: ClipOval(
     child: Image.network(
-      "https://$ip/Trachcare/${patientDetails['image']}",  // Ensure full URL
+      "https://$ip/Trachcare/${patientDetails['image'].toString().substring(2)}",  // Ensure full URL
       height: dn.height(20),
       width: dn.height(20),
       fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) {
-        return Icon(Icons.person, size: 100); // Placeholder if image fails to load
-      },
+      // errorBuilder: (context, error, stackTrace) {
+      //   return Icon(Icons.person, size: 100); // Placeholder if image fails to load
+      // },
     ),
   ),
 ),

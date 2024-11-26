@@ -11,15 +11,15 @@ class PatientMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List pages=[
-       const PatientDashBoard(),
-       const Videospage(),
-       const MedicationPage(),
+       PatientDashBoard(),
+       Videospage(),
+       MedicationPage(),
        
     ];
 // Dimentions dn = Dimentions(context);
     return CupertinoTabScaffold(
           tabBar: CupertinoTabBar(
-            backgroundColor: Colors.grey[50],
+            //backgroundColor: Colors.grey[50],
             activeColor:BlackColor ,
              inactiveColor: grey_color,
 

@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import 'package:trachcare/Screens/Views/Doctor/doctorscreens/calender.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../components/custom_button.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
+import '../Bottomnavigator/patientslist.dart';
 import '../Doctormainscreen.dart';
 
 class PatientDetails extends StatefulWidget {
@@ -143,7 +143,7 @@ void alertdilog(){
         height: dn.height(10),
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => patients_list(),
+            builder: (context) => patientslist(),
           ));
         },
       ),

@@ -1,3 +1,4 @@
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
@@ -28,13 +29,24 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
 
     )),
 
-   
+    leading: Builder(builder: (BuildContext context) {
+      return IconButton(
+        icon: Icon(
+                      CupertinoIcons.chevron_left,
+                      color: BlackColor,
+                      size: 28.0,
+                    ),
+        onPressed: onTap,
+        // tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+      );
+    }),
+      centerTitle: true,
     title: Text(Title,style: GoogleFonts.ibmPlexSans(
                         textStyle: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: const Color.fromARGB(255, 10, 26, 7),
                             fontSize: 15.sp)),),
-        centerTitle: true,
+      
         actions: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -47,6 +59,6 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
   }
   
   @override
-  // TODO: implement preferredSize
+  
   Size get preferredSize => Size.fromHeight(height);
 }

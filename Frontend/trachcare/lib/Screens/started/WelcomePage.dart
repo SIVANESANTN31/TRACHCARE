@@ -12,6 +12,8 @@ import "package:trachcare/components/custom_button.dart";
 import "package:trachcare/style/colors.dart";
 import "package:trachcare/style/utils/Dimention.dart";
 
+
+
 class Welcome_page extends StatefulWidget {
   const Welcome_page({super.key});
 

@@ -126,98 +126,66 @@ Future<void> onRefresh() async{
                 onRefresh: onRefresh,
                 color: CupertinoColors.systemBlue,
                 child: ListView(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Gap(3.h),
-                    Positioned(
-                              top: 500.0, // Position from the top of the screen
-                              left: 25.0, // Position from the left of the screen
-                              right: 25.0, 
-                             // width: dn.width(50),// Position from the right of the screen
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                                child: Container(
-                                                width: dn.width(90),
-                                                height: dn.height(20),
-                                                  
-                                                decoration: BoxDecoration(
-                                                  color: whiteColor,
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                   color: BlackColor_light,
-                                                    blurRadius: 4.0,
-                                                   ),
-                                                  ]
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: Text("Spigotting Status : How long the patient can able to breath ?",textAlign: TextAlign.justify,style: GoogleFonts.ibmPlexSans(
-                                                          textStyle: TextStyle(
-                                fontSize: 13.sp,))
-                                        ,),
-                                                    ),
-                                                  
-Row(
-  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  children: [
-    circleButton("10 am", context, status['status_10'] == '1' ? true : false, 10),
-    circleButton("12 pm", context, status['status_12'] == '1' ? true : false, 12),
-    circleButton("2 pm", context, status['status_2'] == '1' ? true : false, 14),
-    circleButton("4 pm", context, status['status_4'] == '1' ? true : false, 16),
-    circleButton("6 pm", context, status['status_6'] == '1' ? true : false, 18),
-  ],
-)
+              children: [
+                Gap(3.h),
+                 Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                  child: Container(
+                                                  width: dn.width(90),
+                                                  height: dn.height(20),
                                                     
-                                
-                                
-                                                  ],
-                                                )
+                                                  decoration: BoxDecoration(
+                                                    color: whiteColor,
+                                                    borderRadius: BorderRadius.circular(10),
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                     color: BlackColor_light,
+                                                      blurRadius: 4.0,
+                                                     ),
+                                                    ]
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Text("Spigotting Status : How long the patient can able to breath ?",textAlign: TextAlign.justify,style: GoogleFonts.ibmPlexSans(
+                                                            textStyle: TextStyle(
+                                  fontSize: 13.sp,))
+                                          ,),
+                                                      ),
+                                                    
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          circleButton("10 am", context, status['status_10'] == '1' ? true : false, 10),
+                          circleButton("12 pm", context, status['status_12'] == '1' ? true : false, 12),
+                          circleButton("2 pm", context, status['status_2'] == '1' ? true : false, 14),
+                          circleButton("4 pm", context, status['status_4'] == '1' ? true : false, 16),
+                          circleButton("6 pm", context, status['status_6'] == '1' ? true : false, 18),
+                        ],
+                      )
+                                                      
+                                  
+                                  
+                                                    ],
+                                                  )
+                                  ),
                                 ),
-                              ),
-                          ),
-                          Gap(3.h),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    //   child: Container(
-                    //     width: dn.width(100),
-                    //     height: dn.height(10),
-                    //     decoration: BoxDecoration(
-                    //       border: Border.all(),
-                    //       borderRadius: BorderRadius.circular(15)
-                    //     ),
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //       crossAxisAlignment: CrossAxisAlignment.center,
-                    //       children: [
-                    //         Text("Next Appointment Date to conseil is", style: GoogleFonts.ibmPlexSans(
-                    //           textStyle: TextStyle(fontSize: 10.sp))),
-                    //         Container(
-                    //           width: 20.w,
-                    //           height: 6.h,
-                    //           decoration: BoxDecoration(
-                    //             border: Border.all(),
-                    //             borderRadius: BorderRadius.circular(10)
-                    //           ),
-                    //           child: const Center(child: Text(" Aug 15")),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    Gap(3.5.h),
-                    Padding(
-                      padding: const EdgeInsets.all(9.0),
-                      child: Text("Exercisers For TrachCare:", style: GoogleFonts.ibmPlexSans(
-                        textStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, color: const Color(0XFF455A64)))),
-                    ),
-                   
-                    
-                    carsouleview(imagelist,context)
-                  ],
+                
+                Gap(3.h),
+                Text(
+                  "Exercises for TrachCare:",
+                  style: GoogleFonts.ibmPlexSans(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+                Gap(3.h),
+                carsouleview(imagelist, context),
+                 Gap(3.h),
+                 
+              ],
+            ),
               )
             );
           }
@@ -453,6 +421,14 @@ Widget carsouleview(List imagesList, BuildContext context) {
                             ),
                           ),
                           const Divider(),
+                          Center(
+                            child: Icon(
+                                  Icons.more_horiz,
+                                  color: Colors.black,
+                                  size: 30.0,
+                                  semanticLabel: 'Text to announce in accessibility modes',
+                                ),
+                          ),
                         ],
                       ),
                     ),

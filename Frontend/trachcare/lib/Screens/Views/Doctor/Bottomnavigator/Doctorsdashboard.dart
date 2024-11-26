@@ -411,6 +411,14 @@ Widget carsouleview(List imagesList, BuildContext context) {
                             ),
                           ),
                           const Divider(),
+                          Center(
+                            child: Icon(
+                                  Icons.more_horiz,
+                                  color: Colors.black,
+                                  size: 30.0,
+                                  semanticLabel: 'Text to announce in accessibility modes',
+                                ),
+                          ),
                         ],
                       ),
                     ),

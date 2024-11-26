@@ -100,10 +100,14 @@ void updatestatus()async{
             builder: (context) => PatientDashBoard(),
           ),(route)=>false);
 
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(data['msg']),
-            backgroundColor: Colors.green[400],
-          ));
+          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          //   content: Text(data['msg']),
+          //   backgroundColor: Colors.green[400],
+          // )
+           ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Spigotting Status updated successfully'),
+          backgroundColor: Colors.green[400],),
+        );
         } else {
           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
             builder: (context) => PatientDashBoard(),

@@ -11,9 +11,9 @@ class Doctormainpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List pages=[
-       DoctorDashBoard(),
-        Videolist(),
-       const patientslist(),
+      DoctorDashBoard(),
+      Videolist(),
+      patientslist(),
     ];
     return CupertinoTabScaffold(
 

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/Apiurl.dart';
 import 'package:http/http.dart' as http;
+import 'package:trachcare/Screens/Views/Admin/Adminscreens/Doctorlist.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/editdoctordetails.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientlist%20copy.dart';
 import 'package:trachcare/components/custom_button.dart';
@@ -12,7 +13,7 @@ import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
 import '../Adminmainpage.dart';
-import '../Bottomnavigator/Admindb.dart';
+
 
 class Doctordetails extends StatefulWidget {
   final String Doctor_id;
@@ -128,9 +129,9 @@ void alertdilog(){
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: NormalAppbar(Title: "Doctors Details",height: dn.height(10), onTap: (){
-       Navigator.of(context,rootNavigator: true).pop();
+      //  Navigator.of(context,rootNavigator: true).pop();
 
-                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Admindb()),(route)=>false);
+                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Doctorlist()),(route)=>false);
                                },
                                ),
       body: FutureBuilder(

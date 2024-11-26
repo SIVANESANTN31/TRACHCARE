@@ -76,7 +76,7 @@ class _EditpatientprofileState extends State<Editpatientprofile> {
         actions: [
           TextButton(
             onPressed: () {
-               Navigator.of(context).push(MaterialPageRoute(
+               Navigator.of(context).push(CupertinoPageRoute(
                                     builder: (context) => p_ProfilePage(),));
             },
             child: const Text("OK"),
@@ -176,7 +176,7 @@ class _EditpatientprofileState extends State<Editpatientprofile> {
                   child: SafeArea(
                     child: InkWell(
                       onTap: () {
-                        Navigator.of(context,rootNavigator: true).pop();
+                        // Navigator.of(context,rootNavigator: true).pop();
 
                  Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => p_ProfilePage()),(route)=>false);
                       },

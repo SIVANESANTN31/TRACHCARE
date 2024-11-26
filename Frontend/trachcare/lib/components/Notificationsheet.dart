@@ -65,28 +65,37 @@ Widget IOSNotificationstyle(BuildContext context,String Time) {
         content: Text('Notification dismissed'),
       ));
     },
-    child: Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      width: dn.width(95),
-      height: dn.height(10),
-      decoration: BoxDecoration(
-        color: CupertinoColors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.15), // Shadow color with opacity
-            spreadRadius: 2, // How wide the shadow spreads
-            blurRadius: 6, // How much the shadow is blurred
-            offset: Offset(4, 4), // Shadow position (horizontal, vertical)
+    child: Column(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          width: dn.width(95),
+          height: dn.height(12),
+          decoration: BoxDecoration(
+            color: CupertinoColors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.15), // Shadow color with opacity
+                spreadRadius: 2, // How wide the shadow spreads
+                blurRadius: 6, // How much the shadow is blurred
+                offset: Offset(4, 4), // Shadow position (horizontal, vertical)
+              ),
+            ],
           ),
-        ],
-      ),
-      child: ListTile(
-        title: Text("Spigotting Status"),
-        subtitle: Text("You Missed ${Time} Routine"),
-        leading: Icon(CupertinoIcons.bell_fill, color: CupertinoColors.systemYellow),
-        
-      ),
+          child: Card(
+            child: ListTile(
+              title: Text("Spigotting Status"),
+              subtitle: Text("You Missed ${Time} Routine"),
+              leading: Icon(CupertinoIcons.bell_fill, color: CupertinoColors.systemYellow),
+              
+            ),
+          ),
+          
+        ),
+        SizedBox(height: dn.height(5),)
+      ],
     ),
+    
   );
 }

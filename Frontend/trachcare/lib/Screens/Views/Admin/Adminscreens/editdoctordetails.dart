@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/Doctorlist.dart';
-import 'package:trachcare/Screens/Views/Admin/Adminscreens/doctordetails.dart';
 import '../../../../Api/API_funcation/doctordetails.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../Api/DataStore/Datastore.dart';
@@ -161,9 +160,10 @@ class _EditdoctordetailsState extends State<Editdoctordetails> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar:  NormalAppbar(Title: "Edit Doctors Details",height: dn.height(10), onTap: (){
-         Navigator.of(context,rootNavigator: true).pop();
-
-                 Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Doctorlist()),(route)=>false);},),
+          Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Doctorlist(),
+                ),);},),
       body: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: SingleChildScrollView(
@@ -329,11 +329,11 @@ class _EditdoctordetailsState extends State<Editdoctordetails> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
+              // Navigator.of(context).pop(); // Close the dialog
               // Navigate to profile page after dialog is closed
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => Doctordetails(Doctor_id: widget.doctorId,),
+                  builder: (context) => Doctorlist(),
                 ),
               );
             },
