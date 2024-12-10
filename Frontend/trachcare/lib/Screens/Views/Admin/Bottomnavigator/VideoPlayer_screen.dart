@@ -1,3 +1,4 @@
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:media_kit/media_kit.dart";
 import "package:media_kit_video/media_kit_video.dart";
@@ -5,7 +6,6 @@ import "package:trachcare/Api/Apiurl.dart";
 import "package:trachcare/components/NAppbar.dart";
 import "package:trachcare/style/Tropography.dart";
 import "package:video_player/video_player.dart";
-
 import "../../../../style/utils/Dimention.dart";
 import "videolist.dart";
 
@@ -53,8 +53,7 @@ class _a_videoplayerState extends State<a_videoplayer> {
     Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: NormalAppbar(Title: "WatchZone",height: dn.height(10), onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(
-                               builder: (context) => Videolist(),),);
+        Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Videolist()),(route)=>false);
       },),
       
       body: SingleChildScrollView(
@@ -113,7 +112,8 @@ class _a_videoplayerState extends State<a_videoplayer> {
             const Text("Hope this video will helps you!!"),
           ],
         ),
-            )
+            ),
+            SizedBox(height: dn.height(20)),
           ],
         ),
       ),
@@ -153,83 +153,86 @@ class _ControlsOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 50),
-          reverseDuration: const Duration(milliseconds: 200),
-          child: controller.value.isPlaying
-              ? const SizedBox.shrink()
-              : const ColoredBox(
-                  color: Colors.black26,
-                  child: Center(
-                    child: Icon(
-                      Icons.play_arrow,
-                      color: Colors.white,
-                      size: 100.0,
-                      semanticLabel: 'Play',
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Stack(
+        children: <Widget>[
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 50),
+            reverseDuration: const Duration(milliseconds: 200),
+            child: controller.value.isPlaying
+                ? const SizedBox.shrink()
+                : const ColoredBox(
+                    color: Colors.black26,
+                    child: Center(
+                      child: Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                        size: 100.0,
+                        semanticLabel: 'Play',
+                      ),
                     ),
                   ),
+          ),
+          GestureDetector(
+            onTap: () {
+              controller.value.isPlaying ? controller.pause() : controller.play();
+            },
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: PopupMenuButton<Duration>(
+              initialValue: controller.value.captionOffset,
+              tooltip: 'Caption Offset',
+              onSelected: (Duration delay) {
+                controller.setCaptionOffset(delay);
+              },
+              itemBuilder: (BuildContext context) {
+                return <PopupMenuItem<Duration>>[
+                  for (final Duration offsetDuration in _exampleCaptionOffsets)
+                    PopupMenuItem<Duration>(
+                      value: offsetDuration,
+                      child: Text('${offsetDuration.inMilliseconds}ms'),
+                    )
+                ];
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
                 ),
-        ),
-        GestureDetector(
-          onTap: () {
-            controller.value.isPlaying ? controller.pause() : controller.play();
-          },
-        ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: PopupMenuButton<Duration>(
-            initialValue: controller.value.captionOffset,
-            tooltip: 'Caption Offset',
-            onSelected: (Duration delay) {
-              controller.setCaptionOffset(delay);
-            },
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuItem<Duration>>[
-                for (final Duration offsetDuration in _exampleCaptionOffsets)
-                  PopupMenuItem<Duration>(
-                    value: offsetDuration,
-                    child: Text('${offsetDuration.inMilliseconds}ms'),
-                  )
-              ];
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 12,
-                horizontal: 16,
+                child: Text('${controller.value.captionOffset.inMilliseconds}ms'),
               ),
-              child: Text('${controller.value.captionOffset.inMilliseconds}ms'),
             ),
           ),
-        ),
-        Align(
-          alignment: Alignment.topRight,
-          child: PopupMenuButton<double>(
-            initialValue: controller.value.playbackSpeed,
-            tooltip: 'Playback speed',
-            onSelected: (double speed) {
-              controller.setPlaybackSpeed(speed);
-            },
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuItem<double>>[
-                for (final double speed in _examplePlaybackRates)
-                  PopupMenuItem<double>(
-                    value: speed,
-                    child: Text('${speed}x'),
-                  )
-              ];
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 12,
-                horizontal: 16,
+          Align(
+            alignment: Alignment.topRight,
+            child: PopupMenuButton<double>(
+              initialValue: controller.value.playbackSpeed,
+              tooltip: 'Playback speed',
+              onSelected: (double speed) {
+                controller.setPlaybackSpeed(speed);
+              },
+              itemBuilder: (BuildContext context) {
+                return <PopupMenuItem<double>>[
+                  for (final double speed in _examplePlaybackRates)
+                    PopupMenuItem<double>(
+                      value: speed,
+                      child: Text('${speed}x'),
+                    )
+                ];
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
+                ),
+                child: Text('${controller.value.playbackSpeed}x'),
               ),
-              child: Text('${controller.value.playbackSpeed}x'),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

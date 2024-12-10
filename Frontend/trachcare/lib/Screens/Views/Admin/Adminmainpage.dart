@@ -37,9 +37,9 @@ class Adminmainpage extends StatelessWidget {
 
               ),
               BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.calendar_circle),
+                  icon: Icon(CupertinoIcons.person_add),
                   label: "Add Doctor",
-                  activeIcon: Icon(CupertinoIcons.calendar_circle_fill)
+                  activeIcon: Icon(CupertinoIcons.person_add_solid)
               ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.video_collection_outlined),

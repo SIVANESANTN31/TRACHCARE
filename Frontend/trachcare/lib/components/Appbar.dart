@@ -16,9 +16,11 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
   final bool notification;
   final List? notificationlists;
    bool ?doctor=false;
+   bool?export=false;
+  final VoidCallback? onExportPressed; 
   
 
-  Appbar({super.key, required this.Name, this.bottom, required this.height, required this.notification,  this.notificationlists, this.doctor=false});
+  Appbar({super.key, required this.Name, this.bottom, required this.height, required this.notification,  this.notificationlists, this.doctor=false,this.export=false, this.onExportPressed});
 
 
 
@@ -59,6 +61,16 @@ void popsheet(BuildContext context,String Time){
   }
 
 
+
+
+
+
+
+
+
+  
+
+
   @override
   AppBar build(BuildContext context) {
     
@@ -95,22 +107,25 @@ void popsheet(BuildContext context,String Time){
           child: Stack(
             children:[ IconButton(
                 onPressed: () {
-                  if(notification){
-                    if(doctor==false)
-                    popsheet(context,notificationlists![0]);
-                    else{
-          doctorpopsheet(context,notificationlists!);
-                    }
+                if (export == true && onExportPressed != null) {
+                  onExportPressed!();  // Trigger the export function
+                } else if (notification) {
+                  if (doctor == false) {
+                    popsheet(context, notificationlists![0]);
+                  } else {
+                    doctorpopsheet(context, notificationlists!);
                   }
-                  else{
-                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("No notification available"),
-              
-            ));
-                  }
-                 
-                },
-                icon: const Icon(
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("No notification available"),
+                  ));
+                }
+              },
+                icon: export!? Icon(
+                  Icons.cloud_download_outlined,
+                  color: Colors.green,
+                  size: 28,
+                ): Icon(
                   Icons.notifications_active_outlined,
                   color: Colors.green,
                   size: 28,

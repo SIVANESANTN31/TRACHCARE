@@ -26,6 +26,27 @@ class PatientDashBoard extends StatefulWidget {
 
 class _PatientDashBoardState extends State<PatientDashBoard> {
 
+
+
+  void alertdilog(){
+      showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('Daily Report'),
+        content: const Text('Kindly update your Daily Queries first!!!.'),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context,"Ok");
+            },
+            child: const Text('OK'),
+          ),
+          
+        
+      ]),
+    );}
+
    bool isLoading = true;
    List Videourls = [];
 
@@ -56,20 +77,20 @@ void check_status(var status) {
   int currentHour = curtime.hour; // Get the current hour in 24-hour format
 
   // Check if the status at 10 AM is null and current time is between 10 AM and 12 PM
-  if (status['status_10'] == "0" && currentHour >= 10 && currentHour < 12) {
+  if (status['status_10']! == "0" && currentHour >= 10 && currentHour < 12) {
     notificationlist.add("10 AM");
   }
   // Check if the status at 12 PM is null and current time is between 12 PM and 2 PM (until 1:59 PM)
-  else if (status['status_12'] == "0" && currentHour >= 12 && currentHour < 14) {
+  else if (status['status_12']! == "0" && currentHour >= 12 && currentHour < 14) {
     notificationlist.add("12 PM");
   }
-   else if (status['status_2'] == "0" && currentHour >= 14 && currentHour < 16) {
+   else if (status['status_2']! == "0" && currentHour >= 14 && currentHour < 16) {
     notificationlist.add("2 PM");
   }
-  else if (status['status_4'] == "0" && currentHour >= 16 && currentHour < 18) {
+  else if (status['status_4']! == "0" && currentHour >= 16 && currentHour < 18) {
     notificationlist.add("4 PM");
   }
-  else if (status['status_6'] == "0" && currentHour >= 18 && currentHour < 20) {
+  else if (status['status_6']! == "0" && currentHour >= 18 && currentHour < 20) {
     notificationlist.add("6 PM");
   }
   else{
@@ -96,24 +117,25 @@ Future<void> onRefresh() async{
     return FutureBuilder(
       future: PatientDashBoardApi().FetchDetials(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-
+print(snapshot.hasData);
         
         if(snapshot.connectionState == ConnectionState.waiting){
           return const Center(child: CupertinoActivityIndicator(radius: 10,),);
         }
         if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasData){
+
             var patientDetials = snapshot.data['Dashboard'];
             var status = snapshot.data['status'];
            check_status(status);
-          
+            var appoinment  = patientDetials['appoinment'].toString();
           
             var name  = patientDetials['username'].toString();
             var patient_id = patientDetials['patient_id'].toString();
             var imagepath = patientDetials["image_path"].toString().substring(2);
 
             Dimentions dn = Dimentions(context);
-
+            alertdilog();
             return Scaffold(
               appBar: Appbar(Name:name, height: dn.height(10), notification: notificationlist.isNotEmpty,notificationlists:notificationlist),
               drawer: drawer(Name: name,
@@ -171,8 +193,62 @@ Future<void> onRefresh() async{
                                                   )
                                   ),
                                 ),
-                
-                Gap(3.h),
+                                Gap(2.h),
+                Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              gradient: const LinearGradient(
+                                colors: [Color(0XFFFFD9A0), Color(0XFFFFEDD2)],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.10),
+                                  spreadRadius: 2,
+                                  blurRadius: 7,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            width: dn.width(70),
+                            height: dn.height(10),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: Icon(
+                                                    Icons.perm_contact_calendar,
+                                                    color: Colors.green,
+                                                    size: 30,
+                                                  ),
+                                ),
+                               Padding(
+  padding: const EdgeInsets.all(2.0),
+  child: Text.rich(
+    TextSpan(
+      children: [
+        TextSpan(
+          text: "Your next Appointment is ",
+          style: TextStyle(color: Colors.black), // Normal text style
+        ),
+        TextSpan(
+          text: "$appoinment",
+          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold), // Lighter or highlighted text style
+        ),
+      ],
+    ),
+  ),
+),
+
+                              ],
+                            ),
+                          ),
+                        ),
+                Gap(2.h),
+               
                 Text(
                   "Exercises for TrachCare:",
                   style: GoogleFonts.ibmPlexSans(
@@ -182,7 +258,7 @@ Future<void> onRefresh() async{
                 ),
                 Gap(3.h),
                 carsouleview(imagelist, context),
-                 Gap(3.h),
+                 Gap(1.h),
                  
               ],
             ),
@@ -194,20 +270,18 @@ Future<void> onRefresh() async{
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            'assets/error.gif', // Change this path if necessary
-            height: 100,
-            width: 100,
-          ),
+          // Image.asset(
+          //   'assets/error.gif', // Change this path if necessary
+          //   height: 100,
+          //   width: 100,
+          // ),
           const SizedBox(height: 20),
-          const Text("No data available"),
+          Center(child: const Text("No data available")),
         ],
       ),
     );
       }
     );
-
-    
   }
 
 void popsheet(BuildContext context){
@@ -391,46 +465,78 @@ Widget carsouleview(List imagesList, BuildContext context) {
                         ),
                       );
                     },
-                    child: SizedBox(
-                      width: dn.width(100),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              height: dn.height(30),
-                              width: double.infinity,
-                              child: Image.network(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10,right: 10),
+                          child: Stack(
+                             alignment: Alignment.center,
+                            children: [
+                              Image.network(
                                 'https://$ip/Trachcare/${data[index]["Thumbnail_url"]?.toString().substring(2) ?? ""}',
-                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              height: 200,
+                              fit: BoxFit.cover,
+                              ),
+                              IconButton(
+                              
+                              onPressed: (){
+                                
+                              },
+                              color: Colors.black54,
+                              icon: Icon(CupertinoIcons.play_circle_fill,size: 40,))
+                            ],
+                          ),
+                        ),
+                        // const SizedBox(height: 8),
+                        Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                    data[index]["title"]?.toString() ?? "Untitled",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 8),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              data[index]["title"]?.toString() ?? "Untitled",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: Text(
+                        //     data[index]["title"]?.toString() ?? "Untitled",
+                        //     style: TextStyle(
+                        //       fontSize: 16,
+                        //       fontWeight: FontWeight.bold,
+                        //     ),
+                        //     maxLines: 2,
+                        //     overflow: TextOverflow.ellipsis,
+                        //   ),
+                        // ),
+                        const Divider(),
+                        Center(
+                          child: Icon(
+                                Icons.more_horiz,
+                                color: const Color.fromARGB(255, 72, 72, 72),
+                                size: 30.0,
+                                semanticLabel: 'Text to announce in accessibility modes',
                               ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          const Divider(),
-                          Center(
-                            child: Icon(
-                                  Icons.more_horiz,
-                                  color: Colors.black,
-                                  size: 30.0,
-                                  semanticLabel: 'Text to announce in accessibility modes',
-                                ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   );
                 },

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
@@ -9,15 +11,20 @@ import "../style/colors.dart";
 class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String Title;
   final height;
-  final   actionbutton;
+  final actionbutton;
   final onTap;
+  bool?export=false;
+  final VoidCallback? onExportPressed; 
 
   
-   const NormalAppbar(
+    NormalAppbar(
     {super.key,
     required this.Title,
     required this.onTap,
-    this.actionbutton, required this.height});
+    this.actionbutton, 
+    required this.height,
+    this.export,
+    this.onExportPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +55,29 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
                             fontSize: 15.sp)),),
       
         actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: actionbutton,
-            )
-        ],
+  Padding(
+    padding: const EdgeInsets.only(top: 10,right: 5),
+    child: Stack(
+      children: [
+        if (export ?? false ) // Only render IconButton if `export` is true
+          IconButton(
+            onPressed: () {
+              if (onExportPressed != null) {
+                onExportPressed!(); // Trigger the export function
+              }
+            },
+            icon: Icon(
+              Icons.sim_card_download_outlined,
+              color: Colors.green,
+              size: 28,
+            ),
+          ),
 
+        
+      ],
+    ),
+  ),
+],
 
     );
   }

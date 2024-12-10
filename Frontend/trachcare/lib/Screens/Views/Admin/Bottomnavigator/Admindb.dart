@@ -1,8 +1,11 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, unused_local_variable
 
+import 'dart:io';
 import 'dart:ui';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:toastification/toastification.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/Addvideos.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import "package:trachcare/components/Appbar.dart";
@@ -11,30 +14,171 @@ import '../../../../Api/Apiurl.dart';
 import '../../../../components/Navbardrawer.dart';
 import '../Adminscreens/Doctorlist.dart';
 import '../Adminscreens/Profileviewpage.dart';
-
-class Admindb extends StatelessWidget {
+import "package:http/http.dart" as http;
+class Admindb extends StatefulWidget {
   Admindb({super.key});
 
+  @override
+  State<Admindb> createState() => _AdmindbState();
+}
+
+class _AdmindbState extends State<Admindb> {
   List imgList = [
-    'Vector',
-    'Vector-2',
-    'Vector-1',
+    'doctorlist',
+    'video',
+    'patientlist',
+    // 'download',
   ];
 
   List pages_name = [
     'Doctors list',
     'Add videos',
     'Patients list',
+    // 'Export Patients Data'
   ];
 
   get image => ["assets/images/Vector-1.png"];
+
   @override
   Widget build(BuildContext context) {
     List pages = [
       const Doctorlist(),
       VideoUploadPage(),
       patients_list(),
+      
     ];
+
+      bool _isDownloading = false;
+
+  // Function to download the CSV file from the PHP backend
+  Future<void> downloadCSV(BuildContext context) async {
+    setState(() {
+      _isDownloading = true;
+    });
+
+    // Replace with your PHP backend URL that serves the CSV
+    final String url = "$exporturl";
+
+    try {
+      // Make the HTTP request to get the CSV file
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        // Allow the user to pick a directory
+        String? directoryPath = await FilePicker.platform.getDirectoryPath();
+
+        if (directoryPath == null) {
+          // User canceled the picker
+          print('No directory selected.');
+          toastification.show(
+            alignment: Alignment.bottomRight,
+            type: ToastificationType.error,
+            style: ToastificationStyle.flatColored,
+            context: context,
+            title: Text('No Directory Selected'),
+            icon: const Icon(Icons.cancel_rounded, color: Colors.red),
+            showIcon: true,
+            showProgressBar: false,
+            autoCloseDuration: const Duration(seconds: 2),
+          );
+          return;
+        }
+
+        // Generate a unique file name
+        String fileName = 'patient_details_${DateTime.now().millisecondsSinceEpoch}.csv';
+        String filePath = '$directoryPath/$fileName';
+        File file = File(filePath);
+
+        // Ensure a unique filename
+        int counter = 1;
+        while (await file.exists()) {
+          fileName = 'patient_details_${DateTime.now().millisecondsSinceEpoch}_$counter.csv';
+          filePath = '$directoryPath/$fileName';
+          file = File(filePath);
+          counter++;
+        }
+
+        // Write the content to the file
+        await file.writeAsBytes(response.bodyBytes);
+        print('CSV saved at: $filePath');
+
+        // Notify the user
+        toastification.show(
+          alignment: Alignment.bottomRight,
+          type: ToastificationType.success,
+          style: ToastificationStyle.flatColored,
+          context: context,
+          title: Text('Saved Successfully'),
+          icon: const Icon(Icons.check_circle, color: Colors.green),
+          showIcon: true,
+          showProgressBar: false,
+          autoCloseDuration: const Duration(seconds: 2),
+        );
+
+        // // Open the file
+        // OpenFile.open(filePath);
+      } else {
+        // Handle error if the request fails
+        toastification.show(
+          alignment: Alignment.bottomRight,
+          type: ToastificationType.error,
+          style: ToastificationStyle.flatColored,
+          context: context,
+          title: Text('Error Downloading CSV'),
+          icon: const Icon(Icons.cancel_rounded, color: Colors.red),
+          showIcon: true,
+          showProgressBar: false,
+          autoCloseDuration: const Duration(seconds: 2),
+        );
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      toastification.show(
+        alignment: Alignment.bottomRight,
+        type: ToastificationType.error,
+        style: ToastificationStyle.flatColored,
+        context: context,
+        title: Text('An error occurred'),
+        icon: const Icon(Icons.error_outline, color: Colors.red),
+        showIcon: true,
+        showProgressBar: false,
+        autoCloseDuration: const Duration(seconds: 2),
+      );
+    } finally {
+      setState(() {
+        _isDownloading = false;
+      });
+    }
+  }
+
+    // Show confirmation dialog before starting the download
+    void _showDownloadDialog(BuildContext context) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text('Download CSV'),
+          content: Text('Do you want to download the all patients details?'),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                downloadCSV(context); // Start downloading
+              },
+              child: Text('Download'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+    
 
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -63,6 +207,8 @@ class Admindb extends StatelessWidget {
                 Name: name,
                 height: screenHeight * 0.12,
                 notification: false,
+                export: true,
+                onExportPressed: (){_showDownloadDialog(context);},
               ),
               drawer: drawer(
                 Name: name,
@@ -151,7 +297,7 @@ ImageFiltered(
                                         pages_name[index],
                                         style: TextStyle(
                                           fontSize: isTablet ? 14 : 12,
-                                          fontWeight: FontWeight.w500,
+                                          fontWeight: FontWeight.w800,
                                           color: Colors.black.withOpacity(1),
                                         ),
                                       ),

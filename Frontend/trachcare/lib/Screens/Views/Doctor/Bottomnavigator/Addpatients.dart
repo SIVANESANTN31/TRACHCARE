@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
-// import 'package:trachcare/components/NAppbar.dart';
 import '../../../../Api/API_funcation/patientsdetails.dart';
 import '../../../../components/Appbar_copy.dart';
 import '../../../../style/utils/Dimention.dart';
@@ -19,6 +18,8 @@ class _AddpatientsState extends State<Addpatients> {
   final _formKey = GlobalKey<FormState>();
   String name = '';
   String age = '';
+  String gender = '';
+  String appoinment = '';
   String email = '';
   String phonenumber = '';
   String password = '';
@@ -57,56 +58,56 @@ class _AddpatientsState extends State<Addpatients> {
       });
     }
   }
-void _save(BuildContext context) {
 
+  void _save(BuildContext context) {
+    if (_formKey.currentState!.validate() && _image != null) {
+      // Handle form submission
+      addPatientDetails(
+        context,
+        _image!,
+        Doctor_id,
+        name,
+        email,
+        phonenumber,
+        password,
+        age,
+        gender,
+        address,
+        appoinment,
+        bmi,
+        diagnosis,
+        surgeryStatus,
+        postOpTracheostomyDay,
+        tubeNameSize,
+        baselineVitals,
+        respiratoryRate,
+        heartRate,
+        spo2RoomAir,
+        indicationOfTracheostomy,
+        comorbidities,
+        hemoglobin,
+        srSodium,
+        srPotassium,
+        srCalcium,
+        srBicarbonate,
+        pt,
+        aptt,
+        inr,
+        platelets,
+        liverFunctionTest,
+        renalFunctionTest,
+      );
 
-  if (_formKey.currentState!.validate() && _image != null) {
-    // Handle form submission
-    addPatientDetails(
-      context,
-      _image!,
-      Doctor_id,
-      name,
-      email,
-      phonenumber,
-      password,
-      age,
-      address,
-      bmi,
-      diagnosis,
-      surgeryStatus,
-      postOpTracheostomyDay,
-      tubeNameSize,
-      baselineVitals,
-      respiratoryRate,
-      heartRate,
-      spo2RoomAir,
-      indicationOfTracheostomy,
-      comorbidities,
-      hemoglobin,
-      srSodium,
-      srPotassium,
-      srCalcium,
-      srBicarbonate,
-      pt,
-      aptt,
-      inr,
-      platelets,
-      liverFunctionTest,
-      renalFunctionTest,
-    );
-
-    _formKey.currentState!.reset();
-    setState(() {
-      _image = null;
-      
-    });
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Please select a photo and fill in all required fields.")),
-    );
+      _formKey.currentState!.reset();
+      setState(() {
+        _image = null;
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please select a photo and fill in all required fields.")),
+      );
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -127,9 +128,11 @@ void _save(BuildContext context) {
                 buildTextField('Name', (value) => name = value),
                 buildTextField('Email', (value) => email = value),
                 buildTextField('Phonenumber', (value) => phonenumber = value),
-                buildTextField('Password', (value) => password = value,obscureText: true),
+                buildTextField('Password', (value) => password = value, obscureText: true),
                 buildTextField('Age', (value) => age = value),
+                buildTextField('Gender', (value) => gender = value),
                 buildTextField('Address', (value) => address = value),
+                buildAdaptiveDateField(context, 'Next Appointment Date', (value) => appoinment = value),
                 buildTextField('BMI', (value) => bmi = value),
                 buildTextField('Diagnosis', (value) => diagnosis = value),
                 buildTextField('Surgery Status', (value) => surgeryStatus = value),
@@ -171,33 +174,33 @@ void _save(BuildContext context) {
       children: [
         GestureDetector(
           onTap: () {
-           showCupertinoModalPopup(
-      context: context,
-      builder: (BuildContext context) => CupertinoActionSheet(
-        actions: [
-          CupertinoActionSheetAction(
-            child: const Text('Camera'),
-            isDefaultAction: true,
-            onPressed: () {
-              Navigator.of(context, rootNavigator: true).pop();
-              getimage(source: ImageSource.camera);
-            }),
-          CupertinoActionSheetAction(
-            child: const Text('Gallery'),
-            isDefaultAction: true,
-            onPressed: () {
-              getimage(source: ImageSource.gallery);
-              Navigator.of(context, rootNavigator: true).pop();
-            }),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          isDestructiveAction: true,
-          child: const Text("Cancel"),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ));
+            showCupertinoModalPopup(
+                context: context,
+                builder: (BuildContext context) => CupertinoActionSheet(
+                      actions: [
+                        CupertinoActionSheetAction(
+                            child: const Text('Camera'),
+                            isDefaultAction: true,
+                            onPressed: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                              getimage(source: ImageSource.camera);
+                            }),
+                        CupertinoActionSheetAction(
+                            child: const Text('Gallery'),
+                            isDefaultAction: true,
+                            onPressed: () {
+                              getimage(source: ImageSource.gallery);
+                              Navigator.of(context, rootNavigator: true).pop();
+                            }),
+                      ],
+                      cancelButton: CupertinoActionSheetAction(
+                        isDestructiveAction: true,
+                        child: const Text("Cancel"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ));
           },
           child: CircleAvatar(
             radius: 60,
@@ -212,11 +215,10 @@ void _save(BuildContext context) {
     );
   }
 
-
-  TextFormField buildTextField(String labelText, Function(String) onChanged,{bool obscureText = false} ) {
+  TextFormField buildTextField(String labelText, Function(String) onChanged, {bool obscureText = false}) {
     return TextFormField(
       decoration: InputDecoration(labelText: labelText),
-      obscureText :obscureText,
+      obscureText: obscureText,
       validator: (value) {
         if (value!.isEmpty) {
           return 'Please enter $labelText';
@@ -229,6 +231,76 @@ void _save(BuildContext context) {
           onChanged(value);
         });
       },
+    );
+  }
+
+  Widget buildAdaptiveDateField(BuildContext context, String labelText, Function(String) onSaved) {
+    TextEditingController dateController = TextEditingController();
+
+    return GestureDetector(
+      onTap: () async {
+        DateTime? selectedDate;
+
+        if (Platform.isIOS) {
+          await showCupertinoModalPopup(
+            context: context,
+            builder: (_) {
+              DateTime tempDate = DateTime.now();
+              return Container(
+                height: 250,
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 200,
+                      child: CupertinoDatePicker(
+                        initialDateTime: DateTime.now(),
+                        mode: CupertinoDatePickerMode.date,
+                        onDateTimeChanged: (DateTime newDate) {
+                          tempDate = newDate;
+                        },
+                      ),
+                    ),
+                    CupertinoButton(
+                      child: const Text('Confirm'),
+                      onPressed: () {
+                        selectedDate = tempDate;
+                        Navigator.pop(context);
+                        dateController.text = "${selectedDate!.toLocal()}".split(' ')[0];
+                        onSaved(dateController.text);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        } else {
+          selectedDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1900),
+            lastDate: DateTime(2100),
+          );
+
+          if (selectedDate != null) {
+            dateController.text = "${selectedDate.toLocal()}".split(' ')[0];
+            onSaved(dateController.text);
+          }
+        }
+      },
+      child: AbsorbPointer(
+        child: TextFormField(
+          controller: dateController,
+          decoration: InputDecoration(labelText: labelText),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Please select $labelText';
+            }
+            return null;
+          },
+        ),
+      ),
     );
   }
 }

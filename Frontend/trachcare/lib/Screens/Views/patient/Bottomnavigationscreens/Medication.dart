@@ -3,11 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-import 'package:trachcare/components/NAppbar.dart';
+
 import 'package:trachcare/style/colors.dart';
 import '../../../../Api/API_funcation/DashboardApi.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../Api/DataStore/Datastore.dart';
+import '../../../../components/Appbar_copy.dart';
 import '../../../../style/utils/Dimention.dart';
 import '../patientscreens/calender.dart';
 import '../patientscreens/dailyupdates.dart';
@@ -129,11 +130,8 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
             print(imagePath);
 
             return Scaffold(
-              appBar: NormalAppbar(
-                Title: "Diagnostics",
-                height: dn.height(10),
-                onTap: null,
-              ),
+              appBar:Duplicate_Appbar(Title: "Diagnostics", height: dn.height(10)),
+               
               body: Column(
                 children: [
                   // Image container

@@ -1,3 +1,4 @@
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:media_kit/media_kit.dart";
 import "package:media_kit_video/media_kit_video.dart";
@@ -53,8 +54,7 @@ class _videoplayerState extends State<videoplayer> {
     Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: NormalAppbar(Title: "WatchZone",height: dn.height(10), onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(
-                               builder: (context) => Videolist(),),);
+         Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Videolist()),(route)=>false);;
       },),
       
       body: SingleChildScrollView(

@@ -120,6 +120,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 }
 
 Widget Namecard(String name, String patientId, String imagePath, BuildContext context) {
+  print(imagePath);
   Dimentions dn = Dimentions(context);
   return Container(
     margin: const EdgeInsets.all(10),

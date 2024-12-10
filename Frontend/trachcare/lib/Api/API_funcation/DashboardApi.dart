@@ -33,11 +33,15 @@ Future FetchDetials() async{
   };
   try {
     final response = await http.post(Uri.parse(getpatientdetialsurl),body: jsonEncode(Data));
+    // print(response.body);
     var datas = await FetchStatus();
+    print(response.statusCode);
     if(response.statusCode ==200){
+      print(response.statusCode);
       var data = jsonDecode(response.body);
+      print(data['Status']);
       if(data['Status']){
-       
+       print({"Dashboard":data['pateintinfo'],"status":datas});
         return {"Dashboard":data['pateintinfo'],"status":datas!};
       }
       else{

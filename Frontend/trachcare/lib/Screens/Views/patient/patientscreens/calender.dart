@@ -61,52 +61,53 @@ class _calenderState extends State<calender> {
           Namecard(widget.name, patientId, widget.imagePath, context),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: dn.width(5)),
-            child: TableCalendar(
-              availableGestures: AvailableGestures.horizontalSwipe,
-              headerStyle: HeaderStyle(
-                formatButtonVisible: false,
-                titleCentered: true,
-                titleTextStyle: GoogleFonts.ibmPlexSans(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-                leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black54),
-                rightChevronIcon: Icon(Icons.chevron_right, color: Colors.black54),
-              ),
-              calendarStyle: CalendarStyle(
-                todayDecoration: BoxDecoration(
-                  color: Colors.blueAccent.shade100,
-                  shape: BoxShape.circle,
-                ),
-                selectedDecoration: BoxDecoration(
-                  color: Colors.greenAccent.shade700,
-                  shape: BoxShape.circle,
-                ),
-                selectedTextStyle: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                weekendTextStyle: TextStyle(color: Colors.redAccent),
-                defaultTextStyle: TextStyle(color: Colors.black87),
-                outsideTextStyle: TextStyle(color: Colors.grey.shade400),
-                disabledDecoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  shape: BoxShape.circle,
-                ),
-                disabledTextStyle: TextStyle(color: Colors.grey),
-              ),
-              focusedDay: focusedDate,
-              firstDay: DateTime(DateTime.now().year, DateTime.now().month,1),
-              lastDay: DateTime.now(),
-              selectedDayPredicate: (day) => isSameDay(day, selectedDate),
-              enabledDayPredicate: (day) => day.isBefore(DateTime.now().add(Duration(days: 1))),
-              onDaySelected: (selectedDay, focusedDay) {
-                if (selectedDay.isBefore(DateTime.now().add(Duration(days: 1)))) {
-                  onDaySelected(selectedDay, focusedDay);
-                }
-              },
-            ),
+            child:TableCalendar(
+  availableGestures: AvailableGestures.horizontalSwipe,
+  headerStyle: HeaderStyle(
+    formatButtonVisible: false,
+    titleCentered: true,
+    titleTextStyle: GoogleFonts.ibmPlexSans(
+      fontSize: 14.sp,
+      fontWeight: FontWeight.bold,
+      color: Colors.black87,
+    ),
+    leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black54),
+    rightChevronIcon: Icon(Icons.chevron_right, color: Colors.black54),
+  ),
+  calendarStyle: CalendarStyle(
+    todayDecoration: BoxDecoration(
+      color: Colors.blueAccent.shade100,
+      shape: BoxShape.circle,
+    ),
+    selectedDecoration: BoxDecoration(
+      color: Colors.greenAccent.shade700,
+      shape: BoxShape.circle,
+    ),
+    selectedTextStyle: TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+    ),
+    weekendTextStyle: TextStyle(color: Colors.redAccent),
+    defaultTextStyle: TextStyle(color: Colors.black87),
+    outsideTextStyle: TextStyle(color: Colors.grey.shade400),
+    disabledDecoration: BoxDecoration(
+      color: Colors.grey.shade300,
+      shape: BoxShape.circle,
+    ),
+    disabledTextStyle: TextStyle(color: Colors.grey),
+  ),
+  focusedDay: focusedDate,
+  firstDay: DateTime(2000, 1, 1), // Allows navigation from January 1st, 2000
+  lastDay: DateTime(2100, 12, 31), // Allows navigation until December 31st, 2100
+  selectedDayPredicate: (day) => isSameDay(day, selectedDate),
+  enabledDayPredicate: (day) => day.isBefore(DateTime.now().add(Duration(days: 1))),
+  onDaySelected: (selectedDay, focusedDay) {
+    if (selectedDay.isBefore(DateTime.now().add(Duration(days: 1)))) {
+      onDaySelected(selectedDay, focusedDay);
+    }
+  },
+)
+
           ),
         ],
       ),

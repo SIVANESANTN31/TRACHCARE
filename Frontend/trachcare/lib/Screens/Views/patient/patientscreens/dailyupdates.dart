@@ -115,28 +115,28 @@ class _YourdailyReportsState extends State<YourdailyReports> {
                 patientData['spo2_room_air'] = value;
               }, isNumber: true),
               SizedBox(height: 10),
-              buildYesNoQuestion('Daily dressing done?', 'daily_dressing_done'),
-              buildYesNoQuestion('Tracheostomy tie changed?', 'tracheostomy_tie_changed'),
-              buildYesNoQuestion('Suctioning done?', 'suctioning_done'),
+              buildYesNoQuestion('Daily dressing done?', 'daily_dressing_done'),SizedBox(height: dn.height(1)),
+              buildYesNoQuestion('Tracheostomy tie changed?', 'tracheostomy_tie_changed'),SizedBox(height: dn.height(1)),
+              buildYesNoQuestion('Suctioning done?', 'suctioning_done'),SizedBox(height: dn.height(1)),
               if (patientData['suctioning_done'] == true)
                 buildTextField('Secretion color and consistency?', (value) {
                   patientData['secretion_color_consistency'] = value;
-                }),
-              buildYesNoQuestion('Has the patient started on oral feeds?', 'oral_feeds_started'),
+                }),SizedBox(height: dn.height(1)),
+              buildYesNoQuestion('Has the patient started on oral feeds?', 'oral_feeds_started'),SizedBox(height: dn.height(1)),
               if (patientData['oral_feeds_started'] == true)
-                buildYesNoQuestion('If Yes, experiencing cough or breathlessness?', 'cough_or_breathlessness'),
-              buildYesNoQuestion('Has the patient been changed to green tube?', 'changed_to_green_tube'),
-              SizedBox(height: dn.height(2)),
+                buildYesNoQuestion('If Yes, experiencing cough or breathlessness?', 'cough_or_breathlessness'),SizedBox(height: dn.height(1)),
+              buildYesNoQuestion('Has the patient been changed to green tube?', 'changed_to_green_tube'),SizedBox(height: dn.height(1)),
+              SizedBox(height: dn.height(1)),
               buildDropdown('Spigotting status', ),
-              SizedBox(height: dn.height(2)),
+              SizedBox(height: dn.height(1)),
               buildYesNoQuestion(
                   'Is the patient able to breathe through nose while blocking the tube?',
-                  'able_to_breathe_through_nose'),
+                  'able_to_breathe_through_nose'),SizedBox(height: dn.height(1)),
               if (patientData['able_to_breathe_through_nose'] == true)
                 buildTextField('If Yes, breath duration', (value) {
                   patientData['breath_duration'] = value;
                 }),
-              SizedBox(height: 40),
+              SizedBox(height: dn.height(5)),
               Center(
                 child: custom_Button(
                   text: "Submit",
@@ -148,7 +148,7 @@ class _YourdailyReportsState extends State<YourdailyReports> {
                   textcolor: whiteColor,
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: dn.height(10)),
             ],
           ),
         ),

@@ -109,28 +109,32 @@ Widget build(BuildContext context) {
                       Text('Vitals', style: TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline, fontSize: 16.5)),
                       buildTextField('Respiratory Rate', (value) {
                         value = patientData['respiratory_rate'];
-                      }, patientData['respiratory_rate'], isNumber: true),
+                      }, patientData['respiratory_rate'], isNumber: true),SizedBox(height: dn.height(1)),
                       buildTextField('Heart Rate', (value) {
                         patientData['heart_rate'] = value;
-                      }, patientData['heart_rate'], isNumber: true),
+                      }, patientData['heart_rate'], isNumber: true),SizedBox(height: dn.height(1)),
                       buildTextField('SPO2 @ Room Air', (value) {
                         patientData['spo2_room_air'] = value;
-                      }, patientData['spo2_room_air'], isNumber: true),
-                      SizedBox(height: 10),
-                      buildYesNoQuestion('Daily dressing done?', 'daily_dressing_done'),
-                      buildYesNoQuestion('Tracheostomy tie changed?', 'tracheostomy_tie_changed'),
-                      buildYesNoQuestion('Suctioning done?', 'suctioning_done'),
+                      }, patientData['spo2_room_air'], isNumber: true),SizedBox(height: dn.height(1)),
+                      
+                      buildYesNoQuestion('Daily dressing done?', 'daily_dressing_done'),SizedBox(height: dn.height(1)),
+                      buildYesNoQuestion('Tracheostomy tie changed?', 'tracheostomy_tie_changed'),SizedBox(height: dn.height(1)),
+                      buildYesNoQuestion('Suctioning done?', 'suctioning_done'),SizedBox(height: dn.height(1)),
                       if (patientData['suctioning_done'] == "Yes")
                         buildTextField('Secretion color and consistency?', (value) {
                           patientData['secretion_color_consistency'] = value;
-                        }, patientData['secretion_color_consistency']),
+                        }, patientData['secretion_color_consistency']),SizedBox(height: dn.height(1)),
                       buildYesNoQuestion('Has the patient started on oral feeds?', 'oral_feeds_started'),
+                      SizedBox(height: dn.height(1)),
                       if (patientData['oral_feeds_started'] == 'Yes')
                         buildYesNoQuestion('If Yes, experiencing cough or breathlessness?', 'cough_or_breathlessness'),
+                        SizedBox(height: dn.height(1)),
                       buildYesNoQuestion('Has the patient been changed to green tube?', 'changed_to_green_tube'),
+                      SizedBox(height: dn.height(1)),
                       buildDropdown('Spigotting status'),
-                      SizedBox(height: dn.height(2)),
+                      SizedBox(height: dn.height(1)),
                       buildYesNoQuestion('Is the patient able to breathe through nose while blocking the tube?', 'able_to_breathe_through_nose'),
+                      SizedBox(height: dn.height(1)),
                       if (patientData['able_to_breathe_through_nose'] == "Yes")
                         buildTextField('If Yes, breath duration', (value) {
                           patientData['breath_duration'] = value;

@@ -71,27 +71,8 @@ void alertdilog(){
           CupertinoDialogAction(
             isDestructiveAction: true,
             onPressed: () {
-
-             
                   Navigator.of(context,rootNavigator: true).pop();
-
-                  // Fluttertoast.showToast(
-                  //   msg: "invalid username or password",
-                  //   toastLength: Toast.LENGTH_SHORT,
-                  //   gravity: ToastGravity.BOTTOM,
-                  //   timeInSecForIosWeb: 1,
-                  //   textColor: Colors.white,
-                  //   fontSize: 16.0);
                  Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Welcome_page()),(route)=>false);
-                 
-             
-              
-             
-              
-                
-              
-              
-              
             },
             child: const Text('Yes'),
           ),
@@ -147,7 +128,7 @@ void alertdilog(){
             style: GoogleFonts.ibmPlexSans(
               textStyle: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 10.sp,
+                fontSize: 9.sp,
               ),
             ),
           ),

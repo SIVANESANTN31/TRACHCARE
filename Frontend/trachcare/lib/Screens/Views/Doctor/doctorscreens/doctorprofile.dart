@@ -74,7 +74,7 @@ class _d_ProfilePageState extends State<d_ProfilePage> {
      Dimentions dn = Dimentions(context);
     return Scaffold(
       
-      body: SafeArea(
+      body: Container(
         child: SingleChildScrollView(
           
           child: Column(
@@ -92,15 +92,25 @@ class _d_ProfilePageState extends State<d_ProfilePage> {
                       ),
                     ),
                     child: SafeArea(
-                      child: InkWell(
-                            onTap:(){
-                            Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Doctormainpage(),));
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(CupertinoIcons.chevron_left,color: BlackColor,size: 28.0,),
-                          ),),
+                      
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Stack(
+                              children: [
+                                IconButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                      builder: (context) => Doctormainpage(),));
+                                        },
+                                        icon: Icon(
+                                          Icons.chevron_left,
+                                          color: const Color.fromARGB(255, 0, 0, 0),
+                                          size: 30,
+                                        ),
+                                      ),
+                              ],
+                            ),
+                          ),
                     ),
                   ),
                   Padding(
@@ -289,7 +299,7 @@ class _d_ProfilePageState extends State<d_ProfilePage> {
                     ),
                   )
                    
-
+                
                 ],
                 
               ),

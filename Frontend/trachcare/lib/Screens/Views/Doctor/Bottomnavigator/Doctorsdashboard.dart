@@ -16,7 +16,7 @@ import "../../../../Api/DataStore/Datastore.dart";
 import "../../../../components/story_circles.dart";
 import "../../../../style/utils/Dimention.dart";
 import "../doctorscreens/VideoPlayer_screen.dart";
-import "../doctorscreens/calender.dart";
+import "../doctorscreens/dailyupdatedetails.dart";
 import "../doctorscreens/doctorprofile.dart";
 import "Addpatients.dart";
 import 'dart:async';
@@ -86,6 +86,7 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
     if (response.statusCode == 200) {
       // Parse the JSON response
       final List<dynamic> reports = json.decode(response.body);
+      print(reports);
       print("sdfghjkl");
       return reports; // Return the list of reports
     } else {
@@ -171,18 +172,27 @@ Future<List<dynamic>> fetchDailyReport(String doctorId) async {
                               return StoryCircles(
                                 function: () {
                                   Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CalendarScreen(
-                                        key: UniqueKey(),
-                                        patientId: update['patient_id'],
-                                        name: update['username'], // Assuming 'username' is a field in your data
-                                        imagePath: update['image_path']
-                                            .toString()
-                                            .substring(2), // Assuming 'image_path' is a field in your data
-                                      ),
-                                    ),
-                                  );
+        context,
+        MaterialPageRoute(
+          builder: (context) => Viewdailyupdates(
+            selecteddate: update['date'].toString().substring(2).split(" ").first,
+            patientId: update['patient_id'],
+            imagePath: update['image_path'].toString().substring(2),
+            name: update['username'],
+          ),
+        ),
+      );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => CalendarScreen(
+                                  //       key: UniqueKey(),
+                                  //       patientId: update['patient_id'],
+                                  //       name: update['username'], // Assuming 'username' is a field in your data
+                                  //       imagePath: update['image_path'].toString().substring(2), // Assuming 'image_path' is a field in your data
+                                  //     ),
+                                  //   ),
+                                  // );
                                 },
                                 url: update['image_path']
                                     .toString()

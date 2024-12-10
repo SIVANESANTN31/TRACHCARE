@@ -1,3 +1,4 @@
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:media_kit/media_kit.dart";
 import "package:media_kit_video/media_kit_video.dart";
@@ -52,8 +53,7 @@ class _video_playerState extends State<video_player> {
     Dimentions dn = Dimentions(context);
     return Scaffold(
       appBar: NormalAppbar(Title: "WatchZone",height: dn.height(10), onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(
-                               builder: (context) => Videospage(),),);
+         Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => Videospage()),(route)=>false);
       },),
       
       body: SingleChildScrollView(
@@ -154,89 +154,92 @@ class _ControlsOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 50),
-          reverseDuration: const Duration(milliseconds: 200),
-          child: controller.value.isPlaying
-              ? const SizedBox.shrink()
-              : const ColoredBox(
-                  color: Colors.black26,
-                  child: Center(
-                    child: Icon(
-                      Icons.play_arrow,
-                      color: Colors.white,
-                      size: 100.0,
-                      semanticLabel: 'Play',
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Stack(
+        children: <Widget>[
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 50),
+            reverseDuration: const Duration(milliseconds: 200),
+            child: controller.value.isPlaying
+                ? const SizedBox.shrink()
+                : const ColoredBox(
+                    color: Colors.black26,
+                    child: Center(
+                      child: Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                        size: 100.0,
+                        semanticLabel: 'Play',
+                      ),
                     ),
                   ),
+          ),
+          GestureDetector(
+            onTap: () {
+              controller.value.isPlaying ? controller.pause() : controller.play();
+            },
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: PopupMenuButton<Duration>(
+              initialValue: controller.value.captionOffset,
+              tooltip: 'Caption Offset',
+              onSelected: (Duration delay) {
+                controller.setCaptionOffset(delay);
+              },
+              itemBuilder: (BuildContext context) {
+                return <PopupMenuItem<Duration>>[
+                  for (final Duration offsetDuration in _exampleCaptionOffsets)
+                    PopupMenuItem<Duration>(
+                      value: offsetDuration,
+                      child: Text('${offsetDuration.inMilliseconds}ms'),
+                    )
+                ];
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  // Using less vertical padding as the text is also longer
+                  // horizontally, so it feels like it would need more spacing
+                  // horizontally (matching the aspect ratio of the video).
+                  vertical: 12,
+                  horizontal: 16,
                 ),
-        ),
-        GestureDetector(
-          onTap: () {
-            controller.value.isPlaying ? controller.pause() : controller.play();
-          },
-        ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: PopupMenuButton<Duration>(
-            initialValue: controller.value.captionOffset,
-            tooltip: 'Caption Offset',
-            onSelected: (Duration delay) {
-              controller.setCaptionOffset(delay);
-            },
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuItem<Duration>>[
-                for (final Duration offsetDuration in _exampleCaptionOffsets)
-                  PopupMenuItem<Duration>(
-                    value: offsetDuration,
-                    child: Text('${offsetDuration.inMilliseconds}ms'),
-                  )
-              ];
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
-                vertical: 12,
-                horizontal: 16,
+                child: Text('${controller.value.captionOffset.inMilliseconds}ms'),
               ),
-              child: Text('${controller.value.captionOffset.inMilliseconds}ms'),
             ),
           ),
-        ),
-        Align(
-          alignment: Alignment.topRight,
-          child: PopupMenuButton<double>(
-            initialValue: controller.value.playbackSpeed,
-            tooltip: 'Playback speed',
-            onSelected: (double speed) {
-              controller.setPlaybackSpeed(speed);
-            },
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuItem<double>>[
-                for (final double speed in _examplePlaybackRates)
-                  PopupMenuItem<double>(
-                    value: speed,
-                    child: Text('${speed}x'),
-                  )
-              ];
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
-                vertical: 12,
-                horizontal: 16,
+          Align(
+            alignment: Alignment.topRight,
+            child: PopupMenuButton<double>(
+              initialValue: controller.value.playbackSpeed,
+              tooltip: 'Playback speed',
+              onSelected: (double speed) {
+                controller.setPlaybackSpeed(speed);
+              },
+              itemBuilder: (BuildContext context) {
+                return <PopupMenuItem<double>>[
+                  for (final double speed in _examplePlaybackRates)
+                    PopupMenuItem<double>(
+                      value: speed,
+                      child: Text('${speed}x'),
+                    )
+                ];
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  // Using less vertical padding as the text is also longer
+                  // horizontally, so it feels like it would need more spacing
+                  // horizontally (matching the aspect ratio of the video).
+                  vertical: 12,
+                  horizontal: 16,
+                ),
+                child: Text('${controller.value.playbackSpeed}x'),
               ),
-              child: Text('${controller.value.playbackSpeed}x'),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

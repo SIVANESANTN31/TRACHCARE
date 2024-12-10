@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:sizer/sizer.dart';
+import 'package:toastification/toastification.dart';
 import 'package:trachcare/Screens/AuthScreens/SplashScreen.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -23,7 +24,7 @@ void main() {
   MediaKit.ensureInitialized();
   
  
-  runApp(const MyApp());
+  runApp(ToastificationWrapper(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
