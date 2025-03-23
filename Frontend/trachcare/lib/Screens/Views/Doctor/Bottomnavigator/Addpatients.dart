@@ -233,74 +233,76 @@ class _AddpatientsState extends State<Addpatients> {
       },
     );
   }
+Widget buildAdaptiveDateField(BuildContext context, String labelText, Function(String) onSaved) {
+  TextEditingController dateController = TextEditingController();
+  return GestureDetector(
+    onTap: () async {
+      DateTime? selectedDate;
 
-  Widget buildAdaptiveDateField(BuildContext context, String labelText, Function(String) onSaved) {
-    TextEditingController dateController = TextEditingController();
-
-    return GestureDetector(
-      onTap: () async {
-        DateTime? selectedDate;
-
-        if (Platform.isIOS) {
-          await showCupertinoModalPopup(
-            context: context,
-            builder: (_) {
-              DateTime tempDate = DateTime.now();
-              return Container(
-                height: 250,
+      if (Platform.isIOS) {
+        await showCupertinoModalPopup(
+          context: context,
+          builder: (BuildContext popupContext) { // Use a different context
+            DateTime tempDate = DateTime.now();
+            return SafeArea(
+              child: Container(
                 color: Colors.white,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min, // Use only necessary space
                   children: [
-                    SizedBox(
-                      height: 200,
-                      child: CupertinoDatePicker(
-                        initialDateTime: DateTime.now(),
-                        mode: CupertinoDatePickerMode.date,
-                        onDateTimeChanged: (DateTime newDate) {
-                          tempDate = newDate;
-                        },
+                    Flexible(
+                      child: SizedBox(
+                        height: 200, // Adjust height as needed
+                        child: CupertinoDatePicker(
+                          initialDateTime: DateTime.now(),
+                          mode: CupertinoDatePickerMode.date,
+                          onDateTimeChanged: (DateTime newDate) {
+                            tempDate = newDate;
+                          },
+                        ),
                       ),
                     ),
                     CupertinoButton(
-                      child: const Text('Confirm'),
+                      child: Text('Confirm'),
                       onPressed: () {
-                        selectedDate = tempDate;
-                        Navigator.pop(context);
-                        dateController.text = "${selectedDate!.toLocal()}".split(' ')[0];
+                        // Update the TextEditingController with the selected date
+                        dateController.text = "${tempDate.toLocal()}".split(' ')[0];
                         onSaved(dateController.text);
+                        Navigator.pop(popupContext); // Close only the modal popup
                       },
                     ),
                   ],
                 ),
-              );
-            },
-          );
-        } else {
-          selectedDate = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(1900),
-            lastDate: DateTime(2100),
-          );
-
-          if (selectedDate != null) {
-            dateController.text = "${selectedDate.toLocal()}".split(' ')[0];
-            onSaved(dateController.text);
-          }
-        }
-      },
-      child: AbsorbPointer(
-        child: TextFormField(
-          controller: dateController,
-          decoration: InputDecoration(labelText: labelText),
-          validator: (value) {
-            if (value!.isEmpty) {
-              return 'Please select $labelText';
-            }
-            return null;
+              ),
+            );
           },
-        ),
+        );
+      } else {
+        selectedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(1900),
+          lastDate: DateTime(2100),
+        );
+
+        if (selectedDate != null) {
+          dateController.text = "${selectedDate.toLocal()}".split(' ')[0];
+          onSaved(dateController.text);
+        }
+      }
+    },
+    child: AbsorbPointer(
+      child: TextFormField(
+        controller: dateController,
+        decoration: InputDecoration(labelText: labelText),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please select $labelText';
+          }
+          return null;
+        },
       ),
-    );
-  }
+    ),
+  );
+}
 }

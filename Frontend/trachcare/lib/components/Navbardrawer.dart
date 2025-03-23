@@ -188,7 +188,7 @@ void alertdilog(){
                 );
               },
             ),
-            SizedBox(height: dn.height(20),),
+            // SizedBox(height: dn.height(20),),
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: custom_Button(
@@ -198,7 +198,7 @@ void alertdilog(){
                     },
                   width: 10,
                   height: 7,
-                  backgroundColor: Logoutbtncolor,
+                  backgroundColor: const Color.fromARGB(255, 62, 138, 182),
                   textcolor: whiteColor,
                   textSize: 10,
                   ),

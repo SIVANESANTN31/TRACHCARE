@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 import 'package:trachcare/Api/Apiurl.dart';
@@ -77,8 +78,27 @@ class LoginClassApi{
 
 // patient Login funcations
 
-
   void Patientlogin(BuildContext context)async{
+    
+  void alertdilog(){
+      showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('Daily Report'),
+        content: const Text('Kindly update your Daily Queries first!!!.'),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context,"Ok");
+            },
+            child: const Text('OK'),
+          ),
+          
+        
+      ]),
+    );}
+
     try {
       final response  =  await http.post(Uri.parse(PatientLoginurl),body: jsonEncode(LoginData));
       if(response.statusCode ==200){
@@ -96,6 +116,9 @@ class LoginClassApi{
       
       autoCloseDuration: const Duration(seconds: 2),
     );
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+    alertdilog();
+  });
     Navigator.pushAndRemoveUntil(
     context,
     MaterialPageRoute(builder: (context) => const PatientMainScreen()),(route)=>false);

@@ -78,6 +78,7 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
         
         body: Container(
           child: SingleChildScrollView(
+            
             child: Column(
               children: [
                 Stack(
@@ -277,7 +278,7 @@ class _a_ProfilePageState extends State<a_ProfilePage> {
                             String password = data['password'].toString();
                             print(imagepath);
                             // Pass the fetched data to AdminEditProfile
-                            Navigator.of(context).push(
+                            Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                 builder: (context) => AdminEditProfile(
                                   doctorId: doctorId,

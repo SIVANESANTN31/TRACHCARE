@@ -48,136 +48,136 @@ class _AdmindbState extends State<Admindb> {
       
     ];
 
-      bool _isDownloading = false;
+    bool _isDownloading = false;
 
-  // Function to download the CSV file from the PHP backend
-  Future<void> downloadCSV(BuildContext context) async {
-    setState(() {
-      _isDownloading = true;
-    });
+// Function to download the CSV file from the PHP backend
+Future<void> downloadCSV(BuildContext context) async {
+  setState(() {
+    _isDownloading = true;
+  });
 
-    // Replace with your PHP backend URL that serves the CSV
-    final String url = "$exporturl";
+  // Replace with your PHP backend URL that serves the CSV
+  final String url = "$exporturl";
 
-    try {
-      // Make the HTTP request to get the CSV file
-      final response = await http.get(Uri.parse(url));
+  try {
+    // Make the HTTP request to get the CSV file
+    final response = await http.get(Uri.parse(url));
 
-      if (response.statusCode == 200) {
-        // Allow the user to pick a directory
-        String? directoryPath = await FilePicker.platform.getDirectoryPath();
+    if (response.statusCode == 200) {
+      // Allow the user to pick a directory
+      String? directoryPath = await FilePicker.platform.getDirectoryPath();
 
-        if (directoryPath == null) {
-          // User canceled the picker
-          print('No directory selected.');
-          toastification.show(
-            alignment: Alignment.bottomRight,
-            type: ToastificationType.error,
-            style: ToastificationStyle.flatColored,
-            context: context,
-            title: Text('No Directory Selected'),
-            icon: const Icon(Icons.cancel_rounded, color: Colors.red),
-            showIcon: true,
-            showProgressBar: false,
-            autoCloseDuration: const Duration(seconds: 2),
-          );
-          return;
-        }
-
-        // Generate a unique file name
-        String fileName = 'patient_details_${DateTime.now().millisecondsSinceEpoch}.csv';
-        String filePath = '$directoryPath/$fileName';
-        File file = File(filePath);
-
-        // Ensure a unique filename
-        int counter = 1;
-        while (await file.exists()) {
-          fileName = 'patient_details_${DateTime.now().millisecondsSinceEpoch}_$counter.csv';
-          filePath = '$directoryPath/$fileName';
-          file = File(filePath);
-          counter++;
-        }
-
-        // Write the content to the file
-        await file.writeAsBytes(response.bodyBytes);
-        print('CSV saved at: $filePath');
-
-        // Notify the user
-        toastification.show(
-          alignment: Alignment.bottomRight,
-          type: ToastificationType.success,
-          style: ToastificationStyle.flatColored,
-          context: context,
-          title: Text('Saved Successfully'),
-          icon: const Icon(Icons.check_circle, color: Colors.green),
-          showIcon: true,
-          showProgressBar: false,
-          autoCloseDuration: const Duration(seconds: 2),
-        );
-
-        // // Open the file
-        // OpenFile.open(filePath);
-      } else {
-        // Handle error if the request fails
+      if (directoryPath == null) {
+        // User canceled the picker
+        print('No directory selected.');
         toastification.show(
           alignment: Alignment.bottomRight,
           type: ToastificationType.error,
           style: ToastificationStyle.flatColored,
           context: context,
-          title: Text('Error Downloading CSV'),
+          title: Text('No Directory Selected'),
           icon: const Icon(Icons.cancel_rounded, color: Colors.red),
           showIcon: true,
           showProgressBar: false,
           autoCloseDuration: const Duration(seconds: 2),
         );
+        return;
       }
-    } catch (e) {
-      print('Error occurred: $e');
+
+      // Generate a unique file name
+      String fileName = 'patient_details_${DateTime.now().millisecondsSinceEpoch}.csv';
+      String filePath = '$directoryPath/$fileName';
+      File file = File(filePath);
+
+      // Ensure a unique filename
+      int counter = 1;
+      while (await file.exists()) {
+        fileName = 'patient_details_${DateTime.now().millisecondsSinceEpoch}_$counter.csv';
+        filePath = '$directoryPath/$fileName';
+        file = File(filePath);
+        counter++;
+      }
+
+      // Write the content to the file
+      await file.writeAsBytes(response.bodyBytes);
+      print('CSV saved at: $filePath');
+
+      // Notify the user
+      toastification.show(
+        alignment: Alignment.bottomRight,
+        type: ToastificationType.success,
+        style: ToastificationStyle.flatColored,
+        context: context,
+        title: Text('Saved Successfully'),
+        icon: const Icon(Icons.check_circle, color: Colors.green),
+        showIcon: true,
+        showProgressBar: false,
+        autoCloseDuration: const Duration(seconds: 2),
+      );
+
+      // // Open the file
+      // OpenFile.open(filePath);
+    } else {
+      // Handle error if the request fails
       toastification.show(
         alignment: Alignment.bottomRight,
         type: ToastificationType.error,
         style: ToastificationStyle.flatColored,
         context: context,
-        title: Text('An error occurred'),
-        icon: const Icon(Icons.error_outline, color: Colors.red),
+        title: Text('Error Downloading CSV'),
+        icon: const Icon(Icons.cancel_rounded, color: Colors.red),
         showIcon: true,
         showProgressBar: false,
         autoCloseDuration: const Duration(seconds: 2),
       );
-    } finally {
-      setState(() {
-        _isDownloading = false;
-      });
     }
-  }
-
-    // Show confirmation dialog before starting the download
-    void _showDownloadDialog(BuildContext context) {
-    showCupertinoModalPopup(
+  } catch (e) {
+    print('Error occurred: $e');
+    toastification.show(
+      alignment: Alignment.bottomRight,
+      type: ToastificationType.error,
+      style: ToastificationStyle.flatColored,
       context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text('Download CSV'),
-          content: Text('Do you want to download the all patients details?'),
-          actions: [
-            CupertinoDialogAction(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: Text('Cancel'),
-            ),
-            CupertinoDialogAction(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-                downloadCSV(context); // Start downloading
-              },
-              child: Text('Download'),
-            ),
-          ],
-        );
-      },
+      title: Text('An error occurred'),
+      icon: const Icon(Icons.error_outline, color: Colors.red),
+      showIcon: true,
+      showProgressBar: false,
+      autoCloseDuration: const Duration(seconds: 2),
     );
+  } finally {
+    setState(() {
+      _isDownloading = false;
+    });
   }
+}
+
+  // Show confirmation dialog before starting the download
+  void _showDownloadDialog(BuildContext context) {
+  showCupertinoModalPopup(
+    context: context,
+    builder: (BuildContext context) {
+      return CupertinoAlertDialog(
+        title: Text('Download CSV'),
+        content: Text('Do you want to download the all patients details?'),
+        actions: [
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+            },
+            child: Text('Cancel'),
+          ),
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+              downloadCSV(context); // Start downloading
+            },
+            child: Text('Download'),
+          ),
+        ],
+      );
+    },
+  );
+}
     
 
     final screenWidth = MediaQuery.of(context).size.width;

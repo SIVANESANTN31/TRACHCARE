@@ -22,8 +22,7 @@ void main() {
 
   // Necessary initialization for package:media_kit.
   MediaKit.ensureInitialized();
-  
- 
+
   runApp(ToastificationWrapper(child: const MyApp()));
 }
 

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:toastification/toastification.dart';
+import 'package:trachcare/Screens/Views/Admin/Adminscreens/calender.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/patientslist.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
@@ -18,7 +19,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:open_file/open_file.dart';
-import '../../Doctor/doctorscreens/calender.dart';
 import '../Adminmainpage.dart';
 
 class ViewPatientDetails extends StatefulWidget {
@@ -552,7 +552,7 @@ void alertdilog(){
                                   Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => CalendarScreen(
+                                    builder: (context) => a_CalendarScreen(
                                         key: UniqueKey(),
                                         patientId: patientDetails['patient_id'],
                                         name: patientDetails['name'], // Assuming 'username' is a field in your data

@@ -87,25 +87,15 @@ class _p_ProfilePageState extends State<p_ProfilePage> {
                         ),
                       ),
                       child: SafeArea(
-                        
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Stack(
-                                children: [
-                                  IconButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        child: InkWell(
+                              onTap:(){
+                             Navigator.of(context).push(CupertinoPageRoute(
                                         builder: (context) => PatientMainScreen(),));
-                                          },
-                                          icon: Icon(
-                                            Icons.chevron_left,
-                                            color: const Color.fromARGB(255, 0, 0, 0),
-                                            size: 30,
-                                          ),
-                                        ),
-                                ],
-                              ),
-                            ),
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(CupertinoIcons.chevron_left,color: BlackColor,size: 28.0,),
+                            ),),
                       ),
                     ),
                     Padding(

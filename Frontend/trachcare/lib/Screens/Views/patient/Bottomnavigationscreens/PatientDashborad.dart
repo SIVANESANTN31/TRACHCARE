@@ -28,24 +28,6 @@ class _PatientDashBoardState extends State<PatientDashBoard> {
 
 
 
-  void alertdilog(){
-      showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Text('Daily Report'),
-        content: const Text('Kindly update your Daily Queries first!!!.'),
-        actions: <CupertinoDialogAction>[
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: () {
-              Navigator.pop(context,"Ok");
-            },
-            child: const Text('OK'),
-          ),
-          
-        
-      ]),
-    );}
 
    bool isLoading = true;
    List Videourls = [];
@@ -65,6 +47,7 @@ class _PatientDashBoardState extends State<PatientDashBoard> {
   @override
   void initState() {
     super.initState();
+   
     FetchVideos();
   }
   @override
@@ -135,7 +118,7 @@ print(snapshot.hasData);
             var imagepath = patientDetials["image_path"].toString().substring(2);
 
             Dimentions dn = Dimentions(context);
-            alertdilog();
+            
             return Scaffold(
               appBar: Appbar(Name:name, height: dn.height(10), notification: notificationlist.isNotEmpty,notificationlists:notificationlist),
               drawer: drawer(Name: name,

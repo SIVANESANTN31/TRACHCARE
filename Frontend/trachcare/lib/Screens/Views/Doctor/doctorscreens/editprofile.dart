@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:sizer/sizer.dart';
 import '../../../../Api/API_funcation/doctordetails.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../Api/DataStore/Datastore.dart';
@@ -145,7 +146,7 @@ class _doctoreditprofileState extends State<doctoreditprofile> {
               children: [
                 Container(
                   alignment: Alignment.topLeft,
-                  height: dn.height(10),
+                  height: 25.h,
                   decoration: const BoxDecoration(
                     color: TitleColor,
                     borderRadius: BorderRadius.only(
@@ -154,19 +155,24 @@ class _doctoreditprofileState extends State<doctoreditprofile> {
                     ),
                   ),
                   child: SafeArea(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          CupertinoIcons.chevron_left,
-                          color: BlackColor,
-                          size: 28.0,
-                        ),
-                      ),
-                    ),
+                    child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Stack(
+                              children: [
+                                IconButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                      builder: (context) => d_ProfilePage(),));
+                                        },
+                                        icon: Icon(
+                                          Icons.chevron_left,
+                                          color: const Color.fromARGB(255, 0, 0, 0),
+                                          size: 30.0,
+                                        ),
+                                      ),
+                              ],
+                            ),
+                          ),
                   ),
                 ),
                 Padding(

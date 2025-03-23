@@ -5,11 +5,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:sizer/sizer.dart';
 import 'package:trachcare/Api/DataStore/Datastore.dart';
+import 'package:trachcare/Screens/Views/patient/patientscreens/calender.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
 import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
-import '../../patient/Bottomnavigationscreens/Medication.dart';
+
 
 class Viewdailyupdates extends StatefulWidget {
    final String name;
@@ -85,7 +86,10 @@ Widget build(BuildContext context) {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => MedicationPage(),
+            builder: (context) => calender (
+            name: widget.name,
+            imagePath: widget.imagePath,
+          ),
           ),
         );
       },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:sizer/sizer.dart';
+import 'package:trachcare/Screens/Views/Admin/Adminscreens/ViewPatientDetails.dart';
 import 'package:trachcare/Screens/Views/Admin/Adminscreens/dailyupdatedetails.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../components/NAppbar.dart';
@@ -9,12 +10,12 @@ import '../../../../style/colors.dart';
 import '../../../../style/utils/Dimention.dart';
 
 
-class CalendarScreen extends StatefulWidget {
+class a_CalendarScreen extends StatefulWidget {
   final String patientId;
   final String name;
   final String imagePath;
 
-  const CalendarScreen({
+  const a_CalendarScreen({
     Key? key,
     required this.patientId,
     required this.name,
@@ -22,10 +23,10 @@ class CalendarScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CalendarScreenState createState() => _CalendarScreenState();
+  _a_CalendarScreenState createState() => _a_CalendarScreenState();
 }
 
-class _CalendarScreenState extends State<CalendarScreen> {
+class _a_CalendarScreenState extends State<a_CalendarScreen> {
   DateTime selectedDate = DateTime.now();
   DateTime focusedDate = DateTime.now();
 
@@ -52,68 +53,73 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     print(widget.imagePath);
     Dimentions dn = Dimentions(context);
-    return Scaffold(
-      appBar:  NormalAppbar(
-      Title: "Daily Queries Reports",
-      height: dn.height(10),
-      onTap: () {
-        Navigator.of(context).pop();
-      },
-    ),
-      body: ListView(
-        children: [
-          SizedBox(height: dn.height(5)),
-          Namecard(widget.name, widget.patientId, widget.imagePath, context),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: dn.width(5)),
-            child: TableCalendar(
-              availableGestures: AvailableGestures.horizontalSwipe,
-              headerStyle: HeaderStyle(
-                formatButtonVisible: false,
-                titleCentered: true,
-                titleTextStyle: GoogleFonts.ibmPlexSans(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar:  NormalAppbar(
+        Title: "Daily Queries Reports",
+        height: dn.height(10),
+        onTap: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ViewPatientDetails(patientId: widget.patientId,),),);
+        },
+      ),
+        body: ListView(
+          children: [
+            SizedBox(height: dn.height(5)),
+            Namecard(widget.name, widget.patientId, widget.imagePath, context),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: dn.width(5)),
+              child: TableCalendar(
+                availableGestures: AvailableGestures.horizontalSwipe,
+                headerStyle: HeaderStyle(
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                  titleTextStyle: GoogleFonts.ibmPlexSans(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                  leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black54),
+                  rightChevronIcon: Icon(Icons.chevron_right, color: Colors.black54),
                 ),
-                leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black54),
-                rightChevronIcon: Icon(Icons.chevron_right, color: Colors.black54),
+                calendarStyle: CalendarStyle(
+                  todayDecoration: BoxDecoration(
+                    color: Colors.blueAccent.shade100,
+                    shape: BoxShape.circle,
+                  ),
+                  selectedDecoration: BoxDecoration(
+                    color: Colors.greenAccent.shade700,
+                    shape: BoxShape.circle,
+                  ),
+                  selectedTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  weekendTextStyle: TextStyle(color: Colors.redAccent),
+                  defaultTextStyle: TextStyle(color: Colors.black87),
+                  outsideTextStyle: TextStyle(color: Colors.grey.shade400),
+                  disabledDecoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    shape: BoxShape.circle,
+                  ),
+                  disabledTextStyle: TextStyle(color: Colors.grey),
+                ),
+                focusedDay: focusedDate,
+                firstDay: DateTime(DateTime.now().year, DateTime.now().month,1),
+                lastDay: DateTime.now(),
+                selectedDayPredicate: (day) => isSameDay(day, selectedDate),
+                enabledDayPredicate: (day) => day.isBefore(DateTime.now().add(Duration(days: 1))),
+                onDaySelected: (selectedDay, focusedDay) {
+                  if (selectedDay.isBefore(DateTime.now().add(Duration(days: 1)))) {
+                    onDaySelected(selectedDay, focusedDay);
+                  }
+                },
               ),
-              calendarStyle: CalendarStyle(
-                todayDecoration: BoxDecoration(
-                  color: Colors.blueAccent.shade100,
-                  shape: BoxShape.circle,
-                ),
-                selectedDecoration: BoxDecoration(
-                  color: Colors.greenAccent.shade700,
-                  shape: BoxShape.circle,
-                ),
-                selectedTextStyle: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                weekendTextStyle: TextStyle(color: Colors.redAccent),
-                defaultTextStyle: TextStyle(color: Colors.black87),
-                outsideTextStyle: TextStyle(color: Colors.grey.shade400),
-                disabledDecoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  shape: BoxShape.circle,
-                ),
-                disabledTextStyle: TextStyle(color: Colors.grey),
-              ),
-              focusedDay: focusedDate,
-              firstDay: DateTime(DateTime.now().year, DateTime.now().month,1),
-              lastDay: DateTime.now(),
-              selectedDayPredicate: (day) => isSameDay(day, selectedDate),
-              enabledDayPredicate: (day) => day.isBefore(DateTime.now().add(Duration(days: 1))),
-              onDaySelected: (selectedDay, focusedDay) {
-                if (selectedDay.isBefore(DateTime.now().add(Duration(days: 1)))) {
-                  onDaySelected(selectedDay, focusedDay);
-                }
-              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

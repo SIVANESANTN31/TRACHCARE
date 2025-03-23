@@ -155,19 +155,24 @@ class _AdminEditProfileState extends State<AdminEditProfile> {
                     ),
                   ),
                   child: SafeArea(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          CupertinoIcons.chevron_left,
-                          color: BlackColor,
-                          size: 28.0,
-                        ),
-                      ),
-                    ),
+                    child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Stack(
+                              children: [
+                                IconButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                      builder: (context) => a_ProfilePage(),));
+                                        },
+                                        icon: Icon(
+                                          Icons.chevron_left,
+                                          color: const Color.fromARGB(255, 0, 0, 0),
+                                          size: 30.0,
+                                        ),
+                                      ),
+                              ],
+                            ),
+                          ),
                   ),
                 ),
                 Padding(

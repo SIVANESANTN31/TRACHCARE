@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import, unused_local_variable
 
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:gap/gap.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:sizer/sizer.dart";
@@ -22,12 +23,17 @@ class Welcome_page extends StatefulWidget {
 }
 
 class _Welcome_pageState extends State<Welcome_page> {
+
+   @override
+  void initState() {
+    super.initState();
+    // Reapply immersive mode when the next screen loads
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  }
   @override
   Widget build(BuildContext context) {
-
-
-
-
+     // Ensure immersive mode for this widget
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 Dimentions dn = Dimentions(context);
 var screenSize = MediaQuery.of(context).size;
     return Scaffold(

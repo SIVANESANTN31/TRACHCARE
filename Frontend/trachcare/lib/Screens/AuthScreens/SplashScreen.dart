@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:trachcare/Screens/started/WelcomePage.dart';
-import  'package:animate_do/animate_do.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,11 +19,15 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds:1), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => BounceInUp(
-        curve: Curves.linear,
-        
-        child: const Welcome_page())));
+    
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+    // Navigate to the next screen after a delay
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Welcome_page()),
+      );
     });
     }
   

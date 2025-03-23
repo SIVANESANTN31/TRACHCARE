@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:trachcare/Screens/Views/patient/Bottomnavigationscreens/Medication.dart';
 import 'package:trachcare/Screens/Views/patient/patientscreens/dailyReports.dart';
 import '../../../../Api/Apiurl.dart';
 import '../../../../Api/DataStore/Datastore.dart';
@@ -52,7 +54,7 @@ class _calenderState extends State<calender> {
       Title: "Daily Queries Reports",
       height: dn.height(10),
       onTap: () {
-        Navigator.of(context).pop();
+      Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => MedicationPage()),(route)=>false);
       },
     ),
       body: ListView(

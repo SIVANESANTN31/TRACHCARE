@@ -161,193 +161,195 @@ class _EditpatientprofileState extends State<Editpatientprofile> {
       onWillPop: () async => false,
       child: Scaffold(
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    height: 25.h,
-                    decoration: const BoxDecoration(
-                      color: TitleColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
+          child: Container(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      alignment: Alignment.topLeft,
+                      height: 25.h,
+                      decoration: const BoxDecoration(
+                        color: TitleColor,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
                       ),
-                    ),
-                    child: SafeArea(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => p_ProfilePage()),
-      );
-                  //         Navigator.of(context,rootNavigator: true).pop();
-      
-                  //  Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => p_ProfilePage()),(route)=>false);
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(
-                            CupertinoIcons.chevron_left,
-                            color: BlackColor,
-                            size: 28.0,
+                      child: SafeArea(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => p_ProfilePage()),
+                  );
+                    //         Navigator.of(context,rootNavigator: true).pop();
+                  
+                    //  Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (context) => p_ProfilePage()),(route)=>false);
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              CupertinoIcons.chevron_left,
+                              color: BlackColor,
+                              size: 28.0,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 100,
-                      left: 30,
-                      right: 30,
-                      bottom: 0,
-                    ),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: loginFormcolor,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 100,
+                        left: 30,
+                        right: 30,
+                        bottom: 0,
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 16, bottom: 26, left: 16, right: 16),
-                            child: Form(
-                              key: _formKey,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Column(
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 50,
-                                          backgroundImage: imageFile != null
-                                              ? FileImage(imageFile!)
-                                              : NetworkImage("https://$ip/Trachcare/$imagepath")
-                                                  as ImageProvider,
-                                        ),
-                                        SizedBox(height: 10),
-                                        ElevatedButton.icon(
-                                          onPressed: () {
-                                            photoPicker(context);
-                                          },
-                                          icon: const Icon(Icons.camera_alt),
-                                          label: const Text('Change Picture'),
-                                          style: ElevatedButton.styleFrom(
-                                            foregroundColor: Colors.black,
-                                            backgroundColor: Colors.grey[200],
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: loginFormcolor,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 16, bottom: 26, left: 16, right: 16),
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Center(
+                                      child: Column(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 50,
+                                            backgroundImage: imageFile != null
+                                                ? FileImage(imageFile!)
+                                                : NetworkImage("https://$ip/Trachcare/$imagepath")
+                                                    as ImageProvider,
                                           ),
-                                        ),
-                                      ],
+                                          SizedBox(height: 10),
+                                          ElevatedButton.icon(
+                                            onPressed: () {
+                                              photoPicker(context);
+                                            },
+                                            icon: const Icon(Icons.camera_alt),
+                                            label: const Text('Change Picture'),
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor: Colors.black,
+                                              backgroundColor: Colors.grey[200],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter username';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (value) {
-                                      username = value!;
-                                      store.Setusername(username);
-                                    },
-                                    controller: usernameController,
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      labelText: 'Username',
-                                      border: const OutlineInputBorder(),
-                                      filled: true,
+                                    const SizedBox(height: 20),
+                                    TextFormField(
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter username';
+                                        }
+                                        return null;
+                                      },
+                                      onSaved: (value) {
+                                        username = value!;
+                                        store.Setusername(username);
+                                      },
+                                      controller: usernameController,
+                                      textInputAction: TextInputAction.next,
+                                      decoration: InputDecoration(
+                                        labelText: 'Username',
+                                        border: const OutlineInputBorder(),
+                                        filled: true,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  
-                                  TextFormField(
-                                    controller: emailController,
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      labelText: 'Email ID',
-                                      border: const OutlineInputBorder(),
-                                      filled: true,
+                                    const SizedBox(height: 16),
+                                    
+                                    TextFormField(
+                                      controller: emailController,
+                                      textInputAction: TextInputAction.next,
+                                      decoration: InputDecoration(
+                                        labelText: 'Email ID',
+                                        border: const OutlineInputBorder(),
+                                        filled: true,
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty || !value.contains('@')) {
+                                          return 'Please enter a valid email address';
+                                        }
+                                        return null;
+                                      },
                                     ),
-                                    validator: (value) {
-                                      if (value!.isEmpty || !value.contains('@')) {
-                                        return 'Please enter a valid email address';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
-                                  TextFormField(
-                                    controller: phoneNumberController,
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      labelText: 'Phone Number',
-                                      border: const OutlineInputBorder(),
-                                      filled: true,
+                                    const SizedBox(height: 16),
+                                    TextFormField(
+                                      controller: phoneNumberController,
+                                      textInputAction: TextInputAction.next,
+                                      decoration: InputDecoration(
+                                        labelText: 'Phone Number',
+                                        border: const OutlineInputBorder(),
+                                        filled: true,
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please enter a phone number';
+                                        }
+                                        return null;
+                                      },
                                     ),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please enter a phone number';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
-                                  TextFormField(
-                                    controller: passwordController,
-                                    obscureText: true,
-                                    textInputAction: TextInputAction.done,
-                                    decoration: InputDecoration(
-                                      labelText: 'Password',
-                                      border: const OutlineInputBorder(),
-                                      filled: true,
+                                    const SizedBox(height: 16),
+                                    TextFormField(
+                                      controller: passwordController,
+                                      obscureText: true,
+                                      textInputAction: TextInputAction.done,
+                                      decoration: InputDecoration(
+                                        labelText: 'Password',
+                                        border: const OutlineInputBorder(),
+                                        filled: true,
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please enter a password';
+                                        }
+                                        return null;
+                                      },
                                     ),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please enter a password';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  Center(
-        child: Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: custom_Button(
-        text: "Save",
-        width: 48,
-        height: 8,
-        backgroundColor: const Color.fromARGB(255, 58, 182, 41),
-        textcolor: whiteColor,
-        button_funcation: () {
-          var image_path = null;
-          dynamic finalImage = imageFile ?? image_path;
-          _save(context, finalImage);
-          showSuccessDialog(context);
-        },
-        textSize: 12,
-      ),
-        ),
-      ),
-      
-      
-                                  SizedBox(height: dn.height(5)),
-                                ],
+                                    Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: custom_Button(
+                    text: "Save",
+                    width: 48,
+                    height: 8,
+                    backgroundColor: const Color.fromARGB(255, 58, 182, 41),
+                    textcolor: whiteColor,
+                    button_funcation: () {
+            var image_path = null;
+            dynamic finalImage = imageFile ?? image_path;
+            _save(context, finalImage);
+            showSuccessDialog(context);
+                    },
+                    textSize: 12,
+                  ),
+                    ),
+                  ),
+                  
+                  
+                                    SizedBox(height: dn.height(5)),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
